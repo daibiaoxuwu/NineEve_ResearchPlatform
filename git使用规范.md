@@ -69,3 +69,4 @@ body
 footer
 
 - 如果需要关闭issue的话，可以在这里加上Closes #XXX (对应的issue号)。
+- 可以没有。
