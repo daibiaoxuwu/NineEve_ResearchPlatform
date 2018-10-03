@@ -33,80 +33,35 @@
 
 
 
-
-
-
-
-
-
-
-  <div class="py-3">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12" style="">
-          <div class="card">
-            <div class="card-header">PROJECT INFORMATION</div>
-            <div class="card-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>PROJECT NAME</th>
-                    <th>TEACHER</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>项目1</td>
-                    <td>Otto</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>项目2</td>
-                    <td>Thornton</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>项目3</td>
-                    <td>the Bird</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-           
-  <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
-
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="p-0">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
-            <div class="card-header"> MY PROJECTS</div>
+            <div class="card-header">AVALIABLE PROJECTS 可选项目</div>
             <div class="card-body">
               <table class="table">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>PROJECT NAME</th>
-                    <th>STATUS</th>
+                    <th>PROJECT NAME 项目名称</th>
+                    <th>STATUS 状态</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in list ">
+                    <td>{{item.number}}</td>
                     <td>{{item.text}}</td>
-                    <td><button @click="onClick(item)">项目1</button></td>
-                    <td><router-link to="/teacherInfo">Passed</router-link></td>
+                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
+                    <!-- <td><button @click="onClick(item)">项目1</button></td> -->
+                    
+                    <td @click="onClick(item)"><router-link to="/register">{{item.status}}</router-link></td>
                   </tr>
                  
                 </tbody>
               </table>
             </div>
+            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
           </div>
         </div>
       </div>
@@ -139,14 +94,29 @@ export default {
       showDismissibleAlert: false,
       list:[
         {
-          text: "a"
+          number: 1,
+          text: "项目1",
+          status: "Enrolling 可报名"
         },
         {
-           text: "a"
+             number: 2,
+          text: "项目2",
+          status: "Enrolling 可报名"
         },
         {
-           text: "a"
-
+            number: 3,
+          text: "项目3",
+          status: "Enrolling 可报名"
+        },
+         {
+            number: 4,
+          text: "项目4",
+          status: "Enrolling 可报名"
+        },
+         {
+            number: 5,
+          text: "项目5",
+          status: "Enrolling 可报名"
         }
       ]
     };
@@ -162,7 +132,8 @@ export default {
       return '#page/' + pageNum + '/foobar'
     },
     onClick (item){
-      console.log(item.name);
+      alert(item.text);
+      // this.$router.push("/log")
     }
   }
 };
