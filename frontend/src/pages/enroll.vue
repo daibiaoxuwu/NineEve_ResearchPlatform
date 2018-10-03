@@ -140,26 +140,7 @@ Vue 也可以在 unpkg 和 cdnjs 上获取 (cdnjs 的版本更新可能略滞后
       </div>
     </div>
   </div>
-  <div class="py-5 text-muted text-center">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 my-4">
-          <p class="mb-1">© 2017-2018 Company Name</p>
-          <ul class="list-inline">
-            <li class="list-inline-item">
-              <a href="#">Privacy</a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">Terms</a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">Support</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+  
   
      </div>
 </template>

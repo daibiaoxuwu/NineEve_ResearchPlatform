@@ -5,8 +5,8 @@
     <div class="container">
       <div class="row">
         <div class="text-center col-md-7 mx-auto"> <i class="fa d-block fa-bullseye fa-5x mb-4 text-info"></i>
-          <h2>导师信息填写</h2>
-          <p class="lead">tutor's information form</p>
+          <h2>报名信息填写</h2>
+          <p class="lead">Enroll information form</p>
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@
                 <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
               </div>
             </div>
-            <div class="mb-3"> <label for="email">Tutor's ID 教师号<br></label>
+            <div class="mb-3"> <label for="email">Student's ID 学号<br></label>
               <input type="" class="form-control" id="email">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
@@ -154,13 +154,11 @@
       </div>
     </div>
   </div>
- 
+  
   
      </div>
 </template>
 
 <style>
 @import '../assets/theme.css';
-
-/* 可能自带了必填项功能.但没有过于在意.需要时可查询原模板-来自Pingendo. */
 </style>

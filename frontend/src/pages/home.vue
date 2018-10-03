@@ -137,6 +137,7 @@ export default {
     }
   }
 };
+// 逻辑部分直接修改item即可呈现.
 </script>
 
 <style lang="css">
