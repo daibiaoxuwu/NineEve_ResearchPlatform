@@ -10,6 +10,24 @@
       </div>
     </div>
   </nav>
+
+
+   <div class="py-5" style="background-image: url('https://static.pingendo.com/cover-stripes.svg'); background-position:left center; background-size: cover;">
+    <div class="container">
+      <div class="row">
+        <div class="p-5 col-lg-6">
+          <h1>I am so happy, my dear</h1>
+          <p class="mb-3">So absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents.</p>
+          <form>
+            <div class="form-group"> <input type="email" class="form-control" placeholder="Enter email" id="form11"> </div>
+            <div class="form-group"> <input type="password" class="form-control" placeholder="Password" id="form12"> <small class="form-text text-muted text-right">
+                <a href="#"> Forgot your password?</a>
+              </small> </div> <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="py-3">
     <div class="container">
       <div class="row">
