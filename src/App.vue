@@ -56,6 +56,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-
+<style lang="css">
+@import '../src/assets/theme.css'
 </style>
+
