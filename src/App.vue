@@ -28,6 +28,43 @@
       </div>
     </div>
   </div>
+
+<div class="py-5 text-center">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto col-lg-6 col-10">
+          <h1>O my friend</h1>
+          <p class="mb-3">When, while the lovely valley teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable foliage of my trees.</p>
+          <form class="text-left">
+            <div class="form-group"> <label for="form16">Your Name</label> <input type="text" class="form-control" id="form16" placeholder="Johann W. Goethe"> </div>
+            <div class="form-group"> <label for="form17">Your Company</label> <input type="text" class="form-control" id="form17" placeholder="Werther Inc."> </div>
+            <div class="form-group"> <label for="form18">Your email</label> <input type="email" class="form-control" id="form18" placeholder="j.goethe@werther.com"> </div>
+            <div class="form-row">
+              <div class="form-group col-md-6"> <label for="form19">Password</label> <input type="password" class="form-control" id="form19" placeholder="••••"> </div>
+              <div class="form-group col-md-6"> <label for="form20">Confirm Password</label> <input type="password" class="form-control" id="form20" placeholder="••••"> </div>
+            </div>
+            <div class="form-group">
+              <div class="form-check"> <input class="form-check-input" type="checkbox" id="form21" value="on"> <label class="form-check-label" for="form21"> I Agree with <a href="#">Term and Conditions</a> of the service </label> </div>
+            </div> <button type="submit" class="btn btn-primary">Sign in</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div class="py-3">
     <div class="container">
       <div class="row">
@@ -86,21 +123,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
+                  <tr v-for="item in list ">
+                    <td>{{item.text}}</td>
                     <td>项目1</td>
                     <td>Passed</td>
                   </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>项目2</td>
-                    <td>Rejected</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>项目3</td>
-                    <td>Rejected</td>
-                  </tr>
+                 
                 </tbody>
               </table>
             </div>
@@ -109,16 +137,7 @@
       </div>
     </div>
   </div>
-   <b-list-group>
-  <b-list-group-item>Cras justo odio</b-list-group-item>
-  <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-  <b-list-group-item>Morbi leo risus</b-list-group-item>
-  <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-  <b-list-group-item>Vestibulum at eros</b-list-group-item>
-</b-list-group> 
-   
-   
-   
+
    
    
    
@@ -142,7 +161,19 @@ export default {
        currentPage: 1,
         dismissSecs: 10,
       dismissCountDown: 0,
-      showDismissibleAlert: false
+      showDismissibleAlert: false,
+      list:[
+        {
+          text: "a"
+        },
+        {
+           text: "a"
+        },
+        {
+           text: "a"
+
+        }
+      ]
     };
   },
   methods: {
