@@ -114,8 +114,8 @@
                 <tbody>
                   <tr v-for="item in list ">
                     <td>{{item.text}}</td>
-                    <td>项目1</td>
-                    <td>Passed</td>
+                    <td><button @click="onClick(item)">项目1</button></td>
+                    <td><router-link to="/login">Passed</router-link></td>
                   </tr>
                  
                 </tbody>
@@ -174,6 +174,9 @@ export default {
     },
     linkGen (pageNum) {
       return '#page/' + pageNum + '/foobar'
+    },
+    onClick (item){
+      console.log(item.name);
     }
   }
 };
