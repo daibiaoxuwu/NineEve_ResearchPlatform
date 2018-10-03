@@ -55,7 +55,7 @@
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
                     
-                    <td @click="onClick(item)"><router-link to="/register">{{item.status}}</router-link></td>
+                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
                   </tr>
                  
                 </tbody>
