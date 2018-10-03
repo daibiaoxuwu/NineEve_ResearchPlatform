@@ -82,4 +82,21 @@ npm run build
   </style>
   ```
 
+* 添加弹出框:
+
+  https://bootstrap-vue.js.org/docs/components/modal
+
+  ```html
+  <b-btn v-b-modal.modal1 class="btn btn-danger btn-lg btn-block">
+        Retract Enrollment 撤销报名
+  </b-btn>
+  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk"
+               @shown="clearName">
+     <p class="my-4">是否撤销报名?</p>
+  </b-modal>
+  ```
+
+  @ok: 点击ok触发函数 @shown: 显示对话框时触发 @cancel: 取消触发.
+
+  这里btn-danger是按钮显示红色的样式.
 

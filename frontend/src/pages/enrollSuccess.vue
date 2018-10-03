@@ -73,11 +73,19 @@
         </div>
         
         <div class="col-md-8 order-md-1">
-          <h4 class="mb-3"><b>基于Bootstrap-Vue的网页设计研究</b>
+            <h2 class="mb-3"><b>恭喜!</b>
            <small class="form-text text-muted">
-                Web Page Design Using Bootstrap-Vue
+                Congratulations!
               </small>
-         </h4>
+         </h2>
+          <h5 class="mb-3"><b>你已经成功报名了 "基于Bootstrap-Vue的网页设计研究"! 请等待后续通知.</b>
+           <small class="form-text text-muted">
+              You have successfully enrolled for the project. Please await further notice.
+              </small>
+         </h5>
+           <p class="form-text" style="font-weight:bold;">指导教师</p>
+         <p class="form-text text-muted">
+           国雨晴</p>
          <p class="form-text" style="font-weight:bold;">项目简介</p>
          <p class="form-text text-muted">
            Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
@@ -128,8 +136,13 @@ Vue 也可以在 unpkg 和 cdnjs 上获取 (cdnjs 的版本更新可能略滞后
          <p class="form-text text-muted">
          2018-10-3
 </p>
-  <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button>
-             <button class="btn btn-primary btn-lg btn-block" type="submit">Enroll Now</button>
+
+  <b-btn v-b-modal.modal1 class="btn btn-danger btn-lg btn-block">Retract Enrollment 撤销报名</b-btn>
+
+  <!-- Modal Component -->
+  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
+    <p class="my-4">是否撤销报名?</p>
+  </b-modal>
         
         </div>
       </div>
@@ -162,3 +175,18 @@ Vue 也可以在 unpkg 和 cdnjs 上获取 (cdnjs 的版本更新可能略滞后
 <style>
 @import "../assets/theme.css";
 </style>
+<script>
+export default {
+  name: "enrollSuccess",
+   data() {
+    return {
+    }
+   },
+    methods: {
+   handleOK (){
+      alert("Enroll Withdrawn!");
+      // this.$router.push("/log")
+    }
+  }
+}
+</script>
