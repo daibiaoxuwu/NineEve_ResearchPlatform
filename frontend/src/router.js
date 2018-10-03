@@ -4,11 +4,12 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import homepage from "./pages/home.vue";
-import login from "./pages/login.vue";
-
+import teacherInfo from "./pages/teacherInfo.vue";
+import register from "./pages/register.vue";
 const routes = [
     { path: '/', component: homepage },
-    { path: '/login', component: login }
+    { path: '/teacherInfo', component: teacherInfo },
+    { path: '/register', component: register}
   ]
 
 const router = new VueRouter({
