@@ -96,36 +96,25 @@
               <input type="" class="form-control" id="email">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
-            <div class="mb-3"> <label for="email">Laboratory 研究所<br></label>
-              <div class="mb-3">
-                <b-dropdown id="ddown-header" text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
-                <b-dropdown-item-button style="text-align:center;">Software Laboratory 软件所</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">High Performance Laboratory 高性能</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">Multimedia Laboratory 媒体所</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">Artificial Intelligence Laboratory 智能所</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">Network Laboratory 网络所</b-dropdown-item-button>
-            </b-dropdown>
-              </div>
-              <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
-            </div>
+          
             <div class="mb-3"> <label for="email">Wechat/Phone 微信号/手机号<br></label>
               <input type="" class="form-control" id="email" placeholder="">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
-            <div class="mb-3"> <label for="email">Email </label>
+            <div class="mb-3"> <label for="email">Email 邮箱</label>
               <input type="email" class="form-control" id="email" placeholder="you@example.com">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
-            <div class="mb-3"> <label for="address">Personal Namepage Address <span class="text-muted">(Optional)</span></label>
+            <div class="mb-3"> <label for="address">Personal Webpage Address 个人主页地址<span class="text-muted">(Optional)</span></label>
               <input type="text" class="form-control" id="address" placeholder="" required="">
               <div class="invalid-feedback"> Please enter your shipping address. </div>
             </div>
             <hr class="mb-4">
            
             
-            <h4 class="mb-3">Assignment Information 科研任务介绍</h4>
+            <h4 class="mb-3">Enroll Information 报名理由</h4>
             <div class="row">
-                <div class="col-md-12 mb-3"> <label for="email">实验室方向 </label>
+                <div class="col-md-12 mb-3"> <label for="email">Self introduction 自我介绍</label>
                <b-form-textarea id="textarea1"
                      v-model="text"
                      placeholder="Enter something"
@@ -134,7 +123,7 @@
     </b-form-textarea>
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
-            <div class="col-md-12 mb-3"> <label for="email"> 科研成果介绍</label>
+            <div class="col-md-12 mb-3"> <label for="email">Reasons for Enrollment 报名原因</label>
              <b-form-textarea id="textarea1"
                      v-model="text"
                      placeholder="Enter something"
@@ -147,8 +136,16 @@
          
             </div>
             <hr class="mb-4">
-            <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information</button>
-             <button class="btn btn-primary btn-lg btn-block" type="submit">Launch Assignment</button>
+            <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information 保存信息</button>
+         
+              
+  <b-btn v-b-modal.modal2 class="btn btn-primary btn-lg btn-block"  style="margin-top:0.5rem;">Submit Enrollment 提交报名</b-btn>
+  <!-- 上面貌似不能加type="submit"属性, 否则无法弹框. -->
+  <!-- Modal Component -->
+  <b-modal id="modal2" title="Bootstrap-Vue"  @ok="handleOk">
+    <p class="my-4">Are you sure to submit enrollment?</br>是否提交报名?</p>
+  </b-modal>
+           
           </form>
         </div>
       </div>
@@ -162,3 +159,18 @@
 <style>
 @import '../assets/theme.css';
 </style>
+
+<script>
+export default {
+  name: "enrollSuccess",
+   data() {
+    return {
+    }
+   },
+    methods: {
+   handleOk (){
+      this.$router.push("/enrollSuccess")
+    }
+  }
+}
+</script>

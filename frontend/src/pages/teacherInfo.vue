@@ -112,11 +112,11 @@
               <input type="" class="form-control" id="email" placeholder="">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
-            <div class="mb-3"> <label for="email">Email </label>
+            <div class="mb-3"> <label for="email">Email 邮箱</label>
               <input type="email" class="form-control" id="email" placeholder="you@example.com">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
-            <div class="mb-3"> <label for="address">Personal Namepage Address <span class="text-muted">(Optional)</span></label>
+            <div class="mb-3"> <label for="address">Personal Webpage Address 个人主页地址<span class="text-muted">(Optional)</span></label>
               <input type="text" class="form-control" id="address" placeholder="" required="">
               <div class="invalid-feedback"> Please enter your shipping address. </div>
             </div>
@@ -125,7 +125,7 @@
             
             <h4 class="mb-3">Assignment Information 科研任务介绍</h4>
             <div class="row">
-                <div class="col-md-12 mb-3"> <label for="email">实验室方向 </label>
+                <div class="col-md-12 mb-3"> <label for="email">Research Area 实验室方向</label>
                <b-form-textarea id="textarea1"
                      v-model="text"
                      placeholder="Enter something"
@@ -134,7 +134,7 @@
     </b-form-textarea>
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
-            <div class="col-md-12 mb-3"> <label for="email"> 科研成果介绍</label>
+            <div class="col-md-12 mb-3"> <label for="email">Research Results 科研成果介绍</label>
              <b-form-textarea id="textarea1"
                      v-model="text"
                      placeholder="Enter something"
@@ -148,7 +148,7 @@
             </div>
             <hr class="mb-4">
             <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information</button>
-             <button class="btn btn-primary btn-lg btn-block" type="submit">Launch Assignment</button>
+             <button class="btn btn-primary btn-lg btn-block" type="submit" style="margin-top:0.5rem;">Launch Assignment</button>
           </form>
         </div>
       </div>

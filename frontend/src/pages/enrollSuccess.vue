@@ -164,7 +164,7 @@ export default {
     }
    },
     methods: {
-   handleOK (){
+   handleOk (){
       alert("Enroll Withdrawn!");
       // this.$router.push("/log")
     }

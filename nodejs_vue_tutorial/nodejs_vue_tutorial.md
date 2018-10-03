@@ -16,9 +16,9 @@
 
 * 前台: vue.js+bootstrap
 
-  命令行运行vue init webpack-simple 工程名
+  新建工程: 命令行运行vue init webpack-simple 工程名 **如果从github上下载的项目, 跳过这步**
 
-  然后运行npm install
+  然后进入工程根目录, 运行npm install
 
   然后, 如果需要安装jquery, 运行npm install jquery --save
 
