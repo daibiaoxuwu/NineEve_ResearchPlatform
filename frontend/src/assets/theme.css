@@ -8,6 +8,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 :root {
+  
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -108,7 +109,11 @@ ul ol {
 
 dt {
   font-weight: 700; }
-
+  @media (max-width: 767px){
+    .visible-lg{
+      display: none;
+    }
+  }
 dd {
   margin-bottom: .5rem;
   margin-left: 0; }

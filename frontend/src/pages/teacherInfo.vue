@@ -14,7 +14,7 @@
   <div class="">
     <div class="container">
       <div class="row">
-        <div class="col-md-4 order-md-2">
+        <div class="visible-lg col-md-4 order-md-2">
             <div>
           <h4 class="d-flex justify-content-between mb-3"> <span class="text-muted"><b>Assignments</b></span> <span class="badge badge-secondary badge-pill">3</span> </h4>
           <ul class="list-group">

@@ -51,3 +51,35 @@ npm run build
   ```
 
   即可.
+
+* 添加小设备兼容性:
+
+  在index.html中meta处添加
+
+  ```html
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  ```
+
+  然后将需要在"小设备下隐藏"的html标签中添加一个类属性(如visible-lg), 然后在&lt;style>段加入(或者,为了应用到全局,加到theme.css中)
+
+  ```css
+  @media (max-width: 767px){
+    .visible-lg{
+      display: none;
+    }
+  ```
+
+  (可以在&lt;template>外加入&lt;style>标签,在里边导入css文件和定义其他css样式:
+
+  ```html
+  <style>
+  @import "../assets/theme.css";
+  @media (max-width: 767px){
+    .visible-lg{
+      display: none;
+    }
+  }
+  </style>
+  ```
+
+
