@@ -152,3 +152,7 @@ npm run build
 * 表格在鼠标滑过时变灰
 
   加入.table-hover即可.
+
+* bv格式表单: (自动检查空项)
+
+  https://bootstrap-vue.js.org/docs/components/form

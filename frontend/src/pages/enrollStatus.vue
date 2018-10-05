@@ -162,7 +162,7 @@ export default {
     methods: {
       onClick(item){
         alert(item.text);
-        selectedItem=item;
+        this.selectedItem=item;
       },
    handleOk (){
       this.$router.push("/enrollAccepted")
