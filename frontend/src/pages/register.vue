@@ -20,8 +20,9 @@
             </div>
             <div class="form-group">
               <div class="form-check"> <input class="form-check-input" type="checkbox" id="form21" value="on"> <label class="form-check-label" for="form21"> I Agree with <a href="#">Term and Conditions</a> of the service </label> </div>
-            </div> <button type="submit" class="btn btn-primary" @click="onRegister">Register</button>
+            </div>
           </form>
+           <button class="btn btn-primary" @click="onRegister">Register</button>
         </div>
       </div>
     </div>
@@ -52,7 +53,7 @@ export default {
   },
   methods: {
    onRegister(){
-     alert("Register Success!");
+   //  alert("Register Success!");
      this.$router.push("/");
    }
   }

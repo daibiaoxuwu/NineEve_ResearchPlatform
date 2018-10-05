@@ -23,7 +23,7 @@
               <div class="form-group" style="text-align:center;">
              <h5>or</h5>
               </div>
-            <router-link to="/register"><button type="submit" class="form-control btn btn-primary">Register</button></router-link>
+            <router-link to="/register"><button  class="form-control btn btn-primary">Register</button></router-link>
           </form>
         </div>
       </div>
