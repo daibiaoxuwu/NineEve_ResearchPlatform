@@ -40,7 +40,7 @@
           <div class="card">
             <div class="card-header">AVALIABLE PROJECTS 可选项目</div>
             <div class="card-body">
-              <table class="table">
+              <table class="table table-hover">
                 <thead>
                   <tr>
                     <th>#</th>

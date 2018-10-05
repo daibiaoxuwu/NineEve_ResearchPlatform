@@ -148,3 +148,7 @@ npm run build
   ```
 
   就能引入right.vue的html和js等了.
+
+* 表格在鼠标滑过时变灰
+
+  加入.table-hover即可.
