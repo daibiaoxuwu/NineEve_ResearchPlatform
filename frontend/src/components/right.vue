@@ -1,7 +1,7 @@
 <template>
     <div class="visible-lg col-md-4 order-md-2">
             <div>
-          <h4 class="d-flex justify-content-between mb-3"> <span class="text-muted"><b>Assignments</b></span> <span class="badge badge-secondary badge-pill">3</span> </h4>
+          <h4 class="d-flex justify-content-between mb-3"> <span class="text-muted"><b>Assignments 项目</b></span> <span class="badge badge-secondary badge-pill">3</span> </h4>
           <ul class="list-group ">
             <li v-for="item in items" v-bind:class="item.bgclass">
               <div>
@@ -13,7 +13,7 @@
             </div>
 
                  <div  class="my-4">
-          <h4 class="d-flex justify-content-between mb-3"> <span class="text-muted"><b>History Assignments</b></span> <span class="badge badge-secondary badge-pill">3</span> </h4>
+          <h4 class="d-flex justify-content-between mb-3"> <span class="text-muted"><b>History Assignments 历史</b></span> <span class="badge badge-secondary badge-pill">3</span> </h4>
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between list-group-item-action">
               <div>

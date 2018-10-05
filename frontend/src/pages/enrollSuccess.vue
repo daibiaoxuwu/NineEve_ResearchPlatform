@@ -6,7 +6,7 @@
       <div class="row">
         <div class="text-center col-md-7 mx-auto"> <i class="fa d-block fa-bullseye fa-5x mb-4 text-info"></i>
           <h2>项目信息</h2>
-          <p class="lead">Assignment information</p>
+          <p class="lead">Assignment Information</p>
         </div>
       </div>
     </div>

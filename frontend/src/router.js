@@ -10,6 +10,7 @@ import enroll from "./pages/enroll.vue";
 import enrollForm from "./pages/enrollForm.vue";
 import enrollSuccess from "./pages/enrollSuccess.vue";
 import enrollStatus from "./pages/enrollStatus.vue";
+import enrollAccepted from "./pages/enrollAccepted.vue";
 const routes = [
     { path: '/', component: homepage },
     { path: '/teacherInfo', component: teacherInfo },
@@ -17,7 +18,8 @@ const routes = [
     { path: '/enroll', component: enroll},
     { path: '/enrollForm', component: enrollForm},
     { path: '/enrollSuccess', component: enrollSuccess},
-    { path: '/enrollStatus', component: enrollStatus}
+    { path: '/enrollStatus', component: enrollStatus},
+    { path: '/enrollAccepted', component: enrollAccepted}
   ]
 
 const router = new VueRouter({

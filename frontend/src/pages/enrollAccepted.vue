@@ -17,37 +17,17 @@
         <rightpane></rightpane>
         
         <div class="col-md-8 order-md-1">
-          <h4 class="mb-3"><b>Enroll List 报名队列</b></h4>
-
-          <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>STUDENT NAME 学生名</th>
-                    <th>DEPARTMENT 系别</th>
-                    <th>YEAR 年级</th>
-                  </tr>
-                </thead>
-                <tbody>
-             
-                  <tr v-for="(item, index) in list" @click="onClick(item)">
-                    <td>{{index}}</td>
-                    <td>{{item.text}}</td>
-                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
-                    <!-- <td><button @click="onClick(item)">项目1</button></td> -->
-                    
-                    <td >{{item.department}}</td>
-                    <td>{{item.year}}</td>
-                    </tr>
-            
-                  
-                 
-                </tbody>
-              </table>
-
-
-<div>
-            <h2 class="mb-3"><b>{{selectedItem.text}}</b>
+            <h2 class="mb-3"><b>恭喜!</b>
+           <small class="form-text text-muted">
+                Congratulations!
+              </small>
+         </h2>
+          <h5 class="mb-3"><b>你已经同意了 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.year.split(" ")[1]}})的报名! 请等待后续通知.</b>
+           <small class="form-text text-muted">
+              You have successfully accepted a student for your project. Please await further notice.
+              </small>
+         </h5>
+           <h2 class="mb-3"><b>{{selectedItem.text}}</b>
            <small class="form-text text-muted">
                 {{selectedItem.department.split(" ")[0]}} {{selectedItem.year.split(" ")[0]}} {{selectedItem.department.split(" ")[1]}} {{selectedItem.year.split(" ")[1]}} 
               </small>
@@ -94,19 +74,12 @@ Vue 也可以在 unpkg 和 cdnjs 上获取 (cdnjs 的版本更新可能略滞后
 请确认了解不同构建版本并在你发布的站点中使用生产环境版本，把 vue.js 换成 vue.min.js。这是一个更小的构建，可以带来比开发环境下更快的速度体验。
 </p>
 
-  <b-btn v-b-modal.modal1 class="btn btn-primary btn-lg btn-block">Accept Enrollment 同意报名</b-btn>
-
-  <!-- Modal Component -->
-  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
-    <p class="my-4">是否同意 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.year.split(" ")[1]}})报名?</p>
-  </b-modal>
         
-        </div>
         </div>
       </div>
     </div>
   </div>
-  
+
   
      </div>
 </template>
@@ -115,57 +88,24 @@ Vue 也可以在 unpkg 和 cdnjs 上获取 (cdnjs 的版本更新可能略滞后
 <script>
 import rightpane from "../components/right.vue"
 export default {
-  name: "enrollForm",
+
+  name: "enrollSuccess",
    data() {
     return {
-      list:[
-        {
-          text: "肖朝军",
-          department: "CST 计算机系",
-          year: "Junior 大三"
-        },
-        {
-       
-          text: "肖朝军2",
-          department: "CST 计算机系",
-          year: "Junior 大三"
-        },
-        {
-        
-          text: "肖朝军3",
-          department: "CST 计算机系",
-          year: "Junior 大三"
-        },
-         {
-        
-          text: "肖朝军4",
-          department: "CST 计算机系",
-          year: "Junior 大三"
-        },
-         {
-       
-          text: "肖朝军5",
-          department: "CST 计算机系",
-          year: "Junior 大三"
-        }
-      ],
-      selectedItem:  {
+       selectedItem:  {
           text: "肖朝军",
           department: "CST 计算机系",
           year: "Junior 大三"
         }
     }
    },
-     components:{
+    components:{
     rightpane
   },
     methods: {
-      onClick(item){
-        alert(item.text);
-        selectedItem=item;
-      },
    handleOk (){
-      this.$router.push("/enrollAccepted")
+      alert("Enroll Withdrawn!");
+      // this.$router.push("/log")
     }
   }
 }
