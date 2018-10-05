@@ -22,9 +22,9 @@
                 Congratulations!
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经成功报名了 "基于Bootstrap-Vue的网页设计研究"! 请等待后续通知.</b>
+          <h5 class="mb-3"><b>你已经成功结题, 并评价了 "基于Bootstrap-Vue的网页设计研究"! 请等待老师的反馈.</b>
            <small class="form-text text-muted">
-              You have successfully enrolled for the project. Please await further notice.
+              You have successfully terminated and evaluated the project. Please await your tutor's evaluation.
               </small>
          </h5>
            <p class="form-text" style="font-weight:bold;">指导教师</p>
@@ -88,13 +88,9 @@ Vue 也可以在 unpkg 和 cdnjs 上获取 (cdnjs 的版本更新可能略滞后
          2018-10-3
 </p>
 
-  <b-btn v-b-modal.modal1 class="btn btn-danger btn-lg btn-block">Retract Enrollment 撤销报名</b-btn>
 
-  <!-- Modal Component -->
-  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
-    <p class="my-4">是否撤销报名?</p>
-  </b-modal>
-        
+  <router-link to="/"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
+
         </div>
       </div>
     </div>

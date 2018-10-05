@@ -12,6 +12,10 @@ import enrollSuccess from "./pages/enrollSuccess.vue";
 import enrollStatus from "./pages/enrollStatus.vue";
 import enrollAccepted from "./pages/enrollAccepted.vue";
 import enrollAcceptNotice from "./pages/enrollAcceptNotice.vue";
+import studentEvaluate from "./pages/studentEvaluate.vue";
+import studentEvaluateSuccess from "./pages/studentEvaluateSuccess.vue";
+import teacherEvaluate from "./pages/teacherEvaluate.vue";
+import teacherEvaluateSuccess from "./pages/teacherEvaluateSuccess.vue";
 const routes = [
     { path: '/', component: homepage },
     { path: '/teacherInfo', component: teacherInfo },
@@ -21,7 +25,11 @@ const routes = [
     { path: '/enrollSuccess', component: enrollSuccess},
     { path: '/enrollStatus', component: enrollStatus},
     { path: '/enrollAccepted', component: enrollAccepted},
-    { path: '/enrollAcceptNotice', component: enrollAcceptNotice}
+    { path: '/enrollAcceptNotice', component: enrollAcceptNotice},
+    { path: '/studentEvaluate', component: studentEvaluate},
+    { path: '/teacherEvaluate', component: teacherEvaluate},
+    { path: '/studentEvaluateSuccess', component: studentEvaluateSuccess},
+    { path: '/teacherEvaluateSuccess', component: teacherEvaluateSuccess}
   ]
 
 const router = new VueRouter({
