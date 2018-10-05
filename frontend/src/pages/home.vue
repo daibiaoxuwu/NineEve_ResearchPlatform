@@ -60,6 +60,7 @@
                  
                 </tbody>
               </table>
+              
             </div>
             <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
           </div>
@@ -84,6 +85,7 @@
 </template>
 
 <script>
+
 export default {
   name: "home",
   data() {

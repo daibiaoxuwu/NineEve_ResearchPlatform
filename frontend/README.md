@@ -100,3 +100,51 @@ npm run build
 
   这里btn-danger是按钮显示红色的样式.
 
+* 抽离component:
+
+  在components文件夹新建right.vue, 里边写一段完整的, 和其他无异的vue代码. 
+
+  在别的文件(以enrollForm.vue为例)中导入的时候: 在enrollForm.vue的script中添加两句:
+
+  ```js
+  import rightpane from "../components/right.vue"
+  ```
+
+  和
+
+  ```js
+    components:{
+      rightpane
+    },
+  ```
+
+  下面是enrollForm的例子:
+
+  ```js
+  <script>
+  import rightpane from "../components/right.vue"
+  export default {
+    name: "enrollForm",
+     data() {
+      return {
+      }
+     },
+       components:{
+      rightpane
+    },
+      methods: {
+     handleOk (){
+        this.$router.push("/enrollSuccess")
+      }
+    }
+  }
+  </script>
+  ```
+
+  这之后就可以在html区域添加
+
+  ```html
+  <rightpane></rightpane>
+  ```
+
+  就能引入right.vue的html和js等了.

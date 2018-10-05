@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
               <div class="form-check"> <input class="form-check-input" type="checkbox" id="form21" value="on"> <label class="form-check-label" for="form21"> I Agree with <a href="#">Term and Conditions</a> of the service </label> </div>
-            </div> <button type="submit" class="btn btn-primary">Register</button>
+            </div> <button type="submit" class="btn btn-primary" @click="onRegister">Register</button>
           </form>
         </div>
       </div>
@@ -45,40 +45,16 @@
 
 <script>
 export default {
-  name: "home",
+  name: "register",
   data() {
     return {
-       currentPage: 1,
-        dismissSecs: 10,
-      dismissCountDown: 0,
-      showDismissibleAlert: false,
-      list:[
-        {
-          text: "a"
-        },
-        {
-           text: "a"
-        },
-        {
-           text: "a"
-
-        }
-      ]
-    };
+    }
   },
   methods: {
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
-    },
-    linkGen (pageNum) {
-      return '#page/' + pageNum + '/foobar'
-    },
-    onClick (item){
-      console.log(item.name);
-    }
+   onRegister(){
+     alert("Register Success!");
+     this.$router.push("/");
+   }
   }
 };
 </script>

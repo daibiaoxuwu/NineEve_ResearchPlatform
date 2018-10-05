@@ -145,6 +145,22 @@ Vue 也可以在 unpkg 和 cdnjs 上获取 (cdnjs 的版本更新可能略滞后
      </div>
 </template>
 
-<style>
-@import "../assets/theme.css";
-</style>
+
+<script>
+import rightpane from "../components/right.vue"
+export default {
+  name: "enroll",
+   data() {
+    return {
+    }
+   },
+     components:{
+    rightpane
+  },
+    methods: {
+   handleOk (){
+      this.$router.push("/enrollForm")
+    }
+  }
+}
+</script>
