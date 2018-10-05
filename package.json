@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-example",
+  "version": "0.0.0",
+  "description": "A simple chat client using socket.io",
+  "main": "index.js",
+  "author": "Grant Timmerman",
+  "private": true,
+  "license": "BSD",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "nyc --reporter=lcov --reporter=text mocha"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2"
+  }
+}
