@@ -49,8 +49,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in list ">
-                    <td>{{item.number}}</td>
+                  <tr v-for="(item, index) in list ">
+                    <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
@@ -96,27 +96,26 @@ export default {
       showDismissibleAlert: false,
       list:[
         {
-          number: 1,
           text: "项目1",
           status: "Enrolling 可报名"
         },
         {
-             number: 2,
+       
           text: "项目2",
           status: "Enrolling 可报名"
         },
         {
-            number: 3,
+        
           text: "项目3",
           status: "Enrolling 可报名"
         },
          {
-            number: 4,
+        
           text: "项目4",
           status: "Enrolling 可报名"
         },
          {
-            number: 5,
+       
           text: "项目5",
           status: "Enrolling 可报名"
         }

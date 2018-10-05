@@ -3,32 +3,12 @@
             <div>
           <h4 class="d-flex justify-content-between mb-3"> <span class="text-muted"><b>Assignments</b></span> <span class="badge badge-secondary badge-pill">3</span> </h4>
           <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between">
+            <li v-for="item in items" class="list-group-item d-flex justify-content-between">
               <div>
-                <h6 class="my-0"><b>项目1</b></h6> <small class="text-muted">Brief description</small>
-              </div> <span class="text-muted">Pending</span>
+                <h6 class="my-0"><b>{{item.title}}</b></h6> <small class="text-muted">{{item.description}}</small>
+              </div> <span v-bind:class="item.class">{{item.status}}</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <div>
-                <h6 class="my-0"><b>项目2</b></h6> <small class="text-muted">Brief description</small>
-              </div> <span class="text-muted">Released</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <div>
-                <h6 class="my-0"><b>项目3</b></h6> <small class="text-muted">Brief description</small>
-              </div> <span class="text-muted">enrolling: 3</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-success">
-                <h6 class="my-0"><b>项目4</b></h6> <small>EXAMPLECODE</small>
-              </div> <span class="text-success">launched</span>
-            </li>
-             <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-danger">
-                <h6 class="my-0"><b>项目5</b></h6> <small>EXAMPLECODE</small>
-              </div> <span class="text-danger">paused</span>
-            </li>
-           
+                       
           </ul>
             </div>
 
@@ -57,3 +37,67 @@
           
         </div>
 </template>
+
+<script>
+
+export default {
+  name: "right",
+  data() {
+    return {
+     
+      items:[
+        {
+          title: "项目1",
+          description: "基于Nodejs的后台开发实践",
+          status: "Enrolling 可报名",
+          class: "text-muted"
+        },
+        {
+         title: "项目2",
+          description: "基于Nodejs的后台开发实践",
+          status: "Enrolling 可报名",
+          class: "text-muted"
+        },
+        {
+          title: "项目3",
+          description: "基于Nodejs的后台开发实践",
+          status: "Enrolling 可报名",
+          class: "text-muted"
+        },
+         {
+          title: "项目4",
+          description: "基于Nodejs的后台开发实践",
+          status: "Passed 已通过",
+          class: "text-success"
+        },
+         {
+         title: "项目5",
+          description: "基于Nodejs的后台开发实践",
+          status: "Rejected 已拒绝",
+          class: "text-danger"
+        }
+      ]
+    };
+  },
+  methods: {
+    countDownChanged (dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
+    showAlert () {
+      this.dismissCountDown = this.dismissSecs
+    },
+    linkGen (pageNum) {
+      return '#page/' + pageNum + '/foobar'
+    },
+    onClick (item){
+      alert(item.text);
+      // this.$router.push("/log")
+    }
+  }
+};
+// 逻辑部分直接修改item即可呈现.
+</script>
+
+<style lang="css">
+
+</style>
