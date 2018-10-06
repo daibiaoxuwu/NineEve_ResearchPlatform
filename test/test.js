@@ -10,16 +10,3 @@ describe('Array', function() {
     });
   });
 });
-
-describe("app", function(){
-    it("should return page when accessing /", (done)=>{
-        chai.request(app).get("/").end((err, res)=>{
-            expect(res).to.have.status(200);
-            done();
-        })
-    });
-    after(()=>{
-        app.close();
-    })
-
-});
