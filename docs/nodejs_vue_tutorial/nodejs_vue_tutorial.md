@@ -16,11 +16,11 @@
 
 * 前台: vue.js+bootstrap
 
-  命令行运行vue init webpack-simple 工程名
+  新建工程: 命令行运行vue init webpack-simple 工程名 **如果从github上下载的项目, 跳过这步**
 
-  然后运行npm install
+  然后进入工程根目录, 运行npm install
 
-  然后运行npm install jquery --save安装jquery (这句应该已经写在package-lock.json和package.json里了,不一定需要执行)
+  然后, 如果需要安装jquery, 运行npm install jquery --save
 
 
 
@@ -114,38 +114,7 @@
 
   * 运行:
 
-    在前端(du1目录下)运行
-
-    ```
-    npm run build
-    ```
-
-    这会把App.vue中的代码翻译后放在index.html中,
-
-    ```html
-    <body>
-        <div id="app"></div>
-        <script src="/dist/build.js"></script>
-    </body>
-    ```
-
-    在这里,/dist/build.js被执行并替换掉 &lt;div id="app">&lt;/div>
-
-    然后在后端(ser2目录下)运行
-
-    ```
-    node ser2.js
-    ```
-
-    其中的
-
-    ```javascript
-    const port = 8080
-    ```
-
-    定义了8080端口, 在浏览器访问http://localhost:8080/即可访问界面.
-
-    **注意** 不需要同时执行前端npm run dev等, 只执行node 文件名.js即可.
+    node 文件名.js
 
 * 样例工程:点击按钮login, 从后端接受数据"yes"并alert显示出来.
 * 延申:
