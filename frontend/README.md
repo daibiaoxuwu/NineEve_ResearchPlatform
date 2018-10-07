@@ -10,9 +10,12 @@ Finished Landing Page and Tutor's Information. Without Logic.
 
 ```
 # install dependencies
+# 第一次执行npm run dev操作时需要该命令
+# 执行该命令需要在前端根目录下(即frontend)
 npm install
 
 # serve with hot reload at localhost:8080
+# 执行该命令需要在前端根目录下(即frontend)
 npm run dev
 
 # build for production with minification
@@ -102,7 +105,7 @@ npm run build
 
 * 抽离component:
 
-  在components文件夹新建right.vue, 里边写一段完整的, 和其他无异的vue代码. 
+  在components文件夹新建right.vue, 里边写一段完整的, 和其他无异的vue代码.
 
   在别的文件(以enrollForm.vue为例)中导入的时候: 在enrollForm.vue的script中添加两句:
 
