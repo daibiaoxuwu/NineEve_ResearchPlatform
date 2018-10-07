@@ -79,7 +79,7 @@
 
       上述代码监控currentPage的变化, 每当其变化, 即执行function函数.
 
-  * 运行: 命令行在本工程根目录下执行npm run dev, (如果链接服务器需要改为npm run build).
+  * 运行: 命令行在本工程前端根目录(这里为frontend)下执行npm run dev, (如果是第一次执行该命令，需要现在frontend下执行npm install)(如果链接服务器需要改为npm run build).
 
     这时浏览器应该自动打开了http://localhost:8080/.
 
