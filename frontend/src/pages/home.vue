@@ -1,6 +1,6 @@
 <template>
   <div >
- 
+
    <div class="py-5" style="background-image: url('https://static.pingendo.com/cover-stripes.svg'); background-position:left center; background-size: cover;">
     <div class="container">
       <div class="row">
@@ -11,14 +11,14 @@
              <h3>Login</h3>
               </div>
           <form>
-            <div class="form-group"> <input type="email" class="form-control" placeholder="Enter email" id="form11"> </div>
-            <div class="form-group"> <input type="password" class="form-control" placeholder="Password" id="form12">
+            <div class="form-group"> <input type="email" class="form-control" placeholder="Email/Student ID/Teacher ID" v-model="inputNameForm" id="form11"> </div>
+            <div class="form-group"> <input type="password" class="form-control" placeholder="Password" v-model="inputPasswordForm" id="form12">
               <small class="form-text text-muted text-right">
                 <a href="#"> Forgot your password?</a>
               </small>
             </div>
              <div class="form-group">
-            <router-link to="/teacherInfo"><button type="submit" class="form-control btn btn-primary">Submit</button></router-link>
+            <router-link to="/teacherInfo"><button v-on:click="submitRequest()" type="submit" class="form-control btn btn-primary">Submit</button></router-link>
              </div>
               <div class="form-group" style="text-align:center;">
              <h5>or</h5>
@@ -54,13 +54,13 @@
                     <td>{{item.text}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
-                    
+
                     <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
                   </tr>
-                 
+
                 </tbody>
               </table>
-              
+
             </div>
             <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
           </div>
@@ -69,17 +69,10 @@
     </div>
   </div>
 
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+
+
+
+
    </div>
 
 </template>
@@ -100,22 +93,18 @@ export default {
           status: "Enrolling 可报名"
         },
         {
-       
           text: "项目2",
           status: "Enrolling 可报名"
         },
         {
-        
           text: "项目3",
           status: "Enrolling 可报名"
         },
          {
-        
           text: "项目4",
           status: "Enrolling 可报名"
         },
          {
-       
           text: "项目5",
           status: "Enrolling 可报名"
         }
@@ -135,6 +124,12 @@ export default {
     onClick (item){
       alert(item.text);
       // this.$router.push("/log")
+    },
+    submitRequest (){
+      var inputName = this.inputNameForm;
+      var inputPassword = this.inputPasswordForm
+      alert(inputName+"\n"+inputPassword);
+
     }
   }
 };
