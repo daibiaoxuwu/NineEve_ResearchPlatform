@@ -83,6 +83,12 @@ module.exports = {
   performance: {
     hints: false
   },
+  plugins:[
+    new webpack.ProvidePlugin({
+      $:"jquery",
+      jQuery:"jquery"
+    })
+  ],
   devtool: '#eval-source-map'
 }
 
