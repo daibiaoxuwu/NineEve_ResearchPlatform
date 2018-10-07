@@ -127,9 +127,15 @@ export default {
     },
     submitRequest (){
       var inputName = this.inputNameForm;
-      var inputPassword = this.inputPasswordForm
+      var inputPassword = this.inputPasswordForm;
+      var loginRequestUrl = "";
       alert(inputName+"\n"+inputPassword);
-
+      alert($.fn.jquery);
+      $.get(loginRequestUrl, {userName:inputName,password:inputPassword},
+        function(data){
+          //alert(data);
+        }
+      );
     }
   }
 };
