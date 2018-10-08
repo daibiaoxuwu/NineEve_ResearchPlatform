@@ -1,6 +1,6 @@
 ```
 # If you want to connect the frontend with the backend_simulator:
-# If it's your first time to build:
+# If you have changed something in the frontend:
 # In the "frontend", build for production with minification
 npm run build
 # Then goto "backend_simulator"

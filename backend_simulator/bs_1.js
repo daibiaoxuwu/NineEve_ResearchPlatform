@@ -14,11 +14,25 @@ app.get("/login", (req,res)=>{
     res.send('Hello World!');
 });
 
-app.post('/login', function(sReq, sRes){
-    var user = sReq.body.username;
+app.post('/loginRequestUrlEmail', function(sReq, sRes){
+    var user = sReq.body.email;
     var pass = sReq.body.password;
     console.log("User name = "+user+", password is "+pass);
-    sRes .end("yes");
+    sRes.end("This is from the backend simulator:\n"+user+'\n'+pass);
+});
+
+app.post('/loginRequestUrlTeacherId', function(sReq, sRes){
+    var user = sReq.body.teacherId;
+    var pass = sReq.body.password;
+    console.log("User name = "+user+", password is "+pass);
+    sRes.end("This is from the backend simulator:\n"+user+'\n'+pass);
+});
+
+app.post('/loginRequestUrlStudentId', function(sReq, sRes){
+    var user = sReq.body.studentId;
+    var pass = sReq.body.password;
+    console.log("User name = "+user+", password is "+pass);
+    sRes.end("This is from the backend simulator:\n"+user+'\n'+pass);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

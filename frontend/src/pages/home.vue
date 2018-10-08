@@ -11,14 +11,14 @@
              <h3>Login</h3>
               </div>
           <form>
-            <div class="form-group"> <input type="email" class="form-control" placeholder="Email/Student ID/Teacher ID" v-model="inputNameForm" id="form11"> </div>
+            <div class="form-group"> <input type="text" class="form-control" placeholder="Email/Student ID/Teacher ID" v-model="inputNameForm" id="form11"> </div>
             <div class="form-group"> <input type="password" class="form-control" placeholder="Password" v-model="inputPasswordForm" id="form12">
               <small class="form-text text-muted text-right">
                 <a href="#"> Forgot your password?</a>
               </small>
             </div>
              <div class="form-group">
-            <router-link to="/teacherInfo"><button v-on:click="submitRequest()" type="submit" class="form-control btn btn-primary">Submit</button></router-link>
+            <button v-on:click="loginRequest()" type="submit" class="form-control btn btn-primary">Login</button>
              </div>
               <div class="form-group" style="text-align:center;">
              <h5>or</h5>
@@ -125,17 +125,30 @@ export default {
       alert(item.text);
       // this.$router.push("/log")
     },
-    submitRequest (){
+    loginRequest (){
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
-      var loginRequestUrl = "/login";
+      var loginRequestUrlEmail = "/loginRequestUrlEmail";
+      var loginRequestUrlTeacherId = "loginRequestUrlTeacherId";
+      var loginRequestUrlStudentId = "loginRequestUrlStudentId";
+      var reEmail = new RegExp("@");
+      var isEmail = reEmail.test(inputName);
       //alert(inputName+"\n"+inputPassword);
-      //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded. 
-      $.post(loginRequestUrl, {username:inputName,password:inputPassword},
-        function(data){
-          alert(data);
-        }
-      );
+      //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
+      if (isEmail) {
+        $.post(loginRequestUrlEmail, {email:inputName,password:inputPassword},
+          function(data){
+            alert(data);
+          }
+        );
+      }
+      else {
+        $.post(loginRequestUrlTeacherId, {teacherId:inputName,password:inputPassword},
+          function(data){
+            alert(data);
+          }
+        );
+      }
     }
   }
 };
