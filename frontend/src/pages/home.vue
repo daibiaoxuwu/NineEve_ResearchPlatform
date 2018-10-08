@@ -128,12 +128,12 @@ export default {
     submitRequest (){
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
-      var loginRequestUrl = "";
-      alert(inputName+"\n"+inputPassword);
-      alert($.fn.jquery);
-      $.get(loginRequestUrl, {userName:inputName,password:inputPassword},
+      var loginRequestUrl = "/login";
+      //alert(inputName+"\n"+inputPassword);
+      //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded. 
+      $.post(loginRequestUrl, {username:inputName,password:inputPassword},
         function(data){
-          //alert(data);
+          alert(data);
         }
       );
     }
