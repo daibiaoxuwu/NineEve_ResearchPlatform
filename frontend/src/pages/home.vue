@@ -11,6 +11,11 @@
              <h3>Login</h3>
               </div>
           <form>
+            <div class="form-group"> <select type="text" class="form-control" placeholder="Teacher/Student" v-model="inputTSForm" id="form10">
+              <option value="teacher">Teacher</option>
+              <option value="student">Student</option>
+            </select>
+            </div>
             <div class="form-group"> <input type="text" class="form-control" placeholder="Email/Student ID/Teacher ID" v-model="inputNameForm" id="form11"> </div>
             <div class="form-group"> <input type="password" class="form-control" placeholder="Password" v-model="inputPasswordForm" id="form12">
               <small class="form-text text-muted text-right">
@@ -125,31 +130,43 @@ export default {
       alert(item.text);
       // this.$router.push("/log")
     },
+
     loginRequest (){
+      var inputTORS = this.inputTSForm;
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
       var loginRequestUrlEmail = "/loginRequestUrlEmail";
       var loginRequestUrlTeacherId = "loginRequestUrlTeacherId";
       var loginRequestUrlStudentId = "loginRequestUrlStudentId";
-      var reEmail = new RegExp("@");
-      var isEmail = reEmail.test(inputName);
-      //alert(inputName+"\n"+inputPassword);
+      //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      if (isEmail) {
-        $.post(loginRequestUrlEmail, {email:inputName,password:inputPassword},
-          function(data){
-            alert(data);
-          }
-        );
-      }
-      else {
+      if (inputTORS=="teacher") {
         $.post(loginRequestUrlTeacherId, {teacherId:inputName,password:inputPassword},
           function(data){
             alert(data);
           }
         );
       }
-    }
+      else if (inputTORS=="student"){
+        var isEmail = (new RegExp("@")).test(inputName);
+        if (isEmail) {
+          $.post(loginRequestUrlEmail, {email:inputName,password:inputPassword},
+            function(data){
+              alert(data);
+            }
+          );
+        }
+        else {
+          $.post(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
+            function(data){
+              alert(data);
+            }
+          );
+        }
+      }
+    },
+
+
   }
 };
 // 逻辑部分直接修改item即可呈现.

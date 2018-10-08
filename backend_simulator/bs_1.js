@@ -35,4 +35,13 @@ app.post('/loginRequestUrlStudentId', function(sReq, sRes){
     sRes.end("This is from the backend simulator:\n"+user+'\n'+pass);
 });
 
+app.post('/registerRequestUrl', function(sReq, sRes){
+    var name = sReq.body.name;
+    var university = sReq.body.university;
+    var email = sReq.body.email;
+    var password = sReq.body.password;
+    console.log("name:"+name+", university:"+university+", email:"+email+", password:"+password);
+    sRes.end("This is from the backend simulator:\n"+name+"\n"+university+"\n"+email+"\n"+password);
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
