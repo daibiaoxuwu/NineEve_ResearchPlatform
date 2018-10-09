@@ -11,7 +11,7 @@
              <h3>Login</h3>
               </div>
           <form>
-            <div class="form-group"> <select type="text" class="form-control" placeholder="Teacher/Student" v-model="inputTSForm" id="form10">
+            <div class="form-group"> <select class="form-control" v-model="inputTSForm" id="form10">
               <option value="teacher">Teacher</option>
               <option value="student">Student</option>
             </select>
