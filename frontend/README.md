@@ -17,6 +17,7 @@ npm install
 # serve with hot reload at localhost:8080
 # 执行该命令需要在前端根目录下(即frontend)
 npm run dev
+# 如果端口号是80，则加sudo
 
 # You need to install jquery in "frontend" if you build it for the first time.
 npm install jquery --save
@@ -27,8 +28,10 @@ npm install jquery --save
 # If you have changed something in the frontend:
 # In the "frontend", build for production with minification
 npm run build
+# 如果端口号是80，则加sudo
 # Then goto "backend_simulator"
 node bs_1.js
+# 如果端口号是80，则加sudo
 ```
 
 #### Tips
