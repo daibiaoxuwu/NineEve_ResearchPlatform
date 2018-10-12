@@ -102,7 +102,7 @@
 
 
 <script>
-import rightpane from "../components/right.vue"
+import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
 export default {
   name: "enrollForm",
    data() {
@@ -110,7 +110,7 @@ export default {
     }
    },
      components:{
-    rightpane
+    rightpane, assignmentInfo
   },
     methods: {
    handleOk (){
