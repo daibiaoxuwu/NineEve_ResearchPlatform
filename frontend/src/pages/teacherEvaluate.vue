@@ -17,14 +17,31 @@
         <rightpane></rightpane>
         
         <div class="col-md-8 order-md-1">
+
+
+           
+          <h4 class="mb-3">Satisfication 满意度</h4>
+           <div>
+  <b-button-toolbar key-nav  aria-label="Toolbar with button groups">
+
+    <b-button-group class="col-md-12 mb-3">
+      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;">1</b-btn>
+      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;">2</b-btn>
+      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;">3</b-btn>
+      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;">4</b-btn>
+      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;"  >5</b-btn>
+    </b-button-group>
+   
+  </b-button-toolbar>
+</div>
           
           <form class="needs-validation" novalidate="">
           
            
             
-            <h4 class="mb-3">Enroll Information 报名理由</h4>
+            <h4 class="mb-3">Other Information 详细信息</h4>
             <div class="row">
-                <div class="col-md-12 mb-3"> <label for="email">Self introduction 自我介绍</label>
+                <div class="col-md-12 mb-3"> <label for="email">Job introduction 项目完成介绍</label>
                <b-form-textarea id="textarea1"
                      v-model="text"
                      placeholder="Enter something"
@@ -33,7 +50,7 @@
     </b-form-textarea>
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
-            <div class="col-md-12 mb-3"> <label for="email">Reasons for Enrollment 报名原因</label>
+            <div class="col-md-12 mb-3"> <label for="email">Reasons for Evaluation 评价原因</label>
              <b-form-textarea id="textarea1"
                      v-model="text"
                      placeholder="Enter something"
@@ -68,7 +85,7 @@
 
 
 <script>
-import rightpane from "../components/right.vue"
+import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
 export default {
   name: "enrollForm",
    data() {
@@ -76,7 +93,7 @@ export default {
     }
    },
      components:{
-    rightpane
+    rightpane, assignmentInfo
   },
     methods: {
    handleOk (){

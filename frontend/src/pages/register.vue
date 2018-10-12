@@ -2,10 +2,10 @@
   <div >
 
 
-<div class="py-5 text-center">
+<div class="py-5 text-center" style="background-image: url('https://static.pingendo.com/cover-stripes.svg'); background-position:left center; background-size: cover;">
     <div class="container">
       <div class="row">
-        <div class="mx-auto col-lg-6 col-10">
+        <div class="p-5 col-lg-6">
           <h1>校外学生注册</h1>
           <p class="mb-3">Register for external students</br>校内师生请用学号/教师号登陆网站</br>Students and Teachers in Tsinghua, Please login via Student/Teacher ID. </p>
           <form class="text-left">
@@ -61,6 +61,7 @@ export default {
              password:this.registerPassword},
            function(data){
              alert("Register success!\n"+data);
+             this.$router.push("/teacherInfo");
            }
          );
        }
@@ -71,7 +72,7 @@ export default {
      else {
        alert("You should agree with Term and Conditions of the service first!");
      }
-     //this.$router.push("/");
+     
    }
   }
 };
