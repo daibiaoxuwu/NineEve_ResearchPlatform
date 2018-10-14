@@ -3,14 +3,7 @@ var mysql      = require('mysql');
 const app = express()
 const port = 80
 
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'b.NineEve.secoder.local',
-  port     : '3306',
-  user     : 'lzr',
-  password : 'newpass',
-  database : 'A'
-});
+
  
 connection.connect();
 
@@ -22,29 +15,25 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => res.sendfile("index.html"))
 
-app.get("/login", (req,res)=>{
-    res.send('Hello World!');
-});
+
+
+//location for requiring js files for database connection
+var requireLoc = "./pages_fake";
+
+
+//loginRegisterData.js
+var loginRegisterData = require(requireLoc+ "/loginRegisterData");
 
 app.post('/loginRequestUrlEmail', function(sReq, sRes){
-    var user = sReq.body.email;
-    var pass = sReq.body.password;
-    console.log("User name = "+user+", password is "+pass);
-    sRes.end("This is from the backend simulator:\n"+user+'\n'+pass);
+    sRes.send(loginRegisterData.emailLogin(sReq.body.email, sReq.body.password));
 });
 
 app.post('/loginRequestUrlTeacherId', function(sReq, sRes){
-    var user = sReq.body.teacherId;
-    var pass = sReq.body.password;
-    console.log("User name = "+user+", password is "+pass);
-    sRes.end("This is from the backend simulator:\n"+user+'\n'+pass);
+    sRes.send(loginRegisterData.teacherLogin(sReq.body.teacherId, sReq.body.password));
 });
 
 app.post('/loginRequestUrlStudentId', function(sReq, sRes){
-    var user = sReq.body.studentId;
-    var pass = sReq.body.password;
-    console.log("User name = "+user+", password is "+pass);
-    sRes.end("This is from the backend simulator:\n"+user+'\n'+pass);
+    sRes.send(loginRegisterData.studentLogin(sReq.body.studentId, sReq.body.password));
 });
 
 app.post('/registerRequestUrl', function(sReq, sRes){
@@ -52,12 +41,8 @@ app.post('/registerRequestUrl', function(sReq, sRes){
     var university = sReq.body.university;
     var email = sReq.body.email;
     var password = sReq.body.password;
-	connection.query('INSERT INTO b(b) VALUES(1234)', function (error, result) {
-		if (error) throw error;
-		console.log(result);
-	});
-    console.log("name:"+name+", university:"+university+", email:"+email+", password:"+password);
-    sRes.end("This is from the backend simulator:\n"+name+"\n"+university+"\n"+email+"\n"+password);
+    sRes.send(loginRegisterData.register(name,university,email,password));
+    
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
