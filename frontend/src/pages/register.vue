@@ -2,7 +2,7 @@
   <div >
 
 
-<div class="py-5 text-center" style="background-image: url('../src/assets/cover-stripes.svg'); background-position:left center; background-size: cover;">
+<div class="py-5 text-center" style="background-image: url('../src/assets/6452.jpg'); background-position:left center; background-size: cover;">
     <div class="container">
       <div class="row">
         <div class="p-5 col-lg-6">
