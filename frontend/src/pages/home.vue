@@ -14,7 +14,6 @@
             <div class="form-group"> <select class="form-control" v-model="inputTSForm" id="form10">
               <option value="teacher">Teacher</option>
               <option value="student">Student</option>
-              <option value="teacher">Email</option>
             </select>
             </div>
             <div class="form-group"> <input type="text" class="form-control" placeholder="Email/Student ID/Teacher ID" v-model="inputNameForm" id="form11"> </div>
@@ -153,32 +152,30 @@ export default {
           }
         );
       }
-      else if (inputTORS=="email"){
+      else if (inputTORS=="student"){
         var isEmail = (new RegExp("@")).test(inputName);
         if (isEmail) {
           $.post(loginRequestUrlEmail, {email:inputName,password:inputPassword},
             function(data){
-            if(data.loginSuccess){
-              alert("login success");
-            } else {
+              if(data.loginSuccess){
+                alert("login success");
+              } else {
               alert("error in username or password.\n用户名或密码错误.");
-            }
+              }
             }
           );
-        } else {
-          alert("email incorrect.");
         }
-      }
-      else if (inputTORS=="student"){
-        $.post(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
-          function(data){
-            if(data.loginSuccess){
-              alert("login success");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.");
+        else {
+          $.post(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
+            function(data){
+              if(data.loginSuccess){
+                alert("login success");
+              } else {
+                alert("error in username or password.\n用户名或密码错误.");
+              }
             }
-          }
-        );
+          );
+        }
       }
       else{
         alert("please choose a way to login.");
