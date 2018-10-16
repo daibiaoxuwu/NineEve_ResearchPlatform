@@ -14,6 +14,7 @@
             <div class="form-group"> <select class="form-control" v-model="inputTSForm" id="form10">
               <option value="teacher">Teacher</option>
               <option value="student">Student</option>
+              <option value="teacher">Email</option>
             </select>
             </div>
             <div class="form-group"> <input type="text" class="form-control" placeholder="Email/Student ID/Teacher ID" v-model="inputNameForm" id="form11"> </div>
@@ -23,7 +24,7 @@
               </small>
             </div>
              <div class="form-group">
-            <button v-on:click="loginRequest()" type="submit" class="form-control btn btn-primary">Login</button>
+            <button v-on:click="loginRequest()" class="form-control btn btn-primary">Login</button>
              </div>
               <div class="form-group" style="text-align:center;">
              <h5>or</h5>
@@ -136,35 +137,54 @@ export default {
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
       var loginRequestUrlEmail = "/loginRequestUrlEmail";
-      var loginRequestUrlTeacherId = "loginRequestUrlTeacherId";
-      var loginRequestUrlStudentId = "loginRequestUrlStudentId";
+      var loginRequestUrlTeacherId = "/loginRequestUrlTeacherId";
+      var loginRequestUrlStudentId = "/loginRequestUrlStudentId";
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
+      alert(inputTORS);
       if (inputTORS=="teacher") {
         $.post(loginRequestUrlTeacherId, {teacherId:inputName,password:inputPassword},
           function(data){
-            alert(data);
+            if(data.loginSuccess){
+              alert("login success");
+            } else {
+              alert("error in username or password.\n用户名或密码错误.");
+            }
           }
         );
       }
-      else if (inputTORS=="student"){
+      else if (inputTORS=="email"){
         var isEmail = (new RegExp("@")).test(inputName);
         if (isEmail) {
           $.post(loginRequestUrlEmail, {email:inputName,password:inputPassword},
             function(data){
-              alert(data);
+            if(data.loginSuccess){
+              alert("login success");
+            } else {
+              alert("error in username or password.\n用户名或密码错误.");
+            }
             }
           );
-        }
-        else {
-          $.post(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
-            function(data){
-              alert(data);
-            }
-          );
+        } else {
+          alert("email incorrect.");
         }
       }
-    },
+      else if (inputTORS=="student"){
+        $.post(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
+          function(data){
+            if(data.loginSuccess){
+              alert("login success");
+            } else {
+              alert("error in username or password.\n用户名或密码错误.");
+            }
+          }
+        );
+      }
+      else{
+        alert("please choose a way to login.");
+      }
+
+    }
 
 
   }
