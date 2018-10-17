@@ -14,8 +14,16 @@ module.exports = {
      *
      */
     emailLogin: function(email, password, recall) {
+		connection.query('select * from student where email="'+email+'"', function (error, results, fields){
+			if(results.length == 0)
+				recall({loginSuccess: false, usernameTaken: true});
+			else
+				if(results[0].password == password)
+					recall({loginSuccess: true, usernameTaken: true});
+				else
+					recall({loginSuccess: false, usernameTaken: false});
+		});
         console.log("email login: "+email + password);
-        recall({loginSuccess: true, usernameTaken: false});
     },
 
 
@@ -34,8 +42,17 @@ module.exports = {
      *
      */
     teacherLogin: function(teacherID, password, recall) {
+		connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
+			if(results.length == 0)
+				recall({loginSuccess: false, usernameTaken: true});
+			else
+				if(results[0].password == password)
+					recall({loginSuccess: true, usernameTaken: true});
+				else
+					recall({loginSuccess: false, usernameTaken: false});
+		});
         console.log("teacher login: "+teacherID + password);
-        recall({loginSuccess: true, usernameTaken: false});
+		
     },
 
 
@@ -53,8 +70,16 @@ module.exports = {
      *
      */
     studentLogin: function(studentID, password, recall) {
+		connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
+			if(results.length == 0)
+				recall({loginSuccess: false, usernameTaken: true});
+			else
+				if(results[0].password == password)
+					recall({loginSuccess: true, usernameTaken: true});
+				else
+					recall({loginSuccess: false, usernameTaken: false});
+		});
         console.log("student login: "+studentID + password);
-        recall({loginSuccess: true, usernameTaken: false});
     },
 
 
@@ -78,21 +103,21 @@ module.exports = {
      *
      */
 
-    register: function(name, university, email, password, callback) {
+    register: function(name, university, email, password, recall) {
         console.log("register: "+name + university + email + password);
-		connection.query('select * from student where email="'+email+'"', function (error, results, fields){
+		connection.query('select * from student where email="' + email + '"', function (error, results, fields){
 			if (error) throw error;
-			console.log('select * from student where email="'+email+'"');
+			console.log('select * from student where email="' + email + '"');
 			console.log(results.length);
 			if(results.length>0)
-				callback( {registerSuccess: false});
+				recall({registerSuccess: false});
 			else
 			{
-				connection.query('insert into student(name,email,password) values("'+name+'","'+email+'","'+password+'")', function (error, results){
+				connection.query('insert into student(name,email,password) values("' + name + '","' + email + '","' + password + '")', function (error, results){
 					if (error) throw error;
 					console.log(results);
 				});
-				callback( {registerSuccess: true});
+				recall({registerSuccess: true});
 			}
 		});
     }
