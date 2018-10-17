@@ -9,15 +9,13 @@ module.exports = {
      * @param {string} password
      * 登陆者的密码
      *
-     * @typedef {Object} emailLoginRet
      * @property {boolean} loginSuccess
      * 登陆是否成功
      *
-     * @returns {emailLoginRet}
      */
-    emailLogin: function(email, password) {
+    emailLogin: function(email, password, recall) {
         console.log("email login: "+email + password);
-        return {loginSuccess: true};
+        recall({loginSuccess: true});
     },
 
 
@@ -31,15 +29,13 @@ module.exports = {
      * @param {string} password
      * 登陆者的密码
      *
-     * @typedef {Object} teacherLoginRet
      * @property {boolean} loginSuccess
      * 登陆是否成功
      *
-     * @returns {teacherLoginRet}
      */
-    teacherLogin: function(teacherID, password) {
+    teacherLogin: function(teacherID, password, recall) {
         console.log("teacher login: "+teacherID + password);
-        return {loginSuccess: true};
+        recall({loginSuccess: true});
     },
 
 
@@ -52,15 +48,13 @@ module.exports = {
      * @param {string} password
      * 登陆者的密码
      *
-     * @typedef {Object} studentLoginRet
      * @property {boolean} loginSuccess
      * 登陆是否成功
      *
-     * @returns {studentLoginRet}
      */
-    studentLogin: function(studentID, password) {
+    studentLogin: function(studentID, password, recall) {
         console.log("student login: "+studentID + password);
-        return {loginSuccess: true};
+        recall({loginSuccess: true});
     },
 
 
@@ -79,11 +73,9 @@ module.exports = {
      * @param {string} password
      * 登陆者的密码
      *
-     * @typedef {Object} registerRet
      * @property {boolean} registerSuccess
      * 注册是否成功(如果有重复姓名或邮箱, 返回false, 否则返回true)
      *
-     * @returns {registerRet}
      */
 
     register: function(name, university, email, password, callback) {

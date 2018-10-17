@@ -22,15 +22,25 @@ var requireLoc = "./pages_fake";
 var loginRegisterData = require(requireLoc+ "/loginRegisterData");
 
 app.post('/loginRequestUrlEmail', function(sReq, sRes){
-    sRes.send(loginRegisterData.emailLogin(sReq.body.email, sReq.body.password));
+	
+	loginRegisterData.emailLogin(sReq.body.email, sReq.body.password, function(result){
+		sRes.send(result);
+	});
+	
+	
+    //sRes.send(loginRegisterData.emailLogin(sReq.body.email, sReq.body.password));
 });
 
 app.post('/loginRequestUrlTeacherId', function(sReq, sRes){
-    sRes.send(loginRegisterData.teacherLogin(sReq.body.teacherId, sReq.body.password));
+	loginRegisterData.teacherLogin(sReq.body.teacherId, sReq.body.password,function(result){
+		sRes.send(result);
+	});
 });
 
 app.post('/loginRequestUrlStudentId', function(sReq, sRes){
-    sRes.send(loginRegisterData.studentLogin(sReq.body.studentId, sReq.body.password));
+    loginRegisterData.studentLogin(sReq.body.studentId, sReq.body.password,function(result){
+		sRes.send(result);
+	});
 });
 
 app.post('/registerRequestUrl', function(sReq, sRes){
@@ -38,8 +48,9 @@ app.post('/registerRequestUrl', function(sReq, sRes){
     var university = sReq.body.university;
     var email = sReq.body.email;
     var password = sReq.body.password;
-    sRes.send(loginRegisterData.register(name,university,email,password));
-
+    loginRegisterData.register(name,university,email,password,function(result){
+		sRes.send(result);
+	});
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

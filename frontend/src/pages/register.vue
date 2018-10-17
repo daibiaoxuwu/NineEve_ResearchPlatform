@@ -61,7 +61,7 @@ export default {
              password:this.registerPassword},
            function(data){
              if(data.registerSuccess){
-               this.$router.push("/teacherInfo");
+               alert("register success");
              } else {
                alert("Username has been taken.\n 用户名已经被占用.");
              }
