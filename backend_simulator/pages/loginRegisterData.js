@@ -86,17 +86,22 @@ module.exports = {
      * @returns {registerRet}
      */
 
-    register: function(name, university, email, password) {
+    register: function(name, university, email, password, callback) {
         console.log("register: "+name + university + email + password);
 		connection.query('select * from student where email="'+email+'"', function (error, results, fields){
 			if (error) throw error;
+			console.log('select * from student where email="'+email+'"');
+			console.log(results.length);
 			if(results.length>0)
-				return {registerSuccess: false};
+				callback( {registerSuccess: false});
+			else
+			{
+				connection.query('insert into student(name,email,password) values("'+name+'","'+email+'","'+password+'")', function (error, results){
+					if (error) throw error;
+					console.log(results);
+				});
+				callback( {registerSuccess: true});
+			}
 		});
-		connection.query('insert into student(name,email,password) values("'+name+'","'+email+'","'+password+'")', function (error, results){
-			if (error) throw error;
-			console.log(results);
-		});
-        return {registerSuccess: true};
     }
 }
