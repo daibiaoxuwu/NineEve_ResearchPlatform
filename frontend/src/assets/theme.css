@@ -6436,4 +6436,18 @@ html, body {
   .p-5 {
     padding: 4.5rem !important; } }
 
-  
+@media (min-width: 768px) {
+  #app{
+    background-image: url('./wbackground.jpg');
+    background-position:right top;
+    background-size: cover;
+  }
+}
+
+@media (max-width: 767px) {
+  #app{
+    background-image: url('./cbackground.jpg');
+    background-position:right top;
+    background-size: cover;
+  }
+}
