@@ -3,8 +3,9 @@ var request = require("request");
 
 describe("login page test", function(done) {
     var url = "http://localhost:80/";
+    var remoteUrl = "https://nineeve_researchplatform_nineeve.app.secoder.net:443";
     it("return status 200", function(done) {
-        request(url, function(error, response, body) {
+        request(remoteUrl, function(error, response, body) {
             expect(response.statusCode).to.equal(200);
             done();
         });
