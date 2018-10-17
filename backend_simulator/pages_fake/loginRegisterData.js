@@ -10,11 +10,13 @@ module.exports = {
      *
      * @property {boolean} loginSuccess
      * 登陆是否成功
+     * @property {boolean} usernameTaken
+     * 用户名是否存在
      *
      */
     emailLogin: function(email, password, recall) {
         console.log("email login: "+email + password);
-        recall({loginSuccess: true});
+        recall({loginSuccess: true, usernameTaken: false});
     },
 
 
@@ -34,7 +36,7 @@ module.exports = {
      */
     teacherLogin: function(teacherID, password, recall) {
         console.log("teacher login: "+teacherID + password);
-        recall({loginSuccess: true});
+        recall({loginSuccess: true, usernameTaken: false});
     },
 
 
@@ -53,7 +55,7 @@ module.exports = {
      */
     studentLogin: function(studentID, password, recall) {
         console.log("student login: "+studentID + password);
-        recall({loginSuccess: true});
+        recall({loginSuccess: true, usernameTaken: false});
     },
 
 

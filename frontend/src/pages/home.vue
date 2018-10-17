@@ -146,8 +146,10 @@ export default {
           function(data){
             if(data.loginSuccess){
               alert("login success");
+            } else if(data.usernameTaken){
+              alert("用户不存在.");
             } else {
-              alert("error in username or password.\n用户名或密码错误.");
+              alert("error in username or password.\n用户名或密码错误.")
             }
           }
         );
@@ -159,9 +161,11 @@ export default {
             function(data){
               if(data.loginSuccess){
                 alert("login success");
-              } else {
-              alert("error in username or password.\n用户名或密码错误.");
-              }
+              } else if(data.usernameTaken){
+              alert("用户不存在.");
+            } else {
+              alert("error in username or password.\n用户名或密码错误.")
+            }
             }
           );
         }
@@ -170,9 +174,11 @@ export default {
             function(data){
               if(data.loginSuccess){
                 alert("login success");
-              } else {
-                alert("error in username or password.\n用户名或密码错误.");
-              }
+              } else if(data.usernameTaken){
+              alert("用户不存在.");
+            } else {
+              alert("error in username or password.\n用户名或密码错误.")
+            }
             }
           );
         }

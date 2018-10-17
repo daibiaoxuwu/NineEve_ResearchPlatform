@@ -15,7 +15,7 @@ module.exports = {
      */
     emailLogin: function(email, password, recall) {
         console.log("email login: "+email + password);
-        recall({loginSuccess: true});
+        recall({loginSuccess: true, usernameTaken: false});
     },
 
 
@@ -35,7 +35,7 @@ module.exports = {
      */
     teacherLogin: function(teacherID, password, recall) {
         console.log("teacher login: "+teacherID + password);
-        recall({loginSuccess: true});
+        recall({loginSuccess: true, usernameTaken: false});
     },
 
 
@@ -54,7 +54,7 @@ module.exports = {
      */
     studentLogin: function(studentID, password, recall) {
         console.log("student login: "+studentID + password);
-        recall({loginSuccess: true});
+        recall({loginSuccess: true, usernameTaken: false});
     },
 
 
