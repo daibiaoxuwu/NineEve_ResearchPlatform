@@ -5,6 +5,7 @@ Vue.use(VueRouter)
 
 import homepage from "./pages/home.vue";
 import teacherInfo from "./pages/teacherInfo.vue";
+import studentInfo from "./pages/studentInfo.vue";
 import register from "./pages/register.vue";
 import enroll from "./pages/enroll.vue";
 import enrollForm from "./pages/enrollForm.vue";
@@ -19,6 +20,7 @@ import teacherEvaluateSuccess from "./pages/teacherEvaluateSuccess.vue";
 const routes = [
     { path: '/', component: homepage },
     { path: '/teacherInfo', component: teacherInfo },
+    { path: '/studentInfo', component: studentInfo },
     { path: '/register', component: register},
     { path: '/enroll', component: enroll},
     { path: '/enrollForm', component: enrollForm},
