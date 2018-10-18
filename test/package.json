@@ -1,0 +1,17 @@
+{
+  "name": "test",
+  "version": "0.1.0",
+  "description": "testfile",
+  "main": "test.js",
+  "author": "Bingjian Huang",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "mockjs": "1.0.1-beta3",
+    "request": "^2.88.0"
+  },
+  "scripts": {},
+  "devDependencies": {}
+}
