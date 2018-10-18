@@ -1,10 +1,11 @@
 FROM node:9.9.0
 RUN npm config set registry https://registry.npm.taobao.org
-COPY package.json /app/package.json
-COPY package-lock.json /app/package-lock.json
+COPY . /app
 WORKDIR /app
 RUN npm install
-COPY . /app
+RUN npm run init1
+RUN npm run init2
+RUN npm run build
 ENV TEST_ROOT /app
 ENV PORT 80
 EXPOSE 80

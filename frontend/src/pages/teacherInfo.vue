@@ -103,14 +103,8 @@
      </div>
 </template>
 
-<style>
-@import '../assets/theme.css';
-
-/* 可能自带了必填项功能.但没有过于在意.需要时可查询原模板-来自Pingendo. */
-</style>
-
 <script>
-import rightpane from "../components/right.vue"
+import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
 export default {
   name: "teacherInfo",
    data() {
@@ -118,7 +112,7 @@ export default {
     }
    },
      components:{
-    rightpane
+    rightpane, assignmentInfo
   },
     methods: {
    handleOk (){

@@ -8,16 +8,13 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.11",
-    "express": "4.16.3",
-    "socket.io": "^2.1.1",
-    "jquery": "^3.3.1"
+    "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "mysql": "^2.16.0",
+    "socket.io": "^2.1.1"
   },
   "scripts": {
-    "init1": "cd frontend && npm install",
-    "init2": "cd backend_simulator && npm install",
-    "start": "npm run start --prefix backend_simulator",
-    "test": "nyc --reporter=lcov --reporter=text mocha",
-    "build": "npm run build --prefix frontend"
+    "start": "node bs_1.js"
   },
   "devDependencies": {
     "chai": "^4.1.2",

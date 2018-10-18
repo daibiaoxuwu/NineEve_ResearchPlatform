@@ -2,7 +2,7 @@ var assert = require('assert');
 const chai=require("chai");
 const expect=chai.expect;
 chai.use(require("chai-http"))
-const app=require("../")
+// const app=require("../")
 describe('Array', function() {
   describe('#indexOf()', function() {
     it('should return -1 when the value is not present', function() {
@@ -11,7 +11,7 @@ describe('Array', function() {
   });
 });
 
-describe("app", function(){
+/* describe("app", function(){
     it("should return page when accessing /", (done)=>{
         chai.request(app).get("/").end((err, res)=>{
             expect(res).to.have.status(200);
@@ -22,4 +22,4 @@ describe("app", function(){
         app.close();
     })
 
-});
+}); */
