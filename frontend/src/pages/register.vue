@@ -58,15 +58,15 @@ export default {
          var registerRequestUrl = "/registerRequestUrl";
          $.post(registerRequestUrl,
            {name:this.registerName, university:this.registerUniv, email:this.registerEmail,
-             password:this.registerPassword},
-           function(data){
-             if(data.registerSuccess){
-               alert("register success");
-             } else {
-               alert("Username has been taken.\n 用户名已经被占用.");
-             }
+             password:this.registerPassword}
+         ).then(data=> {
+           if(data.registerSuccess){
+           this.$router.replace('/studentInfo');
+           } else {
+            alert("email taken. 用户名已经被占用.");
            }
-         );
+         });
+         
        }
        else {
          alert("The password repetition is not correct.\n 需要输入一致的密码.");
