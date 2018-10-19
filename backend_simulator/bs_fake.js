@@ -4,11 +4,11 @@ const port = 8080
 
 
 
-app.use(express.static('./frontend'))
+app.use(express.static('../frontend'))
 var server = require('http').Server(app);
 app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
-app.set('views', __dirname + '/../views');
+app.set('views', __dirname + '../../views');
 
 var session = require('express-session');
 var appSession = session({
@@ -50,9 +50,9 @@ app.get('/teacherInfo', (req, res) =>
 var user = {};
 if (req.session && req.session.user) {
 user = req.session.user;
-res.render('index', {"user":JSON.stringify(user)} );
+res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
 } else{
-res.redirect("/");
+res.redirect("/");//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
 }
 } )
 //location for requiring js files for database connection
@@ -90,11 +90,10 @@ app.get('/registerRequestUrl', function(sReq, sRes){
     var university = sReq.query.university;
     var email = sReq.query.email;
     var password = sReq.query.password;
-  //  loginRegisterData.register(name,university,email,password,function(result){
-	//	sRes.send(result);
-	//});
-	sReq.session.user = {name: "test"}
-	sRes.send("yes");
+   loginRegisterData.register(name,university,email,password,function(result){
+        sReq.session.user = {name: name}    //设置"全局变量"name. 此后可以根据这个区分用户.
+		sRes.send(result);
+	});
 });
 
 var teacherInfo = require(requireLoc + "/teacherInfo");
