@@ -113,7 +113,7 @@ module.exports = {
 				recall({registerSuccess: false});
 			else
 			{
-				connection.query('insert into student(name,email,password) values("' + name + '","' + email + '","' + password + '")', function (error, results){
+				connection.query('insert into student(name,email,password,studentid) values("' + name + '","' + email + '","' + password + '","")', function (error, results){
 					if (error) throw error;
 					console.log(results);
 				});
