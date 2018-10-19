@@ -71,7 +71,7 @@
             <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Research Area 实验室方向</label>
                <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="text1"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -80,7 +80,7 @@
             </div>
             <div class="col-md-12 mb-3"> <label for="email">Research Results 科研成果介绍</label>
              <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="text2"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -109,7 +109,8 @@ export default {
   name: "teacherInfo",
    data() {
     return {
-    }
+      text1:window._user.name,
+      text2:""    }
    },
      components:{
     rightpane, assignmentInfo

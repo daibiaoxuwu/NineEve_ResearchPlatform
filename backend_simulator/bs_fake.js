@@ -4,12 +4,11 @@ const port = 8080
 
 
 
-app.use(express.static('../frontend'))
+app.use(express.static('./frontend'))
 var server = require('http').Server(app);
 app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/../views');
-
 
 var session = require('express-session');
 var appSession = session({
@@ -21,7 +20,9 @@ var appSession = session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
-    cookie: {}
+    cookie: {
+
+	}
 });
 app.use(appSession);
 
@@ -48,7 +49,7 @@ app.get('/teacherInfo', (req, res) =>
 {
 var user = {};
 if (req.session && req.session.user) {
-user.name = req.session.user;
+user = req.session.user;
 }
 res.render('index', {"user":JSON.stringify(user)} );
 } )
@@ -90,7 +91,8 @@ app.get('/registerRequestUrl', function(sReq, sRes){
   //  loginRegisterData.register(name,university,email,password,function(result){
 	//	sRes.send(result);
 	//});
-	sRes.redirect("/teacherInfo");
+	sReq.session.user = {name: "test"}
+	sRes.send("yes");
 });
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
