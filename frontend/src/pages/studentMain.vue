@@ -19,6 +19,68 @@
           <h1>科研实习平台</h1>
              <p class="mb-3">Scientific Research &amp; Internship Platform</p>
              
+<p class="mb-3">
+  <div class="card">
+            <div class="card-header">MESSAGES 新动态</div>
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>PROJECT NAME 项目名称</th>
+                    <th>STATUS 状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in list ">
+                    <td>{{index}}</td>
+                    <td>{{item.text}}</td>
+                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
+                    <!-- <td><button @click="onClick(item)">项目1</button></td> -->
+
+                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+            </div>
+            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+          </div>
+
+</p>
+<p class="mb-3">
+
+          <div class="card">
+            <div class="card-header">MY PROJECTS 我的项目</div>
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>PROJECT NAME 项目名称</th>
+                    <th>STATUS 状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in list ">
+                    <td>{{index}}</td>
+                    <td>{{item.text}}</td>
+                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
+                    <!-- <td><button @click="onClick(item)">项目1</button></td> -->
+
+                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+            </div>
+            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+          </div>
+</p>
+<p class="mb-3">
+
           <div class="card">
             <div class="card-header">AVALIABLE PROJECTS 可选项目</div>
             <div class="card-body">
@@ -46,6 +108,7 @@
             </div>
             <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
           </div>
+</p>
         </div>
       </div>
     </div>
@@ -53,7 +116,7 @@
 
 
 
-
+  
 
    </div>
 
