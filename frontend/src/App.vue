@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-md bg-primary navbar-dark">
+    <nav class="navbar navbar-expand-md bg-primary navbar-dark" style="padding:0.25rem 1.5rem">
     <div class="container"> <a class="navbar-brand" href="#">Navbar</a> <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent"> <span class="navbar-toggler-icon"></span> </button>
       <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
         <ul class="navbar-nav">
@@ -55,4 +55,5 @@ export default {
 
 <style lang="css">
 @import '../src/assets/theme.css'
+
 </style>

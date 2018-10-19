@@ -1,20 +1,8 @@
 const express = require('express')
-var mysql      = require('mysql');
 const app = express()
-const port = 80
+const port = 8080
 
 
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'b.NineEve.secoder.local',
-  port     : '3306',
-  user     : 'lzr',
-  password : 'newpass',
-  database : 'A'
-});
-
-connection.connect(); 
-global.connection=connection;
 
 app.use(express.static('../frontend'))
 
@@ -27,7 +15,7 @@ app.get('/', (req, res) => res.sendfile("index.html"))
 
 
 //location for requiring js files for database connection
-var requireLoc = "./pages";
+var requireLoc = "./pages_fake";
 
 
 //loginRegisterData.js

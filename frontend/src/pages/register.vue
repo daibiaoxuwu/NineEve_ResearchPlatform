@@ -2,7 +2,7 @@
   <div >
 
 
-<div class="py-5 text-center" style="background-image: url('https://static.pingendo.com/cover-stripes.svg'); background-position:left center; background-size: cover;">
+<div class="py-5 text-centers">
     <div class="container">
       <div class="row">
         <div class="p-5 col-lg-6">
@@ -60,19 +60,22 @@ export default {
            {name:this.registerName, university:this.registerUniv, email:this.registerEmail,
              password:this.registerPassword},
            function(data){
-             alert("Register success!\n"+data);
-             this.$router.push("/teacherInfo");
+             if(data.registerSuccess){
+               alert("register success");
+             } else {
+               alert("Username has been taken.\n 用户名已经被占用.");
+             }
            }
          );
        }
        else {
-         alert("The password repetition is not correct.");
+         alert("The password repetition is not correct.\n 需要输入一致的密码.");
        }
      }
      else {
-       alert("You should agree with Term and Conditions of the service first!");
+       alert("You should agree with Term and Conditions of the service first!\n请点击 同意 勾选框. ");
      }
-     
+
    }
   }
 };
