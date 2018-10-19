@@ -2,7 +2,7 @@
   <div >
 
 
-<div class="py-5 text-center" style="background-image: url('https://static.pingendo.com/cover-stripes.svg'); background-position:left center; background-size: cover;">
+<div class="py-5 text-centers">
     <div class="container">
       <div class="row">
         <div class="p-5 col-lg-6">

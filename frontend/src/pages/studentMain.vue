@@ -4,33 +4,7 @@
    <div class="py-5" >
     <div class="container">
       <div class="row">
-        <div class="p-5 col-lg-6">
-          <h1>科研实习平台</h1>
-          <p class="mb-3">Scientific Research &amp; Internship Platform</p>
-           <div class="form-group" style="text-align:center;">
-             <h3>Login</h3>
-              </div>
-          <form>
-            <div class="form-group"> <select class="form-control" v-model="inputTSForm" id="form10">
-              <option value="teacher">Teacher</option>
-              <option value="student">Student</option>
-            </select>
-            </div>
-            <div class="form-group"> <input type="text" class="form-control" placeholder="Email/Student ID/Teacher ID" v-model="inputNameForm" id="form11"> </div>
-            <div class="form-group"> <input type="password" class="form-control" placeholder="Password" v-model="inputPasswordForm" id="form12">
-              <small class="form-text text-muted text-right">
-                <a href="#"> Forgot your password?</a>
-              </small>
-            </div>
-             <div class="form-group">
-            <button v-on:click="loginRequest()" class="form-control btn btn-primary">Login</button>
-             </div>
-              <div class="form-group" style="text-align:center;">
-             <h5>or</h5>
-              </div>
-            <router-link to="/register"><button  class="form-control btn btn-primary">Register</button></router-link>
-          </form>
-        </div>
+   
       </div>
     </div>
   </div>
@@ -42,6 +16,71 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          <h1>科研实习平台</h1>
+             <p class="mb-3">Scientific Research &amp; Internship Platform</p>
+             
+<p class="mb-3">
+  <div class="card">
+            <div class="card-header">MESSAGES 新动态</div>
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>PROJECT NAME 项目名称</th>
+                    <th>STATUS 状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in list ">
+                    <td>{{index}}</td>
+                    <td>{{item.text}}</td>
+                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
+                    <!-- <td><button @click="onClick(item)">项目1</button></td> -->
+
+                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+            </div>
+            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+          </div>
+
+</p>
+<p class="mb-3">
+
+          <div class="card">
+            <div class="card-header">MY PROJECTS 我的项目</div>
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>PROJECT NAME 项目名称</th>
+                    <th>STATUS 状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in list ">
+                    <td>{{index}}</td>
+                    <td>{{item.text}}</td>
+                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
+                    <!-- <td><button @click="onClick(item)">项目1</button></td> -->
+
+                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+            </div>
+            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+          </div>
+</p>
+<p class="mb-3">
+
           <div class="card">
             <div class="card-header">AVALIABLE PROJECTS 可选项目</div>
             <div class="card-body">
@@ -69,6 +108,7 @@
             </div>
             <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
           </div>
+</p>
         </div>
       </div>
     </div>
@@ -76,7 +116,7 @@
 
 
 
-
+  
 
    </div>
 
@@ -146,7 +186,7 @@ export default {
           function(data){
             if(data.loginSuccess){
               alert("login success");
-            } else if(data.usernameNotFound){
+            } else if(data.usernameTaken){
               alert("用户不存在.");
             } else {
               alert("error in username or password.\n用户名或密码错误.")
@@ -161,7 +201,7 @@ export default {
             function(data){
               if(data.loginSuccess){
                 alert("login success");
-              } else if(data.usernameNotFound){
+              } else if(data.usernameTaken){
               alert("用户不存在.");
             } else {
               alert("error in username or password.\n用户名或密码错误.")
@@ -174,7 +214,7 @@ export default {
             function(data){
               if(data.loginSuccess){
                 alert("login success");
-              } else if(data.usernameNotFound){
+              } else if(data.usernameTaken){
               alert("用户不存在.");
             } else {
               alert("error in username or password.\n用户名或密码错误.")

@@ -4,33 +4,7 @@
    <div class="py-5" >
     <div class="container">
       <div class="row">
-        <div class="p-5 col-lg-6">
-          <h1>科研实习平台</h1>
-          <p class="mb-3">Scientific Research &amp; Internship Platform</p>
-           <div class="form-group" style="text-align:center;">
-             <h3>Login</h3>
-              </div>
-          <form>
-            <div class="form-group"> <select class="form-control" v-model="inputTSForm" id="form10">
-              <option value="teacher">Teacher</option>
-              <option value="student">Student</option>
-            </select>
-            </div>
-            <div class="form-group"> <input type="text" class="form-control" placeholder="Email/Student ID/Teacher ID" v-model="inputNameForm" id="form11"> </div>
-            <div class="form-group"> <input type="password" class="form-control" placeholder="Password" v-model="inputPasswordForm" id="form12">
-              <small class="form-text text-muted text-right">
-                <a href="#"> Forgot your password?</a>
-              </small>
-            </div>
-             <div class="form-group">
-            <button v-on:click="loginRequest()" class="form-control btn btn-primary">Login</button>
-             </div>
-              <div class="form-group" style="text-align:center;">
-             <h5>or</h5>
-              </div>
-            <router-link to="/register"><button  class="form-control btn btn-primary">Register</button></router-link>
-          </form>
-        </div>
+   
       </div>
     </div>
   </div>
@@ -41,49 +15,77 @@
   <div class="p-0">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">AVALIABLE PROJECTS 可选项目</div>
-            <div class="card-body">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>PROJECT NAME 项目名称</th>
-                    <th>STATUS 状态</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(item, index) in list ">
-                    <td>{{index}}</td>
-                    <td>{{item.text}}</td>
-                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
-                    <!-- <td><button @click="onClick(item)">项目1</button></td> -->
-
-                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
-                  </tr>
-
-                </tbody>
-              </table>
-
-            </div>
-            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
-          </div>
+        <div class="col-md-12" >
+           <div class="text-center col-md-7 mx-auto"> <i class="fa d-block fa-bullseye fa-5x mb-4 text-info"></i>
+          <h2>项目列表</h2>
+          <p class="lead" style="margin-bottom: 3rem;">Assignment List</p>
+                
         </div>
+
+               <div class="container">
+      <div class="row">
+        
+        <rightpane style="padding-top: 1.5rem;"></rightpane>
+        
+        <div class="col-md-8 order-md-1">
+<p class="mb-3">
+  <div class="card">
+            <div class="card-header">项目1 基于bootstrap-vue的前端设计研究 指导教师: 国雨晴</div>
+            <div class="card-body">
+              <p class="form-text text-muted">
+           Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
+          在使用 Vue 时，我们推荐在你的浏览器上安装 Vue Devtools。它允许你在一个更友好的界面中审查和调试 Vue 应用。
+         
+</p>
+            </div>
+              </div>
+
+</p>
+<p class="mb-3">
+  <div class="card">
+            <div class="card-header">项目1 基于bootstrap-vue的前端设计研究 指导教师: 国雨晴</div>
+            <div class="card-body">
+              <p class="form-text text-muted">
+           Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
+          在使用 Vue 时，我们推荐在你的浏览器上安装 Vue Devtools。它允许你在一个更友好的界面中审查和调试 Vue 应用。
+          
+</p>
+            </div>
+              </div>
+
+</p>
+<p class="mb-3">
+  <div class="card">
+            <div class="card-header">项目1 基于bootstrap-vue的前端设计研究 指导教师: 国雨晴</div>
+            <div class="card-body">
+              <p class="form-text text-muted">
+           Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
+          在使用 Vue 时，我们推荐在你的浏览器上安装 Vue Devtools。它允许你在一个更友好的界面中审查和调试 Vue 应用。
+         
+</p>
+            </div>
+              </div>
+
+</p>
+
+ <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+        </div>
+      </div>
+    </div>
+  </div>
       </div>
     </div>
   </div>
 
 
-
-
+  
 
    </div>
 
 </template>
 
 <script>
-
+import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
 export default {
   name: "home",
   data() {
@@ -116,6 +118,9 @@ export default {
       ]
     };
   },
+   components:{
+    rightpane, assignmentInfo
+  },
   methods: {
     countDownChanged (dismissCountDown) {
       this.dismissCountDown = dismissCountDown
@@ -146,7 +151,7 @@ export default {
           function(data){
             if(data.loginSuccess){
               alert("login success");
-            } else if(data.usernameNotFound){
+            } else if(data.usernameTaken){
               alert("用户不存在.");
             } else {
               alert("error in username or password.\n用户名或密码错误.")
@@ -161,7 +166,7 @@ export default {
             function(data){
               if(data.loginSuccess){
                 alert("login success");
-              } else if(data.usernameNotFound){
+              } else if(data.usernameTaken){
               alert("用户不存在.");
             } else {
               alert("error in username or password.\n用户名或密码错误.")
@@ -174,7 +179,7 @@ export default {
             function(data){
               if(data.loginSuccess){
                 alert("login success");
-              } else if(data.usernameNotFound){
+              } else if(data.usernameTaken){
               alert("用户不存在.");
             } else {
               alert("error in username or password.\n用户名或密码错误.")
