@@ -42,4 +42,17 @@ app.post('/registerRequestUrl', function(sReq, sRes){
 
 });
 
+var teacherInfo = require(requireLoc + "/teacherInfo");
+
+app.post('/teacherInfo/save', function(sReq, sRes) {
+    sRes.send(teacherInfo.teacherInfoSave(sReq.body.lastName, sReq.body.firstName, sReq.body.userName,
+        sReq.body.wechatPhone, sReq.body.email, sReq.body.perWebAddr, sReq.body.researchArea, sReq.body.researchResults, sReq.body.lab));
+});
+
+app.post('/teacherInfo/launch', function(sReq, sRes) {
+    sRes.send(teacherInfo.teacherInfoLaunch(sReq.body.lastName, sReq.body.firstName, sReq.body.userName,
+        sReq.body.wechatPhone, sReq.body.email, sReq.body.perWebAddr, sReq.body.researchArea, sReq.body.researchResults, sReq.body.lab));
+});
+
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

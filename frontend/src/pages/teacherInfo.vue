@@ -20,48 +20,44 @@
           <h4 class="mb-3"><b>Basic Information 基本信息</b></h4>
           <form class="needs-validation" novalidate="">
             <div class="row">
-              <div class="col-md-6 mb-3"> <label for="firstName">Last name 姓<br></label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+              <div class="col-md-6 mb-3"> <label for="lastName">Last name 姓<br></label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="" v-model="lastName">
                 <div class="invalid-feedback"> Valid first name is required. </div>
               </div>
-              <div class="col-md-6 mb-3"> <label for="lastName">First name 名</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+              <div class="col-md-6 mb-3"> <label for="firstName">First name 名</label>
+                <input type="text" class="form-control" id="firstName" placeholder="" value="" required="" v-model="firstName">
                 <div class="invalid-feedback"> Valid last name is required. </div>
               </div>
             </div>
             <div class="mb-3"> <label for="username">Username 用户名</label>
               <div class="input-group">
                 <div class="input-group-prepend"> <span class="input-group-text">@</span> </div>
-                <input type="text" class="form-control" id="username" placeholder="Username" required="">
+                <input type="text" class="form-control" id="username" placeholder="Username" required="" v-model="username">
                 <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
               </div>
             </div>
-            <div class="mb-3"> <label for="email">Tutor's ID 教师号<br></label>
-              <input type="" class="form-control" id="email">
-              <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
-            </div>
             <div class="mb-3"> <label for="email">Laboratory 研究所<br></label>
               <div class="mb-3">
-                <b-dropdown id="ddown-header" text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
-                <b-dropdown-item-button style="text-align:center;">Software Laboratory 软件所</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">High Performance Laboratory 高性能</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">Multimedia Laboratory 媒体所</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">Artificial Intelligence Laboratory 智能所</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">Network Laboratory 网络所</b-dropdown-item-button>
+                <b-dropdown id="ddown-header" v-bind:text="dropdownText" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
+                <b-dropdown-item-button style="text-align:center;" @click="clickSoft">Software Laboratory 软件所</b-dropdown-item-button>
+                <b-dropdown-item-button style="text-align:center;" @click="clickHigh">High Performance Laboratory 高性能</b-dropdown-item-button>
+                <b-dropdown-item-button style="text-align:center;" @click="clickMult">Multimedia Laboratory 媒体所</b-dropdown-item-button>
+                <b-dropdown-item-button style="text-align:center;" @click="clickArti">Artificial Intelligence Laboratory 智能所</b-dropdown-item-button>
+                <b-dropdown-item-button style="text-align:center;" @click="clickNet">Network Laboratory 网络所</b-dropdown-item-button>
             </b-dropdown>
               </div>
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
             <div class="mb-3"> <label for="email">Wechat/Phone 微信号/手机号<br></label>
-              <input type="" class="form-control" id="email" placeholder="">
+              <input type="" class="form-control" id="email" placeholder="" v-model="wechatPhone">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
             <div class="mb-3"> <label for="email">Email 邮箱</label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <input type="email" class="form-control" id="email" placeholder="you@example.com" v-model="email">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
             <div class="mb-3"> <label for="address">Personal Webpage Address 个人主页地址<span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address" placeholder="" required="">
+              <input type="text" class="form-control" id="address" placeholder="" required="" v-model="perWebAddr">
               <div class="invalid-feedback"> Please enter your shipping address. </div>
             </div>
             <hr class="mb-4">
@@ -71,7 +67,7 @@
             <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Research Area 实验室方向</label>
                <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="researchArea"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -80,7 +76,7 @@
             </div>
             <div class="col-md-12 mb-3"> <label for="email">Research Results 科研成果介绍</label>
              <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="researchResults"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -91,8 +87,8 @@
          
             </div>
             <hr class="mb-4">
-            <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information</button>
-             <button class="btn btn-primary btn-lg btn-block" type="submit" style="margin-top:0.5rem;">Launch Assignment</button>
+            <button class="btn btn-secondary btn-lg btn-block" @click="save">Save information</button>
+             <button class="btn btn-primary btn-lg btn-block" style="margin-top:0.5rem;" @click="launch">Launch Assignment</button>
           </form>
         </div>
       </div>
@@ -109,15 +105,62 @@ export default {
   name: "teacherInfo",
    data() {
     return {
+      lab: -1, dropdownText: "Please Select 请选择"
     }
    },
      components:{
     rightpane, assignmentInfo
   },
     methods: {
-   handleOk (){
+   handleOk () {
       this.$router.push("/")
+    }, 
+    save() {
+      $.post(
+        "/teacherInfo/save",
+        {lastName: this.lastName, firstName: this.firstName, username:this.username, wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr, researchArea:this.researchArea, researchResults:this.researchResults, lab:this.lab},
+        function(data){ //调戏后端求答复~
+          alert(data.saveSuccess); //alert 调试用，显示对话框
+        }
+      )
+    },
+    clickSoft() {
+      this.lab = 0;
+      this.dropdownText = "Software Laboratory 软件所";
+    },
+    clickHigh() {
+      this.lab = 1;
+      this.dropdownText = "High Performance Laboratory 高性能";
+    },
+    clickMult() {
+      this.lab = 2;
+      this.dropdownText = "Multimedia Laboratory 媒体所";
+    },
+    clickArti() {
+      this.lab = 3;
+      this.dropdownText = "Artificial Intelligence Laboratory 智能所";
+    },
+    clickNet() {
+      this.lab = 4;
+      this.dropdownText = "Network Laboratory 网络所";
+    },
+
+    launch() {
+      if(this.lastName.replace(/\s*/g,"").length == 0) {
+        alert("last name empty!");
+      }
+      else if(this.firstName.replace(/\s*/g,"").length == 0) {
+        alert("first name empty!");
+      }
+      $.post(
+        "/teacherInfo/launch",
+        {lastName: this.lastName, firstName: this.firstName, username:this.username, wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr, researchArea:this.researchArea, researchResults:this.researchResults, lab:this.lab},
+        function(data){
+          alert(data.launchSuccess);
+        }
+      )
     }
+
   }
 }
 </script>
