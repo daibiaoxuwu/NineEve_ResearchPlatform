@@ -50,8 +50,10 @@ app.get('/teacherInfo', (req, res) =>
 var user = {};
 if (req.session && req.session.user) {
 user = req.session.user;
-}
 res.render('index', {"user":JSON.stringify(user)} );
+} else{
+res.redirect("/");
+}
 } )
 //location for requiring js files for database connection
 var requireLoc = "./pages_fake";
