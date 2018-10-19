@@ -5,15 +5,53 @@ const port = 8080
 
 
 app.use(express.static('../frontend'))
-
-var bodyParser     =        require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.get('/', (req, res) => res.sendfile("index.html"))
+var server = require('http').Server(app);
+app.engine('.html', require('ejs').__express);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/../views');
 
 
+var session = require('express-session');
+var appSession = session({
+    genid: function (req) {
+        var v ="aaa" + Math.random();
+        //console.info("cookieId " +v);
+        return v;
+    },
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {}
+});
+app.use(appSession);
 
+
+
+app.get('/', (req, res) =>{
+ var user = {};
+if (req.session && req.session.user) {
+	user.name = req.session.user;
+}
+res.render('index', {"user":JSON.stringify(user)} );
+} )
+
+app.get('/register', (req, res) => 
+{
+var user = {};
+if (req.session && req.session.user) {
+user.name = req.session.user;
+}
+res.render('index', {"user":JSON.stringify(user)} );
+} )
+
+app.get('/teacherInfo', (req, res) => 
+{
+var user = {};
+if (req.session && req.session.user) {
+user.name = req.session.user;
+}
+res.render('index', {"user":JSON.stringify(user)} );
+} )
 //location for requiring js files for database connection
 var requireLoc = "./pages_fake";
 
@@ -43,14 +81,16 @@ app.post('/loginRequestUrlStudentId', function(sReq, sRes){
 	});
 });
 
-app.post('/registerRequestUrl', function(sReq, sRes){
-    var name = sReq.body.name;
-    var university = sReq.body.university;
-    var email = sReq.body.email;
-    var password = sReq.body.password;
-    loginRegisterData.register(name,university,email,password,function(result){
-		sRes.send(result);
-	});
+app.get('/registerRequestUrl', function(sReq, sRes){
+	console.log(sReq.query);
+    var name = sReq.query.name;
+    var university = sReq.query.university;
+    var email = sReq.query.email;
+    var password = sReq.query.password;
+  //  loginRegisterData.register(name,university,email,password,function(result){
+	//	sRes.send(result);
+	//});
+	sRes.redirect("/teacherInfo");
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+server.listen(port, () => console.log(`Example app listening on port ${port}!`))

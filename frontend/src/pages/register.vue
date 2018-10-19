@@ -56,16 +56,10 @@ export default {
      if (this.registerAgreement==true) {
        if (this.registerPassword==this.registerPasswordRepetition) {
          var registerRequestUrl = "/registerRequestUrl";
-         $.post(registerRequestUrl,
+         $.get(registerRequestUrl,
            {name:this.registerName, university:this.registerUniv, email:this.registerEmail,
              password:this.registerPassword}
-         ).then(data=> {
-           if(data.registerSuccess){
-           this.$router.replace('/studentInfo');
-           } else {
-            alert("email taken. 用户名已经被占用.");
-           }
-         });
+        );
          
        }
        else {
