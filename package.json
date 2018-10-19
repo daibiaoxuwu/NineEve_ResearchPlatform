@@ -15,6 +15,7 @@
   "scripts": {
     "init1": "cd frontend && npm install",
     "init2": "cd backend_simulator && npm install",
+    "init3": "cd test && npm install",
     "start": "npm run start --prefix backend_simulator",
     "test": "nyc --reporter=lcov --reporter=text mocha",
     "build": "npm run build --prefix frontend"
@@ -23,6 +24,7 @@
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "mocha": "^5.2.0",
-    "nyc": "^12.0.2"
+    "nyc": "^12.0.2",
+    "request": "^2.88.0"
   }
 }
