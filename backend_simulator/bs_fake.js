@@ -62,7 +62,7 @@ var requireLoc = "./pages_fake";
 //loginRegisterData.js
 var loginRegisterData = require(requireLoc+ "/loginRegisterData");
 
-app.post('/loginRequestUrlEmail', function(sReq, sRes){
+app.get('/loginRequestUrlEmail', function(sReq, sRes){
 	
 	loginRegisterData.emailLogin(sReq.body.email, sReq.body.password, function(result){
 		sRes.send(result);
@@ -72,13 +72,13 @@ app.post('/loginRequestUrlEmail', function(sReq, sRes){
     //sRes.send(loginRegisterData.emailLogin(sReq.body.email, sReq.body.password));
 });
 
-app.post('/loginRequestUrlTeacherId', function(sReq, sRes){
+app.get('/loginRequestUrlTeacherId', function(sReq, sRes){
 	loginRegisterData.teacherLogin(sReq.body.teacherId, sReq.body.password,function(result){
 		sRes.send(result);
 	});
 });
 
-app.post('/loginRequestUrlStudentId', function(sReq, sRes){
+app.get('/loginRequestUrlStudentId', function(sReq, sRes){
     loginRegisterData.studentLogin(sReq.body.studentId, sReq.body.password,function(result){
 		sRes.send(result);
 	});
@@ -98,20 +98,21 @@ app.get('/registerRequestUrl', function(sReq, sRes){
 
 var teacherInfo = require(requireLoc + "/teacherInfo");
 
-app.post('/teacherInfo/save', function(sReq, sRes) {
-    console.log(sReq.body.lastName);
-    sRes.send(teacherInfo.teacherInfoSave(sReq.body.lastName, sReq.body.firstName, sReq.body.userName,
-        sReq.body.wechatPhone, sReq.body.email, sReq.body.perWebAddr,
-         sReq.body.researchArea, sReq.body.researchResults, sReq.body.lab));
+app.get('/teacherInfo/save', function(sReq, sRes) {
+    console.log(sReq);
+    console.log(sReq.query.lastName);
+    sRes.send(teacherInfo.teacherInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.userName,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab));
 });
 
-app.post('/teacherInfo/launch', function(sReq, sRes) {
-    sRes.send(teacherInfo.teacherInfoLaunch(sReq.body.lastName, sReq.body.firstName, sReq.body.userName,
-        sReq.body.wechatPhone, sReq.body.email, sReq.body.perWebAddr,
-         sReq.body.researchArea, sReq.body.researchResults, sReq.body.lab));
+app.get('/teacherInfo/launch', function(sReq, sRes) {
+    sRes.send(teacherInfo.teacherInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.userName,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab));
 });
 
-app.post('/teacherInfo/get', function(sReq, sRes) {
+app.get('/teacherInfo/get', function(sReq, sRes) {
     sRes.send(teacherInfo.teacherInfoGet(sReq.session.user.name));
 });
 

@@ -91,6 +91,9 @@
              </form>
             <button class="btn btn-secondary btn-lg btn-block" @click="save">Save information</button>
              <button class="btn btn-primary btn-lg btn-block" style="margin-top:0.5rem;" @click="launch">Launch Assignment</button>
+
+             <b-alert variant="info" :show="showSaveAlert">Saving...正在保存...</b-alert>
+             <b-alert variant="warning" :show="showFailAlert">Server Failure. 服务器故障.</b-alert>
          
         </div>
       </div>
@@ -111,7 +114,17 @@ export default {
       lab: -1, dropdownText: "Please Select 请选择",
       researchArea:window._user.name,
       researchResults:"",
-      lastName:""    }
+      lastName:"",
+      firstName:"",
+      username:"",
+      wechatPhone:"",
+      email:"",
+      perWebAddr:"",
+      researchArea:"",
+      researchResults:"",
+      showSaveAlert: false,
+      showFailAlert: false
+          }
    },
 
      components:{
@@ -126,11 +139,15 @@ export default {
     }, 
    
     save() {
-      $.post(
+          var that = this;
+      console.log( {lastName: that.lastName, firstName: that.firstName, username:that.username,
+         wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
+          researchArea:that.researchArea, researchResults:that.researchResults, lab:that.lab});
+      $.get(
         "/teacherInfo/save",
-        {lastName: this.lastName, firstName: this.firstName, username:this.username,
-         wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr,
-          researchArea:this.researchArea, researchResults:this.researchResults, lab:this.lab},
+        {lastName: that.lastName, firstName: that.firstName, username:that.username,
+         wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
+          researchArea:that.researchArea, researchResults:that.researchResults, lab:that.lab},
         function(data){
           alert(data.saveSuccess);
         }
@@ -139,7 +156,7 @@ export default {
 
     getInfo() {
       var that=this;
-      $.post(
+      $.get(
         "/teacherInfo/get",
         {}).then(function(data){
           console.log("lastname:" +data.lastName)
@@ -178,18 +195,15 @@ export default {
     },
 
     launch() {
-      if(this.lastName.replace(/\s*/g,"").length == 0) {
-        alert("last name empty!");
-      }
-      else if(this.firstName.replace(/\s*/g,"").length == 0) {
-        alert("first name empty!");
-      }
-      $.post(
+      $.get(
         "/teacherInfo/launch",
         {lastName: this.lastName, firstName: this.firstName, username:this.username,
          wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr,
           researchArea:this.researchArea, researchResults:this.researchResults, lab:this.lab},
         function(data){
+          if(data.launchSuccess){
+            
+          }
           alert(data.launchSuccess);
         }
       )

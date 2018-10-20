@@ -78,7 +78,7 @@ module.exports = {
     teacherInfoLaunch: function(lastName, firstName, userName,
          wechatPhone, email, perWebAddr,
           researchArea, researchResults, lab) {
-        console.log("teacherInfoLaunch: " + lastName + firstName);
+        console.log("teacherInfoLaunch: " + lastName + firstName + email);
         return {launchSuccess: true};
     },
 

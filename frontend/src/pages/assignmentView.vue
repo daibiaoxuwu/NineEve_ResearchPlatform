@@ -147,7 +147,7 @@ export default {
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
       alert(inputTORS);
       if (inputTORS=="teacher") {
-        $.post(loginRequestUrlTeacherId, {teacherId:inputName,password:inputPassword},
+        $.get(loginRequestUrlTeacherId, {teacherId:inputName,password:inputPassword},
           function(data){
             if(data.loginSuccess){
               alert("login success");
@@ -162,7 +162,7 @@ export default {
       else if (inputTORS=="student"){
         var isEmail = (new RegExp("@")).test(inputName);
         if (isEmail) {
-          $.post(loginRequestUrlEmail, {email:inputName,password:inputPassword},
+          $.get(loginRequestUrlEmail, {email:inputName,password:inputPassword},
             function(data){
               if(data.loginSuccess){
                 alert("login success");
@@ -175,7 +175,7 @@ export default {
           );
         }
         else {
-          $.post(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
+          $.get(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
             function(data){
               if(data.loginSuccess){
                 alert("login success");
