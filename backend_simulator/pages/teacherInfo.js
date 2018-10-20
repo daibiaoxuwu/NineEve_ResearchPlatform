@@ -34,11 +34,37 @@ module.exports = {
      * 保存是否成功
      */
 
-    teacherInfoSave: function(lastName, firstName, userName,
+    teacherInfoSave: function(teacherID, lastName, firstName, userName,
          wechatPhone, email, perWebAddr,
           researchArea, researchResults, lab, recall) {
-        console.log("teacherInfoSave: " + lastName + firstName);
-        recall({saveSuccess: true});
+			connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
+				if(results.length==0)
+					recall({saveSuccess: false});
+				else
+				{
+					console.log('update teacher set `lastname`="' + lastName + '", \
+					`firstname`="' + firstName + '", \
+					`username`="' + userName + '", \
+					`wechatphone`="' + wechatPhone + '", \
+					`email`="' + email + '", \
+					`perwebaddr`="' + perWebAddr + '", \
+					`researchArea`="' + researchArea + '", \
+					`researchresults`="' + researchResults + '", \
+					`lab`=' + lab + '\
+					 where teacherID="'+teacherID+'"');
+					connection.query('update teacher set `lastname`="' + lastName + '", \
+					`firstname`="' + firstName + '", \
+					`username`="' + userName + '", \
+					`wechatphone`="' + wechatPhone + '", \
+					`email`="' + email + '", \
+					`perwebaddr`="' + perWebAddr + '", \
+					`researcharea`="' + researchArea + '", \
+					`researchresults`="' + researchResults + '", \
+					`lab`=' + lab + '\
+					 where teacherID="'+teacherID+'"');
+					recall({saveSuccess: true});
+				}
+			});
     },
 
 
@@ -76,11 +102,28 @@ module.exports = {
      * 启动是否成功
      */
 
-    teacherInfoLaunch: function(lastName, firstName, userName,
+    teacherInfoLaunch: function(teacherID, lastName, firstName, userName,
          wechatPhone, email, perWebAddr,
           researchArea, researchResults, lab, recall) {
-        console.log("teacherInfoLaunch: " + lastName + firstName);
-        recall({launchSuccess: true});
+				connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
+				if(results.length==0)
+					recall({launchSuccess: false});
+				else
+				{
+					connection.query('update teacher set `lastname`="' + lastName + '", \
+					`firstname`="' + firstName + '", \
+					`username`="' + userName + '", \
+					`wechatphone`="' + wechatPhone + '", \
+					`email`="' + email + '", \
+					`perwebaddr`="' + perWebAddr + '", \
+					`researcharea`="' + researchArea + '", \
+					`researchresults`="' + researchResults + '", \
+					`lab`=' + lab + ', \
+					`filled`=1 \
+					 where teacherID="'+teacherID+'"');
+					recall({launchSuccess: true});
+				}
+			});
     },
 
     teacherInfoGet: function(name, recall) {
