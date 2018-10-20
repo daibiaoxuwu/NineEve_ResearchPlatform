@@ -195,11 +195,12 @@ export default {
     },
 
     launch() {
+      var that=this;
       $.get(
         "/teacherInfo/launch",
-        {lastName: this.lastName, firstName: this.firstName, username:this.username,
-         wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr,
-          researchArea:this.researchArea, researchResults:this.researchResults, lab:this.lab},
+        {lastName: that.lastName, firstName: that.firstName, username:that.username,
+         wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
+          researchArea:that.researchArea, researchResults:that.researchResults, lab:that.lab},
         function(data){
           if(data.launchSuccess){
             
