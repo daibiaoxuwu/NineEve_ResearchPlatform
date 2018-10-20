@@ -101,12 +101,14 @@ var teacherInfo = require(requireLoc + "/teacherInfo");
 app.post('/teacherInfo/save', function(sReq, sRes) {
     console.log(sReq.body.lastName);
     sRes.send(teacherInfo.teacherInfoSave(sReq.body.lastName, sReq.body.firstName, sReq.body.userName,
-        sReq.body.wechatPhone, sReq.body.email, sReq.body.perWebAddr, sReq.body.researchArea, sReq.body.researchResults, sReq.body.lab));
+        sReq.body.wechatPhone, sReq.body.email, sReq.body.perWebAddr,
+         sReq.body.researchArea, sReq.body.researchResults, sReq.body.lab));
 });
 
 app.post('/teacherInfo/launch', function(sReq, sRes) {
     sRes.send(teacherInfo.teacherInfoLaunch(sReq.body.lastName, sReq.body.firstName, sReq.body.userName,
-        sReq.body.wechatPhone, sReq.body.email, sReq.body.perWebAddr, sReq.body.researchArea, sReq.body.researchResults, sReq.body.lab));
+        sReq.body.wechatPhone, sReq.body.email, sReq.body.perWebAddr,
+         sReq.body.researchArea, sReq.body.researchResults, sReq.body.lab));
 });
 
 app.post('/teacherInfo/get', function(sReq, sRes) {

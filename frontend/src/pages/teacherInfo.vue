@@ -105,6 +105,7 @@
 import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
 export default {
   name: "teacherInfo",
+
    data() {
     return {
       lab: -1, dropdownText: "Please Select 请选择",
@@ -112,6 +113,7 @@ export default {
       researchResults:"",
       lastName:""    }
    },
+
      components:{
     rightpane, assignmentInfo
   },
@@ -126,12 +128,15 @@ export default {
     save() {
       $.post(
         "/teacherInfo/save",
-        {lastName: this.lastName, firstName: this.firstName, username:this.username, wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr, researchArea:this.researchArea, researchResults:this.researchResults, lab:this.lab},
-        function(data){ //调戏后端求答复~
-          alert(data.saveSuccess); //alert 调试用，显示对话框
+        {lastName: this.lastName, firstName: this.firstName, username:this.username,
+         wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr,
+          researchArea:this.researchArea, researchResults:this.researchResults, lab:this.lab},
+        function(data){
+          alert(data.saveSuccess);
         }
       )
     },
+
     getInfo() {
       var that=this;
       $.post(
@@ -139,9 +144,18 @@ export default {
         {}).then(function(data){
           console.log("lastname:" +data.lastName)
           that.lastName = data.lastName;
+          that.firstName = data.firstName;
+          that.username = data.username;
+          that.wechatPhone = data.wechatPhone;
+          that.email = data.email;
+          that.perWebAddr = data.perWebAddr;
+          that.researchArea = data.researchArea;
+          that.researchResults = data.researchResults;
+          that.lab = data.lab;
         });
       
     },
+
     clickSoft() {
       this.lab = 0;
       this.dropdownText = "Software Laboratory 软件所";
@@ -172,13 +186,39 @@ export default {
       }
       $.post(
         "/teacherInfo/launch",
-        {lastName: this.lastName, firstName: this.firstName, username:this.username, wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr, researchArea:this.researchArea, researchResults:this.researchResults, lab:this.lab},
+        {lastName: this.lastName, firstName: this.firstName, username:this.username,
+         wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr,
+          researchArea:this.researchArea, researchResults:this.researchResults, lab:this.lab},
         function(data){
           alert(data.launchSuccess);
         }
       )
     }
 
-  }
-}
+  },
+
+  watch: {
+    lab: function(val){
+    if(val==-1){
+      this.dropdownText = "Please Select 请选择";
+    }
+    else if(val==0){
+      this.dropdownText = "Software Laboratory 软件所";
+    }
+    else if(val==1){
+      this.dropdownText = "High Performance Laboratory 高性能";
+    }
+    else if(val==2){
+      this.dropdownText = "Multimedia Laboratory 媒体所";
+    }
+    else if(val==3){
+      this.dropdownText = "Artificial Intelligence Laboratory 智能所";
+    }
+    else if(val==4){
+      this.dropdownText = "Network Laboratory 网络所";
+    }
+      }
+    }
+
+    }
 </script>
