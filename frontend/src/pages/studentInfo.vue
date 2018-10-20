@@ -21,53 +21,49 @@
           <form class="needs-validation" novalidate="">
             <div class="row">
               <div class="col-md-6 mb-3"> <label for="firstName">Last name 姓<br></label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                <input type="text" class="form-control" id="firstName" placeholder="" value="" required="" v-model="lastName">
                 <div class="invalid-feedback"> Valid first name is required. </div>
               </div>
               <div class="col-md-6 mb-3"> <label for="lastName">First name 名</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="" v-model="firstName">
                 <div class="invalid-feedback"> Valid last name is required. </div>
               </div>
             </div>
             <div class="mb-3"> <label for="username">Username 用户名</label>
               <div class="input-group">
                 <div class="input-group-prepend"> <span class="input-group-text">@</span> </div>
-                <input type="text" class="form-control" id="username" placeholder="Username" required="">
+                <input type="text" class="form-control" id="username" placeholder="Username" required="" v-model="username">
                 <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
               </div>
-            </div>
-            <div class="mb-3"> <label for="email">Tutor's ID 教师号<br></label>
-              <input type="" class="form-control" id="email">
-              <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
             <div class="mb-3"> <label for="email">Grade 年级<br></label>
               <div class="mb-3">
                 <b-dropdown id="ddown-header" text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
-                <b-dropdown-item-button style="text-align:center;">Freshman 大一</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">Sophomore 大二</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">Junior 大三</b-dropdown-item-button>
-                <b-dropdown-item-button style="text-align:center;">Senior 大四</b-dropdown-item-button>
+                <b-dropdown-item-button style="text-align:center;" @click="clickFresh">Freshman 大一</b-dropdown-item-button>
+                <b-dropdown-item-button style="text-align:center;" @click="clickSoph">Sophomore 大二</b-dropdown-item-button>
+                <b-dropdown-item-button style="text-align:center;" @click="clickJuni">Junior 大三</b-dropdown-item-button>
+                <b-dropdown-item-button style="text-align:center;" @click="clickSeni">Senior 大四</b-dropdown-item-button>
             </b-dropdown>
               </div>
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
             <div class="mb-3"> <label for="email">Wechat/Phone 微信号/手机号<br></label>
-              <input type="" class="form-control" id="email" placeholder="">
+              <input type="" class="form-control" id="email" placeholder="" v-model="wechatPhone">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
             <div class="mb-3"> <label for="email">Email 邮箱</label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <input type="email" class="form-control" id="email" placeholder="you@example.com" v-model="email">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
             <div class="mb-3"> <label for="address">Personal Webpage Address 个人主页地址<span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address" placeholder="" required="">
+              <input type="text" class="form-control" id="address" placeholder="" required="" v-model="perWebAddr">
               <div class="invalid-feedback"> Please enter your shipping address. </div>
             </div>
           
            <div class="row">
-                <div class="col-md-12 mb-3"> <label for="email">Brief Intorduction 个人简介</label>
+                <div class="col-md-12 mb-3"> <label for="email">Brief Introduction 个人简介</label>
                <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="breIntr"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -120,18 +116,121 @@
 <script>
 import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
 export default {
-  name: "teacherInfo",
+  name: "studentInfo",
+
    data() {
     return {
+      lab: -1, dropdownText: "Please Select 请选择",
+      lastName:"",
+      firstName:"",
+      username:"",
+      wechatPhone:"",
+      email:"",
+      perWebAddr:"",
+      breIntr:"",
+      showSaveAlert: false,
+      showFailAlert: false
     }
    },
+
      components:{
     rightpane, assignmentInfo
+  },
+  created:function(){
+    this.getInfo();
   },
     methods: {
    handleOk (){
       this.$router.push("/")
+    },
+
+    save() {
+          var that = this;
+      console.log( {lastName: that.lastName, firstName: that.firstName, username:that.username,
+         wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
+          breIntr:that.breIntr, lab:that.lab});
+      $.get(
+        "/studentInfo/save",
+        {lastName: that.lastName, firstName: that.firstName, username:that.username,
+         wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
+          breIntr:that.breIntr, lab:that.lab},
+        function(data){
+          alert(data.saveSuccess);
+        }
+      )
+    },
+
+    getInfo() {
+      var that=this;
+      $.get(
+        "/studentInfo/get",
+        {}).then(function(data){
+          console.log("lastname:" +data.lastName)
+          that.lastName = data.lastName;
+          that.firstName = data.firstName;
+          that.username = data.username;
+          that.wechatPhone = data.wechatPhone;
+          that.email = data.email;
+          that.perWebAddr = data.perWebAddr;
+          that.breIntr = breIntr;
+          that.lab = data.lab;
+        });
+      
+    },
+
+    clickFresh() {
+      this.lab = 0;
+      this.dropdownText = "Freshman 大一";
+    },
+    clickSoph() {
+      this.lab = 1;
+      this.dropdownText = "Sophomore 大二";
+    },
+    clickJuni() {
+      this.lab = 2;
+      this.dropdownText = "Junior 大三";
+    },
+    clickSeni() {
+      this.lab = 3;
+      this.dropdownText = "Senior 大四";
+    },
+
+    launch() {
+      $.get(
+        "/studentInfo/launch",
+        {lastName: this.lastName, firstName: this.firstName, username:this.username,
+         wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr,
+          breIntr:this.breIntr, lab:this.lab},
+        function(data){
+          if(data.launchSuccess){
+            
+          }
+          alert(data.launchSuccess);
+        }
+      )
+    }
+
+  },
+
+  watch: {
+    lab:function(val){
+    if(val==-1){
+      this.dropdownText = "请选择年级";
+    }
+    else if(val==0){
+      this.dropdownText = "Freshman 大一"
+    }
+    else if(val==1){
+      this.dropdownText = "Sophomore 大二";
+    }
+    else if(val==2){
+      this.dropdownText = "Junior 大三";
+    }
+    else if(val==3){
+      this.dropdownText = "Senior 大四";
+    }
     }
   }
+
 }
 </script>

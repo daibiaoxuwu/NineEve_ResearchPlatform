@@ -45,6 +45,7 @@ user.name = req.session.user;
 res.render('index', {"user":JSON.stringify(user)} );
 } )
 
+
 app.get('/teacherInfo', (req, res) => 
 {
 var user = {};
@@ -55,8 +56,18 @@ res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用�
 res.redirect("/");//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
 }
 } )
-//location for requiring js files for database connection
-var requireLoc = "./pages_fake";
+
+app.get('/studentInfo', (req, res) => 
+{
+var user = {};
+if (req.session && req.session.user) {
+user = req.session.user;
+res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
+} else{
+res.redirect("/");//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+}
+} )
+var requireLoc = "./pages_fake"; //location for requiring js files for database connection
 
 
 //loginRegisterData.js
@@ -97,6 +108,7 @@ app.get('/registerRequestUrl', function(sReq, sRes){
 });
 
 var teacherInfo = require(requireLoc + "/teacherInfo");
+var studentInfo = require(requireLoc + "/studentInfo");
 
 app.get('/teacherInfo/save', function(sReq, sRes) {
     console.log(sReq);
@@ -114,6 +126,25 @@ app.get('/teacherInfo/launch', function(sReq, sRes) {
 
 app.get('/teacherInfo/get', function(sReq, sRes) {
     sRes.send(teacherInfo.teacherInfoGet(sReq.session.user.name));
+});
+
+
+app.get('/studentInfo/save', function(sReq, sRes) {
+    console.log(sReq);
+    console.log(sReq.query.lastName);
+    sRes.send(studentInfo.studentInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.userName,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.breIntr, sReq.query.lab));
+});
+
+app.get('/studentInfo/launch', function(sReq, sRes) {
+    sRes.send(studentInfo.studentInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.userName,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.breIntr, sReq.query.lab));
+});
+
+app.get('/studentInfo/get', function(sReq, sRes) {
+    sRes.send(studentInfo.studentInfoGet(sReq.session.user.name));
 });
 
 

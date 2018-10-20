@@ -112,8 +112,6 @@ export default {
    data() {
     return {
       lab: -1, dropdownText: "Please Select 请选择",
-      researchArea:window._user.name,
-      researchResults:"",
       lastName:"",
       firstName:"",
       username:"",
@@ -231,8 +229,8 @@ export default {
     else if(val==4){
       this.dropdownText = "Network Laboratory 网络所";
     }
-      }
     }
+  }
 
-    }
+}
 </script>
