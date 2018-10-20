@@ -78,25 +78,29 @@
    <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Laboratories 实验室</label>
                    <div class="mb-3">
-<b-badge href="#" variant="light" style="font-size:15px; font-weight:200; background-color: var(--primary); color: #ffffff">关键词 1</b-badge>
-<b-badge href="#" variant="primary" style="font-size:15px; font-weight:200">关键词 1</b-badge>
-<b-badge href="#" variant="primary" style="font-size:15px; font-weight:200; background-color: #f3f3f3; color: #212529">关键词 1</b-badge>
-<b-badge href="#" variant="light" style="font-size:15px; font-weight:200">关键词 1</b-badge>
+<b-button v-for="item in selectedLab" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin-right:0.5rem;" :pressed.sync="item.state">{{item.name}}</b-button>
+<!-- <b-badge variant="light" style="font-size:15px; font-weight:200; background-color: var(--primary); color: #ffffff">关键词 1</b-badge> -->
+<!-- <b-badge variant="primary" style="font-size:15px; font-weight:200">关键词 1</b-badge> -->
+<!-- <b-badge variant="primary" style="font-size:15px; font-weight:200; background-color: #f3f3f3; color: #212529">关键词 1</b-badge> -->
+<!-- <b-badge variant="light" style="font-size:15px; font-weight:200">关键词 1</b-badge> -->
 </div>
             </div>
             </div>
 
                <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Keywords 关键词</label>
-                   <div class="mb-3">
-<b-badge href="#" variant="light" style="font-size:15px; font-weight:200">关键词 1</b-badge>
-<b-badge href="#" variant="light" style="font-size:15px; font-weight:200">关键词 1</b-badge>
-<b-badge href="#" variant="light" style="font-size:15px; font-weight:200">关键词 1</b-badge>
-<b-badge href="#" variant="light" style="font-size:15px; font-weight:200">关键词 1</b-badge>
-<b-badge href="#" variant="light" style="font-size:15px; font-weight:200">关键词 1</b-badge>
-<b-badge href="#" variant="light" style="font-size:15px; font-weight:200">关键词 1</b-badge>
-<b-badge href="#" variant="light" style="font-size:15px; font-weight:200">关键词 1</b-badge>
+                   
+                   <div class="mb-1">
+<b-button v-for="item in selectedKey" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin-right:0.5rem;" :pressed.sync="item.state">{{item.name}}</b-button>
 </div>
+    <div class="input-group">
+ <b-dropdown  text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100" variant="link" no-caret>
+    <template slot="button-content"  >
+<input class="form-control" placeholder="搜索关键词" type='text'/>
+    </template>
+    <b-dropdown-item v-for="item in allKeys" @click="searchKey(item)">{{item.name}}</b-dropdown-item>
+  </b-dropdown>
+              </div>
             </div>
             </div>
 
@@ -129,7 +133,16 @@ export default {
       perWebAddr:"",
       breIntr:"",
       showSaveAlert: false,
-      showFailAlert: false
+      showFailAlert: false,
+      allKeys:[
+        {name: "关键词 1", state:true},
+        {name: "关键词 2", state:true}
+      ],
+      selectedKey:[],
+      selectedLab:[
+        {name: "软件所", state:false},
+        {name: "网络所", state:false}
+      ]
     }
    },
 
@@ -140,6 +153,18 @@ export default {
     this.getInfo();
   },
     methods: {
+   searchKey (item){
+     this.selectedKey.push(item);
+    },
+    toggleKey (item){
+     if(item.toggleKey=="primary"){
+      item.toggleKey="light";
+     }
+     else {
+      item.toggleKey="primary";
+     }
+     console.log(item);
+    },
    handleOk (){
       this.$router.push("/")
     },
