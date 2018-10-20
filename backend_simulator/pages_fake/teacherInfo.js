@@ -24,5 +24,11 @@ module.exports = {
         return {launchSuccess: true};
     },
 
+    teacherInfoGet: function(name) {
+        console.log("teacherInfGet: " + name); //显示在控制台，调试用
+        if(name=="1") return {lastName: "一"};
+        else if(name == "2") return {lastName: "二"};
+        else return{lastName: ""};
+    },
 
 }

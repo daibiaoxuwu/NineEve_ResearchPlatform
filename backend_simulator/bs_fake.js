@@ -91,7 +91,7 @@ app.get('/registerRequestUrl', function(sReq, sRes){
     var email = sReq.query.email;
     var password = sReq.query.password;
    loginRegisterData.register(name,university,email,password,function(result){
-        sReq.session.user = {name: name}    //设置"全局变量"name. 此后可以根据这个区分用户.
+        sReq.session.user = {name: email}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
 	});
 });
@@ -99,6 +99,7 @@ app.get('/registerRequestUrl', function(sReq, sRes){
 var teacherInfo = require(requireLoc + "/teacherInfo");
 
 app.post('/teacherInfo/save', function(sReq, sRes) {
+    console.log(sReq.body.lastName);
     sRes.send(teacherInfo.teacherInfoSave(sReq.body.lastName, sReq.body.firstName, sReq.body.userName,
         sReq.body.wechatPhone, sReq.body.email, sReq.body.perWebAddr, sReq.body.researchArea, sReq.body.researchResults, sReq.body.lab));
 });
@@ -108,6 +109,9 @@ app.post('/teacherInfo/launch', function(sReq, sRes) {
         sReq.body.wechatPhone, sReq.body.email, sReq.body.perWebAddr, sReq.body.researchArea, sReq.body.researchResults, sReq.body.lab));
 });
 
+app.post('/teacherInfo/get', function(sReq, sRes) {
+    sRes.send(teacherInfo.teacherInfoGet(sReq.session.user.name));
+});
 
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))

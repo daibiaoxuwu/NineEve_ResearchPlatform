@@ -86,10 +86,12 @@
             
          
             </div>
+            
             <hr class="mb-4">
+             </form>
             <button class="btn btn-secondary btn-lg btn-block" @click="save">Save information</button>
              <button class="btn btn-primary btn-lg btn-block" style="margin-top:0.5rem;" @click="launch">Launch Assignment</button>
-          </form>
+         
         </div>
       </div>
     </div>
@@ -107,15 +109,20 @@ export default {
     return {
       lab: -1, dropdownText: "Please Select 请选择",
       researchArea:window._user.name,
-      researchResults:""    }
+      researchResults:"",
+      lastName:""    }
    },
      components:{
     rightpane, assignmentInfo
+  },
+  created:function(){
+    this.getInfo();
   },
     methods: {
    handleOk () {
       this.$router.push("/")
     }, 
+   
     save() {
       $.post(
         "/teacherInfo/save",
@@ -124,6 +131,16 @@ export default {
           alert(data.saveSuccess); //alert 调试用，显示对话框
         }
       )
+    },
+    getInfo() {
+      var that=this;
+      $.post(
+        "/teacherInfo/get",
+        {}).then(function(data){
+          console.log("lastname:" +data.lastName)
+          that.lastName = data.lastName;
+        });
+      
     },
     clickSoft() {
       this.lab = 0;
