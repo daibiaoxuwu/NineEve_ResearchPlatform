@@ -1,3 +1,4 @@
+require('../bs_1.js')
 module.exports = {
     /**
      * 教师请求页面的保存请求 页面url: '/teacherInfo'
