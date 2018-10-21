@@ -29,54 +29,41 @@ app.use(appSession);
 
 
 app.get('/', (req, res) =>{
- var user = {};
-if (req.session && req.session.user) {
-	user.name = req.session.user;
-}
-res.render('index', {"user":JSON.stringify(user)} );
-} )
+    var user = {};
+    if (req.session && req.session.user) { user.name = req.session.user; }
+    res.render('index', {"user":JSON.stringify(user)});
+})
 
-app.get('/register', (req, res) => 
-{
-var user = {};
-if (req.session && req.session.user) {
-user.name = req.session.user;
-}
-res.render('index', {"user":JSON.stringify(user)} );
-} )
+app.get('/register', (req, res) => {
+    var user = {};
+    if (req.session && req.session.user) { user.name = req.session.user;}
+    res.render('index', {"user":JSON.stringify(user)} );
+})
 
 
-app.get('/teacherInfo', (req, res) => 
-{
-var user = {};
-if (req.session && req.session.user) {
-user = req.session.user;
-res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
-} else{
-res.redirect("/");//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
-}
-} )
+app.get('/teacherInfo', (req, res) => {
+    var user = {};
+    if (req.session && req.session.user) {
+        user = req.session.user;
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
+    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+})
 
-app.get('/studentInfo', (req, res) => 
-{
-var user = {};
-if (req.session && req.session.user) {
-user = req.session.user;
-res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
-} else{
-res.redirect("/");//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
-}
-} )
+app.get('/studentInfo', (req, res) => {
+    var user = {};
+    if (req.session && req.session.user) {
+        user = req.session.user;
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
+    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+})
 
-app.get('/main', (req, res) => 
-{
-var user = {};
-if (req.session && req.session.user) {
-user = req.session.user;
-} else{
-}
-res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
-} )
+app.get('/main', (req, res) => {
+    var user = {};
+    if (req.session && req.session.user) {
+        user = req.session.user;
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
+    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+})
 
 var requireLoc = "./pages_fake"; //location for requiring js files for database connection
 
