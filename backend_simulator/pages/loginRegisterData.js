@@ -11,17 +11,19 @@ module.exports = {
      *
      * @property {boolean} loginSuccess
      * 登陆是否成功
+     * @property {boolean} usernameNotFound
+     * 用户名是否存在: 不存在返回true
      *
      */
     emailLogin: function(email, password, recall) {
 		connection.query('select * from student where email="'+email+'"', function (error, results, fields){
 			if(results.length == 0)
-				recall({loginSuccess: false, usernameTaken: true});
+				recall({loginSuccess: false, usernameNotFound: true});
 			else
 				if(results[0].password == password)
-					recall({loginSuccess: true, usernameTaken: true});
+					recall({loginSuccess: true, usernameNotFound: true});
 				else
-					recall({loginSuccess: false, usernameTaken: false});
+					recall({loginSuccess: false, usernameNotFound: false});
 		});
         console.log("email login: "+email + password);
     },
@@ -39,17 +41,19 @@ module.exports = {
      *
      * @property {boolean} loginSuccess
      * 登陆是否成功
+     * @property {boolean} usernameNotFound
+     * 用户名是否存在: 不存在返回true
      *
      */
     teacherLogin: function(teacherID, password, recall) {
 		connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
 			if(results.length == 0)
-				recall({loginSuccess: false, usernameTaken: true});
+				recall({loginSuccess: false, usernameNotFound: true});
 			else
 				if(results[0].password == password)
-					recall({loginSuccess: true, usernameTaken: true});
+					recall({loginSuccess: true, usernameNotFound: true});
 				else
-					recall({loginSuccess: false, usernameTaken: false});
+					recall({loginSuccess: false, usernameNotFound: false});
 		});
         console.log("teacher login: "+teacherID + password);
 		
@@ -67,17 +71,19 @@ module.exports = {
      *
      * @property {boolean} loginSuccess
      * 登陆是否成功
+     * @property {boolean} usernameNotFound
+     * 用户名是否存在: 不存在返回true
      *
      */
     studentLogin: function(studentID, password, recall) {
 		connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
 			if(results.length == 0)
-				recall({loginSuccess: false, usernameTaken: true});
+				recall({loginSuccess: false, usernameNotFound: true});
 			else
 				if(results[0].password == password)
-					recall({loginSuccess: true, usernameTaken: true});
+					recall({loginSuccess: true, usernameNotFound: true});
 				else
-					recall({loginSuccess: false, usernameTaken: false});
+					recall({loginSuccess: false, usernameNotFound: false});
 		});
         console.log("student login: "+studentID + password);
     },

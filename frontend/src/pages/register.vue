@@ -56,17 +56,13 @@ export default {
      if (this.registerAgreement==true) {
        if (this.registerPassword==this.registerPasswordRepetition) {
          var registerRequestUrl = "/registerRequestUrl";
-         $.post(registerRequestUrl,
+         $.get(registerRequestUrl,
            {name:this.registerName, university:this.registerUniv, email:this.registerEmail,
-             password:this.registerPassword},
-           function(data){
-             if(data.registerSuccess){
-               alert("register success");
-             } else {
-               alert("Username has been taken.\n 用户名已经被占用.");
-             }
-           }
-         );
+             password:this.registerPassword}
+        ).then(()=>{
+          window.location.href="/teacherInfo";
+        });
+         
        }
        else {
          alert("The password repetition is not correct.\n 需要输入一致的密码.");
