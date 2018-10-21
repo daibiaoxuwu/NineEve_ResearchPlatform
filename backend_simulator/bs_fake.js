@@ -65,6 +65,15 @@ app.get('/main', (req, res) => {
     } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
 })
 
+
+app.get('/enroll', (req, res) => {
+    var user = {};
+    if (req.session && req.session.user) {
+        user = req.session.user;
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
+    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+})
+
 var requireLoc = "./pages_fake"; //location for requiring js files for database connection
 
 
@@ -108,6 +117,7 @@ app.get('/registerRequestUrl', function(sReq, sRes){
 var teacherInfo = require(requireLoc + "/teacherInfo");
 var studentInfo = require(requireLoc + "/studentInfo");
 var main = require(requireLoc + "/main");
+var enroll = require(requireLoc + "/enroll");
 
 app.get('/teacherInfo/save', function(sReq, sRes) {
     console.log(sReq);
@@ -173,5 +183,12 @@ app.get('/main/get', function(sReq, sRes) {
         })
     })
 });
+
+
+app.get('/enroll/get', function(sReq, sRes) {
+    enroll.enrollGet(sReq.query.title, function(item){
+        sRes.send(item);
+    })
+})
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))

@@ -32,13 +32,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in msgList ">
+                  <tr v-for="(item, index) in msgList" @click="onClick(item)">
+
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
-
-                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
+                    <td>{{item.status}}</td>
                   </tr>
 
                 </tbody>
@@ -63,13 +63,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in myList ">
+                  <tr v-for="(item, index) in myList" @click="onClick(item)">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
+                    <td>{{item.status}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
 
-                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
                   </tr>
 
                 </tbody>
@@ -93,13 +93,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in avaList ">
+                  <tr v-for="(item, index) in avaList" @click="onClick(item)">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
+                    <td>{{item.status}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
 
-                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
                   </tr>
 
                 </tbody>
@@ -171,6 +171,14 @@ export default {
           that.myList = data.myList;
           that.avaList = data.avaList;
         });
+    },
+    onClick(item){
+      this.$router.push({
+        path:'/enroll',
+        params: {
+          title: item.text
+        }
+      })
     }
   },
   watch: {
