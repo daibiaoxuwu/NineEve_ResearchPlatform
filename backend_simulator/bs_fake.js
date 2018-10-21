@@ -133,13 +133,13 @@ app.get('/studentInfo/save', function(sReq, sRes) {
     console.log(sReq.query.lastName);
     sRes.send(studentInfo.studentInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.breIntr, sReq.query.lab));
+         sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey));
 });
 
 app.get('/studentInfo/launch', function(sReq, sRes) {
     sRes.send(studentInfo.studentInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.breIntr, sReq.query.lab));
+         sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey));
 });
 
 app.get('/studentInfo/get', function(sReq, sRes) {

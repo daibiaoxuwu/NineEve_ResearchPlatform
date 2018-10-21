@@ -132,6 +132,9 @@ module.exports = {
      * @param {Array} selectedKey
      * 关注的关键词 每一项的格式:{name:"关键词", state:true/false}, 共任意项
      * state=true代表关注, false代表不关注(可以不存或者不传, 也可以原样传回)
+     * 
+     * @param {Array} allKeys
+     * 所有的关键词 每一项的格式:{name:"关键词", state:true/false}. 所有的关键词都被传出来, state任取.
      */
 
     studentInfoGet: function(name) {

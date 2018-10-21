@@ -134,10 +134,7 @@ export default {
       breIntr:"",
       showSaveAlert: false,
       showFailAlert: false,
-      allKeys:[
-        {name: "关键词 1", state:true},
-        {name: "关键词 2", state:true}
-      ],
+      allKeys:[],
       selectedKey:[],
       selectedLab:[
         {name: "Software Laboratory 软件所", state:false},
@@ -208,6 +205,7 @@ export default {
           that.grade = data.grade;
           that.selectedLab = data.selectedLab;
           that.selectedKey = data.selectedKey;
+          that.allKeys = data.allKeys;
         });
       
     },
