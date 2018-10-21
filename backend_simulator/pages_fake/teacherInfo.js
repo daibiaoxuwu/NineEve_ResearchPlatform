@@ -8,7 +8,7 @@ module.exports = {
      * @param {string} firstName
      * 教师的名
      * 
-     * @param {string} userName
+     * @param {string} username
      * 用户名
      * 
      * @param {string} wechatPhone
@@ -33,7 +33,7 @@ module.exports = {
      * 保存是否成功
      */
 
-    teacherInfoSave: function(lastName, firstName, userName,
+    teacherInfoSave: function(lastName, firstName, username,
          wechatPhone, email, perWebAddr,
           researchArea, researchResults, lab) {
         console.log("teacherInfoSave: " + lastName + firstName);
@@ -50,7 +50,7 @@ module.exports = {
      * @param {string} firstName
      * 教师的名
      * 
-     * @param {string} userName
+     * @param {string} username
      * 用户名
      * 
      * @param {string} wechatPhone
@@ -75,7 +75,7 @@ module.exports = {
      * 启动是否成功
      */
 
-    teacherInfoLaunch: function(lastName, firstName, userName,
+    teacherInfoLaunch: function(lastName, firstName, username,
          wechatPhone, email, perWebAddr,
           researchArea, researchResults, lab) {
         console.log("teacherInfoLaunch: " + lastName + firstName + email);

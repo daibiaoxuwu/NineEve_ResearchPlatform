@@ -60,7 +60,7 @@ export default {
            {name:this.registerName, university:this.registerUniv, email:this.registerEmail,
              password:this.registerPassword}
         ).then(()=>{
-          window.location.href="/teacherInfo";
+          window.location.href="/studentInfo";
         });
          
        }
