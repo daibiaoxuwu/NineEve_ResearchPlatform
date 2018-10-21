@@ -109,6 +109,8 @@
             <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
           </div>
 </p>
+ <router-link to="/"><b-btn  v-bind:class="isTeacherButton">New Assignment 立项</b-btn></router-link>
+
         </div>
       </div>
     </div>
@@ -136,7 +138,9 @@ export default {
        num3: 1,
       msgList:[],
       myList:[],
-      avaList:[]
+      avaList:[],
+
+      isTeacherButton:"invisible"
       
     };
   },
@@ -154,6 +158,12 @@ export default {
           currentPage2: that.currentPage2,
           currentPage3: that.currentPage3,
         }).then(function(data){
+          console.log(data);
+          if(data.isTeacher){
+            that.isTeacherButton="btn btn-primary btn-lg btn-block";
+          }else{
+            that.isTeacherButton="invisible";
+          }
           that.num1=data.num1,
           that.num2=data.num2,
           that.num3=data.num3,

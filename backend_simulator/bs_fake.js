@@ -161,8 +161,9 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.name, function(msgList, myList, avaList){
+    main.mainGet(sReq.session.user.name, function(isTeacher, msgList, myList, avaList){
         console.log({
+            isTeacher: isTeacher,
             num1: parseInt(msgList.length / 3),
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
             num2: parseInt(myList.length / 3),
@@ -175,6 +176,7 @@ app.get('/main/get', function(sReq, sRes) {
             
         });
         sRes.send({
+            isTeacher: isTeacher,
             num1: parseInt(msgList.length / 3) + 1,
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
             num2: parseInt(myList.length / 3) + 1,
