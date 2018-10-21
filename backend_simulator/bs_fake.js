@@ -113,13 +113,13 @@ var studentInfo = require(requireLoc + "/studentInfo");
 app.get('/teacherInfo/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    sRes.send(teacherInfo.teacherInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.userName,
+    sRes.send(teacherInfo.teacherInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab));
 });
 
 app.get('/teacherInfo/launch', function(sReq, sRes) {
-    sRes.send(teacherInfo.teacherInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.userName,
+    sRes.send(teacherInfo.teacherInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab));
 });
@@ -132,13 +132,13 @@ app.get('/teacherInfo/get', function(sReq, sRes) {
 app.get('/studentInfo/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    sRes.send(studentInfo.studentInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.userName,
+    sRes.send(studentInfo.studentInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.breIntr, sReq.query.lab));
 });
 
 app.get('/studentInfo/launch', function(sReq, sRes) {
-    sRes.send(studentInfo.studentInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.userName,
+    sRes.send(studentInfo.studentInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.breIntr, sReq.query.lab));
 });

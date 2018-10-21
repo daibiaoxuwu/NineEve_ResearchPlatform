@@ -78,7 +78,7 @@
    <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Laboratories 实验室</label>
                    <div class="mb-3">
-<b-button v-for="item in selectedLab" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin-right:0.5rem;" :pressed.sync="item.state">{{item.name}}</b-button>
+<b-button v-for="item in selectedLab" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin:0.5rem 0.5rem;" :pressed.sync="item.state">{{item.name}}</b-button>
 <!-- <b-badge variant="light" style="font-size:15px; font-weight:200; background-color: var(--primary); color: #ffffff">关键词 1</b-badge> -->
 <!-- <b-badge variant="primary" style="font-size:15px; font-weight:200">关键词 1</b-badge> -->
 <!-- <b-badge variant="primary" style="font-size:15px; font-weight:200; background-color: #f3f3f3; color: #212529">关键词 1</b-badge> -->
@@ -91,7 +91,7 @@
                 <div class="col-md-12 mb-3"> <label for="email">Keywords 关键词</label>
                    
                    <div class="mb-1">
-<b-button v-for="item in selectedKey" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin-right:0.5rem;" :pressed.sync="item.state">{{item.name}}</b-button>
+<b-button v-for="item in selectedKey" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin:0.5rem 0.5rem;" :pressed.sync="item.state">{{item.name}}</b-button>
 </div>
     <div class="input-group">
  <b-dropdown  text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100" variant="link" no-caret>
@@ -105,9 +105,9 @@
             </div>
 
             <hr class="mb-4">
-            <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information</button>
-             <button class="btn btn-primary btn-lg btn-block" type="submit" style="margin-top:0.5rem;">Launch Assignment</button>
           </form>
+            <button class="btn btn-secondary btn-lg btn-block" type="submit" @click="save">Save information 保存信息</button>
+             <button class="btn btn-primary btn-lg btn-block" type="submit" style="margin-top:0.5rem;" @click="launch">Submit information 提交信息</button>
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@ export default {
 
    data() {
     return {
-      lab: -1, dropdownText: "Please Select 请选择",
+      grade: -1, dropdownText: "Please Select 请选择",
       lastName:"",
       firstName:"",
       username:"",
@@ -140,8 +140,11 @@ export default {
       ],
       selectedKey:[],
       selectedLab:[
-        {name: "软件所", state:false},
-        {name: "网络所", state:false}
+        {name: "Software Laboratory 软件所", state:false},
+        {name: "High Performance Laboratory 高性能", state:false},
+        {name: "Multimedia Laboratory 媒体所", state:false},
+        {name: "Artificial Intelligence Laboratory 智能所", state:false},
+        {name: "Network Laboratory 网络所", state:false}
       ]
     }
    },
@@ -165,24 +168,28 @@ export default {
      }
      console.log(item);
     },
-   handleOk (){
-      this.$router.push("/")
-    },
 
     save() {
           var that = this;
       console.log( {lastName: that.lastName, firstName: that.firstName, username:that.username,
          wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
-          breIntr:that.breIntr, lab:that.lab});
+          breIntr:that.breIntr, grade:that.grade,
+          selectedLab:that.selectedLab,
+          selectedKey:that.selectedKey
+          });
       $.get(
         "/studentInfo/save",
         {lastName: that.lastName, firstName: that.firstName, username:that.username,
          wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
-          breIntr:that.breIntr, lab:that.lab},
-        function(data){
-          alert(data.saveSuccess);
-        }
-      )
+          breIntr:that.breIntr, grade:that.grade,
+          selectedLab:that.selectedLab,
+          selectedKey:that.selectedKey
+          }).then(function(data){
+            if(!data.saveSuccess){
+              alert("保存信息出现问题");
+            }
+        });
+      
     },
 
     getInfo() {
@@ -198,47 +205,54 @@ export default {
           that.email = data.email;
           that.perWebAddr = data.perWebAddr;
           that.breIntr = breIntr;
-          that.lab = data.lab;
+          that.grade = data.grade;
+          that.selectedLab = data.selectedLab;
+          that.selectedKey = data.selectedKey;
         });
       
     },
 
     clickFresh() {
-      this.lab = 0;
+      this.grade = 0;
       this.dropdownText = "Freshman 大一";
     },
     clickSoph() {
-      this.lab = 1;
+      this.grade = 1;
       this.dropdownText = "Sophomore 大二";
     },
     clickJuni() {
-      this.lab = 2;
+      this.grade = 2;
       this.dropdownText = "Junior 大三";
     },
     clickSeni() {
-      this.lab = 3;
+      this.grade = 3;
       this.dropdownText = "Senior 大四";
     },
 
     launch() {
+      var that = this;
       $.get(
         "/studentInfo/launch",
-        {lastName: this.lastName, firstName: this.firstName, username:this.username,
-         wechatPhone:this.wechatPhone, email:this.email, perWebAddr:this.perWebAddr,
-          breIntr:this.breIntr, lab:this.lab},
-        function(data){
-          if(data.launchSuccess){
-            
-          }
-          alert(data.launchSuccess);
-        }
-      )
+        {lastName: that.lastName, firstName: that.firstName, username:that.username,
+         wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
+          breIntr:that.breIntr, grade:that.grade,
+           selectedLab:that.selectedLab,
+          selectedKey:that.selectedKey
+          }).then(function(data){
+            if(data.launchSuccess){
+          window.location.href="/";
+            } else {
+              alert("保存信息出现问题");
+            }
+        });
+       
+      
     }
 
   },
 
   watch: {
-    lab:function(val){
+    grade:function(val){
     if(val==-1){
       this.dropdownText = "请选择年级";
     }

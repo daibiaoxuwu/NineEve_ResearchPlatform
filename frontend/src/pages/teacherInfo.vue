@@ -89,8 +89,8 @@
             
             <hr class="mb-4">
              </form>
-            <button class="btn btn-secondary btn-lg btn-block" @click="save">Save information</button>
-             <button class="btn btn-primary btn-lg btn-block" style="margin-top:0.5rem;" @click="launch">Launch Assignment</button>
+            <button class="btn btn-secondary btn-lg btn-block" @click="save">Save information 保存信息</button>
+             <button class="btn btn-primary btn-lg btn-block" style="margin-top:0.5rem;" @click="launch">Submit Information 提交信息</button>
 
              <b-alert variant="info" :show="showSaveAlert">Saving...正在保存...</b-alert>
              <b-alert variant="warning" :show="showFailAlert">Server Failure. 服务器故障.</b-alert>

@@ -11,7 +11,7 @@ module.exports = {
      * @property {boolean} saveSuccess //property: return
      * 登陆是否成功
      */
-    teacherInfoSave: function(lastName, firstName, userName,
+    teacherInfoSave: function(lastName, firstName, username,
          wechatPhone, email, perWebAddr,
           researchArea, researchResults, lab) {
         console.log("teacherInfoSave: " + lastName + firstName);
@@ -21,7 +21,7 @@ module.exports = {
 
 
 
-    teacherInfoLaunch: function(lastName, firstName, userName,
+    teacherInfoLaunch: function(lastName, firstName, username,
          wechatPhone, email, perWebAddr,
           researchArea, researchResults, lab) {
         console.log("teacherInfoLaunch: " + lastName + firstName);
