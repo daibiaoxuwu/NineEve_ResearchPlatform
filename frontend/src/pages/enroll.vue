@@ -24,7 +24,7 @@
               </small>
          </h4>
          
-         <assignmentInfo></assignmentInfo>
+         <assignmentInfo teacher="国雨晴" ></assignmentInfo>
              <router-link to="/enrollSuccess" > <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button></router-link>
              <router-link to="/enrollForm" > <button class="btn btn-primary btn-lg btn-block" type="submit" style="margin-top:0.5rem;">Enroll Now</button> </router-link>
         

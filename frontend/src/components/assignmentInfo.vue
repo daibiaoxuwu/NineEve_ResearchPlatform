@@ -2,7 +2,7 @@
 <div>
     <p class="form-text" style="font-weight:bold;">指导教师</p>
          <p class="form-text text-muted">
-           国雨晴</p>
+           {{teacher}}</p>
          <p class="form-text" style="font-weight:bold;">项目简介</p>
          <p class="form-text text-muted">
            Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
@@ -53,3 +53,11 @@ Vue 也可以在 unpkg 和 cdnjs 上获取 (cdnjs 的版本更新可能略滞后
 </p>
 </div>
 </template>
+<script>
+export default {
+  
+props:{
+  teacher:String
+}
+}
+</script>
