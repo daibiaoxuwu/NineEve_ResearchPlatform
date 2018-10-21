@@ -240,7 +240,7 @@ export default {
           selectedKey:that.selectedKey
           }).then(function(data){
             if(data.launchSuccess){
-          window.location.href="/studentMain";
+          window.location.href="/main";
             } else {
               alert("保存信息出现问题");
             }

@@ -68,7 +68,7 @@ res.redirect("/");//未登录的用户, 如果输入url强行访问此页面, �
 }
 } )
 
-app.get('/studentMain', (req, res) => 
+app.get('/main', (req, res) => 
 {
 var user = {};
 if (req.session && req.session.user) {
@@ -120,7 +120,7 @@ app.get('/registerRequestUrl', function(sReq, sRes){
 
 var teacherInfo = require(requireLoc + "/teacherInfo");
 var studentInfo = require(requireLoc + "/studentInfo");
-var studentMain = require(requireLoc + "/studentMain");
+var main = require(requireLoc + "/main");
 
 app.get('/teacherInfo/save', function(sReq, sRes) {
     console.log(sReq);
@@ -160,8 +160,8 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 });
 
 
-app.get('/studentMain/get', function(sReq, sRes) {
-    studentMain.studentMainGet(sReq.session.user.name, function(msgList, myList, avaList){
+app.get('/main/get', function(sReq, sRes) {
+    main.mainGet(sReq.session.user.name, function(msgList, myList, avaList){
         console.log({
             num1: parseInt(msgList.length / 3),
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),

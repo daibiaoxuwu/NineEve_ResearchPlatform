@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 import homepage from "./pages/home.vue";
 import teacherInfo from "./pages/teacherInfo.vue";
 import studentInfo from "./pages/studentInfo.vue";
-import studentMain from "./pages/studentMain.vue";
+import main from "./pages/main.vue";
 import assignmentView from "./pages/assignmentView.vue";
 import register from "./pages/register.vue";
 import enroll from "./pages/enroll.vue";
@@ -23,7 +23,7 @@ const routes = [
     { path: '/', component: homepage },
     { path: '/teacherInfo', component: teacherInfo },
     { path: '/studentInfo', component: studentInfo },
-    { path: '/studentMain', component: studentMain },
+    { path: '/main', component: main },
     { path: '/assignmentView', component: assignmentView },
     { path: '/register', component: register},
     { path: '/enroll', component: enroll},

@@ -148,7 +148,7 @@ export default {
       console.log(this.currentPage1);
   var that=this;
       $.get(
-        "/studentMain/get",
+        "/main/get",
         {
           currentPage1: that.currentPage1,
           currentPage2: that.currentPage2,
