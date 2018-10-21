@@ -92,29 +92,15 @@ export default {
         dismissSecs: 10,
       dismissCountDown: 0,
       showDismissibleAlert: false,
-      list:[
-        {
-          text: "项目1",
-          status: "Enrolling 可报名"
-        },
-        {
-          text: "项目2",
-          status: "Enrolling 可报名"
-        },
-        {
-          text: "项目3",
-          status: "Enrolling 可报名"
-        },
-         {
-          text: "项目4",
-          status: "Enrolling 可报名"
-        },
-         {
-          text: "项目5",
-          status: "Enrolling 可报名"
-        }
-      ]
+      list:[]
     };
+  },
+  created:function(){
+    var that = this;
+     $.get('/home/get',
+          function(data){
+            that.list=data;
+          })
   },
   methods: {
     countDownChanged (dismissCountDown) {
@@ -127,8 +113,7 @@ export default {
       return '#page/' + pageNum + '/foobar'
     },
     onClick (item){
-      alert(item.text);
-      // this.$router.push("/log")
+       this.$router.push({path: "/enroll", params: {title: item.text}});
     },
 
     loginRequest (){

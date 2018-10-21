@@ -28,7 +28,7 @@ app.use(appSession);
 
 
 
-app.get('(/|/register)', (req, res) =>{
+app.get('(/|/register|/enroll)', (req, res) =>{
     var user = {};
     if (req.session && req.session.user) { user.name = req.session.user; }
     res.render('index', {"user":JSON.stringify(user)});
@@ -157,6 +157,12 @@ app.get('/main/get', function(sReq, sRes) {
 
 app.get('/enroll/get', function(sReq, sRes) {
     enroll.enrollGet(sReq.query.title, function(item){
+        sRes.send(item);
+    })
+})
+
+app.get('/home/get', function(sReq, sRes) {
+    loginRegisterData.homeGet(function(item){
         sRes.send(item);
     })
 })

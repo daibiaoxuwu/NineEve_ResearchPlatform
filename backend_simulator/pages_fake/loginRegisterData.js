@@ -86,5 +86,37 @@ module.exports = {
     register: function(name, university, email, password, recall) {
         console.log("register: "+name + university + email + password);
         recall({registerSuccess: true});
-    }
+    },
+   /**
+     * 主页拿取所有项目列表请求 页面url: '/'
+     * @return {Array} avaList 
+     * 所有科研任务列表
+     */
+    homeGet: function(callback){
+        callback(
+                [{
+                    text: "项目1",
+                    status: "Enrolling 可报名"
+                  },
+                  {
+                    text: "项目2",
+                    status: "Enrolling 可报名"
+                  },
+                  {
+                    text: "项目3",
+                    status: "Enrolling 可报名"
+                  },
+                   {
+                    text: "项目4",
+                    status: "Enrolling 可报名"
+                  },
+                   {
+                    text: "项目5",
+                    status: "Enrolling 可报名"
+                  }]
+              
+              );
+            }
+
+
 }
