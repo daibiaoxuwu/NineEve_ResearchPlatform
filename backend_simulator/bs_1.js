@@ -144,4 +144,58 @@ app.get('/teacherInfo/get', function(sReq, sRes) {
 		 });
 });
 
+var studentInfo = require(requireLoc + "/studentInfo");
+var main = require(requireLoc + "/main");
+
+app.get('/studentInfo/save', function(sReq, sRes) {
+    console.log(sReq);
+    console.log(sReq.query.lastName);
+    studentInfo.studentInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.breIntr, sReq.query.lab, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/studentInfo/launch', function(sReq, sRes) {
+    studentInfo.studentInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.breIntr, sReq.query.lab, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/studentInfo/get', function(sReq, sRes) {
+    studentInfo.studentInfoGet(sReq.session.user.name, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/main/get', function(sReq, sRes) {
+    main.mainGet(sReq.session.user.name, function(isTeacher, msgList, myList, avaList){
+        console.log({
+            isTeacher: isTeacher,
+            num1: parseInt(msgList.length / 3),
+            msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
+            num2: parseInt(myList.length / 3),
+            myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
+            num3: parseInt(avaList.length / 3),
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
+            msglist2: msgList,
+            myList: myList,
+            avalist2: avaList
+            
+        });
+        sRes.send({
+            isTeacher: isTeacher,
+            num1: parseInt(msgList.length / 3) + 1,
+            msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
+            num2: parseInt(myList.length / 3) + 1,
+            myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
+            num3: parseInt(avaList.length / 3) + 1,
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length))
+        })
+    })
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
