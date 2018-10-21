@@ -139,7 +139,22 @@ module.exports = {
 
     studentInfoGet: function(name) {
         console.log("studentInfGet: " + name);
-        if(name=="1") return {lastName: "一"};
+        if(name=="1") return {lastName: "一", firstName:"2",
+        username:"3",
+        wechatPhone:"4", 
+        email:"5",
+        perWebAddr:"6",
+        breIntr:"7",
+        grade:1,
+        selectedLab:[
+            {name: "Software Laboratory 软件所", state:false},
+            {name: "High Performance Laboratory 高性能", state:false},
+            {name: "Multimedia Laboratory 媒体所", state:false},
+            {name: "Artificial Intelligence Laboratory 智能所", state:false},
+            {name: "Network Laboratory 网络所", state:false}
+          ],
+        selectedKey:[{name: "1", state: true}],
+        allKeys:[{name: "关键词", state: false}]};
         else if(name == "2") return {lastName: "二"};
         else return{lastName: ""};
     },
