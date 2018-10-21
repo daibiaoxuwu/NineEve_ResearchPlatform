@@ -32,7 +32,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in list ">
+                  <tr v-for="(item, index) in msgList ">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
@@ -45,7 +45,7 @@
               </table>
 
             </div>
-            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+            <b-pagination-nav base-url="#" :number-of-pages="num1" v-model="currentPage1" />
           </div>
 
 </p>
@@ -63,7 +63,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in list ">
+                  <tr v-for="(item, index) in myList ">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
@@ -76,7 +76,7 @@
               </table>
 
             </div>
-            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+            <b-pagination-nav base-url="#" :number-of-pages="num2" v-model="currentPage2" />
           </div>
 </p>
 <p class="mb-3">
@@ -93,7 +93,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in list ">
+                  <tr v-for="(item, index) in avaList ">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
@@ -106,7 +106,7 @@
               </table>
 
             </div>
-            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+            <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
           </div>
 </p>
         </div>
@@ -128,113 +128,53 @@ export default {
   name: "home",
   data() {
     return {
-       currentPage: 1,
-        dismissSecs: 10,
-      dismissCountDown: 0,
-      showDismissibleAlert: false,
-      list:[
-        {
-          text: "项目1",
-          status: "Enrolling 可报名"
-        },
-        {
-          text: "项目2",
-          status: "Enrolling 可报名"
-        },
-        {
-          text: "项目3",
-          status: "Enrolling 可报名"
-        },
-         {
-          text: "项目4",
-          status: "Enrolling 可报名"
-        },
-         {
-          text: "项目5",
-          status: "Enrolling 可报名"
-        }
-      ]
+       currentPage1: 1,
+       currentPage2: 1,
+       currentPage3: 1,
+       num1: 1,
+       num2: 1,
+       num3: 1,
+      msgList:[],
+      myList:[],
+      avaList:[]
+      
     };
   },
+  created:function(){
+    this.update();
+  },
   methods: {
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
-    },
-    linkGen (pageNum) {
-      return '#page/' + pageNum + '/foobar'
-    },
-    onClick (item){
-      alert(item.text);
-      // this.$router.push("/log")
-    },
-
-    loginRequest (){
-      var inputTORS = this.inputTSForm;
-      var inputName = this.inputNameForm;
-      var inputPassword = this.inputPasswordForm;
-      var loginRequestUrlEmail = "/loginRequestUrlEmail";
-      var loginRequestUrlTeacherId = "/loginRequestUrlTeacherId";
-      var loginRequestUrlStudentId = "/loginRequestUrlStudentId";
-      //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
-      //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      alert(inputTORS);
-      if (inputTORS=="teacher") {
-        $.get(loginRequestUrlTeacherId, {teacherId:inputName,password:inputPassword},
-          function(data){
-            if(data.loginSuccess){
-              alert("login success");
-            } else if(data.usernameTaken){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-          }
-        );
-      }
-      else if (inputTORS=="student"){
-        var isEmail = (new RegExp("@")).test(inputName);
-        if (isEmail) {
-          $.get(loginRequestUrlEmail, {email:inputName,password:inputPassword},
-            function(data){
-              if(data.loginSuccess){
-                alert("login success");
-              } else if(data.usernameTaken){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-            }
-          );
-        }
-        else {
-          $.get(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
-            function(data){
-              if(data.loginSuccess){
-                alert("login success");
-              } else if(data.usernameTaken){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-            }
-          );
-        }
-      }
-      else{
-        alert("please choose a way to login.");
-      }
-
+    update(){
+      console.log(this.currentPage1);
+  var that=this;
+      $.get(
+        "/studentMain/get",
+        {
+          currentPage1: that.currentPage1,
+          currentPage2: that.currentPage2,
+          currentPage3: that.currentPage3,
+        }).then(function(data){
+          that.num1=data.num1,
+          that.num2=data.num2,
+          that.num3=data.num3,
+          that.msgList = data.msgList;
+          that.myList = data.myList;
+          that.avaList = data.avaList;
+        });
     }
-
-
+  },
+  watch: {
+    currentPage1: function(val){
+      this.update();
+    },
+    currentPage2: function(val){
+      this.update();
+    },
+    currentPage3: function(val){
+      this.update();
+    }
   }
 };
 // 逻辑部分直接修改item即可呈现.
 </script>
 
-<style lang="css">
-
-</style>

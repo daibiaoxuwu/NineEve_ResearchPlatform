@@ -67,6 +67,17 @@ res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用�
 res.redirect("/");//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
 }
 } )
+
+app.get('/studentMain', (req, res) => 
+{
+var user = {};
+if (req.session && req.session.user) {
+user = req.session.user;
+} else{
+}
+res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
+} )
+
 var requireLoc = "./pages_fake"; //location for requiring js files for database connection
 
 
@@ -109,6 +120,7 @@ app.get('/registerRequestUrl', function(sReq, sRes){
 
 var teacherInfo = require(requireLoc + "/teacherInfo");
 var studentInfo = require(requireLoc + "/studentInfo");
+var studentMain = require(requireLoc + "/studentMain");
 
 app.get('/teacherInfo/save', function(sReq, sRes) {
     console.log(sReq);
@@ -147,5 +159,30 @@ app.get('/studentInfo/get', function(sReq, sRes) {
     sRes.send(studentInfo.studentInfoGet(sReq.session.user.name));
 });
 
+
+app.get('/studentMain/get', function(sReq, sRes) {
+    studentMain.studentMainGet(sReq.session.user.name, function(msgList, myList, avaList){
+        console.log({
+            num1: parseInt(msgList.length / 3),
+            msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
+            num2: parseInt(myList.length / 3),
+            myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
+            num3: parseInt(avaList.length / 3),
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
+            msglist2: msgList,
+            myList: myList,
+            avalist2: avaList
+            
+        });
+        sRes.send({
+            num1: parseInt(msgList.length / 3) + 1,
+            msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
+            num2: parseInt(myList.length / 3) + 1,
+            myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
+            num3: parseInt(avaList.length / 3) + 1,
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length))
+        })
+    })
+});
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
