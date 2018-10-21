@@ -9,4 +9,4 @@ const generateLoginReply = function() {
     }
 }
 
-Mock.mock('/loginRequestUrlEmail', 'post', generateLoginReply);
+Mock.mock('/login/byEmail', 'post', generateLoginReply);

@@ -84,7 +84,7 @@ var requireLoc = "./pages";
 //loginRegisterData.js
 var loginRegisterData = require(requireLoc+ "/loginRegisterData");
 
-app.get('/loginRequestUrlEmail', function(sReq, sRes){
+app.get('/login/byEmail', function(sReq, sRes){
 	
 	loginRegisterData.emailLogin(sReq.query.email, sReq.query.password, function(result){
 		sRes.send(result);
@@ -94,20 +94,20 @@ app.get('/loginRequestUrlEmail', function(sReq, sRes){
     //sRes.send(loginRegisterData.emailLogin(sReq.query.email, sReq.query.password));
 });
 
-app.get('/loginRequestUrlTeacherId', function(sReq, sRes){
+app.get('/login/byTeacherId', function(sReq, sRes){
 	console.log(sReq.query.teacherId,sReq.query.password);
 	loginRegisterData.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
 		sRes.send(result);
 	});
 });
 
-app.get('/loginRequestUrlStudentId', function(sReq, sRes){
+app.get('/login/byStudentId', function(sReq, sRes){
     loginRegisterData.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
 		sRes.send(result);
 	});
 });
 
-app.get('/registerRequestUrl', function(sReq, sRes){
+app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
     var name = sReq.query.name;
     var university = sReq.query.university;
