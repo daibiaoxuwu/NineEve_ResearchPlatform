@@ -37,6 +37,18 @@
               </div>
             </div>
 
+                           <div class="mb-3"> <label for="username">Introduction 简介</label>
+              <div class="input-group">
+               <b-form-textarea id="textarea1"
+                     v-model="introduction"
+                     placeholder="Enter something"
+                     :rows="3"
+                     :max-rows="6">
+              </b-form-textarea>
+          <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
+              </div>
+            </div>
+
           <div class="mb-3"> <label for="username">Keywords(separated with spaces) 关键词(以空格分隔)</label>
               <div class="input-group">
                 <input type="text" class="form-control" id="username"  required="" v-model="keywords">
