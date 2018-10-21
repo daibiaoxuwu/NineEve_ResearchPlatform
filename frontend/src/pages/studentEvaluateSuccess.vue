@@ -27,7 +27,7 @@
               You have successfully terminated and evaluated the project. Please await your tutor's evaluation.
               </small>
          </h5>
-     <assignmentInfo></assignmentInfo> 
+     <assignmentInfo v-bind:info="info"></assignmentInfo> 
 
 
   <router-link to="/"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>

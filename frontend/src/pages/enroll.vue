@@ -24,7 +24,7 @@
               </small>
          </h4>
          
-         <assignmentInfo></assignmentInfo>
+         <assignmentInfo v-bind:info="info"></assignmentInfo>
              <router-link to="/enrollSuccess" > <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button></router-link>
              <router-link to="/enrollForm" > <button class="btn btn-primary btn-lg btn-block" type="submit" style="margin-top:0.5rem;">Enroll Now</button> </router-link>
         
@@ -48,16 +48,28 @@ export default {
   name: "enroll",
    data() {
     return {
+      info:{}
     }
    },
    components: {
      rightpane,
      assignmentInfo
    },
+   created:function(){
+     this.initialize();
+   },
    
-    methods: {
-   handleOk (){
-      this.$router.push("/enrollForm")
+  methods: {
+    initialize(){
+  var that=this;
+
+      $.get(
+        "/enroll/get",//TODO:get
+        {
+          title: that.$route.params.title
+        }).then(function(data){
+          that.info=data;
+         });
     }
   }
 }

@@ -89,7 +89,7 @@
 
                           <div class="mb-3"> <label for="username">Deadline 截止时间</label>
               <div class="input-group">
-            <input type="text" class="form-control" id="username" required="" v-model="number">
+            <input type="text" class="form-control" id="username" required="" v-model="deadline">
   
           <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
               </div>

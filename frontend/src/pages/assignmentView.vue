@@ -134,64 +134,8 @@ export default {
     onClick (item){
       alert(item.text);
       // this.$router.push("/log")
-    },
 
-    loginRequest (){
-      var inputTORS = this.inputTSForm;
-      var inputName = this.inputNameForm;
-      var inputPassword = this.inputPasswordForm;
-      var loginRequestUrlEmail = "/loginRequestUrlEmail";
-      var loginRequestUrlTeacherId = "/loginRequestUrlTeacherId";
-      var loginRequestUrlStudentId = "/loginRequestUrlStudentId";
-      //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
-      //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      alert(inputTORS);
-      if (inputTORS=="teacher") {
-        $.get(loginRequestUrlTeacherId, {teacherId:inputName,password:inputPassword},
-          function(data){
-            if(data.loginSuccess){
-              alert("login success");
-            } else if(data.usernameTaken){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-          }
-        );
-      }
-      else if (inputTORS=="student"){
-        var isEmail = (new RegExp("@")).test(inputName);
-        if (isEmail) {
-          $.get(loginRequestUrlEmail, {email:inputName,password:inputPassword},
-            function(data){
-              if(data.loginSuccess){
-                alert("login success");
-              } else if(data.usernameTaken){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-            }
-          );
-        }
-        else {
-          $.get(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
-            function(data){
-              if(data.loginSuccess){
-                alert("login success");
-              } else if(data.usernameTaken){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-            }
-          );
-        }
-      }
-      else{
-        alert("please choose a way to login.");
-      }
-
+ 
     }
 
 
