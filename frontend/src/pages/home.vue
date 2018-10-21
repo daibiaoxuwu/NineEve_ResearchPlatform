@@ -135,14 +135,11 @@ export default {
       var inputTORS = this.inputTSForm;
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
-      var loginRequestUrlEmail = "/loginRequestUrlEmail";
-      var loginRequestUrlTeacherId = "/loginRequestUrlTeacherId";
-      var loginRequestUrlStudentId = "/loginRequestUrlStudentId";
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
       alert(inputTORS);
       if (inputTORS=="teacher") {
-        $.get(loginRequestUrlTeacherId, {teacherId:inputName,password:inputPassword},
+        $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword},
           function(data){
             if(data.loginSuccess){
               alert("login success");
@@ -157,7 +154,7 @@ export default {
       else if (inputTORS=="student"){
         var isEmail = (new RegExp("@")).test(inputName);
         if (isEmail) {
-          $.get(loginRequestUrlEmail, {email:inputName,password:inputPassword},
+          $.get('/login/byEmail', {email:inputName,password:inputPassword},
             function(data){
               if(data.loginSuccess){
                 alert("login success");
@@ -170,7 +167,7 @@ export default {
           );
         }
         else {
-          $.get(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
+          $.get('/login/byStudentId', {studentId:inputName,password:inputPassword},
             function(data){
               if(data.loginSuccess){
                 alert("login success");

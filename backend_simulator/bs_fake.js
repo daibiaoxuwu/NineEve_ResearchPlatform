@@ -28,45 +28,15 @@ app.use(appSession);
 
 
 
-app.get('/', (req, res) =>{
+app.get('(/|/register)', (req, res) =>{
     var user = {};
     if (req.session && req.session.user) { user.name = req.session.user; }
     res.render('index', {"user":JSON.stringify(user)});
 })
 
-app.get('/register', (req, res) => {
-    var user = {};
-    if (req.session && req.session.user) { user.name = req.session.user;}
-    res.render('index', {"user":JSON.stringify(user)} );
-})
-
-
-app.get('/teacherInfo', (req, res) => {
-    var user = {};
-    if (req.session && req.session.user) {
-        user = req.session.user;
-        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
-    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
-})
-
-app.get('/studentInfo', (req, res) => {
-    var user = {};
-    if (req.session && req.session.user) {
-        user = req.session.user;
-        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
-    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
-})
-
-app.get('/main', (req, res) => {
-    var user = {};
-    if (req.session && req.session.user) {
-        user = req.session.user;
-        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
-    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
-})
-
-
-app.get('/enroll', (req, res) => {
+//app.all('/(((teacher|student|assignment)(Info|View|Evaluate|EvaluateSuccess))|(enroll(Form|Status|Success|Accepted|AcceptedNotice))|main)', (req, res) => {
+app.get(/^\/[^\/]*$/, (req, res) => {
+    console.log('geturl');
     var user = {};
     if (req.session && req.session.user) {
         user = req.session.user;
@@ -80,7 +50,7 @@ var requireLoc = "./pages_fake"; //location for requiring js files for database 
 //loginRegisterData.js
 var loginRegisterData = require(requireLoc+ "/loginRegisterData");
 
-app.get('/loginRequestUrlEmail', function(sReq, sRes){
+app.get('/login/byEmail', function(sReq, sRes){
 	
 	loginRegisterData.emailLogin(sReq.body.email, sReq.body.password, function(result){
 		sRes.send(result);
@@ -90,19 +60,19 @@ app.get('/loginRequestUrlEmail', function(sReq, sRes){
     //sRes.send(loginRegisterData.emailLogin(sReq.body.email, sReq.body.password));
 });
 
-app.get('/loginRequestUrlTeacherId', function(sReq, sRes){
+app.get('/login/byTeacherId', function(sReq, sRes){
 	loginRegisterData.teacherLogin(sReq.body.teacherId, sReq.body.password,function(result){
 		sRes.send(result);
 	});
 });
 
-app.get('/loginRequestUrlStudentId', function(sReq, sRes){
+app.get('/login/byStudentId', function(sReq, sRes){
     loginRegisterData.studentLogin(sReq.body.studentId, sReq.body.password,function(result){
 		sRes.send(result);
 	});
 });
 
-app.get('/registerRequestUrl', function(sReq, sRes){
+app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
     var name = sReq.query.name;
     var university = sReq.query.university;
