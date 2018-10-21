@@ -60,7 +60,7 @@ module.exports = {
 					`perwebaddr`="' + perWebAddr + '", \
 					`researcharea`="' + researchArea + '", \
 					`researchresults`="' + researchResults + '", \
-					`lab`=' + lab + '\
+					`lab`="' + lab + '"\
 					 where teacherID="'+teacherID+'"');
 					recall({saveSuccess: true});
 				}
@@ -106,31 +106,38 @@ module.exports = {
          wechatPhone, email, perWebAddr,
           researchArea, researchResults, lab, recall) {
 				connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
-				if(results.length==0)
-					recall({launchSuccess: false});
-				else
-				{
-					connection.query('update teacher set `lastname`="' + lastName + '", \
-					`firstname`="' + firstName + '", \
-					`username`="' + userName + '", \
-					`wechatphone`="' + wechatPhone + '", \
-					`email`="' + email + '", \
-					`perwebaddr`="' + perWebAddr + '", \
-					`researcharea`="' + researchArea + '", \
-					`researchresults`="' + researchResults + '", \
-					`lab`=' + lab + ', \
-					`filled`=1 \
-					 where teacherID="'+teacherID+'"');
-					recall({launchSuccess: true});
-				}
-			});
+					if(results.length==0)
+						recall({launchSuccess: false});
+					else
+					{
+						connection.query('update teacher set `lastname`="' + lastName + '", \
+						`firstname`="' + firstName + '", \
+						`username`="' + userName + '", \
+						`wechatphone`="' + wechatPhone + '", \
+						`email`="' + email + '", \
+						`perwebaddr`="' + perWebAddr + '", \
+						`researcharea`="' + researchArea + '", \
+						`researchresults`="' + researchResults + '", \
+						`lab`="' + lab + '", \
+						`filled`=1 \
+						 where teacherID="'+teacherID+'"');
+						recall({launchSuccess: true});
+					}
+				});
     },
 
-    teacherInfoGet: function(name, recall) {
-        console.log("teacherInfGet: " + name);
-        if(name=="1") recall({lastName: "一"});
-        else if(name == "2") recall({lastName: "二"});
-        else recall({lastName: ""});
+    teacherInfoGet: function(teacherID, recall) {
+        console.log("teacherInfGet: " + teacherID);
+		connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
+			recall({lastName: results[0].lastname,
+					firstName:  results[0].firstname,
+					username:  results[0].username,
+					wechatPhone: results[0].wechatphone,
+					email: results[0].email,
+					perWebAddr: results[0].perwebaddr,
+					researchArea: results[0].researcharea,
+					researchResults: results[0].researchresults,
+					lab: results[0].lab});
+		});				
     },
-
 }
