@@ -134,10 +134,7 @@ export default {
       breIntr:"",
       showSaveAlert: false,
       showFailAlert: false,
-      allKeys:[
-        {name: "关键词 1", state:true},
-        {name: "关键词 2", state:true}
-      ],
+      allKeys:[],
       selectedKey:[],
       selectedLab:[
         {name: "Software Laboratory 软件所", state:false},
@@ -197,17 +194,18 @@ export default {
       $.get(
         "/studentInfo/get",
         {}).then(function(data){
-          console.log("lastname:" +data.lastName)
+          console.log("allkeys" +data)
           that.lastName = data.lastName;
           that.firstName = data.firstName;
           that.username = data.username;
           that.wechatPhone = data.wechatPhone;
           that.email = data.email;
           that.perWebAddr = data.perWebAddr;
-          that.breIntr = breIntr;
+          that.breIntr = data.breIntr;
           that.grade = data.grade;
           that.selectedLab = data.selectedLab;
           that.selectedKey = data.selectedKey;
+          that.allKeys = data.allKeys;
         });
       
     },
