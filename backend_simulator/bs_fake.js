@@ -28,20 +28,27 @@ app.use(appSession);
 
 
 
-app.get('(/|/register|/enroll)', (req, res) =>{
+app.get('(/|/register)', (req, res) =>{
     var user = {};
     if (req.session && req.session.user) { user.name = req.session.user; }//TODO: what's this?
     res.render('index', {"user":JSON.stringify(user)});
 })
 
+app.get('/enroll', (req, res) => {
+    var user = {};
+    if (req.session && req.session.assignment) {
+        user = req.session.user;
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
+    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+})
+
 //app.all('/(((teacher|student|assignment)(Info|View|Evaluate|EvaluateSuccess))|(enroll(Form|Status|Success|Accepted|AcceptedNotice))|main)', (req, res) => {
 app.get(/^\/[^\/]*$/, (req, res) => {
-    console.log('geturl');
     var user = {};
     if (req.session && req.session.user) {
         user = req.session.user;
         res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
-    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
 })
 
 var requireLoc = "./pages_fake"; //location for requiring js files for database connection
@@ -190,11 +197,16 @@ app.get('/main/get', function(sReq, sRes) {
     })
 });
 
-
-app.get('/enroll/get', function(sReq, sRes) {
+app.get('/home/setAssignment', function(sReq, sRes) {
     enroll.enrollGet(sReq.query.title, function(item){
+        sReq.session.assignment = item;
         sRes.send(item);
     })
+})
+
+//do not need database!
+app.get('/enroll/get', function(sReq, sRes) {
+        sRes.send(sReq.session.assignment);
 })
 
 app.get('/home/get', function(sReq, sRes) {

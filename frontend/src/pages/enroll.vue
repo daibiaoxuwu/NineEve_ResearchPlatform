@@ -18,14 +18,7 @@
   <rightpane></rightpane>
         
         <div class="col-md-8 order-md-1">
-          <h4 class="mb-3"><b>基于Bootstrap-Vue的网页设计研究</b>
-           <small class="form-text text-muted">
-                Web Page Design Using Bootstrap-Vue
-                 <small class="form-text text-muted">
-                   Enrolling 可报名
-              </small>
-              </small>
-         </h4>
+      
          
          <assignmentInfo></assignmentInfo>
              <!-- <router-link to="/enrollSuccess" > <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button></router-link> -->
