@@ -22,7 +22,7 @@
            <small class="form-text text-muted">
                 Web Page Design Using Bootstrap-Vue
                  <small class="form-text text-muted">
-                {{info.status}}
+                   Enrolling 可报名
               </small>
               </small>
          </h4>

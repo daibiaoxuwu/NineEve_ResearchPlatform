@@ -38,9 +38,9 @@ module.exports = {
 
     teacherInfoSave: function(lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-          researchArea, researchResults, lab) {
+          researchArea, researchResults, lab, callback) {
         console.log("teacherInfoSave: " + lastName + firstName);
-        return {saveSuccess: true};
+        callback({saveSuccess: true});
     },
 
 
@@ -80,9 +80,9 @@ module.exports = {
 
     teacherInfoLaunch: function(lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-          researchArea, researchResults, lab) {
+          researchArea, researchResults, lab, callback) {
         console.log("teacherInfoLaunch: " + lastName + firstName + email);
-        return {launchSuccess: true};
+        callback({launchSuccess: true});
     },
 
 /**
@@ -119,11 +119,10 @@ module.exports = {
      * 研究所
      *
      */
-    teacherInfoGet: function(name) {
+    teacherInfoGet: function(name, callback) {
         console.log("teacherInfGet: " + name);
-        if(name=="1") return {lastName: "一"};
-        else if(name == "2") return {lastName: "二"};
-        else return{lastName: ""};
+        if(name=="1") callback({lastName: "一"});
+        else callback({lastName: ""});
     },
 
 }

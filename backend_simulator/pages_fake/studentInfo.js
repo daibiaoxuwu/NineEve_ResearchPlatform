@@ -47,9 +47,9 @@ module.exports = {
 
     studentInfoSave: function(id, email, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-          breIntr, grade, selectedLab, selectedKey) {
+          breIntr, grade, selectedLab, selectedKey, callback) {
         console.log("studentInfoSave: " + id + email + lastName + firstName);
-        return {saveSuccess: true};
+        callback({saveSuccess: true});
     },
 
 
@@ -101,9 +101,9 @@ module.exports = {
 
     studentInfoLaunch: function(id, email, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-         breIntr, grade, selectedLab, selectedKey) {
+         breIntr, grade, selectedLab, selectedKey, callback) {
         console.log("studentInfoLaunch: " + id + email + lastName + firstName + email);
-        return {launchSuccess: true};
+        callback({launchSuccess: true});
     },
 
     /**
@@ -152,9 +152,9 @@ module.exports = {
      * 所有的关键词 每一项的格式:{name:"关键词", state:true/false}. 所有的关键词都被传出来, state任取.
      */
 
-    studentInfoGet: function(id, email) {
+    studentInfoGet: function(id, email, callback) {
         console.log("studentInfGet: " + id + email);
-        if(email=="1") return {lastName: "一", firstName:"2",
+        if(email=="1") callback({lastName: "一", firstName:"2",
         username:"3",
         wechatPhone:"4", 
         email:"5",
@@ -169,9 +169,8 @@ module.exports = {
             {name: "Network Laboratory 网络所", state:false}
           ],
         selectedKey:[{name: "1", state: true}],
-        allKeys:[{name: "关键词", state: false}]};
-        else if(id == "2") return {lastName: "二"};
-        else return{lastName: ""};
+        allKeys:[{name: "关键词", state: false}]});
+        else callback({lastName: ""});
     },
 
 }
