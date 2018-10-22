@@ -41,9 +41,9 @@ module.exports = {
 
     studentInfoSave: function(lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-          breIntr, grade, selectedLab, selectedKey) {
+          breIntr, grade, selectedLab, selectedKey, recall) {
         console.log("studentInfoSave: " + lastName + firstName);
-        return {saveSuccess: true};
+        recall({saveSuccess: true});
     },
 
 
@@ -89,9 +89,9 @@ module.exports = {
 
     studentInfoLaunch: function(lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-         breIntr, grade, selectedLab, selectedKey) {
+         breIntr, grade, selectedLab, selectedKey, recall) {
         console.log("studentInfoLaunch: " + lastName + firstName + email);
-        return {launchSuccess: true};
+        recall({launchSuccess: true});
     },
 
     /**
@@ -132,31 +132,11 @@ module.exports = {
      * @param {Array} selectedKey
      * 关注的关键词 每一项的格式:{name:"关键词", state:true/false}, 共任意项
      * state=true代表关注, false代表不关注(可以不存或者不传, 也可以原样传回)
-     * 
-     * @param {Array} allKeys
-     * 所有的关键词 每一项的格式:{name:"关键词", state:true/false}. 所有的关键词都被传出来, state任取.
      */
 
-    studentInfoGet: function(name) {
+    studentInfoGet: function(name, recall) {
         console.log("studentInfGet: " + name);
-        if(name=="1") return {lastName: "一", firstName:"2",
-        username:"3",
-        wechatPhone:"4", 
-        email:"5",
-        perWebAddr:"6",
-        breIntr:"7",
-        grade:1,
-        selectedLab:[
-            {name: "Software Laboratory 软件所", state:false},
-            {name: "High Performance Laboratory 高性能", state:false},
-            {name: "Multimedia Laboratory 媒体所", state:false},
-            {name: "Artificial Intelligence Laboratory 智能所", state:false},
-            {name: "Network Laboratory 网络所", state:false}
-          ],
-        selectedKey:[{name: "1", state: true}],
-        allKeys:[{name: "关键词", state: false}]};
-        else if(name == "2") return {lastName: "二"};
-        else return{lastName: ""};
+        recall({lastName: "一"});
     },
 
 }

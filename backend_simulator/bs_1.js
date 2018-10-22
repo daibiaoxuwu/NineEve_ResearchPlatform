@@ -81,39 +81,39 @@ res.redirect("/");//未登录的用户, 如果输入url强行访问此页面, �
 var requireLoc = "./pages";
 
 
-//loginRegisterData.js
-var loginRegisterData = require(requireLoc+ "/loginRegisterData");
+//home.js
+var home = require(requireLoc+ "/home");
 
-app.get('/loginRequestUrlEmail', function(sReq, sRes){
+app.get('/login/byEmail', function(sReq, sRes){
 	
-	loginRegisterData.emailLogin(sReq.query.email, sReq.query.password, function(result){
+	home.emailLogin(sReq.query.email, sReq.query.password, function(result){
 		sRes.send(result);
 	});
 	
 	
-    //sRes.send(loginRegisterData.emailLogin(sReq.query.email, sReq.query.password));
+    //sRes.send(home.emailLogin(sReq.query.email, sReq.query.password));
 });
 
-app.get('/loginRequestUrlTeacherId', function(sReq, sRes){
+app.get('/login/byTeacherId', function(sReq, sRes){
 	console.log(sReq.query.teacherId,sReq.query.password);
-	loginRegisterData.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
+	home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
 		sRes.send(result);
 	});
 });
 
-app.get('/loginRequestUrlStudentId', function(sReq, sRes){
-    loginRegisterData.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
+app.get('/login/byStudentId', function(sReq, sRes){
+    home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
 		sRes.send(result);
 	});
 });
 
-app.get('/registerRequestUrl', function(sReq, sRes){
+app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
     var name = sReq.query.name;
     var university = sReq.query.university;
     var email = sReq.query.email;
     var password = sReq.query.password;
-   loginRegisterData.register(name,university,email,password,function(result){
+   home.register(name,university,email,password,function(result){
         sReq.session.user = {name: email}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
 	});
@@ -142,6 +142,60 @@ app.get('/teacherInfo/get', function(sReq, sRes) {
     teacherInfo.teacherInfoGet(sReq.session.user.name,function(result){
 			 sRes.send(result);
 		 });
+});
+
+var studentInfo = require(requireLoc + "/studentInfo");
+var main = require(requireLoc + "/main");
+
+app.get('/studentInfo/save', function(sReq, sRes) {
+    console.log(sReq);
+    console.log(sReq.query.lastName);
+    studentInfo.studentInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.breIntr, sReq.query.lab, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/studentInfo/launch', function(sReq, sRes) {
+    studentInfo.studentInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.breIntr, sReq.query.lab, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/studentInfo/get', function(sReq, sRes) {
+    studentInfo.studentInfoGet(sReq.session.user.name, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/main/get', function(sReq, sRes) {
+    main.mainGet(sReq.session.user.name, function(isTeacher, msgList, myList, avaList){
+        console.log({
+            isTeacher: isTeacher,
+            num1: parseInt(msgList.length / 3),
+            msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
+            num2: parseInt(myList.length / 3),
+            myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
+            num3: parseInt(avaList.length / 3),
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
+            msglist2: msgList,
+            myList: myList,
+            avalist2: avaList
+            
+        });
+        sRes.send({
+            isTeacher: isTeacher,
+            num1: parseInt(msgList.length / 3) + 1,
+            msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
+            num2: parseInt(myList.length / 3) + 1,
+            myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
+            num3: parseInt(avaList.length / 3) + 1,
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length))
+        })
+    })
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

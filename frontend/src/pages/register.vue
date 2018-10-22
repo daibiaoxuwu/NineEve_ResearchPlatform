@@ -55,8 +55,7 @@ export default {
    onRegister(){
      if (this.registerAgreement==true) {
        if (this.registerPassword==this.registerPasswordRepetition) {
-         var registerRequestUrl = "/registerRequestUrl";
-         $.get(registerRequestUrl,
+         $.get('/register/getUrl',
            {name:this.registerName, university:this.registerUniv, email:this.registerEmail,
              password:this.registerPassword}
         ).then(()=>{
