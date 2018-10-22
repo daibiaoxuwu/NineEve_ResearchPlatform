@@ -136,6 +136,12 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 		 });
 });
 
+app.get('/studentInfo/getKeys', function(sReq, sRes) {
+    studentInfo.studentInfoGetKeys(function(result){
+			 sRes.send(result);
+		 });
+});
+
 
 app.get('/main/get', function(sReq, sRes) {
     main.mainGet(sReq.session.user.name, function(isTeacher, msgList, myList, avaList){
