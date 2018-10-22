@@ -42,26 +42,16 @@ module.exports = {
 					recall({saveSuccess: false});
 				else
 				{
-					console.log('update teacher set `lastname`="' + lastName + '", \
-					`firstname`="' + firstName + '", \
-					`username`="' + userName + '", \
-					`wechatphone`="' + wechatPhone + '", \
-					`email`="' + email + '", \
-					`perwebaddr`="' + perWebAddr + '", \
-					`researchArea`="' + researchArea + '", \
-					`researchresults`="' + researchResults + '", \
-					`lab`=' + lab + '\
-					 where teacherID="'+teacherID+'"');
-					connection.query('update teacher set `lastname`="' + lastName + '", \
-					`firstname`="' + firstName + '", \
-					`username`="' + userName + '", \
-					`wechatphone`="' + wechatPhone + '", \
-					`email`="' + email + '", \
-					`perwebaddr`="' + perWebAddr + '", \
-					`researcharea`="' + researchArea + '", \
-					`researchresults`="' + researchResults + '", \
-					`lab`="' + lab + '"\
-					 where teacherID="'+teacherID+'"');
+					connection.query('update teacher set `lastname`="' + lastName + '", ' +
+					'`firstname`="' + firstName + '", ' +
+					'`username`="' + userName + '", ' +
+					'`wechatphone`="' + wechatPhone + '", ' +
+					'`email`="' + email + '", ' +
+					'`perwebaddr`="' + perWebAddr + '", ' +
+					'`researcharea`="' + researchArea + '", ' +
+					'`researchresults`="' + researchResults + '", ' +
+					'`lab`="' + lab + '"' +
+					'where teacherID="'+teacherID+'"');
 					recall({saveSuccess: true});
 				}
 			});
@@ -110,17 +100,17 @@ module.exports = {
 						recall({launchSuccess: false});
 					else
 					{
-						connection.query('update teacher set `lastname`="' + lastName + '", \
-						`firstname`="' + firstName + '", \
-						`username`="' + userName + '", \
-						`wechatphone`="' + wechatPhone + '", \
-						`email`="' + email + '", \
-						`perwebaddr`="' + perWebAddr + '", \
-						`researcharea`="' + researchArea + '", \
-						`researchresults`="' + researchResults + '", \
-						`lab`="' + lab + '", \
-						`filled`=1 \
-						 where teacherID="'+teacherID+'"');
+						connection.query('update teacher set `lastname`="' + lastName + '", ' +
+						'`firstname`="' + firstName + '", ' +
+						'`username`="' + userName + '", ' +
+						'`wechatphone`="' + wechatPhone + '", ' +
+						'`email`="' + email + '", ' +
+						'`perwebaddr`="' + perWebAddr + '", ' +
+						'`researcharea`="' + researchArea + '", ' +
+						'`researchresults`="' + researchResults + '", ' +
+						'`lab`="' + lab + '", ' +
+						'`filled`=1 ' +
+						'where teacherID="'+teacherID+'"');
 						recall({launchSuccess: true});
 					}
 				});
