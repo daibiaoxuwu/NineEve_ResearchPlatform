@@ -10,7 +10,7 @@ module.exports = {
      * 所有科研任务列表
      */
 
-    enrollGet: function(name, callback){
+    enrollGet: function(title, callback){
         callback(
             {
                 teacher:"国雨晴",

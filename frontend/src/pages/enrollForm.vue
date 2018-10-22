@@ -18,7 +18,7 @@
         
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3"><b>Basic Information 基本信息</b></h4>
-          <form class="needs-validation" novalidate="">
+          <!-- <form class="needs-validation" novalidate=""> -->
             <div class="row">
               <div class="col-md-6 mb-3"> <label for="firstName">Last name 姓<br></label>
                 <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
@@ -90,7 +90,7 @@
     <p class="my-4">Are you sure to submit enrollment?</br>是否提交报名?</p>
   </b-modal>
            
-          </form>
+          <!-- </form> -->
         </div>
       </div>
     </div>
