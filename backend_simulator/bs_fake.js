@@ -209,6 +209,14 @@ app.get('/enroll/get', function(sReq, sRes) {
         sRes.send(sReq.session.assignment);
 })
 
+//do not need database!
+app.get('/enroll/route', function(sReq, sRes) {
+    if (sReq.session && sReq.session.user) {
+    sRes.send('/enrollForm');}
+        else{
+    sRes.send('/');}
+})
+
 app.get('/home/get', function(sReq, sRes) {
     home.homeGet(function(item){
         sRes.send(item);
