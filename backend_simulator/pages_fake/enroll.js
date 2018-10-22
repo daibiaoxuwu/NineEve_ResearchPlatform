@@ -1,16 +1,24 @@
 module.exports = {
     /**
-     * 学生请求页面的保存请求 页面url: '/main'
+     * 获得某项目具体信息的请求 页面url: assignmentInfo组件
      * 学生通过邮箱登陆
      * 
      * @param {string} title
      * 任务的题目
      *
-     * @property {Array} avaList 
-     * 所有科研任务列表
+     * @property {Array} 
+     * 科研任务具体信息
+     * teacher
+     * introduction
+     * keywords
+     * abilities
+     * detailed
+     * number
+     * deadline
+     * status
      */
 
-    enrollGet: function(name, callback){
+    enrollGet: function(title, callback){
         callback(
             {
                 teacher:"国雨晴",
