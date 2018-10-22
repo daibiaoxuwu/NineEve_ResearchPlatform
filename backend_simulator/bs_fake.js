@@ -47,27 +47,27 @@ app.get(/^\/[^\/]*$/, (req, res) => {
 var requireLoc = "./pages_fake"; //location for requiring js files for database connection
 
 
-//loginRegisterData.js
-var loginRegisterData = require(requireLoc+ "/loginRegisterData");
+//home.js
+var home = require(requireLoc+ "/home");
 
 app.get('/login/byEmail', function(sReq, sRes){
 	
-	loginRegisterData.emailLogin(sReq.body.email, sReq.body.password, function(result){
+	home.emailLogin(sReq.body.email, sReq.body.password, function(result){
 		sRes.send(result);
 	});
 	
 	
-    //sRes.send(loginRegisterData.emailLogin(sReq.body.email, sReq.body.password));
+    //sRes.send(home.emailLogin(sReq.body.email, sReq.body.password));
 });
 
 app.get('/login/byTeacherId', function(sReq, sRes){
-	loginRegisterData.teacherLogin(sReq.body.teacherId, sReq.body.password,function(result){
+	home.teacherLogin(sReq.body.teacherId, sReq.body.password,function(result){
 		sRes.send(result);
 	});
 });
 
 app.get('/login/byStudentId', function(sReq, sRes){
-    loginRegisterData.studentLogin(sReq.body.studentId, sReq.body.password,function(result){
+    home.studentLogin(sReq.body.studentId, sReq.body.password,function(result){
 		sRes.send(result);
 	});
 });
@@ -78,7 +78,7 @@ app.get('/register/getUrl', function(sReq, sRes){
     var university = sReq.query.university;
     var email = sReq.query.email;
     var password = sReq.query.password;
-   loginRegisterData.register(name,university,email,password,function(result){
+   home.register(name,university,email,password,function(result){
         sReq.session.user = {name: email}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
 	});
@@ -162,7 +162,7 @@ app.get('/enroll/get', function(sReq, sRes) {
 })
 
 app.get('/home/get', function(sReq, sRes) {
-    loginRegisterData.homeGet(function(item){
+    home.homeGet(function(item){
         sRes.send(item);
     })
 })
