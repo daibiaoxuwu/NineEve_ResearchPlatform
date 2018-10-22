@@ -21,6 +21,9 @@
           <h4 class="mb-3"><b>基于Bootstrap-Vue的网页设计研究</b>
            <small class="form-text text-muted">
                 Web Page Design Using Bootstrap-Vue
+                 <small class="form-text text-muted">
+                {{info.status}}
+              </small>
               </small>
          </h4>
          

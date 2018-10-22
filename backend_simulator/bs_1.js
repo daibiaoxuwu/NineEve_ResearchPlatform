@@ -81,28 +81,28 @@ res.redirect("/");//未登录的用户, 如果输入url强行访问此页面, �
 var requireLoc = "./pages";
 
 
-//loginRegisterData.js
-var loginRegisterData = require(requireLoc+ "/loginRegisterData");
+//home.js
+var home = require(requireLoc+ "/home");
 
 app.get('/login/byEmail', function(sReq, sRes){
 	
-	loginRegisterData.emailLogin(sReq.query.email, sReq.query.password, function(result){
+	home.emailLogin(sReq.query.email, sReq.query.password, function(result){
 		sRes.send(result);
 	});
 	
 	
-    //sRes.send(loginRegisterData.emailLogin(sReq.query.email, sReq.query.password));
+    //sRes.send(home.emailLogin(sReq.query.email, sReq.query.password));
 });
 
 app.get('/login/byTeacherId', function(sReq, sRes){
 	console.log(sReq.query.teacherId,sReq.query.password);
-	loginRegisterData.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
+	home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
 		sRes.send(result);
 	});
 });
 
 app.get('/login/byStudentId', function(sReq, sRes){
-    loginRegisterData.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
+    home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
 		sRes.send(result);
 	});
 });
@@ -113,7 +113,7 @@ app.get('/register/getUrl', function(sReq, sRes){
     var university = sReq.query.university;
     var email = sReq.query.email;
     var password = sReq.query.password;
-   loginRegisterData.register(name,university,email,password,function(result){
+   home.register(name,university,email,password,function(result){
         sReq.session.user = {name: email}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
 	});
