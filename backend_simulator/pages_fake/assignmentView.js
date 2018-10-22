@@ -4,7 +4,7 @@ module.exports = {
      *
      * @property {Array} 
      * 所有 可报名 科研任务列表
-     * 含有项目: title, teacher, introduction三项.
+     * 含有: title, teacher, introduction三项.
      */
 
     enrollGet: function(title, callback){
