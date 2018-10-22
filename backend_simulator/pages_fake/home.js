@@ -10,13 +10,15 @@ module.exports = {
      *
      * @property {boolean} loginSuccess
      * 登陆是否成功
-     * @property {boolean} usernameTaken
-     * 用户名是否存在
+     * @property {boolean} usernameNotFound
+     * 用户名是否存在: 不存在返回true
+     * @property {boolean} infoFinished
+     * 用户是否填写完个人信息: 填写完返回true
      *
      */
     emailLogin: function(email, password, recall) {
         console.log("email login: "+email + password);
-        recall({loginSuccess: true, usernameTaken: false});
+        recall({loginSuccess: true, usernameNotFound: false, infoFinished: false});
     },
 
 
@@ -32,11 +34,15 @@ module.exports = {
      *
      * @property {boolean} loginSuccess
      * 登陆是否成功
+     * @property {boolean} usernameNotFound
+     * 用户名是否存在: 不存在返回true
+     *      * @property {boolean} infoFinished
+     * 用户是否填写完个人信息: 填写完返回true
      *
      */
     teacherLogin: function(teacherID, password, recall) {
         console.log("teacher login: "+teacherID + password);
-        recall({loginSuccess: true, usernameTaken: false});
+        recall({loginSuccess: true, usernameNotFound: false, infoFinished: true});
     },
 
 
@@ -51,11 +57,15 @@ module.exports = {
      *
      * @property {boolean} loginSuccess
      * 登陆是否成功
+     * @property {boolean} usernameNotFound
+     * 用户名是否存在: 不存在返回true
+     *      * @property {boolean} infoFinished
+     * 用户是否填写完个人信息: 填写完返回true
      *
      */
     studentLogin: function(studentID, password, recall) {
         console.log("student login: "+studentID + password);
-        recall({loginSuccess: true, usernameTaken: false});
+        recall({loginSuccess: true, usernameNotFound: false, infoFinished: false});
     },
 
 
@@ -82,5 +92,37 @@ module.exports = {
     register: function(name, university, email, password, recall) {
         console.log("register: "+name + university + email + password);
         recall({registerSuccess: true});
-    }
+    },
+   /**
+     * 主页拿取所有项目列表请求 页面url: '/'
+     * @return {Array} avaList 
+     * 所有科研任务列表
+     */
+    homeGet: function(callback){
+        callback(
+                [{
+                    text: "项目1",
+                    status: "Enrolling 可报名"
+                  },
+                  {
+                    text: "项目2",
+                    status: "Enrolling 可报名"
+                  },
+                  {
+                    text: "项目3",
+                    status: "Enrolling 可报名"
+                  },
+                   {
+                    text: "项目4",
+                    status: "Enrolling 可报名"
+                  },
+                   {
+                    text: "项目5",
+                    status: "Enrolling 可报名"
+                  }]
+              
+              );
+            }
+
+
 }

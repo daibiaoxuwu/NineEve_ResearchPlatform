@@ -10,7 +10,6 @@
            <div class="form-group" style="text-align:center;">
              <h3>Login</h3>
               </div>
-          <form>
             <div class="form-group"> <select class="form-control" v-model="inputTSForm" id="form10">
               <option value="teacher">Teacher</option>
               <option value="student">Student</option>
@@ -29,7 +28,6 @@
              <h5>or</h5>
               </div>
             <router-link to="/register"><button  class="form-control btn btn-primary">Register</button></router-link>
-          </form>
         </div>
       </div>
     </div>
@@ -92,29 +90,15 @@ export default {
         dismissSecs: 10,
       dismissCountDown: 0,
       showDismissibleAlert: false,
-      list:[
-        {
-          text: "项目1",
-          status: "Enrolling 可报名"
-        },
-        {
-          text: "项目2",
-          status: "Enrolling 可报名"
-        },
-        {
-          text: "项目3",
-          status: "Enrolling 可报名"
-        },
-         {
-          text: "项目4",
-          status: "Enrolling 可报名"
-        },
-         {
-          text: "项目5",
-          status: "Enrolling 可报名"
-        }
-      ]
+      list:[]
     };
+  },
+  created:function(){
+    var that = this;
+     $.get('/home/get',
+          function(data){
+            that.list=data;
+          })
   },
   methods: {
     countDownChanged (dismissCountDown) {
@@ -127,26 +111,26 @@ export default {
       return '#page/' + pageNum + '/foobar'
     },
     onClick (item){
-      alert(item.text);
-      // this.$router.push("/log")
+       this.$router.push({path: "/enroll", params: {title: item.text}});
     },
 
     loginRequest (){
       var inputTORS = this.inputTSForm;
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
-      var loginRequestUrlEmail = "/loginRequestUrlEmail";
-      var loginRequestUrlTeacherId = "/loginRequestUrlTeacherId";
-      var loginRequestUrlStudentId = "/loginRequestUrlStudentId";
+      var that = this;
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      alert(inputTORS);
       if (inputTORS=="teacher") {
-        $.post(loginRequestUrlTeacherId, {teacherId:inputName,password:inputPassword},
-          function(data){
+        $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword})
+          .then(function(data){
             if(data.loginSuccess){
-              alert("login success");
-            } else if(data.usernameTaken){
+              if(data.infoFinished){
+                that.$router.push("/main");
+              }else{
+                that.$router.push("/teacherInfo");
+              }
+            } else if(data.usernameNotFound){
               alert("用户不存在.");
             } else {
               alert("error in username or password.\n用户名或密码错误.")
@@ -157,11 +141,15 @@ export default {
       else if (inputTORS=="student"){
         var isEmail = (new RegExp("@")).test(inputName);
         if (isEmail) {
-          $.post(loginRequestUrlEmail, {email:inputName,password:inputPassword},
-            function(data){
+          $.get('/login/byEmail', {email:inputName,password:inputPassword})
+            .then(function(data){
               if(data.loginSuccess){
-                alert("login success");
-              } else if(data.usernameTaken){
+                if(data.infoFinished){
+                  that.$router.push("/main");
+                }else{
+                  that.$router.push("/studentInfo");
+                }
+              } else if(data.usernameNotFound){
               alert("用户不存在.");
             } else {
               alert("error in username or password.\n用户名或密码错误.")
@@ -170,11 +158,15 @@ export default {
           );
         }
         else {
-          $.post(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
-            function(data){
+          $.get('/login/byStudentId', {studentId:inputName,password:inputPassword})
+            .then(function(data){
               if(data.loginSuccess){
-                alert("login success");
-              } else if(data.usernameTaken){
+                if(data.infoFinished){
+                  that.$router.push("/main");
+                }else{
+                  that.$router.push("/studentInfo");
+                }
+              } else if(data.usernameNotFound){
               alert("用户不存在.");
             } else {
               alert("error in username or password.\n用户名或密码错误.")
