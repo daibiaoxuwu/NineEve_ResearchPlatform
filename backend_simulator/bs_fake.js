@@ -53,6 +53,7 @@ var home = require(requireLoc+ "/home");
 app.get('/login/byEmail', function(sReq, sRes){
 	
 	home.emailLogin(sReq.query.email, sReq.query.password, function(result){
+        sReq.session.user = {name: sReq.query.email};
 		sRes.send(result);
 	});
 	
@@ -62,24 +63,22 @@ app.get('/login/byEmail', function(sReq, sRes){
 
 app.get('/login/byTeacherId', function(sReq, sRes){
 	home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
+        sReq.session.user = {name: sReq.query.teacherId};
 		sRes.send(result);
 	});
 });
 
 app.get('/login/byStudentId', function(sReq, sRes){
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
+        sReq.session.user = {name: sReq.query.studentId}   
 		sRes.send(result);
 	});
 });
 
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
-    var name = sReq.query.name;
-    var university = sReq.query.university;
-    var email = sReq.query.email;
-    var password = sReq.query.password;
-   home.register(name,university,email,password,function(result){
-        sReq.session.user = {name: email}    //设置"全局变量"name. 此后可以根据这个区分用户.
+   home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
+        sReq.session.user = {name: sReq.query.email}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
 	});
 });
