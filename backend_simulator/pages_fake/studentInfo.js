@@ -171,17 +171,6 @@ module.exports = {
         selectedKey:[{name: "1", state: true}],
         allKeys:[{name: "关键词", state: false}]});
         else callback({lastName: ""});
-    },
-
-   /**
-     * 学生请求页面的取得之前所写内容请求 通过邮箱获得 页面url: '/studentInfo'
-     * 如果没有查到此人, 全部返回空串即可
-     * 
-     * @param {Array} allKeys
-     * 所有的关键词 每一项的格式:{name:"关键词", state:true/false}. 所有的关键词都被传出来, state任取.
-     */
-    studentInfoGet: function(callback) {
-        callback([{name: "1", state: false},{name: "2", state: false}]);
     }
 
 }

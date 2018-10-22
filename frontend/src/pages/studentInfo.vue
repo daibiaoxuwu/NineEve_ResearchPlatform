@@ -205,13 +205,8 @@ export default {
           that.grade = data.grade;
           that.selectedLab = data.selectedLab;
           that.selectedKey = data.selectedKey;
+          that.allKeys = data.allKeys;
         });
-          $.get(
-        "/studentInfo/getKeys",
-        {}).then(function(data){
-          that.allKeys = data;
-        });
-      
     },
 
     clickFresh() {

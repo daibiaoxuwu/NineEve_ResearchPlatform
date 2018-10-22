@@ -144,12 +144,6 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 		 });
 });
 
-app.get('/studentInfo/getKeys', function(sReq, sRes) {
-    studentInfo.studentInfoGetKeys(function(result){
-			 sRes.send(result);
-		 });
-});
-
 
 app.get('/enrollForm/save', function(sReq, sRes) {
     console.log(sReq);
