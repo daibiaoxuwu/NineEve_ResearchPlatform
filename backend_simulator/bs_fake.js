@@ -90,38 +90,50 @@ app.get('/register/getUrl', function(sReq, sRes){
 app.get('/teacherInfo/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    sRes.send(teacherInfo.teacherInfoSave(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    teacherInfo.teacherInfoSave(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab));
+         sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab, function(result){
+			 sRes.send(result);
+		 });
 });
 
 app.get('/teacherInfo/launch', function(sReq, sRes) {
-    sRes.send(teacherInfo.teacherInfoLaunch(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    teacherInfo.teacherInfoLaunch(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab));
+         sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab, function(result){
+			 sRes.send(result);
+		 });
 });
 
 app.get('/teacherInfo/get', function(sReq, sRes) {
-    sRes.send(teacherInfo.teacherInfoGet(sReq.session.user.id, sReq.session.user.email));
+    teacherInfo.teacherInfoGet(sReq.session.user.id, function(result){
+			 sRes.send(result);
+		 });
 });
 
 
 app.get('/studentInfo/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    sRes.send(studentInfo.studentInfoSave(sReq.session.user.id, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    studentInfo.studentInfoSave(sReq.session.user.id, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey));
+         sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey, function(result){
+			 sRes.send(result);
+		 });
 });
 
 app.get('/studentInfo/launch', function(sReq, sRes) {
-    sRes.send(studentInfo.studentInfoLaunch(sReq.session.user.id, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    studentInfo.studentInfoLaunch(sReq.session.user.id, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey));
+         sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey, function(result){
+			 sRes.send(result);
+		 });
 });
 
 app.get('/studentInfo/get', function(sReq, sRes) {
-    sRes.send(studentInfo.studentInfoGet(sReq.session.user.id, sReq.session.user.email));
+    studentInfo.studentInfoGet(sReq.session.user.id, sReq.session.user.email, function(result){
+			 sRes.send(result);
+		 });
 });
 
 
