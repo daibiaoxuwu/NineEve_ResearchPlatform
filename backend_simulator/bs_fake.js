@@ -52,22 +52,22 @@ var home = require(requireLoc+ "/home");
 
 app.get('/login/byEmail', function(sReq, sRes){
 	
-	home.emailLogin(sReq.body.email, sReq.body.password, function(result){
+	home.emailLogin(sReq.query.email, sReq.query.password, function(result){
 		sRes.send(result);
 	});
 	
 	
-    //sRes.send(home.emailLogin(sReq.body.email, sReq.body.password));
+    //sRes.send(home.emailLogin(sReq.query.email, sReq.query.password));
 });
 
 app.get('/login/byTeacherId', function(sReq, sRes){
-	home.teacherLogin(sReq.body.teacherId, sReq.body.password,function(result){
+	home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
 		sRes.send(result);
 	});
 });
 
 app.get('/login/byStudentId', function(sReq, sRes){
-    home.studentLogin(sReq.body.studentId, sReq.body.password,function(result){
+    home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
 		sRes.send(result);
 	});
 });

@@ -7,7 +7,7 @@ module.exports = {
      * 学生的邮箱
      *
      * @property {boolean} isTeacher
-     * 是否为学生(学生和老师公用个人主页)
+     * 是否为老师(学生和老师公用个人主页)
      * 
      * @property {Array} msgList 
      * 学生的新消息列表

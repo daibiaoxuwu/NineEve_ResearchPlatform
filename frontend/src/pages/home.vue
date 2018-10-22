@@ -10,7 +10,6 @@
            <div class="form-group" style="text-align:center;">
              <h3>Login</h3>
               </div>
-          <form>
             <div class="form-group"> <select class="form-control" v-model="inputTSForm" id="form10">
               <option value="teacher">Teacher</option>
               <option value="student">Student</option>
@@ -29,7 +28,6 @@
              <h5>or</h5>
               </div>
             <router-link to="/register"><button  class="form-control btn btn-primary">Register</button></router-link>
-          </form>
         </div>
       </div>
     </div>
@@ -120,14 +118,18 @@ export default {
       var inputTORS = this.inputTSForm;
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
+      var that = this;
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      alert(inputTORS);
       if (inputTORS=="teacher") {
-        $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword},
-          function(data){
+        $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword})
+          .then(function(data){
             if(data.loginSuccess){
-              alert("login success");
+              if(data.infoFinished){
+                that.$router.push("/main");
+              }else{
+                that.$router.push("/teacherInfo");
+              }
             } else if(data.usernameNotFound){
               alert("用户不存在.");
             } else {
@@ -139,10 +141,14 @@ export default {
       else if (inputTORS=="student"){
         var isEmail = (new RegExp("@")).test(inputName);
         if (isEmail) {
-          $.get('/login/byEmail', {email:inputName,password:inputPassword},
-            function(data){
+          $.get('/login/byEmail', {email:inputName,password:inputPassword})
+            .then(function(data){
               if(data.loginSuccess){
-                alert("login success");
+                if(data.infoFinished){
+                  that.$router.push("/main");
+                }else{
+                  that.$router.push("/studentInfo");
+                }
               } else if(data.usernameNotFound){
               alert("用户不存在.");
             } else {
@@ -152,10 +158,14 @@ export default {
           );
         }
         else {
-          $.get('/login/byStudentId', {studentId:inputName,password:inputPassword},
-            function(data){
+          $.get('/login/byStudentId', {studentId:inputName,password:inputPassword})
+            .then(function(data){
               if(data.loginSuccess){
-                alert("login success");
+                if(data.infoFinished){
+                  that.$router.push("/main");
+                }else{
+                  that.$router.push("/studentInfo");
+                }
               } else if(data.usernameNotFound){
               alert("用户不存在.");
             } else {
