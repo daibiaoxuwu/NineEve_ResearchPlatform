@@ -53,6 +53,7 @@ var teacherInfo = require(requireLoc + "/teacherInfo");
 var studentInfo = require(requireLoc + "/studentInfo");
 var main = require(requireLoc + "/main");
 var enroll = require(requireLoc + "/enroll");
+var assignmentView = require(requireLoc + "/assignmentView");
 
 
 app.get('/login/byEmail', function(sReq, sRes){
@@ -160,6 +161,12 @@ app.get('/enroll/get', function(sReq, sRes) {
 
 app.get('/home/get', function(sReq, sRes) {
     home.homeGet(function(item){
+        sRes.send(item);
+    })
+})
+
+app.get('/assignmentView/get', function(sReq, sRes) {
+    assignmentView.assignmentViewGet(function(item){
         sRes.send(item);
     })
 })
