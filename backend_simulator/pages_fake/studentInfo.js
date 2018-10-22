@@ -3,6 +3,12 @@ module.exports = {
      * 学生请求页面的保存请求 页面url: '/studentInfo'
      * 学生通过邮箱登陆
      * 
+     * @param {string} id
+     * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
+     * 
+     * @param {string} email
+     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
+     * 
      * @param {string} lastName
      * 学生的姓
      *
@@ -39,11 +45,11 @@ module.exports = {
      * 保存是否成功 如果没有查到此人, 返回false
      */
 
-    studentInfoSave: function(lastName, firstName, username,
+    studentInfoSave: function(id, email, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-          breIntr, grade, selectedLab, selectedKey) {
-        console.log("studentInfoSave: " + lastName + firstName);
-        return {saveSuccess: true};
+          breIntr, grade, selectedLab, selectedKey, callback) {
+        console.log("studentInfoSave: " + id + email + lastName + firstName);
+        callback({saveSuccess: true});
     },
 
 
@@ -51,6 +57,12 @@ module.exports = {
      * 学生请求页面的保存并提交请求 页面url: '/studentInfo'
      * 学生通过邮箱登陆
      *
+     * @param {string} id
+     * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
+     * 
+     * @param {string} email
+     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
+     * 
      * @param {string} lastName
      * 学生的姓
      *
@@ -87,19 +99,22 @@ module.exports = {
      * 启动是否成功 如果没有查到此人, 返回false
      */
 
-    studentInfoLaunch: function(lastName, firstName, username,
+    studentInfoLaunch: function(id, email, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-         breIntr, grade, selectedLab, selectedKey) {
-        console.log("studentInfoLaunch: " + lastName + firstName + email);
-        return {launchSuccess: true};
+         breIntr, grade, selectedLab, selectedKey, callback) {
+        console.log("studentInfoLaunch: " + id + email + lastName + firstName + email);
+        callback({launchSuccess: true});
     },
 
     /**
      * 学生请求页面的取得之前所写内容请求 通过邮箱获得 页面url: '/studentInfo'
      * 如果没有查到此人, 全部返回空串即可
      *
+     * @param {string} id
+     * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
+     * 
      * @param {string} email
-     * 学生的账号
+     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
      * 
      * @property {string} lastName
      * 学生的姓
@@ -137,9 +152,9 @@ module.exports = {
      * 所有的关键词 每一项的格式:{name:"关键词", state:true/false}. 所有的关键词都被传出来, state任取.
      */
 
-    studentInfoGet: function(name) {
-        console.log("studentInfGet: " + name);
-        if(name=="1") return {lastName: "一", firstName:"2",
+    studentInfoGet: function(id, email, callback) {
+        console.log("studentInfGet: " + id + email);
+        if(email=="1") callback({lastName: "一", firstName:"2",
         username:"3",
         wechatPhone:"4", 
         email:"5",
@@ -154,9 +169,8 @@ module.exports = {
             {name: "Network Laboratory 网络所", state:false}
           ],
         selectedKey:[{name: "1", state: true}],
-        allKeys:[{name: "关键词", state: false}]};
-        else if(name == "2") return {lastName: "二"};
-        else return{lastName: ""};
+        allKeys:[{name: "关键词", state: false}]});
+        else callback({lastName: ""});
     },
 
 }

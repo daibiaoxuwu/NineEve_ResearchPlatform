@@ -17,19 +17,16 @@
         <rightpane></rightpane>
      
         <div class="col-md-8 order-md-1">
-            <h2 class="mb-3"><b>恭喜!</b>
+            <h2 class="mb-3"><b>很遗憾...</b>
            <small class="form-text text-muted">
-                Congratulations!
+                We're sorry...
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经被 "基于Bootstrap-Vue的网页设计研究" 录取!</b>
+          <h5 class="mb-3"><b>你未被 "基于Bootstrap-Vue的网页设计研究" 录取.</b>
            <small class="form-text text-muted">
-              You have been accepted to the project. Your project has been launched.
+              You are rejected from the project.
               </small>
-              <b>你们的项目已经启动, 请尽快联系导师.</b>
-           <small class="form-text text-muted">
-             Please contact your tutor as soon as possible.
-              </small>
+             
          </h5>
       <assignmentInfo></assignmentInfo>
   <router-link to="/"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
