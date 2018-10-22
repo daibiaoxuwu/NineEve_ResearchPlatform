@@ -21,11 +21,14 @@
           <h4 class="mb-3"><b>基于Bootstrap-Vue的网页设计研究</b>
            <small class="form-text text-muted">
                 Web Page Design Using Bootstrap-Vue
+                 <small class="form-text text-muted">
+                {{info.status}}
+              </small>
               </small>
          </h4>
          
-         <assignmentInfo v-bind:info="info"></assignmentInfo>
-             <router-link to="/enrollSuccess" > <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button></router-link>
+         <assignmentInfo></assignmentInfo>
+             <!-- <router-link to="/enrollSuccess" > <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button></router-link> -->
              <router-link to="/enrollForm" > <button class="btn btn-primary btn-lg btn-block" type="submit" style="margin-top:0.5rem;">Enroll Now</button> </router-link>
         
         </div>
@@ -48,29 +51,11 @@ export default {
   name: "enroll",
    data() {
     return {
-      info:{}
     }
    },
    components: {
      rightpane,
      assignmentInfo
-   },
-   created:function(){
-     this.initialize();
-   },
-   
-  methods: {
-    initialize(){
-  var that=this;
-
-      $.get(
-        "/enroll/get",//TODO:get
-        {
-          title: that.$route.params.title
-        }).then(function(data){
-          that.info=data;
-         });
-    }
   }
 }
 </script>

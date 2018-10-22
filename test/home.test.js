@@ -5,36 +5,32 @@ var assert = require('assert');
 const chai=require("chai");
 const expect=chai.expect;
 chai.use(require("chai-http"))
-// import Component from '../frontend/src/Component'
+import { mount, RouterLinkStub } from '@vue/test-utils'
 
-// describe('Component', () => {
-//   // 检查原始组件选项
-//   it('has a created hook', () => {
-//     expect(typeof Component.created).to.be.equal('function')
-//   })
+const wrapper = mount(home, {
+  stubs: {
+    RouterLink: RouterLinkStub
+  }
+})
+const vm = wrapper.vm
 
-//   // 评估原始组件选项中的函数的结果
-//   it('sets the correct default data', () => {
-//     expect(typeof Component.data).to.be.equal('function')
-//     const defaultData = Component.data()
-//     expect(defaultData.message).to.be.equal('hello!')
-//   })
-
-//   // 检查 mount 中的组件实例
-//   it('correctly sets the message when created', () => {
-//     const vm = new Vue(Component).$mount()
-//     expect(vm.message).to.be.equal('bye!')
-//   })
-
-//   // 创建一个实例并检查渲染输出
-//   it('renders the correct message', () => {
-//     const Constructor = Vue.extend(Component)
-//     const vm = new Constructor().$mount()
-//     expect(vm.$el.textContent).to.be.equal('bye!')
-//   })
-// })
 
 describe('home.vue test', () => {
+  describe('content test', () => {
+    it('should have title', () => {
+       wrapper.attributes('form')
+      expect(wrapper.text()).contain('科研实习平台');
+    })
+
+    it('should be at page 1 initially', () => {
+      expect(wrapper.vm.currentPage).to.be.equal(1);
+    })
+
+    it('should have 5 items in one page', () => {
+      expect(wrapper.vm.list).has.length(5);
+    })
+  })
+
   it('has a data function', () => {
     expect(typeof home.data).to.be.equal('function');
   })

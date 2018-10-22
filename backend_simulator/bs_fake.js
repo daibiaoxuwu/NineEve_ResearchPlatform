@@ -28,9 +28,9 @@ app.use(appSession);
 
 
 
-app.get('(/|/register)', (req, res) =>{
+app.get('(/|/register|/enroll)', (req, res) =>{
     var user = {};
-    if (req.session && req.session.user) { user.name = req.session.user; }
+    if (req.session && req.session.user) { user.name = req.session.user; }//TODO: what's this?
     res.render('index', {"user":JSON.stringify(user)});
 })
 
@@ -47,83 +47,93 @@ app.get(/^\/[^\/]*$/, (req, res) => {
 var requireLoc = "./pages_fake"; //location for requiring js files for database connection
 
 
-//loginRegisterData.js
-var loginRegisterData = require(requireLoc+ "/loginRegisterData");
+//home.js
+var home = require(requireLoc+ "/home");
+var teacherInfo = require(requireLoc + "/teacherInfo");
+var studentInfo = require(requireLoc + "/studentInfo");
+var main = require(requireLoc + "/main");
+var enroll = require(requireLoc + "/enroll");
+var assignmentView = require(requireLoc + "/assignmentView");
+
 
 app.get('/login/byEmail', function(sReq, sRes){
 	
-	loginRegisterData.emailLogin(sReq.body.email, sReq.body.password, function(result){
+	home.emailLogin(sReq.query.email, sReq.query.password, function(result){
+        sReq.session.user = {id:"", email: sReq.query.email};
 		sRes.send(result);
 	});
-	
-	
-    //sRes.send(loginRegisterData.emailLogin(sReq.body.email, sReq.body.password));
 });
 
 app.get('/login/byTeacherId', function(sReq, sRes){
-	loginRegisterData.teacherLogin(sReq.body.teacherId, sReq.body.password,function(result){
+	home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
+        sReq.session.user = {id: sReq.query.teacherId, email:""};
 		sRes.send(result);
 	});
 });
 
 app.get('/login/byStudentId', function(sReq, sRes){
-    loginRegisterData.studentLogin(sReq.body.studentId, sReq.body.password,function(result){
+    home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
+        sReq.session.user = {id: sReq.query.studentId, email:""}   
 		sRes.send(result);
 	});
 });
 
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
-    var name = sReq.query.name;
-    var university = sReq.query.university;
-    var email = sReq.query.email;
-    var password = sReq.query.password;
-   loginRegisterData.register(name,university,email,password,function(result){
-        sReq.session.user = {name: email}    //设置"全局变量"name. 此后可以根据这个区分用户.
+   home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
+        sReq.session.user = {id:"", email: sReq.query.email}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
 	});
 });
 
-var teacherInfo = require(requireLoc + "/teacherInfo");
-var studentInfo = require(requireLoc + "/studentInfo");
-var main = require(requireLoc + "/main");
-var enroll = require(requireLoc + "/enroll");
 
 app.get('/teacherInfo/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    sRes.send(teacherInfo.teacherInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    teacherInfo.teacherInfoSave(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab));
+         sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab, function(result){
+			 sRes.send(result);
+		 });
 });
 
 app.get('/teacherInfo/launch', function(sReq, sRes) {
-    sRes.send(teacherInfo.teacherInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    teacherInfo.teacherInfoLaunch(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab));
+         sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab, function(result){
+			 sRes.send(result);
+		 });
 });
 
 app.get('/teacherInfo/get', function(sReq, sRes) {
-    sRes.send(teacherInfo.teacherInfoGet(sReq.session.user.name));
+    teacherInfo.teacherInfoGet(sReq.session.user.id, function(result){
+			 sRes.send(result);
+		 });
 });
 
 
 app.get('/studentInfo/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    sRes.send(studentInfo.studentInfoSave(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    studentInfo.studentInfoSave(sReq.session.user.id, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey));
+         sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey, function(result){
+			 sRes.send(result);
+		 });
 });
 
 app.get('/studentInfo/launch', function(sReq, sRes) {
-    sRes.send(studentInfo.studentInfoLaunch(sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    studentInfo.studentInfoLaunch(sReq.session.user.id, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey));
+         sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey, function(result){
+			 sRes.send(result);
+		 });
 });
 
 app.get('/studentInfo/get', function(sReq, sRes) {
-    sRes.send(studentInfo.studentInfoGet(sReq.session.user.name));
+    studentInfo.studentInfoGet(sReq.session.user.id, sReq.session.user.email, function(result){
+			 sRes.send(result);
+		 });
 });
 
 
@@ -157,6 +167,18 @@ app.get('/main/get', function(sReq, sRes) {
 
 app.get('/enroll/get', function(sReq, sRes) {
     enroll.enrollGet(sReq.query.title, function(item){
+        sRes.send(item);
+    })
+})
+
+app.get('/home/get', function(sReq, sRes) {
+    home.homeGet(function(item){
+        sRes.send(item);
+    })
+})
+
+app.get('/assignmentView/get', function(sReq, sRes) {
+    assignmentView.assignmentViewGet(function(item){
         sRes.send(item);
     })
 })

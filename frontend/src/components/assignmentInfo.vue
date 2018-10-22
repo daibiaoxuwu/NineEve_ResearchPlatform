@@ -32,11 +32,35 @@
 </p>
 </div>
 </template>
+
+
 <script>
+
+
 export default {
   
-props:{
- info:Object
-}
+  name: "enroll",
+   data() {
+    return {
+      info:{}
+    }
+   },
+   created:function(){
+     this.initialize();
+   },
+   
+  methods: {
+    initialize(){
+  var that=this;
+
+      $.get(
+        "/enroll/get",//TODO:get
+        {
+          title: that.$route.params.title
+        }).then(function(data){
+          that.info=data;
+         });
+    }
+  }
 }
 </script>

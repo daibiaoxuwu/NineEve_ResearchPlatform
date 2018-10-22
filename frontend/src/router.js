@@ -16,6 +16,7 @@ import enrollSuccess from "./pages/enrollSuccess.vue";
 import enrollStatus from "./pages/enrollStatus.vue";
 import enrollAccepted from "./pages/enrollAccepted.vue";
 import enrollAcceptNotice from "./pages/enrollAcceptNotice.vue";
+import enrollRejectNotice from "./pages/enrollRejectNotice.vue";
 import studentEvaluate from "./pages/studentEvaluate.vue";
 import studentEvaluateSuccess from "./pages/studentEvaluateSuccess.vue";
 import teacherEvaluate from "./pages/teacherEvaluate.vue";
@@ -34,6 +35,7 @@ const routes = [
     { path: '/enrollStatus', component: enrollStatus},
     { path: '/enrollAccepted', component: enrollAccepted},
     { path: '/enrollAcceptNotice', component: enrollAcceptNotice},
+    { path: '/enrollRejectNotice', component: enrollRejectNotice},
     { path: '/studentEvaluate', component: studentEvaluate},
     { path: '/teacherEvaluate', component: teacherEvaluate},
     { path: '/studentEvaluateSuccess', component: studentEvaluateSuccess},

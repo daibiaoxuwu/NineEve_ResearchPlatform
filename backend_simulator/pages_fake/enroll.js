@@ -10,7 +10,7 @@ module.exports = {
      * 所有科研任务列表
      */
 
-    enrollGet: function(name, callback){
+    enrollGet: function(title, callback){
         callback(
             {
                 teacher:"国雨晴",
@@ -45,7 +45,8 @@ module.exports = {
         Vue 也可以在 unpkg 和 cdnjs 上获取 (cdnjs 的版本更新可能略滞后)。\
         请确认了解不同构建版本并在你发布的站点中使用生产环境版本，把 vue.js 换成 vue.min.js。这是一个更小的构建，可以带来比开发环境下更快的速度体验。",
             number:3,
-            deadline:"2018-10-21"
+            deadline:"2018-10-21",
+            status:"Enrolling 可报名"
         
         
               
