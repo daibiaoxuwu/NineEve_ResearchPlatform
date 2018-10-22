@@ -119,15 +119,30 @@ module.exports = {
     teacherInfoGet: function(teacherID, recall) {
         console.log("teacherInfGet: " + teacherID);
 		connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
-			recall({lastName: results[0].lastname,
-					firstName:  results[0].firstname,
-					username:  results[0].username,
-					wechatPhone: results[0].wechatphone,
-					email: results[0].email,
-					perWebAddr: results[0].perwebaddr,
-					researchArea: results[0].researcharea,
-					researchResults: results[0].researchresults,
-					lab: results[0].lab});
+			if(results.length>0)
+			{
+				recall({lastName: results[0].lastname,
+						firstName:  results[0].firstname,
+						username:  results[0].username,
+						wechatPhone: results[0].wechatphone,
+						email: results[0].email,
+						perWebAddr: results[0].perwebaddr,
+						researchArea: results[0].researcharea,
+						researchResults: results[0].researchresults,
+						lab: results[0].lab});
+			}
+			else
+			{
+				recall({lastName: "",
+						firstName:  "",
+						username:  "",
+						wechatPhone: "",
+						email: "",
+						perWebAddr: "",
+						researchArea: "",
+						researchResults: "",
+						lab: ""});
+			}
 		});				
     },
 }
