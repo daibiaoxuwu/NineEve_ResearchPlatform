@@ -1,6 +1,15 @@
 module.exports = {
     /**
      * 报名信息填写页面的保存请求 页面url: '/enrollForm'
+     * 
+     * @param {string} id
+     * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
+     * 
+     * @param {string} idemail
+     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
+     * 
+     * @param {string} assignmentTitle
+     * 学生报名项目的题目
      *
      * @param {string} lastName
      * 学生的姓
@@ -35,15 +44,25 @@ module.exports = {
      *
      */
 
-    enrollFormSave: function(lastName, firstName, username,
-         studentId, wechatPhone, email, perWebAddr,
+    enrollFormSave: function(id, idemail, assignmentTitle, lastName, firstName, username,
+         wechatPhone, email, perWebAddr,
           selfIntr, reasonEnroll, callback) {
+             console.log('e'+id+idemail+assignmentTitle+firstName);
         callback({saveSuccess: true});
     },
 
 
-/**
-     * 报名信息填写页面的保存请求 页面url: '/enrollForm'
+        /**
+     * 报名信息填写页面的保存并提交请求 页面url: '/enrollForm'
+     * 
+     * @param {string} id
+     * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
+     * 
+     * @param {string} idemail
+     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
+     * 
+     * @param {string} assignmentTitle
+     * 学生报名项目的题目
      *
      * @param {string} lastName
      * 学生的姓
@@ -71,12 +90,67 @@ module.exports = {
      * 
      * @param {string} reasonEnroll
      * 报名原因
+     * 
+     * @property {boolean} launchSuccess //property: return
+     * 保存是否成功
+     * 
      *
      */
-    enrollFormGet: function(name, callback) {
-        console.log("enrollFormGet: " + name);
-        if(name=="1") callback({lastName: "一"});
-        else callback({lastName: ""});
+
+    enrollFormLaunch: function(id, idemail, assignmentTitle, lastName, firstName, username,
+        wechatPhone, email, perWebAddr,
+         selfIntr, reasonEnroll, callback) {
+             console.log('e'+id+idemail+assignmentTitle+firstName);
+       callback({launchSuccess: true});
+   },
+
+
+
+
+/**
+     * 报名信息填写页面的保存请求 页面url: '/enrollForm'
+     *
+     *      * @param {string} id
+     * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
+     * 
+     * @param {string} idemail
+     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
+     * 
+     *      * @param {string} assignmentTitle
+     * 学生报名项目的题目
+     * 
+     * @property {string} lastName
+     * 学生的姓
+     *
+     * @property {string} firstName
+     * 学生的名
+     * 
+     * @property {string} username
+     * 用户名
+     * 
+     * @property {string} studentId
+     * 学号
+     * 
+     * @property {string} wechatPhone
+     * 微信号/手机号
+     * 
+     * @property {string} email
+     * 邮箱
+     * 
+     * @property {string} perWebAddr
+     * 个人主页地址
+     * 
+     * @property {string} selfIntr
+     * 自我介绍
+     * 
+     * @property {string} reasonEnroll
+     * 报名原因
+     *
+     */
+    enrollFormGet: function(id, idemail, assignmentTitle, callback) {
+             console.log('e'+id+idemail+assignmentTitle+firstName);
+        if(id=="1") callback({lastName: "一"});
+        else callback({id: ""});
     },
 
 }

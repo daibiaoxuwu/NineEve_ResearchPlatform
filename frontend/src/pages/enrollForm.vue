@@ -80,13 +80,13 @@
          
             </div>
             <hr class="mb-4">
-            <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information 保存信息</button>
+            <button class="btn btn-secondary btn-lg btn-block" @click="save">Save information 保存信息</button>
          
               
   <b-btn v-b-modal.modal2 class="btn btn-primary btn-lg btn-block"  style="margin-top:0.5rem;">Submit Enrollment 提交报名</b-btn>
   <!-- 上面貌似不能加type="submit"属性, 否则无法弹框. -->
   <!-- Modal Component -->
-  <b-modal id="modal2" title="Bootstrap-Vue"  @ok="handleOk">
+  <b-modal id="modal2" title="Bootstrap-Vue"  @ok="launch">
     <p class="my-4">Are you sure to submit enrollment?</br>是否提交报名?</p>
   </b-modal>
            
@@ -129,9 +129,6 @@ export default {
     this.getInfo();
   },
     methods: {
-   handleOk (){
-      this.$router.push("/enrollSuccess")
-    },
 
     save() {
           var that = this;
@@ -176,10 +173,11 @@ export default {
          studentId: that.studentId, wechatPhone: that.wechatPhone, email: that.email,
           perWebAddr: that.perWebAddr, selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll},
         function(data){
+          alert(data.launchSuccess);
           if(data.launchSuccess){
+      this.$router.push("/enrollSuccess")
             
           }
-          alert(data.launchSuccess);
         }
       )
     }
