@@ -45,7 +45,7 @@ module.exports = {
      * 保存是否成功 如果没有查到此人, 返回false
      */
 
-    studentInfoSave: function(id, email, lastName, firstName, username,
+    studentInfoSave: function(id, idemail, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
           breIntr, grade, selectedLab, selectedKey, callback) {
         console.log("studentInfoSave: " + id + email + lastName + firstName);
@@ -99,7 +99,7 @@ module.exports = {
      * 启动是否成功 如果没有查到此人, 返回false
      */
 
-    studentInfoLaunch: function(id, email, lastName, firstName, username,
+    studentInfoLaunch: function(id, idemail, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
          breIntr, grade, selectedLab, selectedKey, callback) {
         console.log("studentInfoLaunch: " + id + email + lastName + firstName + email);

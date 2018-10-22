@@ -111,7 +111,11 @@ export default {
       return '#page/' + pageNum + '/foobar'
     },
     onClick (item){
-       this.$router.push({path: "/enroll", params: {title: item.text}});
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.text}).then(function(){
+       that.$router.push("/enroll");
+      })
     },
 
     loginRequest (){

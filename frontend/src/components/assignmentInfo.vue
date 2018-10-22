@@ -1,5 +1,10 @@
 <template>
 <div>
+      <h4 class="mb-3"><b>{{info.title}}</b>
+           <small class="form-text text-muted">
+             {{info.status}}
+              </small>
+         </h4>
     <p class="form-text" style="font-weight:bold;">指导教师</p>
          <p class="form-text text-muted">
            {{info.teacher}}</p>
@@ -55,9 +60,7 @@ export default {
 
       $.get(
         "/enroll/get",//TODO:get
-        {
-          title: that.$route.params.title
-        }).then(function(data){
+        {}).then(function(data){
           that.info=data;
          });
     }

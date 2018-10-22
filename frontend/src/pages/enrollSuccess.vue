@@ -27,7 +27,7 @@
               You have successfully enrolled for the project. Please await further notice.
               </small>
          </h5>
-       <assignmentInfo v-bind:info="info"></assignmentInfo> 
+       <assignmentInfo></assignmentInfo> 
   <router-link to="/studentEvaluate">
   <b-btn v-b-modal.modal1 class="btn btn-danger btn-lg btn-block">Retract Enrollment 撤销报名</b-btn>
   </router-link>

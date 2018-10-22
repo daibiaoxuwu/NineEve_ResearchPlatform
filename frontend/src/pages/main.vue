@@ -174,26 +174,24 @@ export default {
     },
     onClick(item){
       if(item.status == "Enrolling 可报名"){
-        this.$router.push({
-          path:'/enroll',
-          params: {
-            title: item.text
-          }
-        });
+        
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.text}).then(function(){
+       that.$router.push("/enroll");
+      })
       } else if (item.status == "Passed 已通过"){
-           this.$router.push({
-          path:'/enrollAcceptedNotice',
-          params: {
-            title: item.text
-          }
-        });
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.text}).then(function(){
+       that.$router.push("/enrollAcceptedNotice");
+      })
       } else if (item.status == "Rejected 已拒绝"){
-           this.$router.push({
-          path:'/enrollRejectNotice',
-          params: {
-            title: item.text
-          }
-        });
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.text}).then(function(){
+       that.$router.push("/enrollRejectNotice");
+      })
       }
     }
   },
