@@ -51,6 +51,7 @@ var requireLoc = "./pages_fake"; //location for requiring js files for database 
 var home = require(requireLoc+ "/home");
 var teacherInfo = require(requireLoc + "/teacherInfo");
 var studentInfo = require(requireLoc + "/studentInfo");
+var enrollForm = require(requireLoc + "/enrollForm");
 var main = require(requireLoc + "/main");
 var enroll = require(requireLoc + "/enroll");
 var assignmentView = require(requireLoc + "/assignmentView");
@@ -132,6 +133,31 @@ app.get('/studentInfo/launch', function(sReq, sRes) {
 
 app.get('/studentInfo/get', function(sReq, sRes) {
     studentInfo.studentInfoGet(sReq.session.user.id, sReq.session.user.email, function(result){
+			 sRes.send(result);
+		 });
+});
+
+
+app.get('/enrollForm/save', function(sReq, sRes) {
+    console.log(sReq);
+    console.log(sReq.query.lastName);
+    enrollForm.enrollFormSave(sReq.session.user.studentId, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.selfIntr, sReq.query.reasonEnroll, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/enrollForm/launch', function(sReq, sRes) {
+    enrollForm.enrollFormLaunch(sReq.session.user.studentId, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.selfIntr, sReq.query.reasonEnroll, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/enrollForm/get', function(sReq, sRes) {
+    enrollForm.enrollFormGet(sReq.session.user.studentId, sReq.session.user.email, function(result){
 			 sRes.send(result);
 		 });
 });
