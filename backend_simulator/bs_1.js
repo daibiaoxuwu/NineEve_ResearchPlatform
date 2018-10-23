@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
   database : 'A'
 });
 
-connection.connect(); 
+connection.connect();
 global.connection=connection;
 
 app.use(express.static('../frontend'))
@@ -48,8 +48,8 @@ app.get('/enroll', (req, res) => {
     var user = {};
     if (req.session && req.session.assignment) {
         user = req.session.user;
-        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
-    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
+    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
 })
 
 //app.all('/(((teacher|student|assignment)(Info|View|Evaluate|EvaluateSuccess))|(enroll(Form|Status|Success|Accepted|AcceptedNotice))|main)', (req, res) => {
@@ -57,8 +57,8 @@ app.get(/^\/[^\/]*$/, (req, res) => {
     var user = {};
     if (req.session && req.session.user) {
         user = req.session.user;
-        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
-    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
+    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
 })
 
 var requireLoc = "./pages"; //location for requiring js files for database connection
@@ -77,33 +77,41 @@ var right = require(requireLoc + "/right");
 
 
 app.get('/login/byEmail', function(sReq, sRes){
-	
-	home.emailLogin(sReq.query.email, sReq.query.password, function(result){
+  if (sReq.query.email.length<200 && sReq.query.password.length<200) {
+	   home.emailLogin(sReq.query.email, sReq.query.password, function(result){
         sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false};
 		sRes.send(result);
 	});
+  }
 });
 
 app.get('/login/byTeacherId', function(sReq, sRes){
-	home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
+  if (sReq.query.teacherId.length<200 && sReq.query.password.length<200) {
+	   home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
         sReq.session.user = {id: sReq.query.teacherId, email:"", isTeacher:true};
-		sRes.send(result);
-	});
+		      sRes.send(result);
+	   });
+   }
 });
 
 app.get('/login/byStudentId', function(sReq, sRes){
+  if (sReq.query.studentId.length<200 && sReq.query.password.length<200) {
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
         sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}   
 		sRes.send(result);
-	});
+	  });
+  }
 });
 
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
+  if (sReq.query.name.length<200 && sReq.query.university.length<200
+    && sReq.query.email.length<200 && sReq.query.password.length<200) {
    home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
         sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
-	});
+	 });
+  }
 });
 
 
