@@ -32,7 +32,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in msgList" @click="onClick(item)">
+                  <tr v-for="(item, index) in msgList" @click="onClick(item)" :key="item.text">
 
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
@@ -63,7 +63,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in myList" @click="onClick(item)">
+                  <tr v-for="(item, index) in myList" @click="onClick(item)" :key="item.text">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <td>{{item.status}}</td>
@@ -93,7 +93,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in avaList" @click="onClick(item)">
+                  <tr v-for="(item, index) in avaList" @click="onClick(item)" :key="item.text">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <td>{{item.status}}</td>
@@ -106,7 +106,21 @@
               </table>
 
             </div>
-            <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
+            
+            <!-- <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" style= "float: left;" /> -->
+            <!-- <router-link to="/assignmentView"><b-button style= "float: right;" variant="primary">Details 具体信息</b-button></router-link> -->
+            <!-- <span style="display: inline-block;"> -->
+            <!-- <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" style= " float: left;" /></span> -->
+            <!-- <span style="display: inline-block;"> -->
+            <!-- <router-link to="/assignmentView"><b-button style= "float: right;" variant="primary">Details 具体信息</b-button></router-link></span> -->
+            <div class="row">
+            <div class="col-md-6 order-md-1">
+              <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3"  />
+            </div>
+            <div class="col-md-6 order-md-2">
+              <p class="float-right"><router-link to="/assignmentView" ><b-button variant="primary">Details 具体信息</b-button></router-link></p>
+            </div>
+            </div>
           </div>
 </p>
  <router-link to="/assignmentInfo"><b-btn  v-bind:class="isTeacherButton">New Assignment 立项</b-btn></router-link>
