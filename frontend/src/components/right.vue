@@ -3,7 +3,7 @@
             <div>
           <h4 class="d-flex justify-content-between mb-3"> <span class="text-muted"><b>Assignments 项目</b></span> <span class="badge badge-secondary badge-pill">3</span> </h4>
           <ul class="list-group ">
-            <li v-for="item in items" v-bind:class="item.bgclass" @click="onClick2(item)">
+            <li v-for="item in items" v-bind:class="item.bgclass" @click="onClick2(item)" :key="item.title">
               <div>
                 <h6 class="my-0"><b>{{item.title}}</b></h6> <small class="text-muted">{{item.description}}</small>
               </div> <span v-bind:class="item.class">{{item.status}}</span>

@@ -7,7 +7,7 @@ module.exports = {
      * 含有: title, teacher, introduction三项.
      */
 
-    enrollGet: function(title, callback){
+    assignmentViewGet: function(callback){
         callback(
             [{
                 title:"基于Bootstrap的前端网页设计研究",
