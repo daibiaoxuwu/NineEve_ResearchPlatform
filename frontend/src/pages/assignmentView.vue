@@ -26,7 +26,7 @@
         
         <div class="col-md-8 order-md-1">
 <p class="mb-3">
-  <div class="card mb-3"  v-for="item in items" :key="item.title"  @click="onClick(item)">
+  <div class="card mb-3"  v-for="item in avaList" :key="item.title"  @click="onClick(item)">
             <div class="card-header">{{item.title}}</div>
             <div class="card-body">
               <p class="form-text text-muted">
@@ -41,7 +41,7 @@
 </p>
 
 
- <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+ <b-pagination-nav base-url="#" :number-of-pages="num" v-model="currentPage" />
         </div>
       </div>
     </div>
@@ -66,7 +66,8 @@ export default {
 
     return {
       currentPage:1,
-      items:[{
+      num:1,
+      avaList:[{
                 title:"基于Bootstrap的前端网页设计研究",
                 teacher:"国雨晴",
                 introduction:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器."
@@ -81,14 +82,15 @@ export default {
    components:{
     rightpane, assignmentInfo
   },
-  // created: function(){
-    // var that = this;
-    // $.get("/assignmentView/get",
-        // {}).then(function(data){
-          // that.items=data;
-          // console.log(data);
-        //  });
-  // },
+  created: function(){
+    var that = this;
+    $.get("/assignmentView/get",
+        {currentPage: currentPage}).then(function(data){
+          that.avaList=data.avaList;
+          that.num=data.num;
+          console.log(data);
+         });
+  },
   methods: {
      onClick(item){
       var that = this;

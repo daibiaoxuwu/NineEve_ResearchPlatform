@@ -249,8 +249,11 @@ app.get('/home/get', function(sReq, sRes) {
 })
 
 app.get('/assignmentView/get', function(sReq, sRes) {
-    assignmentView.assignmentViewGet(function(item){
-        sRes.send(item);
+    assignmentView.assignmentViewGet(sReq.query.currentPage, function(avaList){
+        sRes.send({
+            num3: parseInt(avaList.length / 3) + 1,
+            avaList: avaList.slice(Math.min(sReq.query.currentPage * 3 - 3, avaList.length), Math.min(sReq.query.currentPage * 3, avaList.length))
+        })
     })
 })
 
