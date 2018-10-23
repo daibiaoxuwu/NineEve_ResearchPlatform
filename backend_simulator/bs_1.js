@@ -48,8 +48,8 @@ app.get('/enroll', (req, res) => {
     var user = {};
     if (req.session && req.session.assignment) {
         user = req.session.user;
-        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
-    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
+    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
 })
 
 //app.all('/(((teacher|student|assignment)(Info|View|Evaluate|EvaluateSuccess))|(enroll(Form|Status|Success|Accepted|AcceptedNotice))|main)', (req, res) => {
@@ -57,8 +57,8 @@ app.get(/^\/[^\/]*$/, (req, res) => {
     var user = {};
     if (req.session && req.session.user) {
         user = req.session.user;
-        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
-    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
+    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
 })
 
 var requireLoc = "./pages"; //location for requiring js files for database connection
@@ -234,7 +234,7 @@ app.get('/main/get', function(sReq, sRes) {
             msglist2: msgList,
             myList2: myList,
             avalist2: avaList
-            
+
         });
         sRes.send({
             isTeacher: sReq.session.user.isTeacher,

@@ -42,7 +42,7 @@ module.exports = {
      */
     teacherLogin: function(teacherID, password, recall) {
         console.log("teacher login: "+teacherID + password);
-        recall({loginSuccess: true, usernameNotFound: false, infoFinished: true});
+        recall({loginSuccess: true, usernameNotFound: false, infoFinished: false});
     },
 
 
@@ -95,7 +95,7 @@ module.exports = {
     },
    /**
      * 主页拿取所有项目列表请求 页面url: '/'
-     * @return {Array} avaList 
+     * @return {Array} avaList
      * 所有科研任务列表
      */
     homeGet: function(callback){
@@ -120,7 +120,7 @@ module.exports = {
                     text: "项目5",
                     status: "Enrolling 可报名"
                   }]
-              
+
               );
             }
 

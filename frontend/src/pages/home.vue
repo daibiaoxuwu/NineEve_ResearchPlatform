@@ -125,64 +125,68 @@ export default {
       var that = this;
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      if (inputTORS=="teacher") {
-        $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword})
-          .then(function(data){
-            if(data.loginSuccess){
-              if(data.infoFinished){
-                that.$router.push("/main");
-              }else{
-                that.$router.push("/teacherInfo");
-              }
-            } else if(data.usernameNotFound){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-          }
-        );
-      }
-      else if (inputTORS=="student"){
-        var isEmail = (new RegExp("@")).test(inputName);
-        if (isEmail) {
-          $.get('/login/byEmail', {email:inputName,password:inputPassword})
+      if (inputName.length<200 && inputPassword.length<200) {
+        if (inputTORS=="teacher") {
+          $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword})
             .then(function(data){
               if(data.loginSuccess){
                 if(data.infoFinished){
                   that.$router.push("/main");
                 }else{
-                  that.$router.push("/studentInfo");
+                  that.$router.push("/teacherInfo");
                 }
               } else if(data.usernameNotFound){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
+                alert("用户不存在.");
+              } else {
+                alert("error in username or password.\n用户名或密码错误.")
+              }
             }
           );
         }
-        else {
-          $.get('/login/byStudentId', {studentId:inputName,password:inputPassword})
-            .then(function(data){
-              if(data.loginSuccess){
-                if(data.infoFinished){
-                  that.$router.push("/main");
-                }else{
-                  that.$router.push("/studentInfo");
-                }
-              } else if(data.usernameNotFound){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-            }
-          );
+        else if (inputTORS=="student"){
+          var isEmail = (new RegExp("@")).test(inputName);
+          if (isEmail) {
+            $.get('/login/byEmail', {email:inputName,password:inputPassword})
+              .then(function(data){
+                if(data.loginSuccess){
+                  if(data.infoFinished){
+                    that.$router.push("/main");
+                  }else{
+                    that.$router.push("/studentInfo");
+                  }
+                } else if(data.usernameNotFound){
+                alert("用户不存在.");
+              } else {
+                alert("error in username or password.\n用户名或密码错误.")
+              }
+              }
+            );
+          }
+          else {
+            $.get('/login/byStudentId', {studentId:inputName,password:inputPassword})
+              .then(function(data){
+                if(data.loginSuccess){
+                  if(data.infoFinished){
+                    that.$router.push("/main");
+                  }else{
+                    that.$router.push("/studentInfo");
+                  }
+                } else if(data.usernameNotFound){
+                alert("用户不存在.");
+              } else {
+                alert("error in username or password.\n用户名或密码错误.")
+              }
+              }
+            );
+          }
+        }
+        else{
+          alert("please choose a way to login.");
         }
       }
       else{
-        alert("please choose a way to login.");
+        alert("Your input is beyond limitation.");
       }
-
     }
 
 
