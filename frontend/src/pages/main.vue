@@ -106,7 +106,22 @@
               </table>
 
             </div>
-            <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
+            
+            <!-- <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" style= "float: left;" /> -->
+            <!-- <router-link to="/assignmentView"><b-button style= "float: right;" variant="primary">Details 具体信息</b-button></router-link> -->
+            <!-- <span style="display: inline-block;"> -->
+            <!-- <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" style= " float: left;" /></span> -->
+            <!-- <span style="display: inline-block;"> -->
+            <!-- <router-link to="/assignmentView"><b-button style= "float: right;" variant="primary">Details 具体信息</b-button></router-link></span> -->
+            <div class="row">
+            <div class="col-md-6 order-md-1">
+              <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3"  />
+            </div>
+            <div class="col-md-6 order-md-2">
+              <p class="float-right"><router-link to="/assignmentView" ><b-button variant="primary">Details 具体信息</b-button></router-link></p>
+            </div>
+            </div>
+          </div>
           </div>
 </p>
  <router-link to="/assignmentInfo"><b-btn  v-bind:class="isTeacherButton">New Assignment 立项</b-btn></router-link>
