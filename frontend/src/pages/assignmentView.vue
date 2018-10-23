@@ -1,6 +1,5 @@
 <template>
   <div >
-
    <div class="py-5" >
     <div class="container">
       <div class="row">
@@ -8,8 +7,6 @@
       </div>
     </div>
   </div>
-
-
 
 
   <div class="p-0">
@@ -28,8 +25,8 @@
         <rightpane style="padding-top: 1.5rem;"></rightpane>
         
         <div class="col-md-8 order-md-1">
-<p class="mb-3" v-for="item in items" :key="item.title">
-  <div class="card">
+<p class="mb-3">
+  <div class="card mb-3"  v-for="item in items" :key="item.title"  @click="onClick(item)">
             <div class="card-header">{{item.title}}</div>
             <div class="card-body">
               <p class="form-text text-muted">
@@ -38,7 +35,8 @@
          
 </p>
             </div>
-              </div>
+  </div>
+</p>
 
 </p>
 
@@ -63,57 +61,42 @@
 import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
 export default {
   name: "home2",
+  item: Object,
   data: function() {
+
     return {
-       currentPage: 1,
-        dismissSecs: 10,
-      dismissCountDown: 0,
-      showDismissibleAlert: false,
-      items:[
-        {
-          title: "项目1",
-          status: "Enrolling 可报名"
-        },
-        {
-          title: "项目2",
-          status: "Enrolling 可报名"
-        },
-        {
-          title: "项目3",
-          status: "Enrolling 可报名"
-        },
-         {
-          title: "项目4",
-          status: "Enrolling 可报名"
-        },
-         {
-          title: "项目5",
-          status: "Enrolling 可报名"
-        }
-      ]
+      currentPage:1,
+      items:[{
+                title:"基于Bootstrap的前端网页设计研究",
+                teacher:"国雨晴",
+                introduction:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器."
+            },
+            {
+                title:"基于Bootstrap的前端网页设计研究",
+                teacher:"国雨晴",
+                introduction:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器."
+            }]
     };
   },
    components:{
     rightpane, assignmentInfo
   },
+  // created: function(){
+    // var that = this;
+    // $.get("/assignmentView/get",
+        // {}).then(function(data){
+          // that.items=data;
+          // console.log(data);
+        //  });
+  // },
   methods: {
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
-    },
-    linkGen (pageNum) {
-      return '#page/' + pageNum + '/foobar'
-    },
-    onClick (item){
-      alert(item.text);
-      // this.$router.push("/log")
-
- 
+     onClick(item){
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title}).then(function(){
+       that.$router.push("/enroll");
+      })
     }
-
-
   }
 };
 // 逻辑部分直接修改item即可呈现.
