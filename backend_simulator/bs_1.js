@@ -95,10 +95,13 @@ app.get('/login/byStudentId', function(sReq, sRes){
 
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
+  if (sReq.query.name.length<200 && sReq.query.university.length<200
+    && sReq.query.email.length<200 && sReq.query.password.length<200) {
    home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
         sReq.session.user = {id:"", email: sReq.query.email}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
-	});
+	 });
+  }
 });
 
 

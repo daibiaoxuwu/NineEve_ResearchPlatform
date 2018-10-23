@@ -94,16 +94,19 @@ app.get('/login/byStudentId', function(sReq, sRes){
 
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
+  if (sReq.query.name.length<200 && sReq.query.university.length<200
+    && sReq.query.email.length<200 && sReq.query.password.length<200) {
    home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
         sReq.session.user = {id:"", email: sReq.query.email}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
-	});
+	 });
+  }
 });
 
 
 app.get('/teacherInfo/save', function(sReq, sRes) {
-    console.log(sReq);
-    console.log(sReq.query.lastName);
+    //console.log(sReq);
+    console.log(sReq.query.email);
     teacherInfo.teacherInfoSave(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab, function(result){
