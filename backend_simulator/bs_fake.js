@@ -61,6 +61,7 @@ var studentInfo = require(requireLoc + "/studentInfo");
 var enrollForm = require(requireLoc + "/enrollForm");
 var main = require(requireLoc + "/main");
 var enroll = require(requireLoc + "/enroll");
+var enrollStatus = require(requireLoc + "/enrollStatus");
 var assignmentView = require(requireLoc + "/assignmentView");
 
 
@@ -144,8 +145,8 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 		 });
 });
 
-app.get('/studentInfo/getKeys', function(sReq, sRes) {
-    studentInfo.studentInfoGetKeys(function(result){
+app.get('/enrollStatus/getDetails', function(sReq, sRes) {
+    studentInfo.studentInfoGet(sReq.query.id, sReq.query.email, function(result){
 			 sRes.send(result);
 		 });
 });
@@ -177,7 +178,7 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.name, function(isTeacher, msgList, myList, avaList){
+    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(isTeacher, msgList, myList, avaList){
         console.log({
             isTeacher: isTeacher,
             num1: parseInt(msgList.length / 3),
@@ -202,6 +203,24 @@ app.get('/main/get', function(sReq, sRes) {
         })
     })
 });
+
+
+
+
+app.get('/enrollStatus/get', function(sReq, sRes) {
+    enrollStatus.enrollStatusGet(sReq.session.user.id, function(list){
+        console.log({
+            num3: parseInt(list.length / 3),
+            list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length)),
+            avalist2: list
+        });
+        sRes.send({
+            num3: parseInt(list.length / 3) + 1,
+            list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length))
+        })
+    })
+});
+
 
 app.get('/home/setAssignment', function(sReq, sRes) {
     enroll.enrollGet(sReq.query.title, function(item){

@@ -173,10 +173,8 @@ export default {
          studentId: that.studentId, wechatPhone: that.wechatPhone, email: that.email,
           perWebAddr: that.perWebAddr, selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll},
         function(data){
-          alert(data.launchSuccess);
           if(data.launchSuccess){
-      this.$router.push("/enrollSuccess")
-            
+      that.$router.push("/enrollSuccess")
           }
         }
       )
