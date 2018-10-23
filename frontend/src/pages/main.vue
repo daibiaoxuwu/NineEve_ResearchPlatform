@@ -93,7 +93,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in avaList" @click="onClick(item)">
+                  <tr v-for="(item, index) in avaList" @click="onClick(item)" :key="item.text">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <td>{{item.status}}</td>
