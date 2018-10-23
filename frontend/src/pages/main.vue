@@ -109,7 +109,7 @@
             <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
           </div>
 </p>
- <router-link to="/"><b-btn  v-bind:class="isTeacherButton">New Assignment 立项</b-btn></router-link>
+ <router-link to="/assignmentInfo"><b-btn  v-bind:class="isTeacherButton">New Assignment 立项</b-btn></router-link>
 
         </div>
       </div>

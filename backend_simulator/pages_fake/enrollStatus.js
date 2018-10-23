@@ -1,18 +1,17 @@
 module.exports = {
     /**
-     * 学生请求页面的保存请求 页面url: '/main'
-     * 学生通过邮箱登陆
+     * 教师查看某项目的报名情况页面 页面url: '/enrollStatus'
      * 
      * @param {string} name
-     * 学生的邮箱
+     * 教师的邮箱
      *
      * @property {Array} 
-     * 学生的新消息列表
+     * 报名者列表
      * 包含id, email(同样地, 如果id登陆则email="", 如果email登陆则id=""), text(姓名), department(系别,现在恒定是CST 计算机系), grade
      * 
      */
 
-    enrollStatusGet: function(id, callback){
+    enrollStatusGet: function(teacherId, callback){
         callback(
             //msgList
             [
@@ -30,4 +29,5 @@ module.exports = {
 
         );
     }
+    
 }

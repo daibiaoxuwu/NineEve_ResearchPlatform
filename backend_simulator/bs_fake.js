@@ -61,6 +61,7 @@ var studentInfo = require(requireLoc + "/studentInfo");
 var enrollForm = require(requireLoc + "/enrollForm");
 var main = require(requireLoc + "/main");
 var enroll = require(requireLoc + "/enroll");
+var enrollStatus = require(requireLoc + "/enrollStatus");
 var assignmentView = require(requireLoc + "/assignmentView");
 
 
@@ -144,6 +145,12 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 		 });
 });
 
+app.get('/enrollStatus/getDetails', function(sReq, sRes) {
+    studentInfo.studentInfoGet(sReq.query.id, sReq.query.email, function(result){
+			 sRes.send(result);
+		 });
+});
+
 
 app.get('/enrollForm/save', function(sReq, sRes) {
     console.log(sReq);
@@ -171,14 +178,14 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(isTeacher, msgList, myList, list){
+    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(isTeacher, msgList, myList, avaList){
         console.log({
             isTeacher: isTeacher,
             num1: parseInt(msgList.length / 3),
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
             num2: parseInt(myList.length / 3),
             myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
-            num3: parseInt(list.length / 3),
+            num3: parseInt(avaList.length / 3),
             avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
             msglist2: msgList,
             myList: myList,
@@ -201,7 +208,7 @@ app.get('/main/get', function(sReq, sRes) {
 
 
 app.get('/enrollStatus/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(list){
+    enrollStatus.enrollStatusGet(sReq.session.user.id, function(list){
         console.log({
             num3: parseInt(list.length / 3),
             list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length)),
