@@ -67,16 +67,7 @@ export default {
     return {
       currentPage:1,
       num:1,
-      avaList:[{
-                title:"基于Bootstrap的前端网页设计研究",
-                teacher:"国雨晴",
-                introduction:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器."
-            },
-            {
-                title:"基于Bootstrap的前端网页设计研究",
-                teacher:"国雨晴",
-                introduction:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器."
-            }]
+      avaList:[]
     };
   },
    components:{
@@ -85,7 +76,7 @@ export default {
   created: function(){
     var that = this;
     $.get("/assignmentView/get",
-        {currentPage: currentPage}).then(function(data){
+        {currentPage: that.currentPage}).then(function(data){
           that.avaList=data.avaList;
           that.num=data.num;
           console.log(data);
