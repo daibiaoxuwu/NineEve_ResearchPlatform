@@ -14,7 +14,7 @@
     "init1": "cd frontend && npm install",
     "init2": "cd backend_simulator && npm install",
     "start": "npm run start --prefix backend_simulator",
-    "test": "npm run mochatest && npm run jesttest",
+    "test": "npm run mochatest",
     "mochatest": "nyc --reporter=lcov --reporter=text mocha test/server.js",
     "build": "npm run build --prefix frontend",
     "jesttest": "jest --coverage"
