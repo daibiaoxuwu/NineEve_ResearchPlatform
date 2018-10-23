@@ -157,7 +157,7 @@ app.get('/enrollForm/save', function(sReq, sRes) {
     console.log(sReq.query.lastName);
     enrollForm.enrollFormSave(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.selfIntr, sReq.query.reasonEnroll, function(result){
+         sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
 		 });
 });
@@ -165,7 +165,7 @@ app.get('/enrollForm/save', function(sReq, sRes) {
 app.get('/enrollForm/launch', function(sReq, sRes) {
     enrollForm.enrollFormLaunch(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.selfIntr, sReq.query.reasonEnroll, function(result){
+         sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
 		 });
 });
