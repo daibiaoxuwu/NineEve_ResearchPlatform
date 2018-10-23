@@ -242,7 +242,7 @@ app.get('/main/get', function(sReq, sRes) {
 
 
 app.get('/enrollStatus/get', function(sReq, sRes) {
-    enrollStatus.enrollStatusGet(sReq.session.user.id, function(list){
+    enrollStatus.enrollStatusGet(sReq.session.user.id, sReq.session.assignment, function(list){
         console.log({
             num3: parseInt(list.length / 3),
             list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length)),
@@ -299,6 +299,17 @@ app.get('/right/get', function(sReq, sRes) {
     } else{
         sRes.send('/');
     }
+})
+
+app.get('/right/route', function(sReq, sRes) {
+    enroll.enrollGet(sReq.query.title, function(item){
+        sReq.session.assignment = item;
+        if (sReq.session && sReq.session.user.isTeacher) {
+        sRes.send('isTeacher');
+        } else{
+            sRes.send('isStudent');
+        }
+    })
 })
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))

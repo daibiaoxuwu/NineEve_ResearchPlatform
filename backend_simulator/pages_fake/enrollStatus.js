@@ -11,7 +11,7 @@ module.exports = {
      * 
      */
 
-    enrollStatusGet: function(teacherId, callback){
+    enrollStatusGet: function(teacherId, title, callback){
         callback(
             //msgList
             [

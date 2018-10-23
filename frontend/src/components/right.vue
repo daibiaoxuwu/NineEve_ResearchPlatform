@@ -1,5 +1,5 @@
 <template>
-    <div class="visible-lg col-md-4 order-md-2">
+    <div v-bind:class="visible">
             <div>
           <h4 class="d-flex justify-content-between mb-3"> <span class="text-muted"><b>Assignments 项目</b></span> <span class="badge badge-secondary badge-pill">3</span> </h4>
           <ul class="list-group ">
@@ -33,7 +33,8 @@ export default {
   data() {
     return {
       items:[],
-      history:[]
+      history:[],
+      visible:"invisible"
     };
   },
   created: function(){
@@ -42,11 +43,12 @@ export default {
         "/right/get",//TODO:get
         {}).then(function(data){
           if(data=='/'){
-            that.$router.push('/');
+            that.visible="invisible";
           }else {
+            that.visible="visible-lg col-md-4 order-md-2";
 
           for(var item in data.assignment){
-            if(data.assignment.assignment[item].status == "Enrolling 可报名"){
+            if(data.assignment[item].status == "Enrolling 可报名"){
               data.assignment[item].bgclass="list-group-item d-flex justify-content-between list-group-item-action";
             } else {
               data.assignment[item].bgclass="list-group-item d-flex justify-content-between bg-light";
@@ -68,8 +70,21 @@ export default {
   },
   methods: {
           onClick2(item){
-        alert(item.title);
-        this.$router.push("/enrollStatus")
+            var that = this;
+         $.get(
+        "/right/route",//TODO:get
+        {title: item.title}).then(function(data){
+          if(data=="isTeacher")
+        that.$router.push('/enrollStatus');
+        else if(item.status== "Enrolling 可报名"){
+        that.$router.push('/enroll');
+        } else if(item.status== "Passed 已通过"){
+        that.$router.push('/enrollAcceptedNotice');
+        } else{
+        that.$router.push('/enrollRejectNotice');
+        }
+        
+        )
       }
   }
 };
