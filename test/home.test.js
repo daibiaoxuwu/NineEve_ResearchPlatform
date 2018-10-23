@@ -26,9 +26,9 @@ describe('home.vue test', () => {
       expect(wrapper.vm.currentPage).to.be.equal(1);
     })
 
-    it('should have 5 items in one page', () => {
-      expect(wrapper.vm.list).has.length(5);
-    })
+    // it('should have 5 items in one page', () => {
+    //   expect(wrapper.vm.list).has.length(5);
+    // })
   })
 
   it('has a data function', () => {

@@ -13,8 +13,9 @@
   "scripts": {
     "init1": "cd frontend && npm install",
     "init2": "cd backend_simulator && npm install",
+    "init3": "cd test && npm install",
     "start": "npm run start --prefix backend_simulator",
-    "test": "npm run mochatest",
+    "test": "npm run jesttest",
     "mochatest": "nyc --reporter=lcov --reporter=text mocha test/server.js",
     "build": "npm run build --prefix frontend",
     "jesttest": "jest --coverage"
@@ -96,6 +97,7 @@
     ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
-    }
+    },
+    "setupFiles": ["./test/setup_jest.js"]
   }
 }
