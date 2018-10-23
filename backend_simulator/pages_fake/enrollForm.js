@@ -46,7 +46,7 @@ module.exports = {
 
     enrollFormSave: function(id, idemail, assignmentTitle, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-          selfIntr, reasonEnroll, callback) {
+          selfIntr, reasonEnroll, award, callback) {
              console.log('e'+id+idemail+assignmentTitle+firstName);
         callback({saveSuccess: true});
     },
@@ -99,7 +99,7 @@ module.exports = {
 
     enrollFormLaunch: function(id, idemail, assignmentTitle, lastName, firstName, username,
         wechatPhone, email, perWebAddr,
-         selfIntr, reasonEnroll, callback) {
+         selfIntr, reasonEnroll, award, callback) {
              console.log('e'+id+idemail+assignmentTitle+firstName);
        callback({launchSuccess: true});
    },
@@ -148,7 +148,7 @@ module.exports = {
      *
      */
     enrollFormGet: function(id, idemail, assignmentTitle, callback) {
-             console.log('e'+id+idemail+assignmentTitle+firstName);
+             console.log('e'+id+idemail+assignmentTitle);
         if(id=="1") callback({lastName: "一"});
         else callback({id: ""});
     },

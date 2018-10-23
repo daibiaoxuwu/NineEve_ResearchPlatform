@@ -30,8 +30,7 @@
             <div class="card-header">{{item.title}}</div>
             <div class="card-body">
               <p class="form-text text-muted">
-           Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
-          在使用 Vue 时，我们推荐在你的浏览器上安装 Vue Devtools。它允许你在一个更友好的界面中审查和调试 Vue 应用。
+                {{item.description}}
          
 </p>
             </div>
