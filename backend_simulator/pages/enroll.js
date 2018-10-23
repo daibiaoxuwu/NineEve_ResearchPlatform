@@ -16,7 +16,6 @@ module.exports = {
      * number
      * deadline
      * status
-	 * award
      */
 
     enrollGet: function(title, callback){
@@ -30,7 +29,7 @@ module.exports = {
 					keywords: results[0].keywords.split(' '),
 					abilities: results[0].abilities,
 					detailed: results[0].detailed,
-					number: results[0].number,
+					number: results[0].num.toString(),
 					deadline: results[0].deadline,
 					status: results[0].status
 				});
@@ -43,7 +42,7 @@ module.exports = {
 					keywords: [],
 					abilities: "",
 					detailed: "",
-					number: 0,
+					number: "",
 					deadline: "",
 					status: ""
 				});

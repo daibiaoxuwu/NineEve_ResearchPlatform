@@ -138,30 +138,12 @@ module.exports = {
      * 所有科研任务列表
      */
     homeGet: function(callback){
-        callback(
-                [{
-                    text: "项目1",
-                    status: "Enrolling 可报名"
-                  },
-                  {
-                    text: "项目2",
-                    status: "Enrolling 可报名"
-                  },
-                  {
-                    text: "项目3",
-                    status: "Enrolling 可报名"
-                  },
-                   {
-                    text: "项目4",
-                    status: "Enrolling 可报名"
-                  },
-                   {
-                    text: "项目5",
-                    status: "Enrolling 可报名"
-                  }]
-              
-              );
-            }
-
-
+		connection.query('select * from project ', function (error, results, fields){
+			var projects=[];
+			for(var result in results)
+				projects.push({text: results[result].title,
+					status: results[result].status});
+			callback(projects);
+		});
+	}
 }
