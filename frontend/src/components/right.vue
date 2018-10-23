@@ -84,6 +84,35 @@ export default {
       ]
     };
   },
+  created: function(){
+      var that=this;
+      $.get(
+        "/right/get",//TODO:get
+        {}).then(function(data){
+          if(data=='/'){
+            that.$router.push('/');
+          }else {
+
+          for(var item in data){
+            if(data[item].status == "Enrolling 可报名"){
+              data[item].bgclass="list-group-item d-flex justify-content-between list-group-item-action";
+            } else {
+              data[item].bgclass="list-group-item d-flex justify-content-between bg-light";
+            }
+             if(data[item].status == "Enrolling 可报名"){
+              data[item].class="text-muted";
+            } else if(data[item].status == "Passed 已通过"){
+              data[item].class="text-success";
+            } else{
+            // if(data[item].status == "Rejected 已拒绝"){
+              data[item].class="text-danger";
+            } 
+          }
+          that.items=data;
+          }
+         });
+    
+  },
   methods: {
           onClick2(item){
         alert(item.title);

@@ -52,13 +52,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in list" :key="item.text">
+                  <tr v-for="(item, index) in list" :key="item.text" @click="onClick(item)">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
 
-                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
+                    <td>{{item.status}}</td>
                   </tr>
 
                 </tbody>

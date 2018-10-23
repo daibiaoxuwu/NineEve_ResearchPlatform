@@ -73,26 +73,27 @@ var main = require(requireLoc + "/main");
 var enroll = require(requireLoc + "/enroll");
 var enrollStatus = require(requireLoc + "/enrollStatus");
 var assignmentView = require(requireLoc + "/assignmentView");
+var right = require(requireLoc + "/right");
 
 
 app.get('/login/byEmail', function(sReq, sRes){
 	
 	home.emailLogin(sReq.query.email, sReq.query.password, function(result){
-        sReq.session.user = {id:"", email: sReq.query.email};
+        sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false};
 		sRes.send(result);
 	});
 });
 
 app.get('/login/byTeacherId', function(sReq, sRes){
 	home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
-        sReq.session.user = {id: sReq.query.teacherId, email:""};
+        sReq.session.user = {id: sReq.query.teacherId, email:"", isTeacher:true};
 		sRes.send(result);
 	});
 });
 
 app.get('/login/byStudentId', function(sReq, sRes){
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
-        sReq.session.user = {id: sReq.query.studentId, email:""}   
+        sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}   
 		sRes.send(result);
 	});
 });
@@ -100,7 +101,7 @@ app.get('/login/byStudentId', function(sReq, sRes){
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
    home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
-        sReq.session.user = {id:"", email: sReq.query.email}    //设置"全局变量"name. 此后可以根据这个区分用户.
+        sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
 	});
 });
@@ -188,9 +189,9 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(isTeacher, msgList, myList, avaList){
+    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(msgList, myList, avaList){
         console.log({
-            isTeacher: isTeacher,
+            isTeacher: sReq.session.user.isTeacher,
             num1: parseInt(msgList.length / 3),
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
             num2: parseInt(myList.length / 3),
@@ -203,7 +204,7 @@ app.get('/main/get', function(sReq, sRes) {
             
         });
         sRes.send({
-            isTeacher: isTeacher,
+            isTeacher: sReq.session.user.isTeacher,
             num1: parseInt(msgList.length / 3) + 1,
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
             num2: parseInt(myList.length / 3) + 1,
@@ -265,6 +266,16 @@ app.get('/assignmentView/get', function(sReq, sRes) {
             avaList: avaList.slice(Math.min(sReq.query.currentPage * 3 - 3, avaList.length), Math.min(sReq.query.currentPage * 3, avaList.length))
         })
     })
+})
+
+app.get('/right/get', function(sReq, sRes) {
+    if (sReq.session && sReq.session.user) {
+        right.rightGet(sReq.session.user.id, sReq.session.user.email, function(item){
+            sRes.send(item);
+        })
+    } else{
+        sRes.send('/');
+    }
 })
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
