@@ -8,6 +8,9 @@ module.exports = {
      * @param {string} email
      * 学生的邮箱
      *
+     * @property {boolean} isTeacher
+     * 是否为老师(学生和老师公用个人主页)
+     * 
      * @property {Array} msgList 
      * 学生的新消息列表
      * 
@@ -18,9 +21,11 @@ module.exports = {
      * 所有科研任务列表
      */
 
-    mainGet: function(id, email, callback){
+    rightGet: function(id, email, callback){
         callback(
             //isTeacher
+            true,
+            //msgList
       [ { text: "项目1", status: "Enrolling 可报名" },
         { text: "项目2", status: "Enrolling 可报名" },
         { text: "项目3", status: "Enrolling 可报名" },

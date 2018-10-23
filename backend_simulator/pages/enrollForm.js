@@ -38,6 +38,9 @@ module.exports = {
      * @param {string} reasonEnroll
      * 报名原因
      * 
+     * @param {string} award
+     * 奖励
+     * 
      * @property {boolean} saveSuccess //property: return
      * 保存是否成功
      * 
@@ -47,8 +50,27 @@ module.exports = {
     enrollFormSave: function(id, idemail, assignmentTitle, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
           selfIntr, reasonEnroll, award, callback) {
-             console.log('e'+id+idemail+assignmentTitle+firstName);
-        callback({saveSuccess: true});
+			var student=id;
+			if(student=="")
+				student=idemail;
+			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '"', function (error, results, fields){
+				if(results.length==0)
+				{
+					connection.query('insert into enrollform(`selfintr`,`reasonenroll`,`award`) values(' +
+									 '"' + selfIntr + '",' +
+									 '"' + reasonEnroll + '",' + 
+									 '"' + award + '")');
+					callback({saveSuccess: true});
+				}
+				else
+				{
+					connection.query('update enrollform set `selfintr`="' + selfIntr + '", ' +
+														   '`reasonenroll`="' + reasonEnroll + '", ' +
+														   '`award`="' + award + '" ' +
+									'where student="' + student + '" and title="' + assignmentTitle +'"');
+					callback({saveSuccess: true});
+				}
+			});
     },
 
 
@@ -91,17 +113,41 @@ module.exports = {
      * @param {string} reasonEnroll
      * 报名原因
      * 
+	 * @param {string} award
+     * 奖励
+     * 
      * @property {boolean} launchSuccess //property: return
      * 保存是否成功
      * 
+	 
      *
      */
 
     enrollFormLaunch: function(id, idemail, assignmentTitle, lastName, firstName, username,
         wechatPhone, email, perWebAddr,
          selfIntr, reasonEnroll, award, callback) {
-             console.log('e'+id+idemail+assignmentTitle+firstName);
-       callback({launchSuccess: true});
+			var student=id;
+			if(student=="")
+				student=idemail;
+			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '"', function (error, results, fields){
+				if(results.length==0)
+				{
+					connection.query('insert into enrollform(`selfintr`,`reasonenroll`,`award`) values(' +
+									 '"' + selfIntr + '",' +
+									 '"' + reasonEnroll + '",' + 
+									 '"' + award + '")');
+					callback({launchSuccess: true});
+				}
+				else
+				{
+					connection.query('update enrollform set `selfintr`="' + selfIntr + '", ' +
+														   '`reasonenroll`="' + reasonEnroll + '", ' +
+														   '`award`="' + award + '", ' +
+														   '`filled`=1 ' +
+									'where student="' + student + '" and title="' + assignmentTitle +'"');
+					callback({launchSuccess: true});
+				}
+			});
    },
 
 
@@ -149,8 +195,26 @@ module.exports = {
      */
     enrollFormGet: function(id, idemail, assignmentTitle, callback) {
              console.log('e'+id+idemail+assignmentTitle+firstName);
-        if(id=="1") callback({lastName: "一"});
-        else callback({id: ""});
+		var student=id;
+		if(student=="")
+			student=idemail;	
+		connection.query('select * from student where studentID="' + student + '"', function (error, results, fields){
+			var tStudentID = results[0].studentID;
+			if(tStudentID.indexOf('@') != -1)
+				tStudentID = '空';
+			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '"', function (err, resul, fiel){
+				callback({lastName: results[0].lastname,
+						  firstName: results[0].firstname,
+						  username: results[0].username,
+						  studentId: tStudentID,
+						  wechatPhone: results[0].wechatphone,
+						  email: results[0].email,
+						  perWebAddr: results[0].perwebaddr,
+						  selfIntr: resul[0].selfintr,
+						  reasonEnroll: resul[0].reasonenroll,
+						  award: resul[0].award});
+			});
+		});
     },
 
 }
