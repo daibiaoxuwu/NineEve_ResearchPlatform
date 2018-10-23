@@ -27,11 +27,10 @@
         <div class="col-md-8 order-md-1">
 <p class="mb-3">
   <div class="card mb-3"  v-for="item in avaList" :key="item.title"  @click="onClick(item)">
-            <div class="card-header">{{item.title}}</div>
+            <div class="card-header">{{item.title}} 指导教师: {{item.teacher}}</div>
             <div class="card-body">
               <p class="form-text text-muted">
-           Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
-          在使用 Vue 时，我们推荐在你的浏览器上安装 Vue Devtools。它允许你在一个更友好的界面中审查和调试 Vue 应用。
+                {{item.introduction}}
          
 </p>
             </div>
