@@ -21,9 +21,11 @@ module.exports = {
      * 所有科研任务列表
      */
 
-    mainGet: function(id, email, callback){
+    rightGet: function(id, email, callback){
         callback(
             //isTeacher
+            true,
+            //msgList
       [ { text: "项目1", status: "Enrolling 可报名" },
         { text: "项目2", status: "Enrolling 可报名" },
         { text: "项目3", status: "Enrolling 可报名" },
