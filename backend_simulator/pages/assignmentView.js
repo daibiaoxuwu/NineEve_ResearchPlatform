@@ -4,10 +4,10 @@ module.exports = {
      *
      * @property {Array} 
      * 所有 可报名 科研任务列表
-     * 含有项目: title, teacher, introduction三项.
+     * 含有: title, teacher, introduction三项.
      */
 
-    assignmentViewGet: function(title, callback){
+    assignmentViewGet: function(callback){
         callback(
             [{
                 title:"基于Bootstrap的前端网页设计研究",

@@ -38,20 +38,27 @@ app.use(appSession);
 
 
 
-app.get('(/|/register|/enroll)', (req, res) =>{
+app.get('(/|/register)', (req, res) =>{
     var user = {};
     if (req.session && req.session.user) { user.name = req.session.user; }//TODO: what's this?
     res.render('index', {"user":JSON.stringify(user)});
 })
 
+app.get('/enroll', (req, res) => {
+    var user = {};
+    if (req.session && req.session.assignment) {
+        user = req.session.user;
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
+    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+})
+
 //app.all('/(((teacher|student|assignment)(Info|View|Evaluate|EvaluateSuccess))|(enroll(Form|Status|Success|Accepted|AcceptedNotice))|main)', (req, res) => {
 app.get(/^\/[^\/]*$/, (req, res) => {
-    console.log('geturl');
     var user = {};
     if (req.session && req.session.user) {
         user = req.session.user;
         res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进入.
-    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
+    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页面, 会被重定向回到首页.
 })
 
 var requireLoc = "./pages"; //location for requiring js files for database connection
@@ -61,8 +68,10 @@ var requireLoc = "./pages"; //location for requiring js files for database conne
 var home = require(requireLoc+ "/home");
 var teacherInfo = require(requireLoc + "/teacherInfo");
 var studentInfo = require(requireLoc + "/studentInfo");
+var enrollForm = require(requireLoc + "/enrollForm");
 var main = require(requireLoc + "/main");
 var enroll = require(requireLoc + "/enroll");
+var enrollStatus = require(requireLoc + "/enrollStatus");
 var assignmentView = require(requireLoc + "/assignmentView");
 
 
@@ -146,9 +155,40 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 		 });
 });
 
+app.get('/enrollStatus/getDetails', function(sReq, sRes) {
+    studentInfo.studentInfoGet(sReq.query.id, sReq.query.email, function(result){
+			 sRes.send(result);
+		 });
+});
+
+
+app.get('/enrollForm/save', function(sReq, sRes) {
+    console.log(sReq);
+    console.log(sReq.query.lastName);
+    enrollForm.enrollFormSave(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/enrollForm/launch', function(sReq, sRes) {
+    enrollForm.enrollFormLaunch(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/enrollForm/get', function(sReq, sRes) {
+    enrollForm.enrollFormGet(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, function(result){
+			 sRes.send(result);
+		 });
+});
+
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.name, function(isTeacher, msgList, myList, avaList){
+    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(isTeacher, msgList, myList, avaList){
         console.log({
             isTeacher: isTeacher,
             num1: parseInt(msgList.length / 3),
@@ -175,10 +215,41 @@ app.get('/main/get', function(sReq, sRes) {
 });
 
 
-app.get('/enroll/get', function(sReq, sRes) {
+
+
+app.get('/enrollStatus/get', function(sReq, sRes) {
+    enrollStatus.enrollStatusGet(sReq.session.user.id, function(list){
+        console.log({
+            num3: parseInt(list.length / 3),
+            list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length)),
+            avalist2: list
+        });
+        sRes.send({
+            num3: parseInt(list.length / 3) + 1,
+            list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length))
+        })
+    })
+});
+
+
+app.get('/home/setAssignment', function(sReq, sRes) {
     enroll.enrollGet(sReq.query.title, function(item){
+        sReq.session.assignment = item;
         sRes.send(item);
     })
+})
+
+//do not need database!
+app.get('/enroll/get', function(sReq, sRes) {
+        sRes.send(sReq.session.assignment);
+})
+
+//do not need database!
+app.get('/enroll/route', function(sReq, sRes) {
+    if (sReq.session && sReq.session.user) {
+    sRes.send('/enrollForm');}
+        else{
+    sRes.send('/');}
 })
 
 app.get('/home/get', function(sReq, sRes) {
@@ -188,8 +259,11 @@ app.get('/home/get', function(sReq, sRes) {
 })
 
 app.get('/assignmentView/get', function(sReq, sRes) {
-    assignmentView.assignmentViewGet(function(item){
-        sRes.send(item);
+    assignmentView.assignmentViewGet(sReq.query.currentPage, function(avaList){
+        sRes.send({
+            num3: parseInt(avaList.length / 3) + 1,
+            avaList: avaList.slice(Math.min(sReq.query.currentPage * 3 - 3, avaList.length), Math.min(sReq.query.currentPage * 3, avaList.length))
+        })
     })
 })
 

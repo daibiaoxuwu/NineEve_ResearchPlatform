@@ -17,8 +17,16 @@ module.exports = {
      *
      */
     emailLogin: function(email, password, recall) {
+		connection.query('select * from student where email="'+email+'"', function (error, results, fields){
+			if(results.length == 0)
+				recall({loginSuccess: false, usernameNotFound: true, infoFinished: false});
+			else
+				if(results[0].password == password)
+					recall({loginSuccess: true, usernameNotFound: true, infoFinished: results[0].filled == 1});
+				else
+					recall({loginSuccess: false, usernameNotFound: false, infoFinished: false});
+		});
         console.log("email login: "+email + password);
-        recall({loginSuccess: true, usernameNotFound: false, infoFinished: false});
     },
 
 
