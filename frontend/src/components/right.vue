@@ -74,18 +74,20 @@ export default {
          $.get(
         "/right/route",//TODO:get
         {title: item.title}).then(function(data){
-          if(data=="isTeacher")
-        that.$router.push('/enrollStatus');
-        else if(item.status== "Enrolling 可报名"){
-        that.$router.push('/enroll');
-        } else if(item.status== "Passed 已通过"){
-        that.$router.push('/enrollAcceptedNotice');
-        } else{
-        that.$router.push('/enrollRejectNotice');
+          if(data=="isTeacher"){
+          if(item.status== "Enrolling 可报名")
+            that.$router.push('/enrollStatus');
+          } else { 
+            if(item.status== "Enrolling 可报名"){
+            that.$router.push('/enroll');
+            } else if(item.status== "Passed 已通过"){
+            that.$router.push('/enrollAcceptNotice');
+            } else if(item.status== "Rejected 已拒绝"){
+            that.$router.push('/enrollRejectNotice');
+          }
         }
-        
-        )
-      }
+      })
+  }
   }
 };
 // 逻辑部分直接修改item即可呈现.

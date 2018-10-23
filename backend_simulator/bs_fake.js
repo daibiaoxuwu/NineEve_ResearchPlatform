@@ -304,6 +304,7 @@ app.get('/right/get', function(sReq, sRes) {
 app.get('/right/route', function(sReq, sRes) {
     enroll.enrollGet(sReq.query.title, function(item){
         sReq.session.assignment = item;
+        console.log(item);
         if (sReq.session && sReq.session.user.isTeacher) {
         sRes.send('isTeacher');
         } else{
