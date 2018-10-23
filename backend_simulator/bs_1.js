@@ -133,7 +133,7 @@ app.get('/teacherInfo/get', function(sReq, sRes) {
 
 app.get('/studentInfo/save', function(sReq, sRes) {
     console.log(sReq);
-    console.log(sReq.query.lastName);
+    console.log(sReq.query.selectedKey);
     studentInfo.studentInfoSave(sReq.session.user.id, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey, function(result){

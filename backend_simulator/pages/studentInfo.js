@@ -61,6 +61,9 @@ module.exports = {
 					var target = this;
 					return target.replace(new RegExp(search, 'g'), replacement);
 				};
+				var stringKey=JSON.stringify(selectedKey);
+				if(!selectedKey)
+					stringKey='';
 				console.log(JSON.stringify(selectedLab).replaceAll('\"','\\\"') );
 				connection.query('update student set `lastname`="' + lastName + '", ' +
 				'`firstname`="' + firstName + '", ' +
@@ -71,7 +74,7 @@ module.exports = {
 				'`breintr`="' + breIntr + '", ' +
 				'`grade`="' + grade + '", ' +
 				'`selectedlab`="' + JSON.stringify(selectedLab).replaceAll('\"','\\\"') + '", ' +
-				'`selectedkey`="' + JSON.stringify(selectedKey).replaceAll('\"','\\\"') + '" ' +				
+				'`selectedkey`="' + stringKey.replaceAll('\"','\\\"') + '" ' +				
 				'where studentID="'+studentID+'"');
 				recall({saveSuccess: true});
 			}
@@ -141,6 +144,9 @@ module.exports = {
 					var target = this;
 					return target.replace(new RegExp(search, 'g'), replacement);
 				};
+				var stringKey=JSON.stringify(selectedKey);
+				if(!selectedKey)
+					stringKey='';
 				connection.query('update student set `lastname`="' + lastName + '", ' +
 				'`firstname`="' + firstName + '", ' +
 				'`username`="' + username + '", ' +
@@ -150,7 +156,7 @@ module.exports = {
 				'`breintr`="' + breIntr + '", ' +
 				'`grade`="' + grade + '", ' +
 				'`selectedlab`="' + JSON.stringify(selectedLab).replaceAll('\"','\\\"') + '", ' +
-				'`selectedkey`="' + JSON.stringify(selectedKey).replaceAll('\"','\\\"') + '", ' +	
+				'`selectedkey`="' + stringKey.replaceAll('\"','\\\"') + '", ' +	
 				'`filled`=1 ' +
 				'where studentID="'+studentID+'"');
 				recall({launchSuccess: true});
@@ -217,6 +223,8 @@ module.exports = {
 					var allKeys=[];
 					for(var key in result)
 						allKeys.push({name: result[key].name, state: false});
+					var keys=JSON.parse(results[0].selectedkey);
+					console.log(keys);
 					console.log(allKeys);
 					recall({lastName: results[0].lastname,
 					firstName:  results[0].firstname,
