@@ -260,7 +260,7 @@ app.get('/assignmentView/get', function(sReq, sRes) {
 
 app.get('/right/get', function(sReq, sRes) {
     if (sReq.session && sReq.session.user) {
-        right.rightGet(sReq.session.user.id, sReq.session.user.email, function(item){
+        right.rightGet(sReq.session.user.id, sReq.session.user.email,sReq.session.user.isTeacher, function(item){
             sRes.send(item);
         })
     } else{

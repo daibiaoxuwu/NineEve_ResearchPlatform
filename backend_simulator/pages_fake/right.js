@@ -11,41 +11,26 @@ module.exports = {
      * @property {boolean} isTeacher
      * 是否为老师(学生和老师公用个人主页)
      * 
-     * @property {Array} msgList 
-     * 学生的新消息列表
+     * @property {Array} assignments 
+     * 正在进行的科研任务
      * 
-     * @property {Array} myList 
-     * 学生的科研任务(已经报名, 或者已经录取等)列表
-     * 
-     * @property {Array} avaList 
-     * 所有科研任务列表
+     * @property {Array} history
+     * 已经完成的科研任务列表
      */
 
-    rightGet: function(id, email, callback){
-        callback(
-            //isTeacher
-            true,
-            //msgList
-      [ { text: "项目1", status: "Enrolling 可报名" },
+    rightGet: function(id, email,isTeacher, callback){
+        callback({
+     assignments: [ { text: "项目1", status: "Enrolling 可报名" },
         { text: "项目2", status: "Enrolling 可报名" },
         { text: "项目3", status: "Enrolling 可报名" },
-         { text: "项目4", status: "Enrolling 可报名" },
-         { text: "项目5", status: "Enrolling 可报名" } ],
-
-            //myList
-      [ { text: "项目6", status: "Enrolling 可报名" },
-        { text: "项目2", status: "Enrolling 可报名" },
-        { text: "项目3", status: "Enrolling 可报名" },
-         { text: "项目4", status: "Enrolling 可报名" },
-         { text: "项目5", status: "Enrolling 可报名" } ],
-
-            //avaList
-      [ { text: "项目11", status: "Enrolling 可报名" },
+         { text: "项目4", status: "Passed 已通过" },
+         { text: "项目5", status: "Rejected 已拒绝" } ],
+  history:    [ { text: "项目6", status: "Enrolling 可报名" },
         { text: "项目2", status: "Enrolling 可报名" },
         { text: "项目3", status: "Enrolling 可报名" },
          { text: "项目4", status: "Enrolling 可报名" },
          { text: "项目5", status: "Enrolling 可报名" } ]
-        
+        }
         );
     }
 }
