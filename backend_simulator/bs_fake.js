@@ -178,6 +178,31 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 });
 
 
+app.get('/assignmentForm/save', function(sReq, sRes) {
+    console.log(sReq);
+    console.log(sReq.query.lastName);
+    enrollForm.assignmentFormSave(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.selfIntr, sReq.query.reasonEnroll, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/assignmentForm/launch', function(sReq, sRes) {
+    enrollForm.assignmentFormLaunch(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
+         sReq.query.selfIntr, sReq.query.reasonEnroll, function(result){
+			 sRes.send(result);
+		 });
+});
+
+app.get('/assignmentForm/get', function(sReq, sRes) {
+    enrollForm.assignmentFormGet(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, function(result){
+			 sRes.send(result);
+		 });
+});
+
+
 app.get('/main/get', function(sReq, sRes) {
     main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(msgList, myList, avaList){
         console.log({
@@ -250,7 +275,7 @@ app.get('/home/get', function(sReq, sRes) {
 })
 
 app.get('/assignmentView/get', function(sReq, sRes) {
-    assignmentView.assignmentViewGet(sReq.query.currentPage, function(avaList){
+    assignmentView.assignmentViewGet(function(avaList){
         sRes.send({
             num3: parseInt(avaList.length / 3) + 1,
             avaList: avaList.slice(Math.min(sReq.query.currentPage * 3 - 3, avaList.length), Math.min(sReq.query.currentPage * 3, avaList.length))
@@ -260,7 +285,7 @@ app.get('/assignmentView/get', function(sReq, sRes) {
 
 app.get('/right/get', function(sReq, sRes) {
     if (sReq.session && sReq.session.user) {
-        right.rightGet(sReq.session.user.id, sReq.session.user.email, function(item){
+        right.rightGet(sReq.session.user.id, sReq.session.user.email,sReq.session.user.isTeacher, function(item){
             sRes.send(item);
         })
     } else{
