@@ -14,9 +14,10 @@
     "init1": "cd frontend && npm install",
     "init2": "cd backend_simulator && npm install",
     "start": "npm run start --prefix backend_simulator",
-    "mochatest": "nyc --reporter=lcov --reporter=text mocha",
+    "test": "npm run mochatest && npm run jesttest",
+    "mochatest": "nyc --reporter=lcov --reporter=text mocha test/server.js",
     "build": "npm run build --prefix frontend",
-    "test": "jest --coverage"
+    "jesttest": "jest --coverage"
   },
   "devDependencies": {
     "chai": "^4.1.2",

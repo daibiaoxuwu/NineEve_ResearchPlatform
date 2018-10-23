@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 8080
+const port = 80
 
 
 
@@ -167,3 +167,5 @@ app.get('/home/get', function(sReq, sRes) {
 })
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+module.exports = server;

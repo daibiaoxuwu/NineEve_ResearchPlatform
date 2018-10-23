@@ -34,9 +34,5 @@ describe("app test", () => {
       expect(typeof App.data).to.be.equal('function');
     })
 
-    it('has updated function', () => {
-      expect(typeof App.updated).to.be.equal('function');
-    })
-
   })
 })
