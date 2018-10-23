@@ -30,7 +30,7 @@ module.exports = {
      * @param {string} breIntr
      * 学生个人简介
      * 
-     * @param {integer} grade
+     * @param {string} grade
      * 年级
      *
      * @param {Array} selectedLab
@@ -84,7 +84,7 @@ module.exports = {
      * @param {string} breIntr
      * 学生个人简介
      * 
-     * @param {integer} grade
+     * @param {string} grade
      * 年级
      * 
      * @param {Array} selectedLab
@@ -137,7 +137,7 @@ module.exports = {
      * @property {string} breIntr
      * 学生个人简介
      * 
-     * @property {integer} grade
+     * @property {string} grade
      * 年级
      * 
      * @param {Array} selectedLab
@@ -160,7 +160,7 @@ module.exports = {
         email:"5",
         perWebAddr:"6",
         breIntr:"7",
-        grade:1,
+        grade:"Junior 大三",
         selectedLab:[
             {name: "Software Laboratory 软件所", state:false},
             {name: "High Performance Laboratory 高性能", state:false},

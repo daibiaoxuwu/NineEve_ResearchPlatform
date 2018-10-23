@@ -38,7 +38,7 @@
             </div>
             <div class="mb-3"> <label for="email">Grade 年级<br></label>
               <div class="mb-3">
-                <b-dropdown id="ddown-header" text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
+                <b-dropdown id="ddown-header" v-model:text="grade" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
                 <b-dropdown-item-button style="text-align:center;" @click="clickFresh">Freshman 大一</b-dropdown-item-button>
                 <b-dropdown-item-button style="text-align:center;" @click="clickSoph">Sophomore 大二</b-dropdown-item-button>
                 <b-dropdown-item-button style="text-align:center;" @click="clickJuni">Junior 大三</b-dropdown-item-button>
@@ -124,7 +124,7 @@ export default {
 
    data() {
     return {
-      grade: -1, dropdownText: "Please Select 请选择",
+      grade: "Please Select 请选择",
       lastName:"",
       firstName:"",
       username:"",
@@ -210,20 +210,16 @@ export default {
     },
 
     clickFresh() {
-      this.grade = 0;
-      this.dropdownText = "Freshman 大一";
+      this.grade = "Freshman 大一";
     },
     clickSoph() {
-      this.grade = 1;
-      this.dropdownText = "Sophomore 大二";
+      this.grade = "Sophomore 大二";
     },
     clickJuni() {
-      this.grade = 2;
-      this.dropdownText = "Junior 大三";
+      this.grade = "Junior 大三";
     },
     clickSeni() {
-      this.grade = 3;
-      this.dropdownText = "Senior 大四";
+      this.grade = "Senior 大四";
     },
 
     launch() {
@@ -246,27 +242,9 @@ export default {
       
     }
 
-  },
-
-  watch: {
-    grade:function(val){
-    if(val==-1){
-      this.dropdownText = "请选择年级";
-    }
-    else if(val==0){
-      this.dropdownText = "Freshman 大一"
-    }
-    else if(val==1){
-      this.dropdownText = "Sophomore 大二";
-    }
-    else if(val==2){
-      this.dropdownText = "Junior 大三";
-    }
-    else if(val==3){
-      this.dropdownText = "Senior 大四";
-    }
-    }
   }
+
+  
 
 }
 </script>

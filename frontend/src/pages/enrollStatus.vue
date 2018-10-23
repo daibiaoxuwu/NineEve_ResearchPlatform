@@ -44,6 +44,7 @@
                  
                 </tbody>
               </table>
+            <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
 
 
 <div>
@@ -78,51 +79,34 @@ export default {
   name: "enrollForm",
    data() {
     return {
-      list:[
-        {
-          text: "肖朝军",
-          department: "CST 计算机系",
-          year: "Junior 大三"
-        },
-        {
+      list:[],
+      num3:1,
+      currentPage3:1,
        
-          text: "肖朝军2",
-          department: "CST 计算机系",
-          year: "Junior 大三"
-        },
-        {
-        
-          text: "肖朝军3",
-          department: "CST 计算机系",
-          year: "Junior 大三"
-        },
-         {
-        
-          text: "肖朝军4",
-          department: "CST 计算机系",
-          year: "Junior 大三"
-        },
-         {
-       
-          text: "肖朝军5",
-          department: "CST 计算机系",
-          year: "Junior 大三"
-        }
-      ],
       selectedItem:  {
-          text: "肖朝军",
-          department: "CST 计算机系",
-          year: "Junior 大三"
+          department: "暂无学生报名",
         }
     }
    },
      components:{
     rightpane, assignmentInfo, studentInfo
   },
+  created:function(){
+    var that = this;
+    $.get('/enrollStatus/get',
+    {currentPage3:currentPage3}).then(function(result){
+      that.list=result.list;
+      if(result.list.length>0) that.selectedItem=result.list[0];
+      that.num3=num3;
+    })
+  },
     methods: {
       onClick(item){
-        alert(item.text);
         this.selectedItem=item;
+        $.get('/enrollStatus/getStudent',
+    {id: item.id, email:item.email}).then(function(result){
+    
+    })
       },
    handleOk (){
       this.$router.push("/enrollAccepted")

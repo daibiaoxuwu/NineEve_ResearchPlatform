@@ -171,14 +171,14 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.name, function(isTeacher, msgList, myList, avaList){
+    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(isTeacher, msgList, myList, list){
         console.log({
             isTeacher: isTeacher,
             num1: parseInt(msgList.length / 3),
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
             num2: parseInt(myList.length / 3),
             myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
-            num3: parseInt(avaList.length / 3),
+            num3: parseInt(list.length / 3),
             avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
             msglist2: msgList,
             myList: myList,
@@ -196,6 +196,24 @@ app.get('/main/get', function(sReq, sRes) {
         })
     })
 });
+
+
+
+
+app.get('/enrollStatus/get', function(sReq, sRes) {
+    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(list){
+        console.log({
+            num3: parseInt(list.length / 3),
+            list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length)),
+            avalist2: list
+        });
+        sRes.send({
+            num3: parseInt(list.length / 3) + 1,
+            list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length))
+        })
+    })
+});
+
 
 app.get('/home/setAssignment', function(sReq, sRes) {
     enroll.enrollGet(sReq.query.title, function(item){
