@@ -66,25 +66,30 @@ var assignmentView = require(requireLoc + "/assignmentView");
 
 
 app.get('/login/byEmail', function(sReq, sRes){
-	
-	home.emailLogin(sReq.query.email, sReq.query.password, function(result){
-        sReq.session.user = {id:"", email: sReq.query.email};
-		sRes.send(result);
-	});
+  if (sReq.query.email.length<200 && sReq.query.password.length<200) {
+	   home.emailLogin(sReq.query.email, sReq.query.password, function(result){
+          sReq.session.user = {id:"", email: sReq.query.email};
+		      sRes.send(result);
+	   });
+  }
 });
 
 app.get('/login/byTeacherId', function(sReq, sRes){
-	home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
-        sReq.session.user = {id: sReq.query.teacherId, email:""};
-		sRes.send(result);
-	});
+  if (sReq.query.teacherId.length<200 && sReq.query.password.length<200) {
+	   home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
+          sReq.session.user = {id: sReq.query.teacherId, email:""};
+		      sRes.send(result);
+	   });
+   }
 });
 
 app.get('/login/byStudentId', function(sReq, sRes){
+  if (sReq.query.studentId.length<200 && sReq.query.password.length<200) {
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
-        sReq.session.user = {id: sReq.query.studentId, email:""}   
+        sReq.session.user = {id: sReq.query.studentId, email:""}
 		sRes.send(result);
-	});
+	  });
+  }
 });
 
 app.get('/register/getUrl', function(sReq, sRes){
@@ -190,7 +195,7 @@ app.get('/main/get', function(sReq, sRes) {
             msglist2: msgList,
             myList2: myList,
             avalist2: avaList
-            
+
         });
         sRes.send({
             isTeacher: isTeacher,
