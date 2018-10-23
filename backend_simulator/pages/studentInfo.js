@@ -50,8 +50,8 @@ module.exports = {
           breIntr, grade, selectedLab, selectedKey, recall) {
         console.log("studentInfoSave: " + id + email + lastName + firstName);
 		var studentID=id;
-		if(studentID=="")
-			studentID=email;
+		if(studentID==""||!studentID)
+			studentID=mail;
         connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
 			if(results.length==0)
 				recall({saveSuccess: false});
@@ -133,8 +133,8 @@ module.exports = {
          breIntr, grade, selectedLab, selectedKey, recall) {
         console.log("studentInfoLaunch: " + id + email + lastName + firstName + email);
 		var studentID=id;
-		if(studentID=="")
-			studentID=email;
+		if(studentID==""||!studentID)
+			studentID=mail;
         connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
 			if(results.length==0)
 				recall({launchSuccess: false});
@@ -213,7 +213,7 @@ module.exports = {
 
     studentInfoGet: function(id, email, recall) {
 		var studentID=id;
-		if(studentID=="")
+		if(studentID==""||!studentID)
 			studentID=email;
         console.log("studentInfGet: " + id + email);
 		connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){

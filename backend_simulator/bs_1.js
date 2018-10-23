@@ -294,13 +294,13 @@ app.get('/assignmentView/get', function(sReq, sRes) {
 })
 
 app.get('/right/get', function(sReq, sRes) {
-    if (sReq.session && sReq.session.user) {
+/*    if (sReq.session && sReq.session.user) {
         right.rightGet(sReq.session.user.id, sReq.session.user.email,sReq.session.user.isTeacher, function(item){
             sRes.send(item);
         })
     } else{
         sRes.send('/');
-    }
+    }*/
 })
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))

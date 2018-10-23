@@ -51,12 +51,14 @@ module.exports = {
          wechatPhone, email, perWebAddr,
           selfIntr, reasonEnroll, award, callback) {
 			var student=id;
-			if(student=="")
+			if(student==""||!student)
 				student=idemail;
 			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '"', function (error, results, fields){
 				if(results.length==0)
 				{
-					connection.query('insert into enrollform(`selfintr`,`reasonenroll`,`award`) values(' +
+					connection.query('insert into enrollform(`student`,`title`,`selfintr`,`reasonenroll`,`award`) values(' +
+									 '"' + student + '",' +
+									 '"' + assignmentTitle + '",' +
 									 '"' + selfIntr + '",' +
 									 '"' + reasonEnroll + '",' + 
 									 '"' + award + '")');
@@ -127,12 +129,14 @@ module.exports = {
         wechatPhone, email, perWebAddr,
          selfIntr, reasonEnroll, award, callback) {
 			var student=id;
-			if(student=="")
+			if(student==""||!student)
 				student=idemail;
 			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '"', function (error, results, fields){
 				if(results.length==0)
 				{
-					connection.query('insert into enrollform(`selfintr`,`reasonenroll`,`award`) values(' +
+					connection.query('insert into enrollform(`student`,`title`,`selfintr`,`reasonenroll`,`award`) values(' +
+									 '"' + student + '",' +
+									 '"' + assignmentTitle + '",' +									
 									 '"' + selfIntr + '",' +
 									 '"' + reasonEnroll + '",' + 
 									 '"' + award + '")');
@@ -194,25 +198,48 @@ module.exports = {
      *
      */
     enrollFormGet: function(id, idemail, assignmentTitle, callback) {
-             console.log('e'+id+idemail+assignmentTitle+firstName);
+             console.log('e'+id+idemail+assignmentTitle);
 		var student=id;
-		if(student=="")
+		if(student==""||!student)
 			student=idemail;	
-		connection.query('select * from student where studentID="' + student + '"', function (error, results, fields){
-			var tStudentID = results[0].studentID;
+		connection.query('select * from student where studentid="' + student + '"', function (error, results, fields){
+			
+			var tStudentID = results[0].studentid;
 			if(tStudentID.indexOf('@') != -1)
 				tStudentID = '空';
 			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '"', function (err, resul, fiel){
-				callback({lastName: results[0].lastname,
-						  firstName: results[0].firstname,
-						  username: results[0].username,
-						  studentId: tStudentID,
-						  wechatPhone: results[0].wechatphone,
-						  email: results[0].email,
-						  perWebAddr: results[0].perwebaddr,
-						  selfIntr: resul[0].selfintr,
-						  reasonEnroll: resul[0].reasonenroll,
-						  award: resul[0].award});
+				if(resul.length>0)
+				{
+					callback({lastName: results[0].lastname,
+							  firstName: results[0].firstname,
+							  username: results[0].username,
+							  studentId: tStudentID,
+							  wechatPhone: results[0].wechatphone,
+							  email: results[0].email,
+							  perWebAddr: results[0].perwebaddr,
+							  selfIntr: resul[0].selfintr,
+							  reasonEnroll: resul[0].reasonenroll,
+							  award: resul[0].award});
+				}
+				else
+				{
+					connection.query('insert into enrollform(`student`,`title`,`selfintr`,`reasonenroll`,`award`) values(' +
+									 '"' + student + '",' +
+									 '"' + assignmentTitle + '",' +								
+									 '"",' +
+									 '"",' +
+									 '"")');
+										callback({lastName: results[0].lastname,
+							  firstName: results[0].firstname,
+							  username: results[0].username,
+							  studentId: tStudentID,
+							  wechatPhone: results[0].wechatphone,
+							  email: results[0].email,
+							  perWebAddr: results[0].perwebaddr,
+							  selfIntr: "",
+							  reasonEnroll: "",
+							  award: ""});
+				}
 			});
 		});
     },
