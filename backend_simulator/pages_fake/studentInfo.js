@@ -30,7 +30,7 @@ module.exports = {
      * @param {string} breIntr
      * 学生个人简介
      * 
-     * @param {integer} grade
+     * @param {string} grade
      * 年级
      *
      * @param {Array} selectedLab
@@ -45,7 +45,7 @@ module.exports = {
      * 保存是否成功 如果没有查到此人, 返回false
      */
 
-    studentInfoSave: function(id, email, lastName, firstName, username,
+    studentInfoSave: function(id, idemail, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
           breIntr, grade, selectedLab, selectedKey, callback) {
         console.log("studentInfoSave: " + id + email + lastName + firstName);
@@ -84,7 +84,7 @@ module.exports = {
      * @param {string} breIntr
      * 学生个人简介
      * 
-     * @param {integer} grade
+     * @param {string} grade
      * 年级
      * 
      * @param {Array} selectedLab
@@ -99,7 +99,7 @@ module.exports = {
      * 启动是否成功 如果没有查到此人, 返回false
      */
 
-    studentInfoLaunch: function(id, email, lastName, firstName, username,
+    studentInfoLaunch: function(id, idemail, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
          breIntr, grade, selectedLab, selectedKey, callback) {
         console.log("studentInfoLaunch: " + id + email + lastName + firstName + email);
@@ -137,7 +137,7 @@ module.exports = {
      * @property {string} breIntr
      * 学生个人简介
      * 
-     * @property {integer} grade
+     * @property {string} grade
      * 年级
      * 
      * @param {Array} selectedLab
@@ -160,7 +160,7 @@ module.exports = {
         email:"5",
         perWebAddr:"6",
         breIntr:"7",
-        grade:1,
+        grade:"Junior 大三",
         selectedLab:[
             {name: "Software Laboratory 软件所", state:false},
             {name: "High Performance Laboratory 高性能", state:false},
@@ -171,17 +171,6 @@ module.exports = {
         selectedKey:[{name: "1", state: true}],
         allKeys:[{name: "关键词", state: false}]});
         else callback({lastName: ""});
-    },
-
-   /**
-     * 学生请求页面的取得之前所写内容请求 通过邮箱获得 页面url: '/studentInfo'
-     * 如果没有查到此人, 全部返回空串即可
-     * 
-     * @param {Array} allKeys
-     * 所有的关键词 每一项的格式:{name:"关键词", state:true/false}. 所有的关键词都被传出来, state任取.
-     */
-    studentInfoGet: function(callback) {
-        callback([{name: "1", state: false},{name: "2", state: false}]);
     }
 
 }
