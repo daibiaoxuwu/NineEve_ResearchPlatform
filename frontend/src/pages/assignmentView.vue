@@ -27,10 +27,10 @@
         <div class="col-md-8 order-md-1">
 <p class="mb-3">
   <div class="card mb-3"  v-for="item in avaList" :key="item.title"  @click="onClick(item)">
-            <div class="card-header">{{item.title}}</div>
+            <div class="card-header">{{item.title}} 指导教师: {{item.teacher}}</div>
             <div class="card-body">
               <p class="form-text text-muted">
-                {{item.description}}
+                {{item.introduction}}
          
 </p>
             </div>
