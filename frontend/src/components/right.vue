@@ -85,19 +85,6 @@ export default {
     };
   },
   methods: {
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
-    },
-    linkGen (pageNum) {
-      return '#page/' + pageNum + '/foobar'
-    },
-    onClick (item){
-      alert(item.text);
-      // this.$router.push("/log")
-    },
           onClick2(item){
         alert(item.title);
         this.$router.push("/enrollStatus")
