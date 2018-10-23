@@ -188,7 +188,7 @@ app.get('/main/get', function(sReq, sRes) {
             num3: parseInt(avaList.length / 3),
             avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
             msglist2: msgList,
-            myList: myList,
+            myList2: myList,
             avalist2: avaList
             
         });
