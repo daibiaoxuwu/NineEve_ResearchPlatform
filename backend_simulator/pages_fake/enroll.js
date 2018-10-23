@@ -16,6 +16,7 @@ module.exports = {
      * number
      * deadline
      * status
+     * award
      */
 
     enrollGet: function(title, callback){
@@ -55,7 +56,8 @@ module.exports = {
         请确认了解不同构建版本并在你发布的站点中使用生产环境版本，把 vue.js 换成 vue.min.js。这是一个更小的构建，可以带来比开发环境下更快的速度体验。",
             number:3,
             deadline:"2018-10-21",
-            status:"Enrolling 可报名"
+            status:"Enrolling 可报名",
+            award:"特奖"
         
         
               
