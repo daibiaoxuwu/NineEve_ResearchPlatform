@@ -15,7 +15,7 @@
 <p class="form-text" style="font-weight:bold;">关键词</p>
 <div>
 
-    <b-badge variant="light" style="font-size:15px; font-weight:200" v-for="item in info.keywords">{{item}}</b-badge>
+    <b-badge variant="light" style="font-size:15px; font-weight:200" v-for="item in info.keywords" :key="item">{{item}}</b-badge>
 
 </div>
                   <!-- <hr class="mb-4"> -->

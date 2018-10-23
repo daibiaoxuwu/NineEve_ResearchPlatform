@@ -32,7 +32,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in msgList" @click="onClick(item)">
+                  <tr v-for="(item, index) in msgList" @click="onClick(item)" :key="item.text">
 
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
@@ -63,7 +63,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in myList" @click="onClick(item)">
+                  <tr v-for="(item, index) in myList" @click="onClick(item)" :key="item.text">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <td>{{item.status}}</td>
@@ -121,7 +121,6 @@
               <p class="float-right"><router-link to="/assignmentView" ><b-button variant="primary">Details 具体信息</b-button></router-link></p>
             </div>
             </div>
-          </div>
           </div>
 </p>
  <router-link to="/assignmentInfo"><b-btn  v-bind:class="isTeacherButton">New Assignment 立项</b-btn></router-link>
