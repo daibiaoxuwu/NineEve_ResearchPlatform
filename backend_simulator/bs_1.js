@@ -99,7 +99,7 @@ app.get('/login/byTeacherId', function(sReq, sRes){
 app.get('/login/byStudentId', function(sReq, sRes){
   if (sReq.query.studentId.length<200 && sReq.query.password.length<200) {
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
-        sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}   
+        sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}
 		sRes.send(result);
 	  });
   }
@@ -107,6 +107,27 @@ app.get('/login/byStudentId', function(sReq, sRes){
 
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
+  if (sReq.query.name!=null && sReq.query.university!=null &&
+   sReq.query.email!=null && sReq.query.password!=null)  {
+     var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.name)
+     || (new RegExp("\'")).test(sReq.query.name);
+     var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.university)
+     || (new RegExp("\'")).test(sReq.query.university);
+     var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.email)
+     || (new RegExp("\'")).test(sReq.query.email);
+     var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.password)
+     || (new RegExp("\'")).test(sReq.query.password);
+     if (hasQuotationMarks1 || hasQuotationMarks2
+      || hasQuotationMarks3 || hasQuotationMarks4) {
+        return;
+      }
+
+      var isEmail = (new RegExp("@")).test(sReq.query.email);
+      var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+      if (!isEmail || !isInUniv) {
+        return;
+      }
+
   if (sReq.query.name.length<200 && sReq.query.university.length<200
     && sReq.query.email.length<200 && sReq.query.password.length<200) {
    home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
@@ -119,7 +140,52 @@ app.get('/register/getUrl', function(sReq, sRes){
 
 app.get('/teacherInfo/save', function(sReq, sRes) {
     //console.log(sReq);
-    console.log(sReq.query.email);
+    if (sReq.query.lastName == null) sReq.query.lastName = "";
+    if (sReq.query.firstName == null) sReq.query.firstName = "";
+    if (sReq.query.username == null) sReq.query.username = "";
+    if (sReq.query.wechatPhone == null) sReq.query.wechatPhone = "";
+    if (sReq.query.email == null) sReq.query.email = "";
+    if (sReq.query.perWebAddr == null) sReq.query.perWebAddr = "";
+    if (sReq.query.researchArea == null) sReq.query.researchArea = "";
+    if (sReq.query.researchResults == null) sReq.query.researchResults = "";
+    if (sReq.query.lab == null || (sReq.query.lab!=0&&sReq.query.lab!=1
+      &&sReq.query.lab!=2&&sReq.query.lab!=3&&sReq.query.lab!=4))
+      sReq.query.lab = -1;
+
+    if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
+      || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200 || sReq.query.perWebAddr.length>200
+      || sReq.query.researchArea.length>2000 || sReq.query.researchResults.length>2000) {
+        return;
+      }
+
+      var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.lastName)
+      || (new RegExp("\'")).test(sReq.query.lastName);
+      var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.firstName)
+      || (new RegExp("\'")).test(sReq.query.firstName);
+      var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.username)
+      || (new RegExp("\'")).test(sReq.query.username);
+      var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.wechatPhone)
+      || (new RegExp("\'")).test(sReq.query.wechatPhone);
+      var hasQuotationMarks5 = (new RegExp("\"")).test(sReq.query.email)
+      || (new RegExp("\'")).test(sReq.query.email);
+      var hasQuotationMarks6 = (new RegExp("\"")).test(sReq.query.perWebAddr)
+      || (new RegExp("\'")).test(sReq.query.perWebAddr);
+      var hasQuotationMarks7 = (new RegExp("\"")).test(sReq.query.researchArea)
+      || (new RegExp("\'")).test(sReq.query.researchArea);
+      var hasQuotationMarks8 = (new RegExp("\"")).test(sReq.query.researchResults)
+      || (new RegExp("\'")).test(sReq.query.researchResults);
+      if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
+        || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
+        || hasQuotationMarks7 || hasQuotationMarks8) {
+          return;
+        }
+
+      var isEmail = (new RegExp("@")).test(sReq.query.email);
+      var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+      if (!isEmail || !isInUniv) {
+        return;
+      }
+      
     teacherInfo.teacherInfoSave(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab, function(result){
@@ -201,8 +267,8 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 app.get('/assignmentForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.teacherId};
-    assignmentForm.assignmentFormSave(sReq.session.user.teacherId, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
+    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.id};
+    assignmentForm.assignmentFormSave(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
 			 sRes.send(result);
@@ -210,8 +276,8 @@ app.get('/assignmentForm/save', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/launch', function(sReq, sRes) {
-    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.teacherId};
-    assignmentForm.assignmentFormLaunch(sReq.session.user.teacherId, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
+    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.id};
+    assignmentForm.assignmentFormLaunch(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
 			 sRes.send(result);
@@ -220,12 +286,12 @@ app.get('/assignmentForm/launch', function(sReq, sRes) {
 
 app.get('/assignmentForm/get', function(sReq, sRes) {
     if(sReq.session && sReq.session.assignment){
-    assignmentForm.assignmentFormGet(sReq.session.user.teacherId, sReq.session.assignment.title, function(result){
+    assignmentForm.assignmentFormGet(sReq.session.user.id, sReq.session.assignment.title, function(result){
 			 sRes.send(result);
          });
         }
         else {
-            assignmentForm.assignmentFormNew(sReq.session.user.teacherId, function(result){
+            assignmentForm.assignmentFormNew(sReq.session.user.id, function(result){
                 sRes.send(result);
             });
         }
