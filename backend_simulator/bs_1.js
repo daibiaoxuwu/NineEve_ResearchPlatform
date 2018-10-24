@@ -116,8 +116,8 @@ app.get('/register/getUrl', function(sReq, sRes){
 
 
 app.get('/teacherInfo/save', function(sReq, sRes) {
-    console.log(sReq);
-    console.log(sReq.query.lastName);
+    //console.log(sReq);
+    console.log(sReq.query.email);
     teacherInfo.teacherInfoSave(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab, function(result){
@@ -252,7 +252,7 @@ app.get('/main/get', function(sReq, sRes) {
 
 
 app.get('/enrollStatus/get', function(sReq, sRes) {
-    enrollStatus.enrollStatusGet(sReq.session.user.id, sReq.session.assignment, function(list){
+    enrollStatus.enrollStatusGet(sReq.session.user.id, sReq.session.assignment.title, function(list){
         console.log({
             num3: parseInt(list.length / 3),
             list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length)),
@@ -262,6 +262,12 @@ app.get('/enrollStatus/get', function(sReq, sRes) {
             num3: parseInt(list.length / 3) + 1,
             list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length))
         })
+    })
+});
+
+app.get('/enrollStatus/accept', function(sReq, sRes) {
+    enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, sReq.query.email, function(result){
+        sRes.send(result);
     })
 });
 
