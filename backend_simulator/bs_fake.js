@@ -48,7 +48,7 @@ app.get(/^\/[^\/]*$/, (req, res) => {
     if (req.session && req.session.user) {
         user = req.session.user;
         res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
-    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
+    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
 })
 
 var requireLoc = "./pages_fake"; //location for requiring js files for database connection
@@ -63,15 +63,17 @@ var main = require(requireLoc + "/main");
 var enroll = require(requireLoc + "/enroll");
 var enrollStatus = require(requireLoc + "/enrollStatus");
 var assignmentView = require(requireLoc + "/assignmentView");
+var assignmentForm = require(requireLoc + "/assignmentForm");
 var right = require(requireLoc + "/right");
+var evaluate = require(requireLoc + "/evaluate");
 
 
 app.get('/login/byEmail', function(sReq, sRes){
   if (sReq.query.email.length<200 && sReq.query.password.length<200) {
 	   home.emailLogin(sReq.query.email, sReq.query.password, function(result){
         sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false};
-		      sRes.send(result);
-	   });
+		sRes.send(result);
+	});
   }
 });
 
@@ -164,7 +166,7 @@ app.get('/enrollStatus/getDetails', function(sReq, sRes) {
 app.get('/enrollForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    enrollForm.enrollFormSave(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    enrollForm.enrollFormSave(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
@@ -172,7 +174,7 @@ app.get('/enrollForm/save', function(sReq, sRes) {
 });
 
 app.get('/enrollForm/launch', function(sReq, sRes) {
-    enrollForm.enrollFormLaunch(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    enrollForm.enrollFormLaunch(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
@@ -189,7 +191,8 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 app.get('/assignmentForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    enrollForm.assignmentFormSave(sReq.session.user.teacherId, sReq.session.assignment.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
+    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.id};
+    assignmentForm.assignmentFormSave(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
 			 sRes.send(result);
@@ -197,7 +200,8 @@ app.get('/assignmentForm/save', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/launch', function(sReq, sRes) {
-    enrollForm.assignmentFormSave(sReq.session.user.teacherId, sReq.session.assignment.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
+    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.id};
+    assignmentForm.assignmentFormLaunch(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
 			 sRes.send(result);
@@ -205,14 +209,21 @@ app.get('/assignmentForm/launch', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/get', function(sReq, sRes) {
-    enrollForm.assignmentFormGet(sReq.session.user.teacherId, sReq.session.assignment.title, function(result){
+    if(sReq.session && sReq.session.assignment){
+    assignmentForm.assignmentFormGet(sReq.session.user.id, sReq.session.assignment.title, function(result){
 			 sRes.send(result);
-		 });
+         });
+        }
+        else {
+            assignmentForm.assignmentFormNew(sReq.session.user.id, function(result){
+                sRes.send(result);
+            });
+        }
 });
 
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, function(msgList, myList, avaList){
+    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, sReq.session.user.isTeacher, function(msgList, myList, avaList){
         console.log({
             isTeacher: sReq.session.user.isTeacher,
             num1: parseInt(msgList.length / 3),
@@ -256,14 +267,14 @@ app.get('/enrollStatus/get', function(sReq, sRes) {
 });
 
 app.get('/enrollStatus/accept', function(sReq, sRes) {
-    enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id,function(result){
+    enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, function(result){
         sRes.send(result);
     })
 });
 
 
 app.get('/home/setAssignment', function(sReq, sRes) {
-    enroll.enrollGet(sReq.query.title, function(item){
+    enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
         sReq.session.assignment = item;
         sRes.send(item);
     })
@@ -327,5 +338,31 @@ app.get('/right/route', function(sReq, sRes) {
         }
     })
 })
+
+app.get('/studentEvaluate/save', function(sReq, sRes) {
+    evaluate.studentEvaluateSave(sReq.query.user.id, sReq.query.assignment.title, sReq.query.assignment.teacherId,  sReq.query.satis, sReq.query.learned, sReq.query.notlearned, function(item){
+        sRes.send(item);
+    })
+})
+
+app.get('/teacherEvaluate/save', function(sReq, sRes) {
+    evaluate.teacherEvaluateSave(sReq.query.user.id, sReq.query.assignment.title, sReq.query.satis,  sReq.query.intro, sReq.query.reason, function(item){
+        sRes.send(item);
+    })
+})
+
+app.get('/studentEvaluate/get', function(sReq, sRes) {
+    evaluate.studentEvaluateGet(sReq.query.user.id, sReq.query.assignment.title, sReq.query.assignment.teacherId, function(item){
+        sRes.send(item);
+    })
+})
+
+app.get('/teacherEvaluate/get', function(sReq, sRes) {
+    evaluate.teacherEvaluateGet(sReq.query.user.id, sReq.query.assignment.title, function(item){
+        sRes.send(item);
+    })
+})
+
+
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
