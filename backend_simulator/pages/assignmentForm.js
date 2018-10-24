@@ -38,6 +38,7 @@ module.exports = {
     assignmentFormSave: function(teacher, title, background, introduction,
          keywords, abilities, detailed,
           number, deadline, callback) {
+			  			 console.log("lzr4: "+teacher+title);
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 				if(results.length==0)
 				{
@@ -193,7 +194,7 @@ module.exports = {
 				  detailed: "",
 				  number: "",
 				  deadline: ""});	
-    }
+    },
 	
     assignmentFormGet: function(teacher, title, callback) {
         connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
@@ -201,7 +202,7 @@ module.exports = {
 			{
 				callback({background: results[0].background,
 						  introduction: results[0].introduction,
-						  keywords: results[0].keywords,
+						  keywords: results[0].keywords.split(' '),
 						  abilities: results[0].abilities,
 						  detailed: results[0].detailed,
 						  number: results[0].num.toString(),
