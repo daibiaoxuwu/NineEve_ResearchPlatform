@@ -242,7 +242,7 @@ app.get('/main/get', function(sReq, sRes) {
 
 
 app.get('/enrollStatus/get', function(sReq, sRes) {
-    enrollStatus.enrollStatusGet(sReq.session.user.id, sReq.session.assignment, function(list){
+    enrollStatus.enrollStatusGet(sReq.session.user.id, sReq.session.assignment.title, function(list){
         console.log({
             num3: parseInt(list.length / 3),
             list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length)),
@@ -252,6 +252,12 @@ app.get('/enrollStatus/get', function(sReq, sRes) {
             num3: parseInt(list.length / 3) + 1,
             list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length))
         })
+    })
+});
+
+app.get('/enrollStatus/accept', function(sReq, sRes) {
+    enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, sReq.query.email, function(result){
+        sRes.send(result);
     })
 });
 
