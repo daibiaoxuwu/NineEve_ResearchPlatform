@@ -87,6 +87,7 @@ export default {
    data() {
     return {
       list:[{
+        id:"",
           text:"",
           department: "暂无学生报名",
           grade:""
@@ -95,6 +96,7 @@ export default {
       currentPage3:1,
        
       selectedItem:  {
+        id:"",
           text:"",
           department: "",
           grade:""
@@ -114,7 +116,11 @@ export default {
     rightpane, assignmentInfo, studentInfo
   },
   created:function(){
-    var that = this;
+   this.update();
+  },
+    methods: {
+      update(){
+         var that = this;
     $.get('/enrollStatus/get',
     {currentPage3:that.currentPage3}).then(function(result){
      console.log(result);
@@ -127,10 +133,9 @@ export default {
         that.detailClass="invisible";
         that.class2="invisible";
         }
-      that.num3=num3;
+      that.num3=result.num3;
     })
-  },
-    methods: {
+      }
       onClick(item){
         if(item.department=="暂无学生报名"){
           this.detailClass="invisible";
@@ -149,7 +154,7 @@ export default {
    handleOk (){
       var that = this;
         $.get('/enrollStatus/accept',
-    {id: item.id}).then(function(result){
+    {id: that.selectedItem.id}).then(function(result){
       if(result.acceptSuccess){
       that.$router.push("/enrollAccepted");
       }
@@ -158,11 +163,16 @@ export default {
      handleRefuse (){
       var that = this;
         $.get('/enrollStatus/refuse',
-    {id: item.id}).then(function(result){
+    {id: that.selectedItem.id}).then(function(result){
       if(result.acceptSuccess){
       that.$router.push("/enrollRefused");
       }
     })
+    }
+  },
+  watch: {
+    currentPage3: function(val){
+      this.update();
     }
   }
 }

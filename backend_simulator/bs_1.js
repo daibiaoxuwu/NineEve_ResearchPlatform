@@ -38,7 +38,7 @@ app.use(appSession);
 
 
 
-app.get('(/|/register)', (req, res) =>{
+app.get('(/|/register|/assignmentView)', (req, res) =>{
     var user = {};
     if (req.session && req.session.user) { user.name = req.session.user; }//TODO: what's this?
     res.render('index', {"user":JSON.stringify(user)});
@@ -318,8 +318,11 @@ app.get('/enroll/route', function(sReq, sRes) {
 })
 
 app.get('/home/get', function(sReq, sRes) {
-    home.homeGet(function(item){
-        sRes.send(item);
+    home.homeGet(function(avaList){
+        sRes.send({
+            num3: parseInt(avaList.length / 3) + 1,
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length))
+        })
     })
 })
 

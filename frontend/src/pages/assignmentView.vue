@@ -73,21 +73,29 @@ export default {
     rightpane, assignmentInfo
   },
   created: function(){
-    var that = this;
-    $.get("/assignmentView/get",
-        {currentPage: that.currentPage}).then(function(data){
-          that.avaList=data.avaList;
-          that.num=data.num;
-          console.log(data);
-         });
+    this.update();
   },
   methods: {
+    update(){
+      var that = this;
+      $.get("/assignmentView/get",
+          {currentPage: that.currentPage}).then(function(data){
+            that.avaList=data.avaList;
+            that.num=data.num;
+            console.log(data);
+          });
+    },
      onClick(item){
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enroll");
       })
+    }
+  },
+  watch: {
+    currentPage: function(val){
+      this.update();
     }
   }
 };
