@@ -18,7 +18,8 @@
     "test": "npm run jesttest",
     "mochatest": "nyc --reporter=lcov --reporter=text mocha test/server.js",
     "build": "npm run build --prefix frontend",
-    "jesttest": "jest --coverage"
+    "jesttest": "jest --coverage",
+    "basetest": "jest home.test.js"
   },
   "devDependencies": {
     "chai": "^4.1.2",
