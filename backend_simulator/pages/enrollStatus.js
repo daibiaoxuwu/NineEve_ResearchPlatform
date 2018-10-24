@@ -17,18 +17,26 @@ module.exports = {
     enrollStatusGet: function(teacherId, title, callback){
         connection.query('select * from enrollform where title="' + title + '" and teacher="' + teacherId + '"', function (error, results, field){
 			var statu=[];
+			console.log("lzr6"+teacherId+","+title);
 			for(var i in results)
 			{
+				console.log(results[i].filled);
 				if(results[i].filled==1)
 				{
 					connection.query('select * from student where studentid="' + results[i].student + '"', function (err, resul, fie){
+						console.log({id: results[i].student,
+									text: resul[0].lastname + resul[0].firstname,
+									department: "CST 计算机系",
+									grade: resul[0].grade});
 						statu.push({id: results[i].student,
 									text: resul[0].lastname + resul[0].firstname,
 									department: "CST 计算机系",
 									grade: resul[0].grade});
+						console.log(statu);
 					});
 				}
 			}
+			console.log(statu);
 			callback(statu);
 		});
     },

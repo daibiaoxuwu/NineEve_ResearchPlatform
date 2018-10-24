@@ -36,7 +36,7 @@
 
                     <td>{{index}}</td>
                     <td>{{item.title}}</td>
-                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
+                    <!-- <td @click="onClick1(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
                     <td>{{item.status}}</td>
                   </tr>
@@ -195,6 +195,43 @@ export default {
        that.$router.push("/enroll");
       })
       } else if (item.status == "Passed 已通过"){
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enrollAcceptedNotice");
+      })
+      } else if (item.status == "Rejected 已拒绝"){
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enrollRejectNotice");
+      })
+      }else if (item.status == "Editable 可编辑"){
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/assignmentForm");
+      })
+      }
+    },
+	onClick1(item){
+      if(item.status == "Enrolling 可报名"){
+if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
+           
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enrollStatus");
+      })
+	  }
+	  else{
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enroll");
+      })
+      } 
+	  }else if (item.status == "Passed 已通过"){
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
