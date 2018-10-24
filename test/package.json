@@ -11,7 +11,8 @@
     "vue": "^2.5.17"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "basetest": "jest database_server.test.js"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.25",
