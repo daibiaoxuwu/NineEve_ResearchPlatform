@@ -75,6 +75,7 @@ var enrollStatus = require(requireLoc + "/enrollStatus");
 var assignmentView = require(requireLoc + "/assignmentView");
 var assignmentForm = require(requireLoc + "/assignmentForm");
 var right = require(requireLoc + "/right");
+var evaluate = require(requireLoc + "/evaluate");
 
 
 app.get('/login/byEmail', function(sReq, sRes){
@@ -347,5 +348,31 @@ app.get('/right/route', function(sReq, sRes) {
         }
     })
 })
+
+app.get('/studentEvaluate/save', function(sReq, sRes) {
+    evaluate.studentEvaluateSave(sReq.query.user.id, sReq.query.assignment.title, sReq.query.assignment.teacherId,  sReq.query.satis, sReq.query.learned, sReq.query.notlearned, function(item){
+        sRes.send(item);
+    })
+})
+
+app.get('/teacherEvaluate/save', function(sReq, sRes) {
+    evaluate.teacherEvaluateSave(sReq.query.user.id, sReq.query.assignment.title, sReq.query.satis,  sReq.query.intro, sReq.query.reason, function(item){
+        sRes.send(item);
+    })
+})
+
+app.get('/studentEvaluate/get', function(sReq, sRes) {
+    evaluate.studentEvaluateGet(sReq.query.user.id, sReq.query.assignment.title, sReq.query.assignment.teacherId, function(item){
+        sRes.send(item);
+    })
+})
+
+app.get('/teacherEvaluate/get', function(sReq, sRes) {
+    evaluate.teacherEvaluateGet(sReq.query.user.id, sReq.query.assignment.title, function(item){
+        sRes.send(item);
+    })
+})
+
+
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))

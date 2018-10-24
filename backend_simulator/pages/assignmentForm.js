@@ -193,7 +193,7 @@ module.exports = {
 				  detailed: "",
 				  number: "",
 				  deadline: ""});	
-    },
+    }
 	
     assignmentFormGet: function(teacher, title, callback) {
         connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
