@@ -35,7 +35,7 @@ module.exports = {
      * 
      */
 
-    assignmentFormSave: function(title, background, introduction,
+    assignmentFormSave: function(teacher, title, background, introduction,
          keywords, abilities, detailed,
           number, deadline, callback) {
         callback({saveSuccess: true});
@@ -76,7 +76,7 @@ module.exports = {
      * 启动是否成功
      */
 
-    assignmentFormLaunch: function(title, background, introduction,
+    assignmentFormLaunch: function(teacher, title, background, introduction,
         keywords, abilities, detailed,
          number, deadline, callback) {
         callback({launchSuccess: true});
@@ -113,8 +113,25 @@ module.exports = {
      * 截止时间
      *
      */
-    assignmentFormGet: function(teacherId, title, callback) {
+	assignmentFormNew: function(teacher, callback) {
+		callback({background: "",
+				  introduction: "",
+				  keywords: "",
+				  abilities: "",
+				  detailed: "",
+				  number: "",
+				  deadline: ""});	
+    }
+	
+    assignmentFormGet: function(teacher, title, callback) {
         
+				callback({background: "1",
+						  introduction: "2",
+						  keywords: "3",
+						  abilities: "4",
+						  detailed: "5",
+						  number: "6",
+						  deadline: "7"});
     }
 
 }

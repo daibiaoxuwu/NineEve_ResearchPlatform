@@ -56,7 +56,7 @@ module.exports = {
 			if(results.length>0)
 			{
 				connection.query('update enrollform set `success`=1,`teacherread`=1,`studentread`=0 where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"');
-				callback({acceptSuccess: true})
+				callback({acceptSuccess: true});
 			}
 			else
 			{

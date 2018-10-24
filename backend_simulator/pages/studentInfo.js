@@ -30,7 +30,7 @@ module.exports = {
      * @param {string} breIntr
      * 学生个人简介
      * 
-     * @param {integer} grade
+     * @param {string} grade
      * 年级
      *
      * @param {Array} selectedLab
@@ -113,7 +113,7 @@ module.exports = {
      * @param {string} breIntr
      * 学生个人简介
      * 
-     * @param {integer} grade
+     * @param {string} grade
      * 年级
      * 
      * @param {Array} selectedLab
@@ -195,7 +195,7 @@ module.exports = {
      * @property {string} breIntr
      * 学生个人简介
      * 
-     * @property {integer} grade
+     * @property {string} grade
      * 年级
      * 
      * @param {Array} selectedLab
