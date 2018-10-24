@@ -273,7 +273,7 @@ app.get('/enrollStatus/accept', function(sReq, sRes) {
 
 
 app.get('/home/setAssignment', function(sReq, sRes) {
-    enroll.enrollGet(sReq.query.title, function(item){
+    enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
         sReq.session.assignment = item;
         sRes.send(item);
     })

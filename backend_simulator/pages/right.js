@@ -11,41 +11,47 @@ module.exports = {
      * @property {boolean} isTeacher
      * 是否为老师(学生和老师公用个人主页)
      * 
-     * @property {Array} msgList 
-     * 学生的新消息列表
+     * @property {Array} assignments 
+     * 正在进行的科研任务
      * 
-     * @property {Array} myList 
-     * 学生的科研任务(已经报名, 或者已经录取等)列表
-     * 
-     * @property {Array} avaList 
-     * 所有科研任务列表
+     * @property {Array} history
+     * 已经完成的科研任务列表
      */
 
-    rightGet: function(id, email, callback){
-        callback(
-            //isTeacher
-            true,
-            //msgList
-      [ { text: "项目1", status: "Enrolling 可报名" },
-        { text: "项目2", status: "Enrolling 可报名" },
-        { text: "项目3", status: "Enrolling 可报名" },
-         { text: "项目4", status: "Enrolling 可报名" },
-         { text: "项目5", status: "Enrolling 可报名" } ],
+    rightGet: function(id, email,isTeacher, callback){
+        callback({
+     assignment: [ {
+        title:"基于Bootstrap的前端网页设计研究",
+        status:"Enrolling 可报名",
+        description:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器..."
+    },{
+    title:"基于Bootstrap的前端网页设计研究",
+    status:"Passed 已通过",
+    description:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器..."
+ 
+},
+{
+    title:"基于Bootstrap的前端网页设计研究",
+    status:"Rejected 已拒绝",
+    description:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器..."
+ 
+}
+],
+  history:    [
 
-            //myList
-      [ { text: "项目6", status: "Enrolling 可报名" },
-        { text: "项目2", status: "Enrolling 可报名" },
-        { text: "项目3", status: "Enrolling 可报名" },
-         { text: "项目4", status: "Enrolling 可报名" },
-         { text: "项目5", status: "Enrolling 可报名" } ],
+    {
+        title:"基于Bootstrap的前端网页设计研究",
+        status:"Enrolling 可报名",
+        description:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器..."
+    },{
+    title:"基于Bootstrap的前端网页设计研究",
+    status:"Enrolling 可报名",
+    description:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器..."
+ 
+}
 
-            //avaList
-      [ { text: "项目11", status: "Enrolling 可报名" },
-        { text: "项目2", status: "Enrolling 可报名" },
-        { text: "项目3", status: "Enrolling 可报名" },
-         { text: "项目4", status: "Enrolling 可报名" },
-         { text: "项目5", status: "Enrolling 可报名" } ]
-        
+  ]
+        }
         );
     }
 }

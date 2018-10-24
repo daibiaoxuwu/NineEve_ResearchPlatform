@@ -14,8 +14,9 @@ module.exports = {
      * 
      */
 
-    enrollStatusGet: function(teacherId, assignment, callback){
-        callback(
+    enrollStatusGet: function(teacherId, title, callback){
+        
+		callback(
             //msgList
             [
                 {id:"1",
@@ -51,7 +52,7 @@ module.exports = {
      * 是否成功
      * 
      */
-    enrollStatusAccept: function(teacherId, assignmentTitle, studentId, studentEmail, callback){
+    enrollStatusAccept: function(teacherId, title, studentId, studentEmail, callback){
         callback({acceptSuccess: true});
     }
     
