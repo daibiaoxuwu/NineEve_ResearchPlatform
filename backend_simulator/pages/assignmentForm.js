@@ -183,6 +183,16 @@ module.exports = {
      * 截止时间
      *
      */
+	assignmentFormNew: function(teacher, callback) {
+		callback({background: "",
+				  introduction: "",
+				  keywords: "",
+				  abilities: "",
+				  detailed: "",
+				  number: "",
+				  deadline: ""});	
+    }
+	
     assignmentFormGet: function(teacher, title, callback) {
         connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 			if(results.length>0)
