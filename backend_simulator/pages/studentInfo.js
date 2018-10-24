@@ -223,8 +223,15 @@ module.exports = {
 					var allKeys=[];
 					for(var key in result)
 						allKeys.push({name: result[key].name, state: false});
-					var keys=JSON.parse(results[0].selectedkey);
-					console.log(keys);
+                     var keys=[];
+                     if(results[0].selectedkey!=""){
+                     keys=JSON.parse(results[0].selectedkey);
+                     }
+                     var labs=[];
+                     if(results[0].selectedlab!=""){
+                     labs=JSON.parse(results[0].selectedlab);
+                     }
+					 console.log(keys);
 					console.log(allKeys);
 					recall({lastName: results[0].lastname,
 					firstName:  results[0].firstname,
@@ -233,8 +240,8 @@ module.exports = {
 					email: results[0].email,
 					perWebAddr: results[0].perwebaddr,
 					grade: results[0].grade,
-					selectedLab: JSON.parse(results[0].selectedlab),
-					selectedKey: JSON.parse(results[0].selectedkey),
+					selectedLab: labs,
+					selectedKey: keys,
 					allKeys: allKeys});
 				});
 			}

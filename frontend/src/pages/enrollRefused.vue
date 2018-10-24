@@ -32,7 +32,7 @@
                 {{selectedItem.department.split(" ")[0]}} {{selectedItem.year.split(" ")[0]}} {{selectedItem.department.split(" ")[1]}} {{selectedItem.year.split(" ")[1]}} 
               </small>
          </h2>
-        <studentInfo></studentInfo>
+       <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
        <router-link to="/main">         
   <b-btn class="btn btn-primary btn-lg btn-block"  style="margin-top:0.5rem;">Home 返回主页</b-btn>
    </router-link>

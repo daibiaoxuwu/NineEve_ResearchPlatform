@@ -165,6 +165,8 @@ export default {
 
     getInfo() {
       var that=this;
+      console.log(this.$route);
+      if(!this.$route.query.isNew){
       $.get(
         "/assignmentForm/get",
         {}).then(function(data){
@@ -177,7 +179,7 @@ export default {
           that.number = data.number;
           that.deadline = data.deadline;
           });
-      
+      }
     },
 
     launch() {

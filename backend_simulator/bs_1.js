@@ -201,7 +201,7 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 app.get('/assignmentForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.id};
+    sReq.session.newAssignment={title: sReq.query.title, teacherId: sReq.session.user.id};
     assignmentForm.assignmentFormSave(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
@@ -210,7 +210,7 @@ app.get('/assignmentForm/save', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/launch', function(sReq, sRes) {
-    sReq.session.assignment="";
+    sReq.session.newAssignment="";
     assignmentForm.assignmentFormLaunch(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
@@ -219,8 +219,8 @@ app.get('/assignmentForm/launch', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/get', function(sReq, sRes) {
-    if(sReq.session && sReq.session.assignment && sReq.session.assignment!=""){
-    assignmentForm.assignmentFormGet(sReq.session.user.id, sReq.session.assignment.title, function(result){
+    if(sReq.session && sReq.session.newAssignment && sReq.session.newAssignment!=""){
+    assignmentForm.assignmentFormGet(sReq.session.user.id, sReq.session.newAssignment.title, function(result){
 			 sRes.send(result);
          });
         }
@@ -291,6 +291,13 @@ app.get('/enrollStatus/refuse', function(sReq, sRes) {
 app.get('/home/setAssignment', function(sReq, sRes) {
     enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
         sReq.session.assignment = item;
+        sRes.send(item);
+    })
+})
+
+app.get('/home/setNewAssignment', function(sReq, sRes) {
+    enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
+        sReq.session.newAssignment = item;
         sRes.send(item);
     })
 })
@@ -381,6 +388,11 @@ app.get('/teacherEvaluate/get', function(sReq, sRes) {
     })
 })
 
+//do not need database!
+app.get('/app/logout', function(sReq, sRes) {
+        sReq.session.destroy();
+        sRes.end();
+})
 
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))

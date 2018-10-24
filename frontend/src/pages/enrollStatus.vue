@@ -135,7 +135,7 @@ export default {
         }
       that.num3=result.num3;
     })
-      }
+      },
       onClick(item){
         if(item.department=="暂无学生报名"){
           this.detailClass="invisible";
@@ -156,7 +156,7 @@ export default {
         $.get('/enrollStatus/accept',
     {id: that.selectedItem.id}).then(function(result){
       if(result.acceptSuccess){
-      that.$router.push("/enrollAccepted");
+      that.$router.push({path:"/enrollAccepted", query:{detail: that.detail}});
       }
     })
     },

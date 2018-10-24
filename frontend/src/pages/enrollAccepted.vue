@@ -32,7 +32,7 @@
                 {{selectedItem.department.split(" ")[0]}} {{selectedItem.year.split(" ")[0]}} {{selectedItem.department.split(" ")[1]}} {{selectedItem.year.split(" ")[1]}} 
               </small>
          </h2>
-        <studentInfo></studentInfo>
+       <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
        <router-link to="/teacherEvaluate">         
   <b-btn v-b-modal.modal2 class="btn btn-danger btn-lg btn-block"  style="margin-top:0.5rem;">End Assignment 结题</b-btn>
    </router-link>
@@ -61,6 +61,7 @@ export default {
   name: "enrollSuccess",
    data() {
     return {
+      detail:{},
        selectedItem:  {
           text: "肖朝军",
           department: "CST 计算机系",
@@ -70,6 +71,8 @@ export default {
    },
     components:{
     rightpane, assignmentInfo, studentInfo
+  },created:function(){
+    this.detail = this.$route.detail;
   },
     methods: {
    handleOk (){

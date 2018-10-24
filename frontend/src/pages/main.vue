@@ -123,7 +123,7 @@
             </div>
           </div>
 </p>
- <router-link to="/assignmentForm"><b-btn  v-bind:class="isTeacherButton">New Assignment 立项</b-btn></router-link>
+ <b-btn  v-bind:class="isTeacherButton" @click="newAssign">New Assignment 立项</b-btn>
 
         </div>
       </div>
@@ -162,6 +162,9 @@ export default {
     this.update();
   },
   methods: {
+    newAssign(){
+      this.$router.push({path:'/assignmentForm', query:{isNew: true}});
+    },
     update(){
       console.log(this.currentPage1);
   var that=this;
@@ -220,9 +223,9 @@ export default {
       })
       }else if (item.status == "Editable 可编辑"){
       var that = this;
-      $.get("/home/setAssignment",
+      $.get("/home/setNewAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
-       that.$router.push("/assignmentForm");
+       that.$router.push({path:"/assignmentForm", query:{isNew: false}});
       })
       }
     },
@@ -257,9 +260,9 @@ if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
       })
       }else if (item.status == "Editable 可编辑"){
       var that = this;
-      $.get("/home/setAssignment",
+      $.get("/home/setNewAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
-       that.$router.push("/assignmentForm");
+       that.$router.push({path:"/assignmentForm", query:{isNew: false}});
       })
       }
     }
