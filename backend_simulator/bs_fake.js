@@ -87,7 +87,7 @@ app.get('/login/byTeacherId', function(sReq, sRes){
 app.get('/login/byStudentId', function(sReq, sRes){
   if (sReq.query.studentId.length<200 && sReq.query.password.length<200) {
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
-        sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}   
+        sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}
 		sRes.send(result);
 	  });
   }
@@ -95,18 +95,49 @@ app.get('/login/byStudentId', function(sReq, sRes){
 
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
-  if (sReq.query.name.length<200 && sReq.query.university.length<200
-    && sReq.query.email.length<200 && sReq.query.password.length<200) {
-   home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
-        sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
-		sRes.send(result);
-	 });
+  if (sReq.query.name!=null && sReq.query.university!=null &&
+   sReq.query.email!=null && sReq.query.password!=null)  {
+     var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.name)
+     || (new RegExp("\'")).test(sReq.query.name);
+     var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.university)
+     || (new RegExp("\'")).test(sReq.query.university);
+     var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.email)
+     || (new RegExp("\'")).test(sReq.query.email);
+     var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.password)
+     || (new RegExp("\'")).test(sReq.query.password);
+     if (hasQuotationMarks1 || hasQuotationMarks2
+      || hasQuotationMarks3 || hasQuotationMarks4) {
+        return;
+      }
+
+      var isEmail = (new RegExp("@")).test(sReq.query.email);
+      var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+      if (!isEmail || !isInUniv) {
+        return;
+      }
+
+     if (sReq.query.name.length<200 && sReq.query.university.length<200
+       && sReq.query.email.length<200 && sReq.query.password.length<200) {
+      home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
+           sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
+   		sRes.send(result);
+   	 });
+     }
   }
 });
 
 
 app.get('/teacherInfo/save', function(sReq, sRes) {
     //console.log(sReq);
+    console.log(sReq.query.lastName);
+    console.log(sReq.query.firstName);
+    console.log(sReq.query.username);
+    console.log(sReq.query.wechatPhone);
+    console.log(sReq.query.email);
+    console.log(sReq.query.perWebAddr);
+    console.log(sReq.query.researchArea);
+    console.log(sReq.query.researchResults);
+    console.log(sReq.query.lab);
     console.log(sReq.query.email);
     teacherInfo.teacherInfoSave(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
