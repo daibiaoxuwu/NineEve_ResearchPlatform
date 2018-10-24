@@ -12,7 +12,7 @@ module.exports = {
 			var projects=[];
 			for(var result in results)
 				projects.push({title: results[result].title,
-							   teacher: results[result].teacher,
+							   teacherId: results[result].teacher,
 							   introduction: results[result].introduction});
 			callback(projects);
 		});

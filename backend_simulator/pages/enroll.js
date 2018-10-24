@@ -19,6 +19,7 @@ module.exports = {
      */
 
     enrollGet: function(title, teacher, callback){
+		console.log("lzr: ", title, teacher);
         connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 			if(results.length>0)
 			{
