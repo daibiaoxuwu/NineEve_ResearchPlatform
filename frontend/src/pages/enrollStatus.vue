@@ -54,11 +54,18 @@
               </small>
          </h2>
        <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
-t  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
+  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
 
   <!-- Modal Component -->
   <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
     <p class="my-4">是否同意 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
+  </b-modal>
+
+  <b-btn v-b-modal.modal1 v-bind:class="class2">Reject Enrollment 拒绝报名</b-btn>
+
+  <!-- Modal Component -->
+  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleRefuse">
+    <p class="my-4">是否拒绝 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
   </b-modal>
         
         </div>
@@ -142,6 +149,15 @@ export default {
     {id: item.id}).then(function(result){
       if(result.acceptSuccess){
       that.$router.push("/enrollAccepted");
+      }
+    })
+    },
+     handleRefuse (){
+      var that = this;
+        $.get('/enrollStatus/refuse',
+    {id: item.id}).then(function(result){
+      if(result.acceptSuccess){
+      that.$router.push("/enrollRefused");
       }
     })
     }

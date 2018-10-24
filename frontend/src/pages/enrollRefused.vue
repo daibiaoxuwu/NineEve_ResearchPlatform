@@ -17,12 +17,12 @@
         <rightpane></rightpane>
         
         <div class="col-md-8 order-md-1">
-            <h2 class="mb-3"><b>恭喜!</b>
+            <h2 class="mb-3"><b>啊...</b>
            <small class="form-text text-muted">
-                Congratulations!
+                Well...
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经同意了学生的报名! 请等待后续通知.</b>
+          <h5 class="mb-3"><b>你已经拒绝了学生的的报名...</b>
            <small class="form-text text-muted">
               You have successfully accepted a student for your project. Please await further notice.
               </small>
@@ -33,15 +33,10 @@
               </small>
          </h2>
         <studentInfo></studentInfo>
-       <router-link to="/teacherEvaluate">         
-  <b-btn v-b-modal.modal2 class="btn btn-danger btn-lg btn-block"  style="margin-top:0.5rem;">End Assignment 结题</b-btn>
+       <router-link to="/main">         
+  <b-btn class="btn btn-primary btn-lg btn-block"  style="margin-top:0.5rem;">Home 返回主页</b-btn>
    </router-link>
-  <!-- Modal Component -->
 
-  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
-    <p class="my-4">是否结题?</p>
-  </b-modal>
- 
         
         </div>
       </div>
