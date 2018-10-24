@@ -10,6 +10,9 @@ module.exports = {
      * 
      * @param {string} assignmentTitle
      * 学生报名项目的题目
+     * 
+     *      *      *      * @param {string} teacher
+     * 学生报名项目的老师id
      *
      * @param {string} lastName
      * 学生的姓
@@ -63,7 +66,7 @@ module.exports = {
 									 '"' + selfIntr + '",' +
 									 '"' + reasonEnroll + '",' + 
 									 '"' + award + '",0)');
-					callback({launchSuccess: true});
+					callback({saveSuccess: true});
 				}
 				else
 				{
@@ -90,6 +93,9 @@ module.exports = {
      * @param {string} assignmentTitle
      * 学生报名项目的题目
      *
+     *      *      *      * @param {string} teacher
+     * 学生报名项目的老师id
+     * 
      * @param {string} lastName
      * 学生的姓
      *
@@ -171,6 +177,9 @@ module.exports = {
      * 
      *      * @param {string} assignmentTitle
      * 学生报名项目的题目
+     * 
+     *      *      * @param {string} teacher
+     * 学生报名项目的老师id
      * 
      * @property {string} lastName
      * 学生的姓

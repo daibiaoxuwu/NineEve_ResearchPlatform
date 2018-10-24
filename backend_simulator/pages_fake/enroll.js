@@ -19,7 +19,7 @@ module.exports = {
      * award
      */
 
-    enrollGet: function(title, callback){
+    enrollGet: function(title, teacher, callback){
         callback(
             {
                 title:"基于bootstrap的前端网页设计研究",

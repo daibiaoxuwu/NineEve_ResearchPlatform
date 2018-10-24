@@ -11,7 +11,7 @@ module.exports = {
      * @param {string} assignmentTitle
      * 学生报名项目的题目
      * 
-     *      *      *      * @param {string} teacherId
+     *      *      *      * @param {string} teacher
      * 学生报名项目的老师id
      *
      * @param {string} lastName
@@ -41,13 +41,16 @@ module.exports = {
      * @param {string} reasonEnroll
      * 报名原因
      * 
+     * @param {string} award
+     * 奖励
+     * 
      * @property {boolean} saveSuccess //property: return
      * 保存是否成功
      * 
      *
      */
 
-    enrollFormSave: function(id, idemail, assignmentTitle, teacherId, lastName, firstName, username,
+    enrollFormSave: function(id, idemail, assignmentTitle, teacher, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
           selfIntr, reasonEnroll, award, callback) {
              console.log('e'+id+idemail+assignmentTitle+firstName);
@@ -67,7 +70,7 @@ module.exports = {
      * @param {string} assignmentTitle
      * 学生报名项目的题目
      *
-     *      *      *      * @param {string} teacherId
+     *      *      *      * @param {string} teacher
      * 学生报名项目的老师id
      * 
      * @param {string} lastName
@@ -103,7 +106,7 @@ module.exports = {
      *
      */
 
-    enrollFormLaunch: function(id, idemail, assignmentTitle, teacherId, lastName, firstName, username,
+    enrollFormLaunch: function(id, idemail, assignmentTitle, teacher, lastName, firstName, username,
         wechatPhone, email, perWebAddr,
          selfIntr, reasonEnroll, award, callback) {
              console.log('e'+id+idemail+assignmentTitle+firstName);
@@ -125,7 +128,7 @@ module.exports = {
      *      * @param {string} assignmentTitle
      * 学生报名项目的题目
      * 
-     *      *      * @param {string} teacherId
+     *      *      * @param {string} teacher
      * 学生报名项目的老师id
      * 
      * @property {string} lastName
@@ -156,7 +159,7 @@ module.exports = {
      * 报名原因
      *
      */
-    enrollFormGet: function(id, idemail, assignmentTitle, teacherId, callback) {
+    enrollFormGet: function(id, idemail, assignmentTitle, teacher, callback) {
              console.log('e'+id+idemail+assignmentTitle);
         if(id=="1") callback({lastName: "一"});
         else callback({id: ""});
