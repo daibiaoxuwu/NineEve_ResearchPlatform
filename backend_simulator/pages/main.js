@@ -22,28 +22,63 @@ module.exports = {
      */
 
     mainGet: function(id, email, isTeacher, callback){
-        callback(
-            //isTeacher
-      [ { title: "项目1", teacherId:"1", status: "Enrolling 可报名" },
-        { title: "项目2", teacherId:"1",  status: "Enrolling 可报名" },
-        { title: "项目3",  teacherId:"1", status: "Enrolling 可报名" },
-         { title: "项目4",  teacherId:"1", status: "Enrolling 可报名" },
-         { title: "项目5",  teacherId:"1", status: "Enrolling 可报名" } ],
-
-            //myList
-      [ { title: "项目6", teacherId:"1",  status: "Enrolling 可报名" },
-        { title: "项目2", teacherId:"1",  status: "Enrolling 可报名" },
-        { title: "项目3",  teacherId:"1", status: "Enrolling 可报名" },
-         { title: "项目4", teacherId:"1",  status: "Enrolling 可报名" },
-         { title: "项目5", teacherId:"1", status: "Enrolling 可报名" } ],
-
-            //avaList
-      [ { title: "项目11", teacherId:"1",  status: "Enrolling 可报名" },
-        { title: "项目2", teacherId:"1",  status: "Enrolling 可报名" },
-        { title: "项目3", teacherId:"1",  status: "Enrolling 可报名" },
-         { title: "项目4", teacherId:"1",  status: "Enrolling 可报名" },
-         { title: "项目5",  teacherId:"1", status: "Enrolling 可报名" } ]
-        
-        );
+		connection.query('select * from project ', function (error, results, fields){
+			var studentid=id;
+			var teacherid=id;
+			if(!studentid||studentid=="")
+				studentid=email;
+			var message=[];
+			var mylist=[];
+			var avalist=[];
+			if(isTeacher)
+			{
+				connection.query('select * from enrollform where teacherread=0 and teacher="' + teacherid + '"', function (err, resul, fiel){
+					for(var i in results)
+					{
+						if(results[i].teacher==teacherid)
+							mylist.push({title: results[i].title,
+										 teacherId: results[i].teacher,
+										 status: results[i].status});
+						avalist.push({title: results[i].title,
+									  teacherId: results[i].teacher,
+									  status: results[i].status});
+					}
+					for(var i in resul)
+						message.push({title: resul[i].title,
+									  teacherId: resul[i].teacher,
+								      status: "Enrolling 可报名"});
+					callback(message,mylist,avalist);
+				});
+			}
+			else
+			{
+				connection.query('select * from enrollform where studentread=0 and student="' + studentid + '"', function (err, resul, fiel){
+					for(var i in results)
+					{
+						if(results[i].student==studentid)
+							mylist.push({title: results[i].title,
+										 teacherId: results[i].teacher,
+										 status: results[i].status});
+						avalist.push({title: results[i].title,
+									  teacherId: results[i].teacher,
+									  status: results[i].status});
+					}
+					for(var i in resul)
+					{
+						var st=resul[i].status;
+						if(resul[i].success==1)
+							st='Accepted 已通过';
+						else
+							if(resul[i].success==2)
+								st='Rejected 已拒绝';
+						message.push({title: resul[i].title,
+									  teacherId: resul[i].teacher,
+								      status: st});
+					}
+					callback(message,mylist,avalist);
+				});	
+			}				
+					
+		});
     }
 }

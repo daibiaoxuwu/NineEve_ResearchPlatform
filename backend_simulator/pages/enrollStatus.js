@@ -55,8 +55,22 @@ module.exports = {
 		connection.query('select * from enrollform where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"', function (error, results, fields){
 			if(results.length>0)
 			{
-				connection.query('update enrollform set `success`=1 where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"');
-				callback({acceptSuccess: true});
+				connection.query('update enrollform set `success`=1,`teacherread`=1,`studentread`=0 where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"');
+				callback({acceptSuccess: true})
+			}
+			else
+			{
+				callback({acceptSuccess: false});
+			}
+		});
+    },
+	
+	enrollStatusReject: function(teacherId, title, studentId, callback){
+		connection.query('select * from enrollform where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"', function (error, results, fields){
+			if(results.length>0)
+			{
+				connection.query('update enrollform set `success`=2,`teacherread`=1,`studentread`=0 where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"');
+				callback({acceptSuccess: true})
 			}
 			else
 			{

@@ -41,7 +41,7 @@ module.exports = {
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 				if(results.length==0)
 				{
-					connection.query('insert into project(`teacher`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`number`,`status`,`deadline`) values(' +
+					connection.query('insert into project(`teacher`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
 									 '"' + teacher + '",' +
 									 '"' + title + '",' +
 									 '"' + background+ '",' +
@@ -63,7 +63,7 @@ module.exports = {
 										'`keywords`="' + keywords + '", ' +
 										'`abilities`="' + abilities + '", ' +
 										'`detailed`="' + detailed + '", ' +
-										'`number`=' + number + ', ' +
+										'`num`=' + number + ', ' +
 										'`deadline`="' + deadline + '", ' +
 										'where teacher="'+teacher+'" and title="' + title + '"');
 						callback({saveSuccess: true});
@@ -114,10 +114,11 @@ module.exports = {
     assignmentFormLaunch: function(teacher, title, background, introduction,
         keywords, abilities, detailed,
          number, deadline, callback) {
+			 console.log("lzr2: "+teacher+title);
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 				if(results.length==0)
 				{
-					connection.query('insert into project(`teacher`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`number`,`status`,`deadline`) values(' +
+					connection.query('insert into project(`teacher`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
 									 '"' + teacher + '",' +
 									 '"' + title + '",' +
 									 '"' + background+ '",' +
@@ -139,7 +140,7 @@ module.exports = {
 										'`keywords`="' + keywords + '", ' +
 										'`abilities`="' + abilities + '", ' +
 										'`detailed`="' + detailed + '", ' +
-										'`number`=' + number + ', ' +
+										'`num`=' + number + ', ' +
 										'`deadline`="' + deadline + '", ' +
 										'`status`="' + 'Enrolling 可报名' + '",' +
 										'where teacher="'+teacher+'" and title="' + title + '"');
@@ -150,6 +151,7 @@ module.exports = {
 						callback({launchSuccess: false});
 					}
 				}
+			});
     },
 
 /**
@@ -191,7 +193,7 @@ module.exports = {
 				  detailed: "",
 				  number: "",
 				  deadline: ""});	
-    }
+    },
 	
     assignmentFormGet: function(teacher, title, callback) {
         connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
@@ -202,7 +204,7 @@ module.exports = {
 						  keywords: results[0].keywords,
 						  abilities: results[0].abilities,
 						  detailed: results[0].detailed,
-						  number: results[0].number.toString(),
+						  number: results[0].num.toString(),
 						  deadline: results[0].deadline});
 			}
 			else

@@ -73,6 +73,7 @@ var main = require(requireLoc + "/main");
 var enroll = require(requireLoc + "/enroll");
 var enrollStatus = require(requireLoc + "/enrollStatus");
 var assignmentView = require(requireLoc + "/assignmentView");
+var assignmentForm = require(requireLoc + "/assignmentForm");
 var right = require(requireLoc + "/right");
 
 
@@ -200,7 +201,7 @@ app.get('/assignmentForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
     sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.teacherId};
-    enrollForm.assignmentFormSave(sReq.session.user.teacherId, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
+    assignmentForm.assignmentFormSave(sReq.session.user.teacherId, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
 			 sRes.send(result);
@@ -209,7 +210,7 @@ app.get('/assignmentForm/save', function(sReq, sRes) {
 
 app.get('/assignmentForm/launch', function(sReq, sRes) {
     sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.teacherId};
-    enrollForm.assignmentFormSave(sReq.session.user.teacherId, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
+    assignmentForm.assignmentFormLaunch(sReq.session.user.teacherId, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
 			 sRes.send(result);
@@ -218,12 +219,12 @@ app.get('/assignmentForm/launch', function(sReq, sRes) {
 
 app.get('/assignmentForm/get', function(sReq, sRes) {
     if(sReq.session && sReq.session.assignment){
-    enrollForm.assignmentFormGet(sReq.session.user.teacherId, sReq.session.assignment.title, function(result){
+    assignmentForm.assignmentFormGet(sReq.session.user.teacherId, sReq.session.assignment.title, function(result){
 			 sRes.send(result);
          });
         }
         else {
-            enrollForm.assignmentFormNew(sReq.session.user.teacherId, function(result){
+            assignmentForm.assignmentFormNew(sReq.session.user.teacherId, function(result){
                 sRes.send(result);
             });
         }
