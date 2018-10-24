@@ -212,7 +212,8 @@ module.exports = {
         connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 			if(results.length>0)
 			{
-				callback({background: results[0].background,
+				callback({title: title,
+						  background: results[0].background,
 						  introduction: results[0].introduction,
 						  keywords: results[0].keywords.split(' '),
 						  abilities: results[0].abilities,
@@ -222,7 +223,8 @@ module.exports = {
 			}
 			else
 			{
-				callback({background: "",
+				callback({title: "",
+						  background: "",
 						  introduction: "",
 						  keywords: "",
 						  abilities: "",
