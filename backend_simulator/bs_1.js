@@ -344,8 +344,8 @@ app.get('/assignmentView/get', function(sReq, sRes) {
 
 app.get('/right/get', function(sReq, sRes) {
     if (sReq.session && sReq.session.user) {
-        right.rightGet(sReq.session.user.id, sReq.session.user.email,sReq.session.user.isTeacher, function(item){
-            sRes.send(item);
+        main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
+            sRes.send({msgList: msgList.slice(0, Math.min(5, msgList.length)), myList: myList.slice(0, Math.min(5, myList.length))});
         })
     } else{
         sRes.send('/');
@@ -353,7 +353,7 @@ app.get('/right/get', function(sReq, sRes) {
 })
 
 app.get('/right/route', function(sReq, sRes) {
-    enroll.enrollGet(sReq.query.title, function(item){
+    enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
         sReq.session.assignment = item;
         console.log(item);
         if (sReq.session && sReq.session.user.isTeacher) {

@@ -60,7 +60,7 @@
     <p class="my-4">是否同意 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
   </b-modal>
 
-  <b-btn v-b-modal.modal2 v-bind:class="class2">Reject Enrollment 拒绝报名</b-btn>
+  <b-btn v-b-modal.modal2 v-bind:class="class2" style="margin-top:0.5rem;">Reject Enrollment 拒绝报名</b-btn>
 
   <!-- Modal Component -->
   <b-modal id="modal2" title="拒绝报名"  @ok="handleRefuse">
