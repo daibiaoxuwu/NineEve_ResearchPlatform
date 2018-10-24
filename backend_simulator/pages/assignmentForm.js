@@ -32,10 +32,45 @@ module.exports = {
      * 
      */
 
-    assignmentFormSave: function(title, background, introduction,
+    assignmentFormSave: function(teacher, title, background, introduction,
          keywords, abilities, detailed,
           number, deadline, callback) {
-        callback({saveSuccess: true});
+			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
+				if(results.length==0)
+				{
+					connection.query('insert into project(`teacher`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`number`,`status`,`deadline`) values(' +
+									 '"' + teacher + '",' +
+									 '"' + title + '",' +
+									 '"' + background+ '",' +
+									 '"' + introduction + '",' +
+									 '"' + keywords + '",' +
+									 '"' + abilities + '",' +
+									 '"' + detailed + '",' +
+									 '' + number + ',' +
+									 '"' + 'editable 可编辑' + '",' +
+									 '"' + deadline + '")');
+					callback({saveSuccess: true});
+				}
+				else
+				{
+					if(results[0].status.indexOf("editable")!=-1)
+					{
+						connection.query('update project set `background`="' + background + '", ' +
+										'`introduction`="' + introduction + '", ' +
+										'`keywords`="' + keywords + '", ' +
+										'`abilities`="' + abilities + '", ' +
+										'`detailed`="' + detailed + '", ' +
+										'`number`=' + number + ', ' +
+										'`deadline`="' + deadline + '", ' +
+										'where teacher="'+teacher+'" and title="' + title + '"');
+						callback({saveSuccess: true});
+					}
+					else
+					{
+						callback({saveSuccess: false});
+					}
+				}
+			});  
     },
 
 
@@ -70,10 +105,45 @@ module.exports = {
      * 启动是否成功
      */
 
-    assignmentFormLaunch: function(title, background, introduction,
+    assignmentFormLaunch: function(teacher, title, background, introduction,
         keywords, abilities, detailed,
          number, deadline, callback) {
-        callback({launchSuccess: true});
+			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
+				if(results.length==0)
+				{
+					connection.query('insert into project(`teacher`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`number`,`status`,`deadline`) values(' +
+									 '"' + teacher + '",' +
+									 '"' + title + '",' +
+									 '"' + background+ '",' +
+									 '"' + introduction + '",' +
+									 '"' + keywords + '",' +
+									 '"' + abilities + '",' +
+									 '"' + detailed + '",' +
+									 '' + number + ',' +
+									 '"' + 'enrolling 可报名' + '",' +
+									 '"' + deadline + '")');
+					callback({launchSuccess: true});
+				}
+				else
+				{
+					if(results[0].status.indexOf("editable")!=-1)
+					{
+						connection.query('update project set `background`="' + background + '", ' +
+										'`introduction`="' + introduction + '", ' +
+										'`keywords`="' + keywords + '", ' +
+										'`abilities`="' + abilities + '", ' +
+										'`detailed`="' + detailed + '", ' +
+										'`number`=' + number + ', ' +
+										'`deadline`="' + deadline + '", ' +
+										'`status`="' + 'enrolling 可报名' + '",' +
+										'where teacher="'+teacher+'" and title="' + title + '"');
+						callback({launchSuccess: true});
+					}
+					else
+					{
+						callback({launchSuccess: false});
+					}
+				}
     },
 
 /**
@@ -104,8 +174,29 @@ module.exports = {
      * 截止时间
      *
      */
-    assignmentFormGet: function(name, callback) {
-        
+    assignmentFormGet: function(teacher, title, callback) {
+        connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
+			if(results.length>0)
+			{
+				callback({background: results[0].background,
+						  introduction: results[0].introduction,
+						  keywords: results[0].keywords,
+						  abilities: results[0].abilities,
+						  detailed: results[0].detailed,
+						  number: results[0].number.toString(),
+						  deadline: results[0].deadline});
+			}
+			else
+			{
+				callback({background: "",
+						  introduction: "",
+						  keywords: "",
+						  abilities: "",
+						  detailed: "",
+						  number: "",
+						  deadline: ""});
+			}	
+		});			
     }
 
 }
