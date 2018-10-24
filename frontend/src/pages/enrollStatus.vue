@@ -139,7 +139,7 @@ export default {
    handleOk (){
       var that = this;
         $.get('/enrollStatus/accept',
-    {id: item.id, email:item.email}).then(function(result){
+    {id: item.id}).then(function(result){
       if(result.acceptSuccess){
       that.$router.push("/enrollAccepted");
       }

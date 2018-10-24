@@ -266,7 +266,7 @@ app.get('/enrollStatus/get', function(sReq, sRes) {
 });
 
 app.get('/enrollStatus/accept', function(sReq, sRes) {
-    enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, sReq.query.email, function(result){
+    enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, function(result){
         sRes.send(result);
     })
 });

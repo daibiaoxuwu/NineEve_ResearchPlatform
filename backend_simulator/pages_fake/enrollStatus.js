@@ -51,7 +51,7 @@ module.exports = {
      * 是否成功
      * 
      */
-    enrollStatusAccept: function(teacherId, assignmentTitle, studentId, studentEmail, callback){
+    enrollStatusAccept: function(teacherId, assignmentTitle, studentId, callback){
         callback({acceptSuccess: true});
     }
     
