@@ -189,17 +189,17 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 app.get('/assignmentForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    enrollForm.assignmentFormSave(sReq.session.user.teacherId, sReq.session.assignment.title, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
-        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.selfIntr, sReq.query.reasonEnroll, function(result){
+    enrollForm.assignmentFormSave(sReq.session.user.teacherId, sReq.session.assignment.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
+        sReq.query.abilities, sReq.query.detailed, sReq.query.number,
+         sReq.query.deadline, function(result){
 			 sRes.send(result);
 		 });
 });
 
 app.get('/assignmentForm/launch', function(sReq, sRes) {
-    enrollForm.assignmentFormLaunch(sReq.session.user.teacherId, sReq.session.assignment.title, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
-        sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
-         sReq.query.selfIntr, sReq.query.reasonEnroll, function(result){
+    enrollForm.assignmentFormSave(sReq.session.user.teacherId, sReq.session.assignment.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
+        sReq.query.abilities, sReq.query.detailed, sReq.query.number,
+         sReq.query.deadline, function(result){
 			 sRes.send(result);
 		 });
 });
