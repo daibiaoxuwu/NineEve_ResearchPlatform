@@ -206,6 +206,12 @@ export default {
       {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enrollRejectNotice");
       })
+      }else if (item.status == "Editable 可编辑"){
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/assignmentForm");
+      })
       }
     }
   },

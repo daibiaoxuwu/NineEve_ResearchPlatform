@@ -267,7 +267,7 @@ app.get('/assignmentForm/save', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/launch', function(sReq, sRes) {
-    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.id};
+    sReq.session.assignment="";
     assignmentForm.assignmentFormLaunch(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
@@ -276,7 +276,7 @@ app.get('/assignmentForm/launch', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/get', function(sReq, sRes) {
-    if(sReq.session && sReq.session.assignment){
+    if(sReq.session && sReq.session.assignment && sReq.session.assignment!=""){
     assignmentForm.assignmentFormGet(sReq.session.user.id, sReq.session.assignment.title, function(result){
 			 sRes.send(result);
          });
