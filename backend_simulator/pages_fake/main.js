@@ -24,25 +24,25 @@ module.exports = {
     mainGet: function(id, email, callback){
         callback(
             //isTeacher
-      [ { text: "项目1", status: "Enrolling 可报名" },
-        { text: "项目2", status: "Enrolling 可报名" },
-        { text: "项目3", status: "Enrolling 可报名" },
-         { text: "项目4", status: "Enrolling 可报名" },
-         { text: "项目5", status: "Enrolling 可报名" } ],
+      [ { title: "项目1", teacherId:"1", status: "Enrolling 可报名" },
+        { title: "项目2", teacherId:"1",  status: "Enrolling 可报名" },
+        { title: "项目3",  teacherId:"1", status: "Enrolling 可报名" },
+         { title: "项目4",  teacherId:"1", status: "Enrolling 可报名" },
+         { title: "项目5",  teacherId:"1", status: "Enrolling 可报名" } ],
 
             //myList
-      [ { text: "项目6", status: "Enrolling 可报名" },
-        { text: "项目2", status: "Enrolling 可报名" },
-        { text: "项目3", status: "Enrolling 可报名" },
-         { text: "项目4", status: "Enrolling 可报名" },
-         { text: "项目5", status: "Enrolling 可报名" } ],
+      [ { title: "项目6", teacherId:"1",  status: "Enrolling 可报名" },
+        { title: "项目2", teacherId:"1",  status: "Enrolling 可报名" },
+        { title: "项目3",  teacherId:"1", status: "Enrolling 可报名" },
+         { title: "项目4", teacherId:"1",  status: "Enrolling 可报名" },
+         { title: "项目5", teacherId:"1", status: "Enrolling 可报名" } ],
 
             //avaList
-      [ { text: "项目11", status: "Enrolling 可报名" },
-        { text: "项目2", status: "Enrolling 可报名" },
-        { text: "项目3", status: "Enrolling 可报名" },
-         { text: "项目4", status: "Enrolling 可报名" },
-         { text: "项目5", status: "Enrolling 可报名" } ]
+      [ { title: "项目11", teacherId:"1",  status: "Enrolling 可报名" },
+        { title: "项目2", teacherId:"1",  status: "Enrolling 可报名" },
+        { title: "项目3", teacherId:"1",  status: "Enrolling 可报名" },
+         { title: "项目4", teacherId:"1",  status: "Enrolling 可报名" },
+         { title: "项目5",  teacherId:"1", status: "Enrolling 可报名" } ]
         
         );
     }
