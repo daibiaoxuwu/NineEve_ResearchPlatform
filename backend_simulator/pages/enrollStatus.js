@@ -23,7 +23,7 @@ module.exports = {
 				{
 					connection.query('select * from student where studentid="' + results[i].student + '"', function (err, resul, fie){
 						statu.push({id: results[i].student,
-									text: resul[0].firstname + resul[0].lastname,
+									text: resul[0].lastname + resul[0].firstname,
 									department: "CST 计算机系",
 									grade: resul[0].grade});
 					});
