@@ -57,14 +57,14 @@
   <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
 
   <!-- Modal Component -->
-  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
+  <b-modal id="modal1" title="同意报名"  @ok="handleOk">
     <p class="my-4">是否同意 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
   </b-modal>
 
-  <b-btn v-b-modal.modal1 v-bind:class="class2">Reject Enrollment 拒绝报名</b-btn>
+  <b-btn v-b-modal.modal2 v-bind:class="class2">Reject Enrollment 拒绝报名</b-btn>
 
   <!-- Modal Component -->
-  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleRefuse">
+  <b-modal id="modal2" title="拒绝报名"  @ok="handleRefuse">
     <p class="my-4">是否拒绝 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
   </b-modal>
         
@@ -121,6 +121,9 @@ export default {
       if(result.list.length>0){
         that.list=result.list;
         that.selectedItem=result.list[0];
+          that.detailClass="";
+          that.class2="btn btn-primary btn-lg btn-block";
+      } else {
         that.detailClass="invisible";
         that.class2="invisible";
         }
@@ -130,11 +133,11 @@ export default {
     methods: {
       onClick(item){
         if(item.department=="暂无学生报名"){
-          detailClass="invisible";
-          class2="invisible";
+          this.detailClass="invisible";
+          this.class2="invisible";
         }else{
-          detailClass="";
-          class2="btn btn-primary btn-lg btn-block";
+          this.detailClass="";
+          this.class2="btn btn-primary btn-lg btn-block";
         var that = this;
         this.selectedItem=item;
         $.get('/enrollStatus/getDetails',

@@ -188,13 +188,25 @@ export default {
     },
     onClick(item){
       if(item.status == "Enrolling 可报名"){
+        if(this.isTeacherButton=="invisible"){
         
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enroll");
       })
-      } else if (item.status == "Passed 已通过"){
+      }
+      else{
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enrollStatus");
+      })
+        
+      }
+      }
+      
+      else if (item.status == "Passed 已通过"){
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){

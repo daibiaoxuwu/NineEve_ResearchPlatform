@@ -281,6 +281,11 @@ app.get('/enrollStatus/accept', function(sReq, sRes) {
         sRes.send(result);
     })
 });
+app.get('/enrollStatus/refuse', function(sReq, sRes) {
+    enrollStatus.enrollStatusReject(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, function(result){
+        sRes.send(result);
+    })
+});
 
 
 app.get('/home/setAssignment', function(sReq, sRes) {
