@@ -1,7 +1,10 @@
 module.exports = {
     /**
      * 项目信息页面的保存请求 页面url: '/assignmentForm'
-     *
+     * 
+     * @param {string} teacherId
+     * 教师号
+     * 
      * @param {string} title
      * 项目名称
      *
@@ -76,6 +79,9 @@ module.exports = {
 
 /**
      * 项目信息页面的保存请求 页面url: '/assignmentForm'
+     * 
+     * @param {string} teacherId
+     * 教师号
      *
      * @param {string} title
      * 项目名称
@@ -149,6 +155,9 @@ module.exports = {
 /**
      * 项目信息页面的获取旧的信息请求 页面url: '/assignmentForm'
      * 
+     * @param {string} teacherId
+     * 教师号
+     *
      * @param {string} title
      * 项目名称
      *

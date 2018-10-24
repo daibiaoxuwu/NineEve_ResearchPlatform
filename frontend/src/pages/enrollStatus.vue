@@ -111,7 +111,12 @@ export default {
     $.get('/enrollStatus/get',
     {currentPage3:that.currentPage3}).then(function(result){
      console.log(result);
-      if(result.list.length>0){  that.list=result.list; that.selectedItem=result.list[0];}
+      if(result.list.length>0){
+        that.list=result.list;
+        that.selectedItem=result.list[0];
+        that.detailClass="invisible";
+        that.class2="invisible";
+        }
       that.num3=num3;
     })
   },
