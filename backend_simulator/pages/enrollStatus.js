@@ -15,23 +15,22 @@ module.exports = {
      */
 
     enrollStatusGet: function(teacherId, title, callback){
-        
-		callback(
-            //msgList
-            [
-                {id:"1",
-                email:"",
-                text: "肖朝军1",
-                department: "CST 计算机系",
-                grade: "Junior 大三"},
-                {id:"",
-                email:"2",
-                text: "肖朝军5",
-                department: "CST 计算机系",
-                grade: "Junior 大三"}
-            ]
-
-        );
+        connection.query('select * from enrollform where title="' + title + '" and teacher="' + teacherId + '"', function (error, results, field){
+			var statu=[];
+			for(var i in results)
+			{
+				if(results[i].filled==1)
+				{
+					connection.query('select * from student where studentid="' + results[i].student + '"', function (err, resul, fie){
+						statu.push({id: results[i].student,
+									text: resul[0].firstname + resul[0].lastname,
+									department: "CST 计算机系",
+									grade: resul[0].grade});
+					});
+				}
+			}
+			callback(statu);
+		});
     },
             /**
      * 教师通过学生对其项目的报名 页面url: '/enrollStatus'
@@ -52,8 +51,18 @@ module.exports = {
      * 是否成功
      * 
      */
-    enrollStatusAccept: function(teacherId, title, studentId, studentEmail, callback){
-        callback({acceptSuccess: true});
+    enrollStatusAccept: function(teacherId, title, studentId, callback){
+		connection.query('select * from enrollform where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"', function (error, results, fields){
+			if(results.length>0)
+			{
+				connection.query('update enrollform set `success`=1 where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"');
+				callback({acceptSuccess: true});
+			}
+			else
+			{
+				callback({acceptSuccess: false});
+			}
+		});
     }
     
 }

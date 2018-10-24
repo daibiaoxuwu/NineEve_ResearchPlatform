@@ -124,7 +124,7 @@ module.exports = {
 				recall({registerSuccess: false});
 			else
 			{
-				connection.query('insert into student(name,email,password,studentid) values("' + name + '","' + email + '","' + password + '","' + email + '")', function (error, results){
+				connection.query('insert into student(username,email,password,studentid) values("' + name + '","' + email + '","' + password + '","' + email + '")', function (error, results){
 					if (error) throw error;
 					console.log(results);
 				});
