@@ -268,6 +268,15 @@ app.get('/enroll/get', function(sReq, sRes) {
         sRes.send(sReq.session.assignment);
 })
 
+app.get('/enroll/isTeacher', function(sReq, sRes) {
+    if(sReq.session && sReq.session.user && sReq.session.user.isTeacher == false){
+        sRes.send(false);
+    } else{
+        sRes.send(true);
+    }
+})
+
+
 //do not need database!
 app.get('/enroll/route', function(sReq, sRes) {
     if (sReq.session && sReq.session.user) {
