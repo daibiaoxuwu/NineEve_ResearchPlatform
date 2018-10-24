@@ -46,14 +46,13 @@
               </table>
             <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
 
-
-<div>
             <h2 class="mb-3"><b>{{selectedItem.text}}</b>
            <small class="form-text text-muted">
                 {{selectedItem.department.split(" ")[0]}} {{selectedItem.grade.split(" ")[0]}} {{selectedItem.department.split(" ")[1]}} {{selectedItem.grade.split(" ")[1]}} 
               </small>
          </h2>
-       <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
+<studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
+
   <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
 
   <!-- Modal Component -->
@@ -75,7 +74,6 @@
   </div>
   
   
-     </div>
 </template>
 
 
@@ -101,13 +99,7 @@ export default {
           department: "",
           grade:""
         },
-      detail: {lastName: "一", firstName:"2",
-        username:"3",
-        wechatPhone:"4", 
-        email:"5",
-        perWebAddr:"6",
-        breIntr:"7",
-        grade:"Junior 大三"},
+      detail: {},
       detailClass: "invisible",
       class2:"invisible"
     }

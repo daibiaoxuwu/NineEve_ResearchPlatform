@@ -22,18 +22,18 @@
                 Congratulations!
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经成功报名了 "基于Bootstrap-Vue的网页设计研究"! 请等待后续通知.</b>
+          <h5 class="mb-3"><b>你已经成功提交报名!请等待后续通知.</b>
            <small class="form-text text-muted">
               You have successfully enrolled for the project. Please await further notice.
               </small>
          </h5>
        <assignmentInfo></assignmentInfo> 
   <router-link to="/studentEvaluate">
-  <b-btn v-b-modal.modal1 class="btn btn-danger btn-lg btn-block">Retract Enrollment 撤销报名</b-btn>
+  <b-btn v-b-modal.modal1 class="btn btn-primary btn-lg btn-block">End Assignment 结题</b-btn>
   </router-link>
   <!-- Modal Component -->
   <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
-    <p class="my-4">是否撤销报名?</p>
+    <p class="my-4">是否结题?</p>
   </b-modal>
 
         </div>

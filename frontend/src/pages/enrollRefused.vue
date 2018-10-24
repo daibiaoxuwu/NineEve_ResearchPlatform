@@ -27,12 +27,8 @@
               You have successfully accepted a student for your project. Please await further notice.
               </small>
          </h5>
-           <h2 class="mb-3"><b>{{selectedItem.text}}</b>
-           <small class="form-text text-muted">
-                {{selectedItem.department.split(" ")[0]}} {{selectedItem.year.split(" ")[0]}} {{selectedItem.department.split(" ")[1]}} {{selectedItem.year.split(" ")[1]}} 
-              </small>
-         </h2>
-       <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
+       <!-- <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo> -->
+       <assignmentInfo></assignmentInfo>
        <router-link to="/main">         
   <b-btn class="btn btn-primary btn-lg btn-block"  style="margin-top:0.5rem;">Home 返回主页</b-btn>
    </router-link>

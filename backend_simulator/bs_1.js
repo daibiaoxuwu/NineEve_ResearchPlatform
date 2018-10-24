@@ -166,11 +166,6 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 		 });
 });
 
-app.get('/enrollStatus/getDetails', function(sReq, sRes) {
-    studentInfo.studentInfoGet(sReq.query.id, sReq.query.email, function(result){
-			 sRes.send(result);
-		 });
-});
 
 
 app.get('/enrollForm/save', function(sReq, sRes) {
@@ -193,6 +188,11 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
 
 app.get('/enrollForm/get', function(sReq, sRes) {
     enrollForm.enrollFormGet(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
+			 sRes.send(result);
+		 });
+});
+app.get('/enrollStatus/getDetails', function(sReq, sRes) {
+    enrollForm.enrollFormGet(sReq.query.id, sReq.query.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
 			 sRes.send(result);
 		 });
 });

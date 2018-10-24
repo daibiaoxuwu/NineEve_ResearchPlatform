@@ -22,7 +22,7 @@
                 Congratulations!
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经被 "基于Bootstrap-Vue的网页设计研究" 录取!</b>
+          <h5 class="mb-3"><b>你已经被项目录取!</b>
            <small class="form-text text-muted">
               You have been accepted to the project. Your project has been launched.
               </small>

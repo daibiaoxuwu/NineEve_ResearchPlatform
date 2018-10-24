@@ -22,7 +22,7 @@
                 Congratulations!
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经成功结题, 并评价了 "基于Bootstrap-Vue的网页设计研究"! 请等待老师的反馈.</b>
+          <h5 class="mb-3"><b>你已经成功结题, 并评价了项目!请等待老师的反馈.</b>
            <small class="form-text text-muted">
               You have successfully terminated and evaluated the project. Please await your tutor's evaluation.
               </small>
