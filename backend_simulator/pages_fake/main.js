@@ -21,7 +21,7 @@ module.exports = {
      * 所有科研任务列表
      */
 
-    mainGet: function(id, email, callback){
+    mainGet: function(id, email, isTeacher, callback){
         callback(
             //isTeacher
       [ { title: "项目1", teacherId:"1", status: "Enrolling 可报名" },
