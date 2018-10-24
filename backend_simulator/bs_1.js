@@ -207,8 +207,8 @@ app.get('/teacherInfo/launch', function(sReq, sRes) {
       sReq.query.lab = -1;
 
     if (sReq.query.lastName == "" || sReq.query.firstName == "" || sReq.query.username == ""
-     || sReq.query.wechatPhone == "" || sReq.query.email == "" || sReq.query.perWebAddr == ""
-     || sReq.query.researchArea == "" || sReq.query.researchResults == "" || sReq.query.lab == -1) {
+     || sReq.query.wechatPhone == "" || sReq.query.email == "" || sReq.query.researchArea == ""
+     || sReq.query.researchResults == "" || sReq.query.lab == -1) {
       return;
     }
 

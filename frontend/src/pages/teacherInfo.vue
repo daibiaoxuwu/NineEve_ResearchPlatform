@@ -252,8 +252,8 @@ export default {
       if (that.researchResults == null) that.researchResults = "";
       if (that.lab == null) that.lab = -1;
       if (that.lastName == "" || that.firstName == "" || that.username == ""
-       || that.wechatPhone == "" || that.email == "" || that.perWebAddr == ""
-       || that.researchArea == "" || that.researchResults == "" || that.lab == -1) {
+       || that.wechatPhone == "" || that.email == "" || that.researchArea == ""
+       || that.researchResults == "" || that.lab == -1) {
         alert("Please complete all the forms.\n 请将所有表单填写完毕.");
         return;
       }
