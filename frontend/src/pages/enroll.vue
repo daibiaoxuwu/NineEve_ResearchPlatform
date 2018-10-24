@@ -22,7 +22,7 @@
          
          <assignmentInfo></assignmentInfo>
              <!-- <router-link to="/enrollSuccess" > <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button></router-link> -->
-             <button class="btn btn-primary btn-lg btn-block" @click= "enroll" style="margin-top:0.5rem;">Enroll Now</button>
+             <button v-bind:class="visible" @click= "enroll" style="margin-top:0.5rem;">Enroll Now</button>
         
         </div>
       </div>
@@ -44,12 +44,23 @@ export default {
   name: "enroll",
    data() {
     return {
+      visible:"invisible"
     }
    },
    components: {
      rightpane,
      assignmentInfo
-  }, methods:{
+  },created:function(){
+    var that=this;
+     $.get('/enroll/isTeacher',{}).then(function(data){
+     if(data.isTeacher){
+          that.visible="invisible";
+        }else{
+          that.visible="btn btn-primary btn-lg btn-block";
+        }
+     })
+  },
+   methods:{
     enroll(){
       console.log("enroll")
       var that = this;

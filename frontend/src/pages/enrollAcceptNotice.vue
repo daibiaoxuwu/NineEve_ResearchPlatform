@@ -62,7 +62,7 @@ export default {
     }
    },
     components:{
-    rightpane,
+    rightpane,assignmentInfo
 
   },
     methods: {

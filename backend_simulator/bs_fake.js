@@ -273,7 +273,7 @@ app.get('/main/get', function(sReq, sRes) {
 
 
 app.get('/enrollStatus/get', function(sReq, sRes) {
-    enrollStatus.enrollStatusGet(sReq.session.user.id, function(list){
+    enrollStatus.enrollStatusGet(sReq.session.user.id, sReq.session.assignment, function(list){
         console.log({
             num3: parseInt(list.length / 3),
             list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length)),
@@ -298,6 +298,15 @@ app.get('/home/setAssignment', function(sReq, sRes) {
 app.get('/enroll/get', function(sReq, sRes) {
         sRes.send(sReq.session.assignment);
 })
+
+app.get('/enroll/isTeacher', function(sReq, sRes) {
+    if(sReq.session && sReq.session.user && sReq.session.user.isTeacher == false){
+        sRes.send(false);
+    } else{
+        sRes.send(true);
+    }
+})
+
 
 //do not need database!
 app.get('/enroll/route', function(sReq, sRes) {
@@ -330,6 +339,18 @@ app.get('/right/get', function(sReq, sRes) {
     } else{
         sRes.send('/');
     }
+})
+
+app.get('/right/route', function(sReq, sRes) {
+    enroll.enrollGet(sReq.query.title, function(item){
+        sReq.session.assignment = item;
+        console.log(item);
+        if (sReq.session && sReq.session.user.isTeacher) {
+        sRes.send('isTeacher');
+        } else{
+            sRes.send('isStudent');
+        }
+    })
 })
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
