@@ -18,26 +18,33 @@ module.exports = {
      * status
      */
 
-    enrollGet: function(title, callback){
-        connection.query('select * from project where title="'+title+'"', function (error, results, fields){
+    enrollGet: function(title, teacher, callback){
+		console.log("lzr: ", title, teacher);
+        connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 			if(results.length>0)
-				callback(
-				{
-					title: results[0].title,
-					teacher: results[0].teacher,
-					introduction: results[0].introduction,
-					keywords: results[0].keywords.split(' '),
-					abilities: results[0].abilities,
-					detailed: results[0].detailed,
-					number: results[0].num.toString(),
-					deadline: results[0].deadline,
-					status: results[0].status
+			{
+				connection.query('select * from teacher where teacherid="' + teacher + '"', function (err, resul, fiel){
+					callback(
+					{
+						title: results[0].title,
+						teacher: resul[0].firstname+resul[0].lastname,
+						teacherId: results[0].teacher,
+						introduction: results[0].introduction,
+						keywords: results[0].keywords.split(' '),
+						abilities: results[0].abilities,
+						detailed: results[0].detailed,
+						number: results[0].num.toString(),
+						deadline: results[0].deadline,
+						status: results[0].status
+					});
 				});
+			}
 			else
 				callback(
 				{
 					title: "",
 					teacher: "",
+					teacherId: "",
 					introduction: "",
 					keywords: [],
 					abilities: "",

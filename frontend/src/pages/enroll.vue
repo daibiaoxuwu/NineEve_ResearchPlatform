@@ -53,7 +53,7 @@ export default {
   },created:function(){
     var that=this;
      $.get('/enroll/isTeacher',{}).then(function(data){
-     if(data.isTeacher){
+     if(data){
           that.visible="invisible";
         }else{
           that.visible="btn btn-primary btn-lg btn-block";

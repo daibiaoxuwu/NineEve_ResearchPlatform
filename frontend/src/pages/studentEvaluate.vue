@@ -23,11 +23,11 @@
   <b-button-toolbar key-nav  aria-label="Toolbar with button groups">
 
     <b-button-group class="col-md-12 mb-3">
-      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;">1</b-btn>
-      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;">2</b-btn>
-      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;">3</b-btn>
-      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;">4</b-btn>
-      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;"  >5</b-btn>
+      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;" @click="satisfy(1)">1</b-btn>
+      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;" @click="satisfy(2)">2</b-btn>
+      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;" @click="satisfy(3)">3</b-btn>
+      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;" @click="satisfy(4)">4</b-btn>
+      <b-btn class="col-md-12 mb-3 btn btn-outline-primary btn-lg btn-block" style="marginTop:0.5rem;" @click="satisfy(5)">5</b-btn>
     </b-button-group>
    
   </b-button-toolbar>
@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">What you've learned 收获</label>
                <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="learned"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -46,7 +46,7 @@
             </div>
             <div class="col-md-12 mb-3"> <label for="email">What you've not learned 尚未习得</label>
              <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="notlearned"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -84,6 +84,9 @@ export default {
   name: "enrollForm",
    data() {
     return {
+      satis:5,
+      learned:"",
+      notlearned:""
     }
    },
      components:{
@@ -91,7 +94,12 @@ export default {
   },
     methods: {
    handleOk (){
-      this.$router.push("/studentEvaluateSuccess")
+     var that = this;
+     $.get("/studentEvaluate/save", {satis: that.satis, learned: that.learned, notlearned:that.notlearned}).then(function(data){
+       if(data.saveSuccess==true){
+          that.$router.push("/studentEvaluateSuccess");
+       }
+     })
     }
   }
 }

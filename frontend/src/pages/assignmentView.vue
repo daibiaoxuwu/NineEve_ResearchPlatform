@@ -85,7 +85,7 @@ export default {
      onClick(item){
       var that = this;
       $.get("/home/setAssignment",
-      {title: item.title}).then(function(){
+      {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enroll");
       })
     }

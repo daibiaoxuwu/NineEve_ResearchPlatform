@@ -1,7 +1,10 @@
 module.exports = {
     /**
      * 项目信息页面的保存请求 页面url: '/assignmentForm'
-     *
+     * 
+     * @param {string} teacherId
+     * 教师号
+     * 
      * @param {string} title
      * 项目名称
      *
@@ -32,15 +35,53 @@ module.exports = {
      * 
      */
 
-    assignmentFormSave: function(title, background, introduction,
+    assignmentFormSave: function(teacher, title, background, introduction,
          keywords, abilities, detailed,
           number, deadline, callback) {
-        callback({saveSuccess: true});
+			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
+				if(results.length==0)
+				{
+					connection.query('insert into project(`teacher`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
+									 '"' + teacher + '",' +
+									 '"' + title + '",' +
+									 '"' + background+ '",' +
+									 '"' + introduction + '",' +
+									 '"' + keywords + '",' +
+									 '"' + abilities + '",' +
+									 '"' + detailed + '",' +
+									 '' + number + ',' +
+									 '"' + 'Editable 可编辑' + '",' +
+									 '"' + deadline + '")');
+					callback({saveSuccess: true});
+				}
+				else
+				{
+					if(results[0].status.indexOf("Editable")!=-1)
+					{
+						connection.query('update project set `background`="' + background + '", ' +
+										'`introduction`="' + introduction + '", ' +
+										'`keywords`="' + keywords + '", ' +
+										'`abilities`="' + abilities + '", ' +
+										'`detailed`="' + detailed + '", ' +
+										'`num`=' + number + ', ' +
+										'`deadline`="' + deadline + '", ' +
+										'where teacher="'+teacher+'" and title="' + title + '"');
+						callback({saveSuccess: true});
+					}
+					else
+					{
+						callback({saveSuccess: false});
+					}
+				}
+			});  
     },
 
 
 /**
      * 项目信息页面的保存请求 页面url: '/assignmentForm'
+     * 
+     * @param {string} teacherId
+     * 教师号
      *
      * @param {string} title
      * 项目名称
@@ -70,15 +111,55 @@ module.exports = {
      * 启动是否成功
      */
 
-    assignmentFormLaunch: function(title, background, introduction,
+    assignmentFormLaunch: function(teacher, title, background, introduction,
         keywords, abilities, detailed,
          number, deadline, callback) {
-        callback({launchSuccess: true});
+			 console.log("lzr2: "+teacher+title);
+			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
+				if(results.length==0)
+				{
+					connection.query('insert into project(`teacher`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
+									 '"' + teacher + '",' +
+									 '"' + title + '",' +
+									 '"' + background+ '",' +
+									 '"' + introduction + '",' +
+									 '"' + keywords + '",' +
+									 '"' + abilities + '",' +
+									 '"' + detailed + '",' +
+									 '' + number + ',' +
+									 '"' + 'Enrolling 可报名' + '",' +
+									 '"' + deadline + '")');
+					callback({launchSuccess: true});
+				}
+				else
+				{
+					if(results[0].status.indexOf("Editable")!=-1)
+					{
+						connection.query('update project set `background`="' + background + '", ' +
+										'`introduction`="' + introduction + '", ' +
+										'`keywords`="' + keywords + '", ' +
+										'`abilities`="' + abilities + '", ' +
+										'`detailed`="' + detailed + '", ' +
+										'`num`=' + number + ', ' +
+										'`deadline`="' + deadline + '", ' +
+										'`status`="' + 'Enrolling 可报名' + '",' +
+										'where teacher="'+teacher+'" and title="' + title + '"');
+						callback({launchSuccess: true});
+					}
+					else
+					{
+						callback({launchSuccess: false});
+					}
+				}
+			});
     },
 
 /**
      * 项目信息页面的获取旧的信息请求 页面url: '/assignmentForm'
      * 
+     * @param {string} teacherId
+     * 教师号
+     *
      * @param {string} title
      * 项目名称
      *
@@ -104,8 +185,39 @@ module.exports = {
      * 截止时间
      *
      */
-    assignmentFormGet: function(name, callback) {
-        
+	assignmentFormNew: function(teacher, callback) {
+		callback({background: "",
+				  introduction: "",
+				  keywords: "",
+				  abilities: "",
+				  detailed: "",
+				  number: "",
+				  deadline: ""});	
+    }
+	
+    assignmentFormGet: function(teacher, title, callback) {
+        connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
+			if(results.length>0)
+			{
+				callback({background: results[0].background,
+						  introduction: results[0].introduction,
+						  keywords: results[0].keywords,
+						  abilities: results[0].abilities,
+						  detailed: results[0].detailed,
+						  number: results[0].num.toString(),
+						  deadline: results[0].deadline});
+			}
+			else
+			{
+				callback({background: "",
+						  introduction: "",
+						  keywords: "",
+						  abilities: "",
+						  detailed: "",
+						  number: "",
+						  deadline: ""});
+			}	
+		});			
     }
 
 }

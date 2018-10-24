@@ -111,7 +111,12 @@ export default {
     $.get('/enrollStatus/get',
     {currentPage3:that.currentPage3}).then(function(result){
      console.log(result);
-      if(result.list.length>0){  that.list=result.list; that.selectedItem=result.list[0];}
+      if(result.list.length>0){
+        that.list=result.list;
+        that.selectedItem=result.list[0];
+        that.detailClass="invisible";
+        that.class2="invisible";
+        }
       that.num3=num3;
     })
   },
@@ -134,7 +139,7 @@ export default {
    handleOk (){
       var that = this;
         $.get('/enrollStatus/accept',
-    {id: item.id, email:item.email}).then(function(result){
+    {id: item.id}).then(function(result){
       if(result.acceptSuccess){
       that.$router.push("/enrollAccepted");
       }

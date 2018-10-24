@@ -52,9 +52,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in list" :key="item.text" @click="onClick(item)">
+                  <tr v-for="(item, index) in list" :key="item.title" @click="onClick(item)">
                     <td>{{index}}</td>
-                    <td>{{item.text}}</td>
+                    <td>{{item.title}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
 
@@ -113,7 +113,7 @@ export default {
     onClick (item){
       var that = this;
       $.get("/home/setAssignment",
-      {title: item.text}).then(function(){
+      {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enroll");
       })
     },

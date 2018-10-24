@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Job introduction 项目完成介绍</label>
                <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="intro"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -52,7 +52,7 @@
             </div>
             <div class="col-md-12 mb-3"> <label for="email">Reasons for Evaluation 评价原因</label>
              <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="reason"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -90,6 +90,9 @@ export default {
   name: "enrollForm",
    data() {
     return {
+      satis:5,
+      intro:"",
+      reason:""
     }
    },
      components:{
@@ -97,7 +100,12 @@ export default {
   },
     methods: {
    handleOk (){
-      this.$router.push("/teacherEvaluateSuccess")
+     var that = this;
+     $.get("/teacherEvaluate/save", {satis: that.satis, intro: that.intro, reason:that.reason}).then(function(data){
+       if(data.saveSuccess==true){
+          that.$router.push("/teacherEvaluateSuccess");
+       }
+     })
     }
   }
 }

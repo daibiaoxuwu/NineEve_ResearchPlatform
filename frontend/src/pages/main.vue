@@ -32,10 +32,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in msgList" @click="onClick(item)" :key="item.text">
+                  <tr v-for="(item, index) in msgList" @click="onClick(item)" :key="item.title">
 
                     <td>{{index}}</td>
-                    <td>{{item.text}}</td>
+                    <td>{{item.title}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
                     <td>{{item.status}}</td>
@@ -63,9 +63,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in myList" @click="onClick(item)" :key="item.text">
+                  <tr v-for="(item, index) in myList" @click="onClick(item)" :key="item.title">
                     <td>{{index}}</td>
-                    <td>{{item.text}}</td>
+                    <td>{{item.title}}</td>
                     <td>{{item.status}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
@@ -93,9 +93,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in avaList" @click="onClick(item)" :key="item.text">
+                  <tr v-for="(item, index) in avaList" @click="onClick(item)" :key="item.title">
                     <td>{{index}}</td>
-                    <td>{{item.text}}</td>
+                    <td>{{item.title}}</td>
                     <td>{{item.status}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
@@ -191,19 +191,19 @@ export default {
         
       var that = this;
       $.get("/home/setAssignment",
-      {title: item.text}).then(function(){
+      {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enroll");
       })
       } else if (item.status == "Passed 已通过"){
       var that = this;
       $.get("/home/setAssignment",
-      {title: item.text}).then(function(){
+      {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enrollAcceptedNotice");
       })
       } else if (item.status == "Rejected 已拒绝"){
       var that = this;
       $.get("/home/setAssignment",
-      {title: item.text}).then(function(){
+      {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enrollRejectNotice");
       })
       }
