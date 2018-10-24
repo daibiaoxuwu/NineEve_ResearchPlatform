@@ -10,6 +10,9 @@ module.exports = {
      * 
      * @param {string} assignmentTitle
      * 学生报名项目的题目
+     * 
+     *      *      *      * @param {string} teacherId
+     * 学生报名项目的老师id
      *
      * @param {string} lastName
      * 学生的姓
@@ -44,7 +47,7 @@ module.exports = {
      *
      */
 
-    enrollFormSave: function(id, idemail, assignmentTitle, lastName, firstName, username,
+    enrollFormSave: function(id, idemail, assignmentTitle, teacherId, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
           selfIntr, reasonEnroll, award, callback) {
              console.log('e'+id+idemail+assignmentTitle+firstName);
@@ -64,6 +67,9 @@ module.exports = {
      * @param {string} assignmentTitle
      * 学生报名项目的题目
      *
+     *      *      *      * @param {string} teacherId
+     * 学生报名项目的老师id
+     * 
      * @param {string} lastName
      * 学生的姓
      *
@@ -97,7 +103,7 @@ module.exports = {
      *
      */
 
-    enrollFormLaunch: function(id, idemail, assignmentTitle, lastName, firstName, username,
+    enrollFormLaunch: function(id, idemail, assignmentTitle, teacherId, lastName, firstName, username,
         wechatPhone, email, perWebAddr,
          selfIntr, reasonEnroll, award, callback) {
              console.log('e'+id+idemail+assignmentTitle+firstName);
@@ -118,6 +124,9 @@ module.exports = {
      * 
      *      * @param {string} assignmentTitle
      * 学生报名项目的题目
+     * 
+     *      *      * @param {string} teacherId
+     * 学生报名项目的老师id
      * 
      * @property {string} lastName
      * 学生的姓
@@ -147,7 +156,7 @@ module.exports = {
      * 报名原因
      *
      */
-    enrollFormGet: function(id, idemail, assignmentTitle, callback) {
+    enrollFormGet: function(id, idemail, assignmentTitle, teacherId, callback) {
              console.log('e'+id+idemail+assignmentTitle);
         if(id=="1") callback({lastName: "一"});
         else callback({id: ""});
