@@ -63,7 +63,7 @@ module.exports = {
 									 '"' + selfIntr + '",' +
 									 '"' + reasonEnroll + '",' + 
 									 '"' + award + '",0)');
-					callback({launchSuccess: true});
+					callback({saveSuccess: true});
 				}
 				else
 				{
@@ -72,7 +72,7 @@ module.exports = {
 														   '`award`="' + award + '", ' +
 														   '`filled`=0 ' +
 									'where student="' + student + '" and title="' + assignmentTitle  + '" and teacher="' + teacher + '"');
-					callback({launchSuccess: true});
+					callback({saveSuccess: true});
 				}
 			});
     },

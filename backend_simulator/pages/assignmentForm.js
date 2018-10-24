@@ -65,7 +65,7 @@ module.exports = {
 										'`abilities`="' + abilities + '", ' +
 										'`detailed`="' + detailed + '", ' +
 										'`num`=' + number + ', ' +
-										'`deadline`="' + deadline + '", ' +
+										'`deadline`="' + deadline + '" ' +
 										'where teacher="'+teacher+'" and title="' + title + '"');
 						callback({saveSuccess: true});
 					}
@@ -136,6 +136,8 @@ module.exports = {
 				{
 					if(results[0].status.indexOf("Editable")!=-1)
 					{
+						var teachername = "";
+						
 						connection.query('update project set `background`="' + background + '", ' +
 										'`introduction`="' + introduction + '", ' +
 										'`keywords`="' + keywords + '", ' +
@@ -143,7 +145,7 @@ module.exports = {
 										'`detailed`="' + detailed + '", ' +
 										'`num`=' + number + ', ' +
 										'`deadline`="' + deadline + '", ' +
-										'`status`="' + 'Enrolling 可报名' + '",' +
+										'`status`="' + 'Enrolling 可报名' + '" ' +
 										'where teacher="'+teacher+'" and title="' + title + '"');
 						callback({launchSuccess: true});
 					}

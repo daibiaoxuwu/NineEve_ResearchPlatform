@@ -22,6 +22,9 @@ module.exports = {
      */
 
     mainGet: function(id, email, isTeacher, callback){
+		console.log("lzr5"+id);
+		console.log("lzr6"+email);
+		console.log("lzr7"+isTeacher);
 		connection.query('select * from project ', function (error, results, fields){
 			var studentid=id;
 			var teacherid=id;
