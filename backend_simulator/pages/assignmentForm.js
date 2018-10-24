@@ -1,6 +1,6 @@
 module.exports = {
     /**
-     * 项目信息页面的保存请求 页面url: '/assignmentInfo'
+     * 项目信息页面的保存请求 页面url: '/assignmentForm'
      *
      * @param {string} title
      * 项目名称
@@ -32,7 +32,7 @@ module.exports = {
      * 
      */
 
-    assignmentInfoSave: function(title, background, introduction,
+    assignmentFormSave: function(title, background, introduction,
          keywords, abilities, detailed,
           number, deadline, callback) {
         callback({saveSuccess: true});
@@ -40,7 +40,7 @@ module.exports = {
 
 
 /**
-     * 项目信息页面的保存请求 页面url: '/assignmentInfo'
+     * 项目信息页面的保存请求 页面url: '/assignmentForm'
      *
      * @param {string} title
      * 项目名称
@@ -70,14 +70,14 @@ module.exports = {
      * 启动是否成功
      */
 
-    assignmentInfoLaunch: function(title, background, introduction,
+    assignmentFormLaunch: function(title, background, introduction,
         keywords, abilities, detailed,
          number, deadline, callback) {
         callback({launchSuccess: true});
     },
 
 /**
-     * 项目信息页面的获取旧的信息请求 页面url: '/assignmentInfo'
+     * 项目信息页面的获取旧的信息请求 页面url: '/assignmentForm'
      * 
      * @param {string} title
      * 项目名称
@@ -104,7 +104,7 @@ module.exports = {
      * 截止时间
      *
      */
-    assignmentInfoGet: function(name, callback) {
+    assignmentFormGet: function(name, callback) {
         
     }
 

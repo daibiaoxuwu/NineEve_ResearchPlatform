@@ -152,7 +152,7 @@ export default {
          keywords: that.keywords, abilities: that.abilities, detailed:that.detailed,
           number: that.number, deadline: that.deadline});
       $.get(
-        "/assignmentInfo/save",
+        "/assignmentForm/save",
         {title: that.title, background: that.background, introduction: that.introduction,
          keywords: that.keywords, abilities: that.abilities, detailed:that.detailed,
           number: that.number, deadline: that.deadline}).then(function(data){
@@ -166,7 +166,7 @@ export default {
     getInfo() {
       var that=this;
       $.get(
-        "/assignmentInfo/get",
+        "/assignmentForm/get",
         {}).then(function(data){
           that.title = data.title;
           that.background = data.background;
@@ -183,7 +183,7 @@ export default {
     launch() {
       var that = this;
       $.get(
-        "/assignmentInfo/launch",
+        "/assignmentForm/launch",
         {title: that.title, background: that.background, introduction: that.introduction,
          keywords: that.keywords, abilities: that.abilities, detailed:that.detailed,
           number: that.number, deadline: that.deadline}).then(function(data){

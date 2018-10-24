@@ -123,7 +123,7 @@
             </div>
           </div>
 </p>
- <router-link to="/assignmentInfo"><b-btn  v-bind:class="isTeacherButton">New Assignment 立项</b-btn></router-link>
+ <router-link to="/assignmentForm"><b-btn  v-bind:class="isTeacherButton">New Assignment 立项</b-btn></router-link>
 
         </div>
       </div>
