@@ -206,9 +206,8 @@ export default {
           researchArea:that.researchArea, researchResults:that.researchResults, lab:that.lab},
         function(data){
           if(data.launchSuccess){
-
+            that.$router.push('/main');
           }
-          alert(data.launchSuccess);
         }
       )
     }
