@@ -38,6 +38,10 @@ export default {
     };
   },
   created: function(){
+    this.update();
+  },
+  methods: {
+    update(){
       var that=this;
       $.get(
         "/right/get",//TODO:get
@@ -70,12 +74,12 @@ export default {
          });
     
   },
-  methods: {
           onClick2(item){
             var that = this;
          $.get(
         "/right/route",//TODO:get
         {title: item.title, teacherId: item.teacherId}).then(function(data){
+        that.update();
           if(data=="isTeacher"){
           if(item.status== "Enrolling 可报名")
             that.$router.push('/enrollStatus');
