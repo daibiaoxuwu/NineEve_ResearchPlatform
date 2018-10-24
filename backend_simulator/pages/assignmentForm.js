@@ -42,18 +42,24 @@ module.exports = {
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 				if(results.length==0)
 				{
-					connection.query('insert into project(`teacher`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
-									 '"' + teacher + '",' +
-									 '"' + title + '",' +
-									 '"' + background+ '",' +
-									 '"' + introduction + '",' +
-									 '"' + keywords + '",' +
-									 '"' + abilities + '",' +
-									 '"' + detailed + '",' +
-									 '' + number + ',' +
-									 '"' + 'Editable 可编辑' + '",' +
-									 '"' + deadline + '")');
-					callback({saveSuccess: true});
+					connection.query('select * from teacher where teacherid="' + teacher + '"', function (err, resul, fiel){
+						var teachername="";
+						if(resul.length>0)
+							teachername=resul[0].lastname + resul[0].firstname;
+						connection.query('insert into project(`teacher`,`teachername`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
+										 '"' + teacher + '",' +
+										 '"' + teachername + '",' +
+										 '"' + title + '",' +
+										 '"' + background+ '",' +
+										 '"' + introduction + '",' +
+										 '"' + keywords + '",' +
+										 '"' + abilities + '",' +
+										 '"' + detailed + '",' +
+										 '' + number + ',' +
+										 '"' + 'Editable 可编辑' + '",' +
+										 '"' + deadline + '")');
+						callback({saveSuccess: true});
+					});
 				}
 				else
 				{
@@ -119,25 +125,29 @@ module.exports = {
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 				if(results.length==0)
 				{
-					connection.query('insert into project(`teacher`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
-									 '"' + teacher + '",' +
-									 '"' + title + '",' +
-									 '"' + background+ '",' +
-									 '"' + introduction + '",' +
-									 '"' + keywords + '",' +
-									 '"' + abilities + '",' +
-									 '"' + detailed + '",' +
-									 '' + number + ',' +
-									 '"' + 'Enrolling 可报名' + '",' +
-									 '"' + deadline + '")');
-					callback({launchSuccess: true});
+					connection.query('select * from teacher where teacherid="' + teacher + '"', function (err, resul, fiel){
+						var teachername="";
+						if(resul.length>0)
+							teachername=resul[0].lastname + resul[0].firstname;
+						connection.query('insert into project(`teacher`,`teachername`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
+										 '"' + teacher + '",' +
+										 '"' + teachername + '",' +
+										 '"' + title + '",' +
+										 '"' + background+ '",' +
+										 '"' + introduction + '",' +
+										 '"' + keywords + '",' +
+										 '"' + abilities + '",' +
+										 '"' + detailed + '",' +
+										 '' + number + ',' +
+										 '"' + 'Enrolling 可报名' + '",' +
+										 '"' + deadline + '")');
+						callback({launchSuccess: true});
+					});
 				}
 				else
 				{
 					if(results[0].status.indexOf("Editable")!=-1)
-					{
-						var teachername = "";
-						
+					{		
 						connection.query('update project set `background`="' + background + '", ' +
 										'`introduction`="' + introduction + '", ' +
 										'`keywords`="' + keywords + '", ' +
