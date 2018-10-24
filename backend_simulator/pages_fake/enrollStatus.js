@@ -2,8 +2,11 @@ module.exports = {
     /**
      * 教师查看某项目的报名情况页面 页面url: '/enrollStatus'
      * 
-     * @param {string} name
-     * 教师的邮箱
+     * @param {string} teacherId
+     * 教师号
+     * 
+     * @param {string} assignment
+     * 教师的任务
      *
      * @property {Array} 
      * 报名者列表
@@ -28,6 +31,28 @@ module.exports = {
             ]
 
         );
+    },
+            /**
+     * 教师通过学生对其项目的报名 页面url: '/enrollStatus'
+     * 
+     * @param {string} teacherId
+     * 教师号
+     * 
+     * @param {string} assignmentTitle
+     * 教师的任务
+     * 
+     *      * @param {string} student
+     * 学生id
+     * 
+     *      * @param {string} studentEmail
+     * 学生email
+     * 
+     * @property {Boolean} 
+     * 是否成功
+     * 
+     */
+    enrollStatusAccept: function(teacherId, assignmentTitle, studentId, studentEmail, callback){
+        callback({acceptSuccess: true});
     }
     
 }
