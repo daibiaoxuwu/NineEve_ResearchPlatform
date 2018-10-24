@@ -101,23 +101,28 @@ module.exports = {
     homeGet: function(callback){
         callback(
                 [{
-                    text: "项目1",
+                    title: "项目1",
+                    teacherId: "1",
                     status: "Enrolling 可报名"
                   },
                   {
-                    text: "项目2",
+                    title: "项目2",
+                    teacherId: "1",
                     status: "Enrolling 可报名"
                   },
                   {
-                    text: "项目3",
+                    title: "项目3",
+                    teacherId: "1",
                     status: "Enrolling 可报名"
                   },
                    {
-                    text: "项目4",
+                    title: "项目4",
+                    teacherId: "1",
                     status: "Enrolling 可报名"
                   },
                    {
-                    text: "项目5",
+                    title: "项目5",
+                    teacherId: "1",
                     status: "Enrolling 可报名"
                   }]
 
