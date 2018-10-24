@@ -141,7 +141,8 @@ module.exports = {
 		connection.query('select * from project ', function (error, results, fields){
 			var projects=[];
 			for(var result in results)
-				projects.push({text: results[result].title,
+				projects.push({title: results[result].title,
+					teacherId: results[result].teacher,
 					status: results[result].status});
 			callback(projects);
 		});
