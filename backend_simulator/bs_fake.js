@@ -111,6 +111,7 @@ app.get('/register/getUrl', function(sReq, sRes){
       || hasQuotationMarks3 || hasQuotationMarks4) {
         return;
       }
+    }
 
       var isEmail = (new RegExp("@")).test(sReq.query.email);
       var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
@@ -118,13 +119,12 @@ app.get('/register/getUrl', function(sReq, sRes){
         return;
       }
 
-     if (sReq.query.name.length<200 && sReq.query.university.length<200
-       && sReq.query.email.length<200 && sReq.query.password.length<200) {
-      home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
-           sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
-   		sRes.send(result);
-   	 });
-     }
+  if (sReq.query.name.length<200 && sReq.query.university.length<200
+    && sReq.query.email.length<200 && sReq.query.password.length<200) {
+   home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
+        sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
+		sRes.send(result);
+	 });
   }
 });
 
@@ -176,7 +176,7 @@ app.get('/teacherInfo/save', function(sReq, sRes) {
       if (!isEmail || !isInUniv) {
         return;
       }
-
+      
     teacherInfo.teacherInfoSave(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab, function(result){
@@ -290,7 +290,7 @@ app.get('/assignmentForm/get', function(sReq, sRes) {
 
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, sReq.session.user.isTeacher, function(msgList, myList, avaList){
+    main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
         console.log({
             isTeacher: sReq.session.user.isTeacher,
             num1: parseInt(msgList.length / 3),

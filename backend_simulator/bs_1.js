@@ -121,6 +121,7 @@ app.get('/register/getUrl', function(sReq, sRes){
       || hasQuotationMarks3 || hasQuotationMarks4) {
         return;
       }
+    }
 
       var isEmail = (new RegExp("@")).test(sReq.query.email);
       var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
@@ -299,7 +300,7 @@ app.get('/assignmentForm/get', function(sReq, sRes) {
 
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.id, sReq.session.user.idemail, sReq.session.user.isTeacher, function(msgList, myList, avaList){
+    main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
         console.log({
             isTeacher: sReq.session.user.isTeacher,
             num1: parseInt(msgList.length / 3),

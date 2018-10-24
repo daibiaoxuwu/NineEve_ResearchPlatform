@@ -121,7 +121,7 @@ module.exports = {
 				  detailed: "",
 				  number: "",
 				  deadline: ""});	
-    }
+    },
 	
     assignmentFormGet: function(teacher, title, callback) {
         
