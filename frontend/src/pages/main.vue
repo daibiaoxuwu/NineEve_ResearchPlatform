@@ -213,6 +213,16 @@ export default {
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enrollAcceptedNotice");
+      })
+        
+      }
+      }
+      
+      else if (item.status == "Passed 已通过"){
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enrollAcceptNotice");
       })
       } else if (item.status == "Rejected 已拒绝"){

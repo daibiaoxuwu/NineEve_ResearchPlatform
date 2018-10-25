@@ -66,6 +66,25 @@
   <b-modal id="modal2" title="拒绝报名"  @ok="handleRefuse">
     <p class="my-4">是否拒绝 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
   </b-modal>
+  
+
+  <b-btn v-b-modal.modal5 style="margin-top:0.5rem;">Launch Assignment 启动项目</b-btn>
+
+  <!-- Modal Component -->
+  <b-modal id="modal5" title="启动项目"  @ok="handleLaunch">
+    <p class="my-4">是否终止报名,启动项目?</p>
+  </b-modal>
+  
+
+
+  
+
+  
+
+  
+
+  
+
         
         </div>
         </div>
@@ -160,6 +179,17 @@ export default {
       that.$router.push("/enrollRefused");
       }
     })
+    },
+    handleLaunch(){
+      var that = this;
+      $.get('/enrollStatus/launch',{}).then(function(){
+        that.$router.push("/main");
+      })
+    }
+  },
+  watch: {
+    currentPage3: function(val){
+      this.update();
     }
   },
   watch: {

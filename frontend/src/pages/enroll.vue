@@ -22,7 +22,7 @@
          
          <assignmentInfo></assignmentInfo>
              <!-- <router-link to="/enrollSuccess" > <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button></router-link> -->
-             <button v-bind:class="visible" @click= "enroll" style="margin-top:0.5rem;">Enroll Now</button>
+             <button v-bind:class="visible" @click= "enroll" style="margin-top:0.5rem;">{{buttonword}}</button>
         
         </div>
       </div>
@@ -44,7 +44,9 @@ export default {
   name: "enroll",
    data() {
     return {
-      visible:"invisible"
+      visible:"invisible",
+      isTeacher:false,
+      buttonword:"报名 Enroll Now"
     }
    },
    components: {
@@ -53,20 +55,35 @@ export default {
   },created:function(){
     var that=this;
      $.get('/enroll/isTeacher',{}).then(function(data){
-     if(data){
+       that.isTeacher=data.isTeacher;
+    if(data.assignment.status=="Launched 已启动"){
+      that.buttonword="结题 End Assignment";
+     } else {
+        that.buttonword="报名 Enroll Now";
+     if(data.isTeacher){
           that.visible="invisible";
         }else{
           that.visible="btn btn-primary btn-lg btn-block";
         }
+
+     }
      })
   },
    methods:{
     enroll(){
       console.log("enroll")
+      if(this.buttonword=="结题 End Assignment"){
+        if(this.isTeacher){
+          this.$router.push('/teacherEvaluate');
+        } else{
+          this.$router.push('/studentEvaluate');
+        }
+      } else{
       var that = this;
       $.get('/enroll/route',{}).then(function(data){
         that.$router.push(data);
       });
+      }
     }
   }
 }

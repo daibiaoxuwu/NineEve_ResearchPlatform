@@ -286,6 +286,12 @@ app.get('/enrollStatus/refuse', function(sReq, sRes) {
         sRes.send(result);
     })
 });
+app.get('/enrollStatus/launch', function(sReq, sRes) {
+    enrollStatus.enrollStatusLaunch(sReq.session.user.id, sReq.session.assignment.title, function(result){
+        sRes.send(result);
+    })
+});
+
 
 
 app.get('/home/setAssignment', function(sReq, sRes) {
@@ -308,11 +314,15 @@ app.get('/enroll/get', function(sReq, sRes) {
 })
 
 app.get('/enroll/isTeacher', function(sReq, sRes) {
-    if(sReq.session && sReq.session.user && sReq.session.user.isTeacher == false){
-        sRes.send(false);
-    } else{
-        sRes.send(true);
-    }
+    enroll.enrollGet(sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
+        sReq.session.assignment = item;
+        var isTeacher=true;
+        if(sReq.session && sReq.session.user && sReq.session.user.isTeacher == false){
+            isTeacher=false;
+        }
+        sRes.send({assignment:item, isTeacher:isTeacher});
+    })
+    
 })
 
 
