@@ -110,6 +110,8 @@ module.exports = {
 			{
 				connection.query('update project set `status`="Launched 已启动" ' +
 										'where teacher="'+teacher+'" and title="' + title + '"');
+				connection.query('update enrollform set `success`=2, `teacherread`=1, `studentread`=0 ' +
+										'where teacher="'+teacher+'" and title="' + title + '" and `success`=0');
 				callback({acceptSuccess: true})
 			}
 			else

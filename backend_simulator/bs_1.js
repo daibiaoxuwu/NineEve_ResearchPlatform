@@ -310,7 +310,9 @@ app.get('/home/setNewAssignment', function(sReq, sRes) {
 
 //do not need database!
 app.get('/enroll/get', function(sReq, sRes) {
-        sRes.send(sReq.session.assignment);
+     enroll.enrollGet(sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
+        sRes.send(item);
+     })
 })
 
 app.get('/enroll/isTeacher', function(sReq, sRes) {

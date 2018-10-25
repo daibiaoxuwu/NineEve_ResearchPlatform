@@ -62,6 +62,8 @@ export default {
      } else if(data.assignment.status=="Evaluated 学生已评价" && that.isTeacher==true){
       that.buttonword="评价学生 Evaluate";
       that.visible="btn btn-primary btn-lg btn-block"
+     } else if(data.assignment.status=="Ended 已结题"){
+      that.visible="invisible"
      } else {
         that.buttonword="报名 Enroll Now";
      if(data.isTeacher){

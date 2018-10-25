@@ -31,7 +31,7 @@
                 <tbody>
              
                   <tr v-for="(item, index) in list" @click="onClick(item)" :key="item.text"> <!--for循环传入list；@click时传入参数，onClick可以用-->
-                    <td>{{index+1}}</td>
+                    <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
