@@ -138,6 +138,7 @@ export default {
       if(result.list.length>0){
         that.list=result.list;
         that.selectedItem=result.list[0];
+        that.onClick(selectedItem);
           that.detailClass="";
           that.class2="btn btn-primary btn-lg btn-block";
       } else {

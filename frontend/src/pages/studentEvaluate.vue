@@ -18,7 +18,7 @@
         
         <div class="col-md-8 order-md-1">
          
-          <h4 class="mb-3">Satisfication 满意度</h4>
+          <h4 class="mb-3">Satisfication 满意度: {{satis}}</h4>
            <div>
   <b-button-toolbar key-nav  aria-label="Toolbar with button groups">
 
