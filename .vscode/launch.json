@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "启动程序",
-            "program": "${workspaceFolder}\\backend_simulator\\bs_1.js",
+            "program": "${workspaceFolder}\\backend_simulator\\bs_fake.js",
             "cwd": "${workspaceFolder}\\backend_simulator"
         }
     ]
