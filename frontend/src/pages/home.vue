@@ -53,7 +53,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="(item, index) in list" :key="item.title" @click="onClick(item)">
-                    <td>{{index}}</td>
+                    <td>{{index+1}}</td>
                     <td>{{item.title}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
@@ -65,7 +65,7 @@
               </table>
 
             </div>
-            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+            <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
           </div>
         </div>
       </div>
@@ -86,29 +86,22 @@ export default {
   name: "home",
   data() {
     return {
-       currentPage: 1,
-        dismissSecs: 10,
-      dismissCountDown: 0,
-      showDismissibleAlert: false,
+       currentPage3: 1,
+       num3:1,
       list:[]
     };
   },
   created:function(){
-    var that = this;
-     $.get('/home/get',
-          function(data){
-            that.list=data;
-          })
+    this.update();
   },
   methods: {
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
-    },
-    linkGen (pageNum) {
-      return '#page/' + pageNum + '/foobar'
+    update(){
+      var that = this;
+      $.get('/home/get',{currentPage3: that.currentPage3},
+            function(data){
+              that.list=data.avaList;
+              that.num3=data.num3;
+            })
     },
     onClick (item){
       var that = this;
@@ -190,6 +183,11 @@ export default {
     }
 
 
+  },
+  watch: {
+    currentPage3: function(val){
+      this.update();
+    }
   }
 };
 // 逻辑部分直接修改item即可呈现.

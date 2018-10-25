@@ -22,7 +22,7 @@
          
          <assignmentInfo></assignmentInfo>
              <!-- <router-link to="/enrollSuccess" > <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button></router-link> -->
-             <button v-bind:class="visible" @click= "enroll" style="margin-top:0.5rem;">Enroll Now</button>
+             <button v-bind:class="visible" @click= "enroll" style="margin-top:0.5rem;">{{buttonword}}</button>
         
         </div>
       </div>
@@ -44,7 +44,9 @@ export default {
   name: "enroll",
    data() {
     return {
-      visible:"invisible"
+      visible:"invisible",
+      isTeacher:false,
+      buttonword:"报名 Enroll Now"
     }
    },
    components: {
@@ -53,20 +55,76 @@ export default {
   },created:function(){
     var that=this;
      $.get('/enroll/isTeacher',{}).then(function(data){
-     if(data){
+       if(data=='/'){
+         that.visible="invisible";
+       }else{
+
+       that.isTeacher=data.isTeacher;
+    if(data.assignment.status=="Launched 已启动"){
+      if(that.isTeacher==false){
+          $.get('/enrollForm/Check',{}).then(function(result){
+            if(result==true){
+        that.buttonword="结题 End Assignment";
+        that.visible="btn btn-primary btn-lg btn-block"
+            } else{
+        that.visible="invisible"
+            }
+          })
+      } else{
+        that.visible="invisible"
+      }
+    }
+     
+     else if(data.assignment.status=="Evaluated 学生已评价"){
+      if(that.isTeacher==true){
+          $.get('/enrollForm/CheckT',{}).then(function(result){
+            if(result==true){
+        that.buttonword="评价学生 Evaluate";
+        that.visible="btn btn-primary btn-lg btn-block"
+            } else{
+        that.visible="invisible"
+            }
+      })
+      } else{
+        that.visible="invisible"
+      }
+     }
+
+     else if(data.assignment.status=="Ended 已结题"){
+      that.visible="invisible"
+     }
+     
+     else {
+        if(data.isTeacher){
           that.visible="invisible";
         }else{
-          that.visible="btn btn-primary btn-lg btn-block";
+              that.visible="btn btn-primary btn-lg btn-block";
+          $.get('/enrollForm/Check',{}).then(function(result){
+            if(result==true){
+              that.buttonword="You've enrolled. 已经报名.";
+            } else {
+              that.buttonword="报名 Enroll Now";
+            }
+          })
         }
+      }
+     }
      })
+     
   },
    methods:{
     enroll(){
       console.log("enroll")
+      if(this.buttonword=="结题 End Assignment"){
+          this.$router.push('/studentEvaluate');
+      } else if(this.buttonword=="评价学生 Evaluate"){
+          this.$router.push('/teacherEvaluate');
+      } else if(this.buttonword=="报名 Enroll Now"){
       var that = this;
       $.get('/enroll/route',{}).then(function(data){
         that.$router.push(data);
       });
+      }
     }
   }
 }

@@ -138,56 +138,13 @@ export default {
 
     save() {
           var that = this;
-          if (that.lastName == null) that.lastName = "";
-          if (that.firstName == null) that.firstName = "";
-          if (that.username == null) that.username = "";
-          if (that.wechatPhone == null) that.wechatPhone = "";
-          if (that.email == null) that.email = "";
-          if (that.perWebAddr == null) that.perWebAddr = "";
-          if (that.researchArea == null) that.researchArea = "";
-          if (that.researchResults == null) that.researchResults = "";
-          if (that.lab == null) that.lab = -1;
       console.log( {lastName: that.lastName, firstName: that.firstName, username:that.username,
          wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
           researchArea:that.researchArea, researchResults:that.researchResults, lab:that.lab});
-
-      if (that.lastName.length>20 || that.firstName.length>20 || that.username.length>200
-        || that.wechatPhone.length>200 || that.email.length>200 || that.perWebAddr.length>200
-        || that.researchArea.length>2000 || that.researchResults.length>2000) {
-          alert("Your input is beyond limitation.\n 您的输入超出字符长度限制.");
-          return;
-        }
-
-        var hasQuotationMarks1 = (new RegExp("\"")).test(that.lastName)
-        || (new RegExp("\'")).test(that.lastName);
-        var hasQuotationMarks2 = (new RegExp("\"")).test(that.firstName)
-        || (new RegExp("\'")).test(that.firstName);
-        var hasQuotationMarks3 = (new RegExp("\"")).test(that.username)
-        || (new RegExp("\'")).test(that.username);
-        var hasQuotationMarks4 = (new RegExp("\"")).test(that.wechatPhone)
-        || (new RegExp("\'")).test(that.wechatPhone);
-        var hasQuotationMarks5 = (new RegExp("\"")).test(that.email)
-        || (new RegExp("\'")).test(that.email);
-        var hasQuotationMarks6 = (new RegExp("\"")).test(that.perWebAddr)
-        || (new RegExp("\'")).test(that.perWebAddr);
-        var hasQuotationMarks7 = (new RegExp("\"")).test(that.researchArea)
-        || (new RegExp("\'")).test(that.researchArea);
-        var hasQuotationMarks8 = (new RegExp("\"")).test(that.researchResults)
-        || (new RegExp("\'")).test(that.researchResults);
-        if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
-        || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
-        || hasQuotationMarks7 || hasQuotationMarks8) {
-           alert("Please don't put quotation marks in your inputs.\n 请不要输入引号.");
-           return;
-         }
-
-         var isEmail = (new RegExp("@")).test(that.email);
-         var isInUniv = (new RegExp("edu\.cn$")).test(that.email);
-         if (!isEmail || !isInUniv) {
-           alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
-           return;
-         }
-
+      //if (that.lastname.length<20 && that.firstName.length<20 && that.username.length<200
+        //&& that.wechatPhone.length<200 && that.email.length<200 && that.perWebAddr.length<200
+        //&& that.researchArea.length<2000 && that.researchResults.length<2000
+        //&& that.lab.length<200) {
         $.get(
           "/teacherInfo/save",
           {lastName: that.lastName, firstName: that.firstName, username:that.username,
@@ -197,6 +154,7 @@ export default {
             alert(data.saveSuccess);
           }
         );
+      //}
     },
 
     getInfo() {

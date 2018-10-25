@@ -57,51 +57,24 @@ export default {
   },
   methods: {
    onRegister(){
-     if (this.registerName!=null && this.registerUniv!=null
-       && this.registerPassword!=null && this.registerEmail!=null) {
-         var hasQuotationMarks1 = (new RegExp("\"")).test(this.registerName)
-         || (new RegExp("\'")).test(this.registerName);
-         var hasQuotationMarks2 = (new RegExp("\"")).test(this.registerUniv)
-         || (new RegExp("\'")).test(this.registerUniv);
-         var hasQuotationMarks3 = (new RegExp("\"")).test(this.registerPassword)
-         || (new RegExp("\'")).test(this.registerPassword);
-         var hasQuotationMarks4 = (new RegExp("\"")).test(this.registerEmail)
-         || (new RegExp("\'")).test(this.registerEmail);
-         if (hasQuotationMarks1 || hasQuotationMarks2
-          || hasQuotationMarks3 || hasQuotationMarks4) {
-            alert("Please don't put quotation marks in your inputs.\n 请不要输入引号.");
-            return;
-          }
-
-         var isEmail = (new RegExp("@")).test(this.registerEmail);
-         var isInUniv = (new RegExp("edu\.cn$")).test(this.registerEmail);
-
-         if (isEmail && isInUniv) {
-           if (this.registerAgreement==true) {
-             if (this.registerPassword==this.registerPasswordRepetition) {
-               $.get('/register/getUrl',
-                 {name:this.registerName, university:this.registerUniv, email:this.registerEmail,
-                   password:this.registerPassword}
-              ).then(()=>{
-                window.location.href="/studentInfo";
-              });
-
-             }
-             else {
-               alert("The password repetition is not correct.\n 需要输入一致的密码.");
-             }
-           }
-           else {
-             alert("You should agree with Term and Conditions of the service first!\n请点击 同意 勾选框. ");
-           }
-         }
-         else {
-           alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
-         }
+     if (this.registerAgreement==true) {
+       if (this.registerPassword==this.registerPasswordRepetition) {
+         $.get('/register/getUrl',
+           {name:this.registerName, university:this.registerUniv, email:this.registerEmail,
+             password:this.registerPassword}
+        ).then(()=>{
+          window.location.href="/studentInfo";
+        });
+         
        }
-      else {
-        alert("Please complete all the forms.\n 请将所有表单填写完毕.");
-      }
+       else {
+         alert("The password repetition is not correct.\n 需要输入一致的密码.");
+       }
+     }
+     else {
+       alert("You should agree with Term and Conditions of the service first!\n请点击 同意 勾选框. ");
+     }
+
    }
   }
 };

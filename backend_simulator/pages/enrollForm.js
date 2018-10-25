@@ -10,9 +10,6 @@ module.exports = {
      * 
      * @param {string} assignmentTitle
      * 学生报名项目的题目
-     * 
-     *      *      *      * @param {string} teacher
-     * 学生报名项目的老师id
      *
      * @param {string} lastName
      * 学生的姓
@@ -75,7 +72,7 @@ module.exports = {
 														   '`award`="' + award + '", ' +
 														   '`filled`=0 ' +
 									'where student="' + student + '" and title="' + assignmentTitle  + '" and teacher="' + teacher + '"');
-					callback({launchSuccess: true});
+					callback({saveSuccess: true});
 				}
 			});
     },
@@ -93,9 +90,6 @@ module.exports = {
      * @param {string} assignmentTitle
      * 学生报名项目的题目
      *
-     *      *      *      * @param {string} teacher
-     * 学生报名项目的老师id
-     * 
      * @param {string} lastName
      * 学生的姓
      *
@@ -178,9 +172,6 @@ module.exports = {
      *      * @param {string} assignmentTitle
      * 学生报名项目的题目
      * 
-     *      *      * @param {string} teacher
-     * 学生报名项目的老师id
-     * 
      * @property {string} lastName
      * 学生的姓
      *
@@ -255,5 +246,42 @@ module.exports = {
 			});
 		});
     },
+     enrollFormCheck: function(id, idemail, assignmentTitle, teacher, callback) {
+             console.log('e'+id+idemail+assignmentTitle);
+		var student=id;
+		if(student==""||!student)
+			student=idemail;	
+		connection.query('select * from student where studentid="' + student + '"', function (error, results, fields){
+			var tStudentID = results[0].studentid;
+			if(tStudentID.indexOf('@') != -1)
+				tStudentID = '空';
+			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"  and `filled`=1 ', function (err, resul, fiel){
+				if(resul.length>0)
+				{
+                    callback(true);
+                } else {
+                    callback(false);
+                }
+            })
+        })
+    },
+
+     enrollFormCheckT: function(id, idemail, assignmentTitle, teacher, callback) {
+             console.log('e'+id+idemail+assignmentTitle);
+		var student=id;
+		if(student==""||!student)
+			student=idemail;	
+		connection.query('select * from teacher where teacherid="' + student + '" and `filled`=1', function (error, results, fields){
+			connection.query('select * from enrollform where teacher="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"  and `filled`=1 ', function (err, resul, fiel){
+				if(resul.length>0)
+				{
+                    callback(true);
+                } else {
+                    callback(false);
+                }
+            })
+        })
+    }
 
 }
+

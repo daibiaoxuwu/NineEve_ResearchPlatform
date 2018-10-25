@@ -48,8 +48,8 @@ app.get('/enroll', (req, res) => {
     var user = {};
     if (req.session && req.session.assignment) {
         user = req.session.user;
-        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
-    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页�会被重定向回到首�
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
+    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页�会被重定向回到首�
 })
 
 //app.all('/(((teacher|student|assignment)(Info|View|Evaluate|EvaluateSuccess))|(enroll(Form|Status|Success|Accepted|AcceptedNotice))|main)', (req, res) => {
@@ -57,8 +57,8 @@ app.get(/^\/[^\/]*$/, (req, res) => {
     var user = {};
     if (req.session && req.session.user) {
         user = req.session.user;
-        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
-    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页�会被重定向回到首�
+        res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
+    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页�会被重定向回到首�
 })
 
 var requireLoc = "./pages"; //location for requiring js files for database connection
@@ -107,28 +107,6 @@ app.get('/login/byStudentId', function(sReq, sRes){
 
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
-  if (sReq.query.name!=null && sReq.query.university!=null &&
-   sReq.query.email!=null && sReq.query.password!=null)  {
-     var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.name)
-     || (new RegExp("\'")).test(sReq.query.name);
-     var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.university)
-     || (new RegExp("\'")).test(sReq.query.university);
-     var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.email)
-     || (new RegExp("\'")).test(sReq.query.email);
-     var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.password)
-     || (new RegExp("\'")).test(sReq.query.password);
-     if (hasQuotationMarks1 || hasQuotationMarks2
-      || hasQuotationMarks3 || hasQuotationMarks4) {
-        return;
-      }
-    }
-
-      var isEmail = (new RegExp("@")).test(sReq.query.email);
-      var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
-      if (!isEmail || !isInUniv) {
-        return;
-      }
-
   if (sReq.query.name.length<200 && sReq.query.university.length<200
     && sReq.query.email.length<200 && sReq.query.password.length<200) {
    home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
@@ -387,7 +365,7 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 app.get('/enrollForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    enrollForm.enrollFormSave(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    enrollForm.enrollFormSave(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
@@ -395,7 +373,7 @@ app.get('/enrollForm/save', function(sReq, sRes) {
 });
 
 app.get('/enrollForm/launch', function(sReq, sRes) {
-    enrollForm.enrollFormLaunch(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    enrollForm.enrollFormLaunch(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
@@ -403,9 +381,28 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
 });
 
 app.get('/enrollForm/get', function(sReq, sRes) {
-    enrollForm.enrollFormGet(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
+    enrollForm.enrollFormGet(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
 			 sRes.send(result);
 		 });
+});
+app.get('/enrollForm/check', function(sReq, sRes) {
+    if(sReq.session && sReq.session.user){
+    enrollForm.enrollFormCheck(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
+			 sRes.send(result);
+         });
+        }
+    else{
+        sRes.send("/");
+    }
+});//TODO
+app.get('/enrollForm/checkT', function(sReq, sRes) {
+    if(sReq.session && sReq.session.user){
+    enrollForm.enrollFormCheckT(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
+			 sRes.send(result);
+		 });}
+    else{
+        sRes.send("/");
+    }
 });
 app.get('/enrollStatus/getDetails', function(sReq, sRes) {
     enrollForm.enrollFormGet(sReq.query.id, sReq.query.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
@@ -526,7 +523,9 @@ app.get('/home/setNewAssignment', function(sReq, sRes) {
 
 //do not need database!
 app.get('/enroll/get', function(sReq, sRes) {
-        sRes.send(sReq.session.assignment);
+     enroll.enrollGet(sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
+        sRes.send(item);
+     })
 })
 
 app.get('/enroll/isTeacher', function(sReq, sRes) {
@@ -597,19 +596,19 @@ app.get('/studentEvaluate/save', function(sReq, sRes) {
 })
 
 app.get('/teacherEvaluate/save', function(sReq, sRes) {
-    evaluate.teacherEvaluateSave(sReq.session.user.id, sReq.session.assignment.title, sReq.query.satis,  sReq.query.intro, sReq.query.reason, function(item){
+    evaluate.teacherEvaluateSave(sReq.session.assignment.teacherId, sReq.session.assignment.title, sReq.query.satis,  sReq.query.intro, sReq.query.reason, function(item){
         sRes.send(item);
     })
 })
 
 app.get('/studentEvaluate/get', function(sReq, sRes) {
-    evaluate.studentEvaluateGet(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
+    evaluate.studentEvaluateGet(sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
         sRes.send(item);
     })
 })
 
 app.get('/teacherEvaluate/get', function(sReq, sRes) {
-    evaluate.teacherEvaluateGet(sReq.session.user.id, sReq.session.assignment.title, function(item){
+    evaluate.teacherEvaluateGet(sReq.session.assignment.teacherId, sReq.session.assignment.title, function(item){
         sRes.send(item);
     })
 })

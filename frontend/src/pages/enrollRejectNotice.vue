@@ -22,14 +22,14 @@
                 We're sorry...
               </small>
          </h2>
-          <h5 class="mb-3"><b>你未被 "基于Bootstrap-Vue的网页设计研究" 录取.</b>
+          <h5 class="mb-3"><b>你未被录取.</b>
            <small class="form-text text-muted">
               You are rejected from the project.
               </small>
              
          </h5>
       <assignmentInfo></assignmentInfo>
-  <router-link to="/"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
+  <router-link to="/main"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
 
         
         

@@ -158,6 +158,7 @@ export default {
      this.selectedKey.push(item);
     },
     toggleKey (item){
+       console.log("toggle"+item);
      if(item.toggleKey=="primary"){
       item.toggleKey="light";
      }

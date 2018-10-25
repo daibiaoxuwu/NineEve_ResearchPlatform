@@ -11,9 +11,13 @@ module.exports = {
 		connection.query('select * from project ', function (error, results, fields){
 			var projects=[];
 			for(var result in results)
+			{
+				console.log(results[result].teachername);
 				projects.push({title: results[result].title,
 							   teacherId: results[result].teacher,
+							   teacher: results[result].teachername,
 							   introduction: results[result].introduction});
+			}
 			callback(projects);
 		});
     }

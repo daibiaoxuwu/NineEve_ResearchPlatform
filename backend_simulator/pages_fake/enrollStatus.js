@@ -53,6 +53,9 @@ module.exports = {
      */
     enrollStatusAccept: function(teacherId, title, studentId, callback){
         callback({acceptSuccess: true});
+    },
+    enrollStatusLaunch: function(teacherId, title, callback){
+        callback({acceptSuccess: true});
     }
     
 }

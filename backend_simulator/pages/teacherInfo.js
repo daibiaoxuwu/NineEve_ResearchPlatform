@@ -116,40 +116,6 @@ module.exports = {
 				});
     },
 
-/**
-     * 教师请求页面的获取旧的信息请求 页面url: '/teacherInfo'
-     *
-     * @param {string} name
-     * 教师号 用以查询教师
-     *
-     * @property {string} lastName
-     * 教师的姓
-     *
-     * @property {string} firstName
-     * 教师的名
-     *
-     * @property {string} username
-     * 用户名
-     *
-     * @property {string} wechatPhone
-     * 微信号/手机号
-     *
-     * @property {string} email
-     * 邮箱
-     *
-     * @property {string} perWebAddr
-     * 个人主页地址
-     *
-     * @property {string} researchArea
-     * 实验室方向
-     *
-     * @property {string} researchResults
-     * 科研成果介绍
-     *
-     * @property {integer} lab
-     * 研究所
-     *
-     */
     teacherInfoGet: function(teacherID, recall) {
         console.log("teacherInfGet: " + teacherID);
 		connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
@@ -179,5 +145,4 @@ module.exports = {
 			}
 		});				
     },
-
 }

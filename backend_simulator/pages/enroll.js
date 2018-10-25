@@ -27,7 +27,7 @@ module.exports = {
 					callback(
 					{
 						title: results[0].title,
-						teacher: resul[0].firstname+resul[0].lastname,
+						teacher: resul[0].lastname+resul[0].firstname,
 						teacherId: results[0].teacher,
 						introduction: results[0].introduction,
 						keywords: results[0].keywords.split(' '),

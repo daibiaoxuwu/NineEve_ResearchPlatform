@@ -28,7 +28,7 @@ app.use(appSession);
 
 
 
-app.get('(/|/register)', (req, res) =>{
+app.get('(/|/register|/assignmentView)', (req, res) =>{
     var user = {};
     if (req.session && req.session.user) { user.name = req.session.user; }//TODO: what's this?
     res.render('index', {"user":JSON.stringify(user)});
@@ -371,11 +371,6 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 		 });
 });
 
-app.get('/enrollStatus/getDetails', function(sReq, sRes) {
-    studentInfo.studentInfoGet(sReq.query.id, sReq.query.email, function(result){
-			 sRes.send(result);
-		 });
-});
 
 
 app.get('/enrollForm/save', function(sReq, sRes) {
@@ -401,12 +396,17 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 			 sRes.send(result);
 		 });
 });
+app.get('/enrollStatus/getDetails', function(sReq, sRes) {
+    enrollForm.enrollFormGet(sReq.query.id, sReq.query.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
+			 sRes.send(result);
+		 });
+});
 
 
 app.get('/assignmentForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.id};
+    sReq.session.newAssignment={title: sReq.query.title, teacherId: sReq.session.user.id};
     assignmentForm.assignmentFormSave(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
@@ -415,7 +415,7 @@ app.get('/assignmentForm/save', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/launch', function(sReq, sRes) {
-    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.id};
+    sReq.session.newAssignment="";
     assignmentForm.assignmentFormLaunch(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
@@ -424,8 +424,8 @@ app.get('/assignmentForm/launch', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/get', function(sReq, sRes) {
-    if(sReq.session && sReq.session.assignment){
-    assignmentForm.assignmentFormGet(sReq.session.user.id, sReq.session.assignment.title, function(result){
+    if(sReq.session && sReq.session.newAssignment && sReq.session.newAssignment!=""){
+    assignmentForm.assignmentFormGet(sReq.session.user.id, sReq.session.newAssignment.title, function(result){
 			 sRes.send(result);
          });
         }
@@ -441,11 +441,11 @@ app.get('/main/get', function(sReq, sRes) {
     main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
         console.log({
             isTeacher: sReq.session.user.isTeacher,
-            num1: parseInt(msgList.length / 3),
+            num1: parseInt((msgList.length-1) / 3)+1,
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
-            num2: parseInt(myList.length / 3),
+            num2: parseInt((myList.length-1) / 3)+1,
             myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
-            num3: parseInt(avaList.length / 3),
+            num3: parseInt((avaList.length-1) / 3)+1,
             avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
             msglist2: msgList,
             myList2: myList,
@@ -454,11 +454,11 @@ app.get('/main/get', function(sReq, sRes) {
         });
         sRes.send({
             isTeacher: sReq.session.user.isTeacher,
-            num1: parseInt(msgList.length / 3) + 1,
+            num1: parseInt((msgList.length-1) / 3) + 1,
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
-            num2: parseInt(myList.length / 3) + 1,
+            num2: parseInt((myList.length-1) / 3) + 1,
             myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
-            num3: parseInt(avaList.length / 3) + 1,
+            num3: parseInt((avaList.length-1) / 3) + 1,
             avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length))
         })
     })
@@ -475,7 +475,7 @@ app.get('/enrollStatus/get', function(sReq, sRes) {
             avalist2: list
         });
         sRes.send({
-            num3: parseInt(list.length / 3) + 1,
+            num3: parseInt((list.length-1) / 3) + 1,
             list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length))
         })
     })
@@ -486,11 +486,23 @@ app.get('/enrollStatus/accept', function(sReq, sRes) {
         sRes.send(result);
     })
 });
+app.get('/enrollStatus/refuse', function(sReq, sRes) {
+    enrollStatus.enrollStatusReject(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, function(result){
+        sRes.send(result);
+    })
+});
 
 
 app.get('/home/setAssignment', function(sReq, sRes) {
     enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
         sReq.session.assignment = item;
+        sRes.send(item);
+    })
+})
+
+app.get('/home/setNewAssignment', function(sReq, sRes) {
+    enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
+        sReq.session.newAssignment = item;
         sRes.send(item);
     })
 })
@@ -518,15 +530,18 @@ app.get('/enroll/route', function(sReq, sRes) {
 })
 
 app.get('/home/get', function(sReq, sRes) {
-    home.homeGet(function(item){
-        sRes.send(item);
+    home.homeGet(function(avaList){
+        sRes.send({
+            num3: parseInt((avaList.length-1) / 3) + 1,
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length))
+        })
     })
 })
 
 app.get('/assignmentView/get', function(sReq, sRes) {
     assignmentView.assignmentViewGet(function(avaList){
         sRes.send({
-            num3: parseInt(avaList.length / 3) + 1,
+            num: parseInt((avaList.length-1) / 3) + 1,
             avaList: avaList.slice(Math.min(sReq.query.currentPage * 3 - 3, avaList.length), Math.min(sReq.query.currentPage * 3, avaList.length))
         })
     })
@@ -534,8 +549,8 @@ app.get('/assignmentView/get', function(sReq, sRes) {
 
 app.get('/right/get', function(sReq, sRes) {
     if (sReq.session && sReq.session.user) {
-        right.rightGet(sReq.session.user.id, sReq.session.user.email,sReq.session.user.isTeacher, function(item){
-            sRes.send(item);
+        main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
+            sRes.send({msgList: msgList.slice(0, Math.min(5, msgList.length)), myList: myList.slice(0, Math.min(5, myList.length))});
         })
     } else{
         sRes.send('/');
@@ -543,7 +558,7 @@ app.get('/right/get', function(sReq, sRes) {
 })
 
 app.get('/right/route', function(sReq, sRes) {
-    enroll.enrollGet(sReq.query.title, function(item){
+    enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
         sReq.session.assignment = item;
         console.log(item);
         if (sReq.session && sReq.session.user.isTeacher) {
@@ -555,29 +570,34 @@ app.get('/right/route', function(sReq, sRes) {
 })
 
 app.get('/studentEvaluate/save', function(sReq, sRes) {
-    evaluate.studentEvaluateSave(sReq.query.user.id, sReq.query.assignment.title, sReq.query.assignment.teacherId,  sReq.query.satis, sReq.query.learned, sReq.query.notlearned, function(item){
+    evaluate.studentEvaluateSave(sReq.session.user.id, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.satis, sReq.query.learned, sReq.query.notlearned, function(item){
         sRes.send(item);
     })
 })
 
 app.get('/teacherEvaluate/save', function(sReq, sRes) {
-    evaluate.teacherEvaluateSave(sReq.query.user.id, sReq.query.assignment.title, sReq.query.satis,  sReq.query.intro, sReq.query.reason, function(item){
+    evaluate.teacherEvaluateSave(sReq.session.user.id, sReq.session.assignment.title, sReq.query.satis,  sReq.query.intro, sReq.query.reason, function(item){
         sRes.send(item);
     })
 })
 
 app.get('/studentEvaluate/get', function(sReq, sRes) {
-    evaluate.studentEvaluateGet(sReq.query.user.id, sReq.query.assignment.title, sReq.query.assignment.teacherId, function(item){
+    evaluate.studentEvaluateGet(sReq.session.user.id, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
         sRes.send(item);
     })
 })
 
 app.get('/teacherEvaluate/get', function(sReq, sRes) {
-    evaluate.teacherEvaluateGet(sReq.query.user.id, sReq.query.assignment.title, function(item){
+    evaluate.teacherEvaluateGet(sReq.session.user.id, sReq.session.assignment.title, function(item){
         sRes.send(item);
     })
 })
 
+//do not need database!
+app.get('/app/logout', function(sReq, sRes) {
+        sReq.session.destroy();
+        sRes.end();
+})
 
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))

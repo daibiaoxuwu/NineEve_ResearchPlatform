@@ -13,6 +13,7 @@ import register from "./pages/register.vue";
 import enroll from "./pages/enroll.vue";
 import enrollForm from "./pages/enrollForm.vue";
 import enrollSuccess from "./pages/enrollSuccess.vue";
+import enrollRefused from "./pages/enrollRefused.vue";
 import enrollStatus from "./pages/enrollStatus.vue";
 import enrollAccepted from "./pages/enrollAccepted.vue";
 import enrollAcceptNotice from "./pages/enrollAcceptNotice.vue";
@@ -32,6 +33,7 @@ const routes = [
     { path: '/enroll', component: enroll},
     { path: '/enrollForm', component: enrollForm},
     { path: '/enrollSuccess', component: enrollSuccess},
+    { path: '/enrollRefused', component: enrollRefused},
     { path: '/enrollStatus', component: enrollStatus},
     { path: '/enrollAccepted', component: enrollAccepted},
     { path: '/enrollAcceptNotice', component: enrollAcceptNotice},
