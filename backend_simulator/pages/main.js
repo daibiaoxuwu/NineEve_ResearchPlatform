@@ -75,11 +75,10 @@ module.exports = {
 								st=results[j].status;
 							}
 						}
-						if(resul[i].success==1)
+						if(resul[i].success==1 && st=="Enrolling 可报名")
 							st='Passed 已通过';
-						else
-							if(resul[i].success==2)
-								st='Rejected 已拒绝';
+						else if(resul[i].success==2 && st=="Enrolling 可报名")
+							st='Rejected 已拒绝';
 						message.push({title: resul[i].title,
 									  teacherId: resul[i].teacher,
 								      status: st});

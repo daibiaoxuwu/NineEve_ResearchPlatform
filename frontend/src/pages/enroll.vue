@@ -69,7 +69,12 @@ export default {
      if(data.isTeacher){
           that.visible="invisible";
         }else{
-          that.visible="btn btn-primary btn-lg btn-block";
+            that.visible="btn btn-primary btn-lg btn-block";
+          $.get('/enrollForm/Check',{}).then(function(result){
+            if(result==true){
+              that.buttonword="You've enrolled. 已经报名.";
+            }
+          })
         }
 
      }
@@ -82,7 +87,7 @@ export default {
           this.$router.push('/studentEvaluate');
       } else if(this.buttonword=="评价学生 Evaluate"){
           this.$router.push('/teacherEvaluate');
-      } else{
+      } else if(this.buttonword=="报名 Enroll Now"){
       var that = this;
       $.get('/enroll/route',{}).then(function(data){
         that.$router.push(data);

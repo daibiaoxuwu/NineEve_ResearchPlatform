@@ -32,7 +32,7 @@
               </small>
          </h5>
       <assignmentInfo></assignmentInfo>
-  <router-link to="/"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
+  <router-link to="/main"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
 
   <!-- <b-btn v-b-modal.modal1 class="btn btn-danger btn-lg btn-block" style="marginTop:0.5rem;">Terminate Assignment 结束项目</b-btn>
   <!-- Modal Component -->

@@ -158,6 +158,8 @@ export default {
           number: that.number, deadline: that.deadline}).then(function(data){
             if(!data.saveSuccess){
               alert("保存信息出现问题");
+            } else{
+              alert('保存成功');
             }
         });
       

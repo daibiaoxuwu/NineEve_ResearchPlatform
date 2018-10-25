@@ -29,7 +29,7 @@
          </h5>
            <assignmentInfo></assignmentInfo> 
 
-  <router-link to="/"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
+  <router-link to="/main"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
 
         
         </div>
