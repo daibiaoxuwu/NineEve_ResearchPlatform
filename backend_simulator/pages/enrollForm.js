@@ -262,6 +262,26 @@ module.exports = {
                 } else {
                     callback(false);
                 }
-			
+            })
+        })
+    },
+
+     enrollFormCheckT: function(id, idemail, assignmentTitle, teacher, callback) {
+             console.log('e'+id+idemail+assignmentTitle);
+		var student=id;
+		if(student==""||!student)
+			student=idemail;	
+		connection.query('select * from teacher where teacherid="' + student + '"', function (error, results, fields){
+			connection.query('select * from enrollform where teacher="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"', function (err, resul, fiel){
+				if(resul.length>0)
+				{
+                    callback(true);
+                } else {
+                    callback(false);
+                }
+            })
+        })
+    }
 
 }
+

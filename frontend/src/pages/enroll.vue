@@ -55,30 +55,62 @@ export default {
   },created:function(){
     var that=this;
      $.get('/enroll/isTeacher',{}).then(function(data){
+       if(data=='/'){
+         that.visible="invisible";
+       }else{
+
        that.isTeacher=data.isTeacher;
-    if(data.assignment.status=="Launched 已启动" && that.isTeacher==false){
-      that.buttonword="结题 End Assignment";
-      that.visible="btn btn-primary btn-lg btn-block"
-     } else if(data.assignment.status=="Evaluated 学生已评价" && that.isTeacher==true){
-      that.buttonword="评价学生 Evaluate";
-      that.visible="btn btn-primary btn-lg btn-block"
-     } else if(data.assignment.status=="Ended 已结题"){
+    if(data.assignment.status=="Launched 已启动"){
+      if(that.isTeacher==false){
+          $.get('/enrollForm/Check',{}).then(function(result){
+            if(result==true){
+        that.buttonword="结题 End Assignment";
+        that.visible="btn btn-primary btn-lg btn-block"
+            } else{
+        that.visible="invisible"
+            }
+          })
+      } else{
+        that.visible="invisible"
+      }
+    }
+     
+     else if(data.assignment.status=="Evaluated 学生已评价"){
+      if(that.isTeacher==true){
+          $.get('/enrollForm/CheckT',{}).then(function(result){
+            if(result==true){
+        that.buttonword="评价学生 Evaluate";
+        that.visible="btn btn-primary btn-lg btn-block"
+            } else{
+        that.visible="invisible"
+            }
+      })
+      } else{
+        that.visible="invisible"
+      }
+     }
+
+     else if(data.assignment.status=="Ended 已结题"){
       that.visible="invisible"
-     } else {
-        that.buttonword="报名 Enroll Now";
-     if(data.isTeacher){
+     }
+     
+     else {
+        if(data.isTeacher){
           that.visible="invisible";
         }else{
-            that.visible="btn btn-primary btn-lg btn-block";
+              that.visible="btn btn-primary btn-lg btn-block";
           $.get('/enrollForm/Check',{}).then(function(result){
             if(result==true){
               that.buttonword="You've enrolled. 已经报名.";
+            } else {
+              that.buttonword="报名 Enroll Now";
             }
           })
         }
-
+      }
      }
      })
+     
   },
    methods:{
     enroll(){
