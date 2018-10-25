@@ -62,9 +62,10 @@ module.exports = {
 							mylist.push({title: results[i].title,
 										 teacherId: results[i].teacher,
 										 status: results[i].status});
-						avalist.push({title: results[i].title,
-									  teacherId: results[i].teacher,
-									  status: results[i].status});
+						if(results[i].status.indexOf("Enroll")!=-1)
+							avalist.push({title: results[i].title,
+										  teacherId: results[i].teacher,
+										  status: results[i].status});
 					}
 					for(var i in resul)
 					{

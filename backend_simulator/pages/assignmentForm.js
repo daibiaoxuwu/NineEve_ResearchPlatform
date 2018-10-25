@@ -121,7 +121,10 @@ module.exports = {
     assignmentFormLaunch: function(teacher, title, background, introduction,
         keywords, abilities, detailed,
          number, deadline, callback) {
-			 console.log("lzr2: "+teacher+title);
+			console.log("lzr2: "+teacher+title);
+			var keyarray = keywords.toString().split(' ');
+			for(var i in keyarray)
+				connection.query('insert into `key`(`name`) values("' + keyarray[i] + '")');
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 				if(results.length==0)
 				{

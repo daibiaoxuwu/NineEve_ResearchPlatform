@@ -41,7 +41,7 @@ module.exports = {
 
     enrollStatusGet: function(teacherId, title, callback){
 		var that = this;
-        connection.query('select * from enrollform where title="' + title + '" and teacher="' + teacherId + '"', function (error, results, field){
+        connection.query('select * from enrollform where title="' + title + '" and teacher="' + teacherId + '" and `success`=0', function (error, results, field){
 			var statu=[];
 			console.log("lzr6"+teacherId+","+title);
 			var i = 0;

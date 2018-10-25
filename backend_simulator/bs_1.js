@@ -365,7 +365,7 @@ app.get('/right/route', function(sReq, sRes) {
 })
 
 app.get('/studentEvaluate/save', function(sReq, sRes) {
-    evaluate.studentEvaluateSave(sReq.session.user.id, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.satis, sReq.query.learned, sReq.query.notlearned, function(item){
+    evaluate.studentEvaluateSave(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.satis, sReq.query.learned, sReq.query.notlearned, function(item){
         sRes.send(item);
     })
 })
@@ -377,7 +377,7 @@ app.get('/teacherEvaluate/save', function(sReq, sRes) {
 })
 
 app.get('/studentEvaluate/get', function(sReq, sRes) {
-    evaluate.studentEvaluateGet(sReq.session.user.id, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
+    evaluate.studentEvaluateGet(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
         sRes.send(item);
     })
 })

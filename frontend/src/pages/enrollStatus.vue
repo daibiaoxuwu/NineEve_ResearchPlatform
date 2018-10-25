@@ -14,7 +14,7 @@
   <div class="">
     <div class="container">
       <div class="row">
-        <rightpane></rightpane>
+        <rightpane @click="update"></rightpane>
         
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3"><b>Enroll List 报名队列</b></h4>

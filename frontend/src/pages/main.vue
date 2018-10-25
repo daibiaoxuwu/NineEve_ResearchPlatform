@@ -250,7 +250,7 @@ if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
-       that.$router.push("/enrollAcceptedNotice");
+       that.$router.push("/enrollAcceptNotice");
       })
       } else if (item.status == "Rejected 已拒绝"){
       var that = this;
