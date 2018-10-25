@@ -56,8 +56,12 @@ export default {
     var that=this;
      $.get('/enroll/isTeacher',{}).then(function(data){
        that.isTeacher=data.isTeacher;
-    if(data.assignment.status=="Launched 已启动"){
+    if(data.assignment.status=="Launched 已启动" && that.isTeacher==false){
       that.buttonword="结题 End Assignment";
+      that.visible="btn btn-primary btn-lg btn-block"
+     } else if(data.assignment.status=="Evaluated 学生已评价" && that.isTeacher==true){
+      that.buttonword="评价学生 Evaluate";
+      that.visible="btn btn-primary btn-lg btn-block"
      } else {
         that.buttonword="报名 Enroll Now";
      if(data.isTeacher){
@@ -73,11 +77,9 @@ export default {
     enroll(){
       console.log("enroll")
       if(this.buttonword=="结题 End Assignment"){
-        if(this.isTeacher){
-          this.$router.push('/teacherEvaluate');
-        } else{
           this.$router.push('/studentEvaluate');
-        }
+      } else if(this.buttonword=="评价学生 Evaluate"){
+          this.$router.push('/teacherEvaluate');
       } else{
       var that = this;
       $.get('/enroll/route',{}).then(function(data){

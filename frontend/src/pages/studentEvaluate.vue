@@ -57,7 +57,7 @@
          
             </div>
             <hr class="mb-4">
-            <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information 保存信息</button>
+            <!-- <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information 保存信息</button> -->
          
               
   <b-btn v-b-modal.modal2 class="btn btn-primary btn-lg btn-block"  style="margin-top:0.5rem;">Submit Evaluation 提交评价</b-btn>

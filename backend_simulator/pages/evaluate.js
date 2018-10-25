@@ -1,37 +1,58 @@
 module.exports = {
 
-    studentEvaluateSave: function(id, email, title, teacherId, satis, learned, notlearned, callback){
+    studentEvaluateSave: function(id, email, title, teacher, satis, learned, notlearned, callback){
 		var student = id;
 		if(!student || student == "")
 			student = email;
-		connection.query('insert into stueva(`student`,`teacher`,`titie`,`satis`,`learned`,`notlearned`) values(' +
+		connection.query('insert into stueva(`student`,`teacher`,`title`,`satis`,`learned`,`notlearned`) values(' +
 						 '"' + student + '",' +
-						 '"' + teacherId + '",' +
+						 '"' + teacher + '",' +
 						 '"' + title + '",' +
 						 '"' + satis + '",' +
 						 '"' + learned + '",' +
 						 '"' + notlearned + '")');
+		connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
+			if(results.length>0)
+			{
+				connection.query('update project set `status`="Evaluated 学生已评价" ' +
+										'where teacher="'+teacher+'" and title="' + title + '"');
+				connection.query('update enrollform set `teacherread`=0,`studentread`=1 ' +
+										'where teacher="'+teacher+'" and title="' + title + '" and student="' + student +'" ');
+			}
         callback({saveSuccess: true});
+		});
     },
-    teacherEvaluateSave: function(teacherId, title, satis, intro, reason, callback){
+    teacherEvaluateSave: function(teacher, title, satis, intro, reason, callback){
 				connection.query('insert into teaeva(`title`,`teacher`,`satis`,`intro`,`reason`) values(' +
 						 '"' + title + '",' +
-						 '"' + teacherId + '",' +
+						 '"' + teacher + '",' +
 						 '"' + satis + '",' +
 						 '"' + intro + '",' +
 						 '"' + reason + '")');
-        callback({saveSuccess: true});
+		connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
+			if(results.length>0)
+			{
+				connection.query('update project set `status`="Ended 已结题" ' +
+										'where teacher="'+teacher+'" and title="' + title + '"');
+				// connection.query('update enrollform set `teacherread`=0,`studentread`=1 ' +
+										// 'where teacher="'+teacher+'" and title="' + title + '" and student="' + student +'" ');
+			}
+				callback({saveSuccess: true});
+});
     },
     
-    studentEvaluateGet: function(id, email, title, teacherId,  callback){
-		var student = id;
-		if(!student || student == "")
-			student = email;
-		connection.query('select * from stueva where student="' + student + '" and teacher="' + teacherId + '" and title="' + title + '"', function (error, results, field){
+    studentEvaluateGet: function(title, teacherId,  callback){
+		connection.query('select * from stueva where teacher="' + teacherId + '" and title="' + title + '"', function (error, results, field){
 			if(results.length>0)
-				callback({satis: results[0].satis,
-						  learned: results[0].learned,
-						  notlearned: results[0].notlearned});
+			{
+				var result = [];	
+				for(var i in results){
+				result.push({satis: results[i].satis,
+						  learned: results[i].learned,
+						  notlearned: results[i].notlearned});
+				}
+				callback(result);
+			}
 			else
 				callback('');	
 		});

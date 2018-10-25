@@ -387,7 +387,7 @@ app.get('/teacherEvaluate/save', function(sReq, sRes) {
 })
 
 app.get('/studentEvaluate/get', function(sReq, sRes) {
-    evaluate.studentEvaluateGet(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
+    evaluate.studentEvaluateGet(sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
         sRes.send(item);
     })
 })

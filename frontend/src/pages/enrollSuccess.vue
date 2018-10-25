@@ -28,13 +28,13 @@
               </small>
          </h5>
        <assignmentInfo></assignmentInfo> 
-  <router-link to="/studentEvaluate">
-  <b-btn v-b-modal.modal1 class="btn btn-primary btn-lg btn-block">End Assignment 结题</b-btn>
-  </router-link>
+  <!-- <router-link to="/studentEvaluate"> -->
+  <!-- <b-btn v-b-modal.modal1 class="btn btn-primary btn-lg btn-block">End Assignment 结题</b-btn> -->
+  <!-- </router-link> -->
   <!-- Modal Component -->
-  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
-    <p class="my-4">是否结题?</p>
-  </b-modal>
+  <!-- <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk"> -->
+    <!-- <p class="my-4">是否结题?</p> -->
+  <!-- </b-modal> -->
 
         </div>
       </div>

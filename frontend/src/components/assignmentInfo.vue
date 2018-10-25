@@ -52,8 +52,8 @@
 </p>
 </div>
 
-<div :class="visibleS">
-<h5 class="form-text" style="font-weight:bold;">学生评价</h5>
+<div :class="visibleS" v-for="(info3,index) in info3s" :key="info3.learned">
+<h5 class="form-text" style="font-weight:bold;">学生 {{index+1}} 评价</h5>
 <p class="form-text" style="font-weight:bold;">满意度</p>
          <p class="form-text text-muted">
          {{info3.satis}}
@@ -83,6 +83,7 @@ export default {
       info:{},
       info2:{},
       info3:{},
+      info3s:[],
       visibleT:"invisible",
       visibleS:"invisible"
     }
@@ -104,7 +105,7 @@ export default {
         "/studentEvaluate/get",//TODO:get
         {}).then(function(data){
           if(data && data!=""){
-          that.info3=data;
+          that.info3s=data;
           that.visibleS="";
           }
           else{

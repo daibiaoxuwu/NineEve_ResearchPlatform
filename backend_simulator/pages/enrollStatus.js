@@ -41,12 +41,22 @@ module.exports = {
 
     enrollStatusGet: function(teacherId, title, callback){
 		var that = this;
-        connection.query('select * from enrollform where title="' + title + '" and teacher="' + teacherId + '" and `success`=0', function (error, results, field){
-			var statu=[];
-			console.log("lzr6"+teacherId+","+title);
-			var i = 0;
-			that.enrollQuery(results, statu, 0, callback);
-		});
+        connection.query('select * from project where title="' + title + '" and teacher="' + teacherId + '" ', function (error1, results1, field1){
+			if(results1[0].status=="Enrolling 可报名"){
+			connection.query('select * from enrollform where title="' + title + '" and teacher="' + teacherId + '" and `success`!=2', function (error, results, field){
+				var statu=[];
+				console.log("lzr6"+teacherId+","+title);
+				var i = 0;
+				that.enrollQuery(results, statu, 0, callback);
+			});
+		}else{
+			connection.query('select * from enrollform where title="' + title + '" and teacher="' + teacherId + '" and `success`=0', function (error, results, field){
+				var statu=[];
+				console.log("lzr6"+teacherId+","+title);
+				var i = 0;
+				that.enrollQuery(results, statu, 0, callback);
+			});
+		}})
     },
             /**
      * 教师通过学生对其项目的报名 页面url: '/enrollStatus'
@@ -93,6 +103,19 @@ module.exports = {
 				callback({acceptSuccess: false});
 			}
 		});
-    }
-    
+	},
+    enrollStatusLaunch: function(teacher, title, callback){
+		connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
+			if(results.length>0)
+			{
+				connection.query('update project set `status`="Launched 已启动" ' +
+										'where teacher="'+teacher+'" and title="' + title + '"');
+				callback({acceptSuccess: true})
+			}
+			else
+			{
+				callback({acceptSuccess: false});
+			}
+		});
+	}
 }

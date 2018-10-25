@@ -35,7 +35,7 @@ module.exports = {
 			var avalist=[];
 			if(isTeacher)
 			{
-				connection.query('select * from enrollform where teacherread=0 and teacher="' + teacherid + '"', function (err, resul, fiel){
+				connection.query('select * from enrollform where teacherread=0 and teacher="' + teacherid + '" and `success`!=0', function (err, resul, fiel){
 					for(var i in results)
 					{
 						if(results[i].teacher==teacherid)
@@ -69,12 +69,19 @@ module.exports = {
 					}
 					for(var i in resul)
 					{
-						var st=resul[i].status;
+						var st;
+						for(var j in results){
+							if(results[j].title == resul[i].title && results[j].teacher == resul[i].teacher){
+								st=results[j].status;
+							}
+						}
+						if(st=="Enrolling 可报名"){
 						if(resul[i].success==1)
 							st='Passed 已通过';
 						else
 							if(resul[i].success==2)
 								st='Rejected 已拒绝';
+						}
 						message.push({title: resul[i].title,
 									  teacherId: resul[i].teacher,
 								      status: st});

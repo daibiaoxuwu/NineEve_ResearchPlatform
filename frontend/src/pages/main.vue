@@ -34,7 +34,7 @@
                 <tbody>
                   <tr v-for="(item, index) in msgList" @click="onClick(item)" :key="item.title">
 
-                    <td>{{index}}</td>
+                    <td>{{index+1}}</td>
                     <td>{{item.title}}</td>
                     <!-- <td @click="onClick1(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
@@ -64,7 +64,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="(item, index) in myList" @click="onClick(item)" :key="item.title">
-                    <td>{{index}}</td>
+                    <td>{{index+1}}</td>
                     <td>{{item.title}}</td>
                     <td>{{item.status}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
@@ -94,7 +94,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="(item, index) in avaList" @click="onClick(item)" :key="item.title">
-                    <td>{{index}}</td>
+                    <td>{{index+1}}</td>
                     <td>{{item.title}}</td>
                     <td>{{item.status}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
@@ -213,19 +213,12 @@ export default {
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
-       that.$router.push("/enrollAcceptedNotice");
+       that.$router.push("/enrollAcceptNotice");
       })
         
       }
-      }
       
-      else if (item.status == "Passed 已通过"){
-      var that = this;
-      $.get("/home/setAssignment",
-      {title: item.title, teacherId: item.teacherId}).then(function(){
-       that.$router.push("/enrollAcceptNotice");
-      })
-      } else if (item.status == "Rejected 已拒绝"){
+  else if (item.status == "Rejected 已拒绝"){
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
@@ -236,6 +229,12 @@ export default {
       $.get("/home/setNewAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push({path:"/assignmentForm", query:{isNew: false}});
+      })
+      }     else{
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enroll");
       })
       }
     },

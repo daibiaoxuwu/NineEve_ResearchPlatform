@@ -53,7 +53,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="(item, index) in list" :key="item.title" @click="onClick(item)">
-                    <td>{{index}}</td>
+                    <td>{{index+1}}</td>
                     <td>{{item.title}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
