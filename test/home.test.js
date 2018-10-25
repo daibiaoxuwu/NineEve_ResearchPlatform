@@ -7,6 +7,7 @@ const chai=require("chai");
 const expect=chai.expect;
 chai.use(require("chai-http"))
 import { mount, createLocalVue } from '@vue/test-utils'
+var mock = require('./mock.js')
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
@@ -19,6 +20,7 @@ const router = new VueRouter()
 const wrapper = mount(home, {
   localVue,
   router,
+  mock,
   stubs: [
     'router-link', 
     'router-view',
@@ -42,11 +44,9 @@ describe('home.vue test', () => {
       expect(wrapper.vm.currentPage).to.be.equal(1);
     })
     
-    console.log(vm.list.length);
-    
-    // it('should have 5 items in one page', () => {
-    //   expect(wrapper.vm.list).has.length(5);
-    // })
+    it('should have items after created', () => {
+      expect(vm.list.length).greaterThan(0);
+    })
   })
 
   it('has a data function', () => {
