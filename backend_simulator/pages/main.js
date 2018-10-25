@@ -71,7 +71,7 @@ module.exports = {
 					{
 						var st=resul[i].status;
 						if(resul[i].success==1)
-							st='Accepted 已通过';
+							st='Passed 已通过';
 						else
 							if(resul[i].success==2)
 								st='Rejected 已拒绝';
