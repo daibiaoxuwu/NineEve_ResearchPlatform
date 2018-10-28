@@ -299,7 +299,7 @@ if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
       {
         search: val
       }).then(function(data){
-
+        this.$router.push("/assignmentView");
       })
     }
   }
