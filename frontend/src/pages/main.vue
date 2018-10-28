@@ -18,7 +18,13 @@
         <div class="col-md-12">
           <h1>科研实习平台</h1>
              <p class="mb-3">Scientific Research &amp; Internship Platform</p>
-             
+     <b-dropdown  text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100" variant="link" no-caret>
+    <template slot="button-content"  >
+        <template>
+        <input class="form-control" placeholder="search" v-model="search" type='text'/>
+    </template>
+    <b-dropdown-item v-for="item in allKeys" @click="searchKey(item)" :key="item.name">{{item.name}}</b-dropdown-item>
+  </b-dropdown>
 <p class="mb-3">
   <div class="card">
             <div class="card-header">MESSAGES 新动态</div>
@@ -287,6 +293,14 @@ if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
     },
     currentPage3: function(val){
       this.update();
+    },
+    search: function(val){
+      $.get("/main/search",
+      {
+        search: val
+      }).then(function(data){
+
+      })
     }
   }
 };
