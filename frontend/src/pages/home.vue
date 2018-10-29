@@ -52,7 +52,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in list ">
+                  <tr v-for="(item, index) in list" :key="item.text">
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
@@ -111,7 +111,11 @@ export default {
       return '#page/' + pageNum + '/foobar'
     },
     onClick (item){
-       this.$router.push({path: "/enroll", params: {title: item.text}});
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.text}).then(function(){
+       that.$router.push("/enroll");
+      })
     },
 
     loginRequest (){

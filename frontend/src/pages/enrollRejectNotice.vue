@@ -15,22 +15,28 @@
     <div class="container">
       <div class="row">
         <rightpane></rightpane>
-        
+     
         <div class="col-md-8 order-md-1">
-            <h2 class="mb-3"><b>恭喜!</b>
+            <h2 class="mb-3"><b>很遗憾...</b>
            <small class="form-text text-muted">
-                Congratulations!
+                We're sorry...
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经成功为学生 肖朝军 结题并完成评价! 项目已正式结束.</b>
+          <h5 class="mb-3"><b>你未被 "基于Bootstrap-Vue的网页设计研究" 录取.</b>
            <small class="form-text text-muted">
-              You have successfully terminated the project and evaluated your student.
+              You are rejected from the project.
               </small>
+             
          </h5>
-           <assignmentInfo></assignmentInfo> 
-
+      <assignmentInfo></assignmentInfo>
   <router-link to="/"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
 
+  <b-btn v-b-modal.modal1 class="btn btn-danger btn-lg btn-block" style="marginTop:0.5rem;">Terminate Assignment 结束项目</b-btn>
+  <!-- Modal Component -->
+  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
+    <p class="my-4">是否结束项目?</p>
+  </b-modal>
+        
         
         </div>
       </div>
@@ -44,6 +50,7 @@
 
 <script>
 import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
+
 export default {
 
   name: "enrollSuccess",
@@ -52,12 +59,13 @@ export default {
     }
    },
     components:{
-    rightpane, assignmentInfo
+    rightpane,
+
   },
     methods: {
    handleOk (){
-      alert("Enroll Withdrawn!");
-      // this.$router.push("/log")
+      alert("Terminated!");
+      this.$router.push("/studentEvaluate")
     }
   }
 }

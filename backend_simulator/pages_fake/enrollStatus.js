@@ -1,38 +1,33 @@
 module.exports = {
     /**
-     * 教师请求页面的保存请求 页面url: '/teacherInfo'
+     * 教师查看某项目的报名情况页面 页面url: '/enrollStatus'
+     * 
+     * @param {string} name
+     * 教师的邮箱
      *
-     * @param {string} lastName
-     * 教师的姓
-     *
-     * @param {string} firstName
-     * 教师的名
-     *
-     * @property {boolean} saveSuccess //property: return
-     * 登陆是否成功
+     * @property {Array} 
+     * 报名者列表
+     * 包含id, email(同样地, 如果id登陆则email="", 如果email登陆则id=""), text(姓名), department(系别,现在恒定是CST 计算机系), grade
+     * 
      */
-    teacherInfoSave: function(lastName, firstName, username,
-         wechatPhone, email, perWebAddr,
-          researchArea, researchResults, lab) {
-        console.log("teacherInfoSave: " + lastName + firstName);
-        return {saveSuccess: true};
-    },
 
+    enrollStatusGet: function(teacherId, callback){
+        callback(
+            //msgList
+            [
+                {id:"1",
+                email:"",
+                text: "肖朝军1",
+                department: "CST 计算机系",
+                grade: "Junior 大三"},
+                {id:"",
+                email:"2",
+                text: "肖朝军5",
+                department: "CST 计算机系",
+                grade: "Junior 大三"}
+            ]
 
-
-
-    teacherInfoLaunch: function(lastName, firstName, username,
-         wechatPhone, email, perWebAddr,
-          researchArea, researchResults, lab) {
-        console.log("teacherInfoLaunch: " + lastName + firstName);
-        return {launchSuccess: true};
-    },
-
-    teacherInfoGet: function(name) {
-        console.log("teacherInfGet: " + name);
-        if(name=="1") return {lastName: "一"};
-        else if(name == "2") return {lastName: "二"};
-        else return{lastName: ""};
-    },
-
+        );
+    }
+    
 }

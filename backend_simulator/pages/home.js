@@ -1,4 +1,3 @@
-require('../bs_1.js')
 module.exports = {
     /**
      * 账号密码登陆请求 页面url: '/'
@@ -13,19 +12,13 @@ module.exports = {
      * 登陆是否成功
      * @property {boolean} usernameNotFound
      * 用户名是否存在: 不存在返回true
+     * @property {boolean} infoFinished
+     * 用户是否填写完个人信息: 填写完返回true
      *
      */
     emailLogin: function(email, password, recall) {
-		connection.query('select * from student where email="'+email+'"', function (error, results, fields){
-			if(results.length == 0)
-				recall({loginSuccess: false, usernameNotFound: true});
-			else
-				if(results[0].password == password)
-					recall({loginSuccess: true, usernameNotFound: true});
-				else
-					recall({loginSuccess: false, usernameNotFound: false});
-		});
         console.log("email login: "+email + password);
+        recall({loginSuccess: true, usernameNotFound: false, infoFinished: false});
     },
 
 
@@ -43,17 +36,19 @@ module.exports = {
      * 登陆是否成功
      * @property {boolean} usernameNotFound
      * 用户名是否存在: 不存在返回true
+     *      * @property {boolean} infoFinished
+     * 用户是否填写完个人信息: 填写完返回true
      *
      */
     teacherLogin: function(teacherID, password, recall) {
 		connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
 			if(results.length == 0)
-				recall({loginSuccess: false, usernameNotFound: true});
+				recall({loginSuccess: false, usernameNotFound: true, infoFinished: false});
 			else
 				if(results[0].password == password)
-					recall({loginSuccess: true, usernameNotFound: true});
+					recall({loginSuccess: true, usernameNotFound: true, infoFinished: results[0].filled == 1});
 				else
-					recall({loginSuccess: false, usernameNotFound: false});
+					recall({loginSuccess: false, usernameNotFound: false, infoFinished: false});
 		});
         console.log("teacher login: "+teacherID + password);
 		
@@ -73,17 +68,19 @@ module.exports = {
      * 登陆是否成功
      * @property {boolean} usernameNotFound
      * 用户名是否存在: 不存在返回true
+     *      * @property {boolean} infoFinished
+     * 用户是否填写完个人信息: 填写完返回true
      *
      */
-    studentLogin: function(studentID, password, recall) {
+        studentLogin: function(studentID, password, recall) {
 		connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
 			if(results.length == 0)
-				recall({loginSuccess: false, usernameNotFound: true});
+				recall({loginSuccess: false, usernameNotFound: true, infoFinished: false});
 			else
 				if(results[0].password == password)
-					recall({loginSuccess: true, usernameNotFound: true});
+					recall({loginSuccess: true, usernameNotFound: false, infoFinished: results[0].filled == 1});
 				else
-					recall({loginSuccess: false, usernameNotFound: false});
+					recall({loginSuccess: false, usernameNotFound: false, infoFinished: false});
 		});
         console.log("student login: "+studentID + password);
     },
@@ -126,5 +123,37 @@ module.exports = {
 				recall({registerSuccess: true});
 			}
 		});
-    }
+    },
+   /**
+     * 主页拿取所有项目列表请求 页面url: '/'
+     * @return {Array} avaList 
+     * 所有科研任务列表
+     */
+    homeGet: function(callback){
+        callback(
+                [{
+                    text: "项目1",
+                    status: "Enrolling 可报名"
+                  },
+                  {
+                    text: "项目2",
+                    status: "Enrolling 可报名"
+                  },
+                  {
+                    text: "项目3",
+                    status: "Enrolling 可报名"
+                  },
+                   {
+                    text: "项目4",
+                    status: "Enrolling 可报名"
+                  },
+                   {
+                    text: "项目5",
+                    status: "Enrolling 可报名"
+                  }]
+              
+              );
+            }
+
+
 }

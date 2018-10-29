@@ -1,6 +1,5 @@
 <template>
   <div >
-
    <div class="py-5" >
     <div class="container">
       <div class="row">
@@ -8,8 +7,6 @@
       </div>
     </div>
   </div>
-
-
 
 
   <div class="p-0">
@@ -29,8 +26,8 @@
         
         <div class="col-md-8 order-md-1">
 <p class="mb-3">
-  <div class="card">
-            <div class="card-header">项目1 基于bootstrap-vue的前端设计研究 指导教师: 国雨晴</div>
+  <div class="card mb-3"  v-for="item in avaList" :key="item.title"  @click="onClick(item)">
+            <div class="card-header">{{item.title}}</div>
             <div class="card-body">
               <p class="form-text text-muted">
            Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
@@ -38,37 +35,13 @@
          
 </p>
             </div>
-              </div>
-
+  </div>
 </p>
-<p class="mb-3">
-  <div class="card">
-            <div class="card-header">项目1 基于bootstrap-vue的前端设计研究 指导教师: 国雨晴</div>
-            <div class="card-body">
-              <p class="form-text text-muted">
-           Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
-          在使用 Vue 时，我们推荐在你的浏览器上安装 Vue Devtools。它允许你在一个更友好的界面中审查和调试 Vue 应用。
-          
-</p>
-            </div>
-              </div>
-
-</p>
-<p class="mb-3">
-  <div class="card">
-            <div class="card-header">项目1 基于bootstrap-vue的前端设计研究 指导教师: 国雨晴</div>
-            <div class="card-body">
-              <p class="form-text text-muted">
-           Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
-          在使用 Vue 时，我们推荐在你的浏览器上安装 Vue Devtools。它允许你在一个更友好的界面中审查和调试 Vue 应用。
-         
-</p>
-            </div>
-              </div>
 
 </p>
 
- <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+
+ <b-pagination-nav base-url="#" :number-of-pages="num" v-model="currentPage" />
         </div>
       </div>
     </div>
@@ -87,58 +60,45 @@
 <script>
 import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
 export default {
-  name: "home",
-  data() {
+  name: "home2",
+  item: Object,
+  data: function() {
+
     return {
-       currentPage: 1,
-        dismissSecs: 10,
-      dismissCountDown: 0,
-      showDismissibleAlert: false,
-      list:[
-        {
-          text: "项目1",
-          status: "Enrolling 可报名"
-        },
-        {
-          text: "项目2",
-          status: "Enrolling 可报名"
-        },
-        {
-          text: "项目3",
-          status: "Enrolling 可报名"
-        },
-         {
-          text: "项目4",
-          status: "Enrolling 可报名"
-        },
-         {
-          text: "项目5",
-          status: "Enrolling 可报名"
-        }
-      ]
+      currentPage:1,
+      num:1,
+      avaList:[{
+                title:"基于Bootstrap的前端网页设计研究",
+                teacher:"国雨晴",
+                introduction:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器."
+            },
+            {
+                title:"基于Bootstrap的前端网页设计研究",
+                teacher:"国雨晴",
+                introduction:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器."
+            }]
     };
   },
    components:{
     rightpane, assignmentInfo
   },
+  created: function(){
+    var that = this;
+    $.get("/assignmentView/get",
+        {currentPage: currentPage}).then(function(data){
+          that.avaList=data.avaList;
+          that.num=data.num;
+          console.log(data);
+         });
+  },
   methods: {
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
-    },
-    linkGen (pageNum) {
-      return '#page/' + pageNum + '/foobar'
-    },
-    onClick (item){
-      alert(item.text);
-      // this.$router.push("/log")
-
- 
+     onClick(item){
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title}).then(function(){
+       that.$router.push("/enroll");
+      })
     }
-
-
   }
 };
 // 逻辑部分直接修改item即可呈现.
