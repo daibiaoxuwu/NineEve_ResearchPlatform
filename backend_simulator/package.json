@@ -16,7 +16,8 @@
     "socket.io": "^2.1.1"
   },
   "scripts": {
-    "start": "node bs_1.js"
+    "start": "node bs_1.js",
+    "fakestart": "node bs_fake.js"
   },
   "devDependencies": {
     "chai": "^4.1.2",

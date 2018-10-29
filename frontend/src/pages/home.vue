@@ -95,10 +95,10 @@ export default {
   },
   created:function(){
     var that = this;
-     $.get('/home/get',
-          function(data){
-            that.list=data;
-          })
+    $.get('/home/get',
+        function(data){
+          that.list=data;
+        })
   },
   methods: {
     countDownChanged (dismissCountDown) {

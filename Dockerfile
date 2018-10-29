@@ -5,6 +5,7 @@ WORKDIR /app
 RUN npm install
 RUN npm run init1
 RUN npm run init2
+RUN npm run init3
 RUN npm run build
 ENV TEST_ROOT /app
 ENV PORT 80
