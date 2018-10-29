@@ -42,26 +42,16 @@ module.exports = {
 					recall({saveSuccess: false});
 				else
 				{
-					console.log('update teacher set `lastname`="' + lastName + '", \
-					`firstname`="' + firstName + '", \
-					`username`="' + userName + '", \
-					`wechatphone`="' + wechatPhone + '", \
-					`email`="' + email + '", \
-					`perwebaddr`="' + perWebAddr + '", \
-					`researchArea`="' + researchArea + '", \
-					`researchresults`="' + researchResults + '", \
-					`lab`=' + lab + '\
-					 where teacherID="'+teacherID+'"');
-					connection.query('update teacher set `lastname`="' + lastName + '", \
-					`firstname`="' + firstName + '", \
-					`username`="' + userName + '", \
-					`wechatphone`="' + wechatPhone + '", \
-					`email`="' + email + '", \
-					`perwebaddr`="' + perWebAddr + '", \
-					`researcharea`="' + researchArea + '", \
-					`researchresults`="' + researchResults + '", \
-					`lab`="' + lab + '"\
-					 where teacherID="'+teacherID+'"');
+					connection.query('update teacher set `lastname`="' + lastName + '", ' +
+					'`firstname`="' + firstName + '", ' +
+					'`username`="' + userName + '", ' +
+					'`wechatphone`="' + wechatPhone + '", ' +
+					'`email`="' + email + '", ' +
+					'`perwebaddr`="' + perWebAddr + '", ' +
+					'`researcharea`="' + researchArea + '", ' +
+					'`researchresults`="' + researchResults + '", ' +
+					'`lab`="' + lab + '"' +
+					'where teacherID="'+teacherID+'"');
 					recall({saveSuccess: true});
 				}
 			});
@@ -110,17 +100,17 @@ module.exports = {
 						recall({launchSuccess: false});
 					else
 					{
-						connection.query('update teacher set `lastname`="' + lastName + '", \
-						`firstname`="' + firstName + '", \
-						`username`="' + userName + '", \
-						`wechatphone`="' + wechatPhone + '", \
-						`email`="' + email + '", \
-						`perwebaddr`="' + perWebAddr + '", \
-						`researcharea`="' + researchArea + '", \
-						`researchresults`="' + researchResults + '", \
-						`lab`="' + lab + '", \
-						`filled`=1 \
-						 where teacherID="'+teacherID+'"');
+						connection.query('update teacher set `lastname`="' + lastName + '", ' +
+						'`firstname`="' + firstName + '", ' +
+						'`username`="' + userName + '", ' +
+						'`wechatphone`="' + wechatPhone + '", ' +
+						'`email`="' + email + '", ' +
+						'`perwebaddr`="' + perWebAddr + '", ' +
+						'`researcharea`="' + researchArea + '", ' +
+						'`researchresults`="' + researchResults + '", ' +
+						'`lab`="' + lab + '", ' +
+						'`filled`=1 ' +
+						'where teacherID="'+teacherID+'"');
 						recall({launchSuccess: true});
 					}
 				});
@@ -129,15 +119,30 @@ module.exports = {
     teacherInfoGet: function(teacherID, recall) {
         console.log("teacherInfGet: " + teacherID);
 		connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
-			recall({lastName: results[0].lastname,
-					firstName:  results[0].firstname,
-					username:  results[0].username,
-					wechatPhone: results[0].wechatphone,
-					email: results[0].email,
-					perWebAddr: results[0].perwebaddr,
-					researchArea: results[0].researcharea,
-					researchResults: results[0].researchresults,
-					lab: results[0].lab});
+			if(results.length>0)
+			{
+				recall({lastName: results[0].lastname,
+						firstName:  results[0].firstname,
+						username:  results[0].username,
+						wechatPhone: results[0].wechatphone,
+						email: results[0].email,
+						perWebAddr: results[0].perwebaddr,
+						researchArea: results[0].researcharea,
+						researchResults: results[0].researchresults,
+						lab: results[0].lab});
+			}
+			else
+			{
+				recall({lastName: "",
+						firstName:  "",
+						username:  "",
+						wechatPhone: "",
+						email: "",
+						perWebAddr: "",
+						researchArea: "",
+						researchResults: "",
+						lab: ""});
+			}
 		});				
     },
 }

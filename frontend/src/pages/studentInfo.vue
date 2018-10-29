@@ -38,7 +38,7 @@
             </div>
             <div class="mb-3"> <label for="email">Grade 年级<br></label>
               <div class="mb-3">
-                <b-dropdown id="ddown-header" text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
+                <b-dropdown id="ddown-header" v-model="grade" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
                 <b-dropdown-item-button style="text-align:center;" @click="clickFresh">Freshman 大一</b-dropdown-item-button>
                 <b-dropdown-item-button style="text-align:center;" @click="clickSoph">Sophomore 大二</b-dropdown-item-button>
                 <b-dropdown-item-button style="text-align:center;" @click="clickJuni">Junior 大三</b-dropdown-item-button>
@@ -78,7 +78,7 @@
    <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Laboratories 实验室</label>
                    <div class="mb-3">
-<b-button v-for="item in selectedLab" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin:0.5rem 0.5rem;" :pressed.sync="item.state">{{item.name}}</b-button>
+<b-button v-for="item in selectedLab" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin:0.5rem 0.5rem;" :pressed.sync="item.state" :key="item.name">{{item.name}}</b-button>
 <!-- <b-badge variant="light" style="font-size:15px; font-weight:200; background-color: var(--primary); color: #ffffff">关键词 1</b-badge> -->
 <!-- <b-badge variant="primary" style="font-size:15px; font-weight:200">关键词 1</b-badge> -->
 <!-- <b-badge variant="primary" style="font-size:15px; font-weight:200; background-color: #f3f3f3; color: #212529">关键词 1</b-badge> -->
@@ -91,14 +91,14 @@
                 <div class="col-md-12 mb-3"> <label for="email">Keywords 关键词</label>
                    
                    <div class="mb-1">
-<b-button v-for="item in selectedKey" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin:0.5rem 0.5rem;" :pressed.sync="item.state">{{item.name}}</b-button>
+<b-button v-for="item in selectedKey" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin:0.5rem 0.5rem;" :pressed.sync="item.state" :key="item.name">{{item.name}}</b-button>
 </div>
     <div class="input-group">
  <b-dropdown  text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100" variant="link" no-caret>
     <template slot="button-content"  >
 <input class="form-control" placeholder="搜索关键词" type='text'/>
     </template>
-    <b-dropdown-item v-for="item in allKeys" @click="searchKey(item)">{{item.name}}</b-dropdown-item>
+    <b-dropdown-item v-for="item in allKeys" @click="searchKey(item)" :key="item.name">{{item.name}}</b-dropdown-item>
   </b-dropdown>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default {
 
    data() {
     return {
-      grade: -1, dropdownText: "Please Select 请选择",
+      grade: "Please Select 请选择",
       lastName:"",
       firstName:"",
       username:"",
@@ -207,24 +207,19 @@ export default {
           that.selectedKey = data.selectedKey;
           that.allKeys = data.allKeys;
         });
-      
     },
 
     clickFresh() {
-      this.grade = 0;
-      this.dropdownText = "Freshman 大一";
+      this.grade = "Freshman 大一";
     },
     clickSoph() {
-      this.grade = 1;
-      this.dropdownText = "Sophomore 大二";
+      this.grade = "Sophomore 大二";
     },
     clickJuni() {
-      this.grade = 2;
-      this.dropdownText = "Junior 大三";
+      this.grade = "Junior 大三";
     },
     clickSeni() {
-      this.grade = 3;
-      this.dropdownText = "Senior 大四";
+      this.grade = "Senior 大四";
     },
 
     launch() {
@@ -247,27 +242,9 @@ export default {
       
     }
 
-  },
-
-  watch: {
-    grade:function(val){
-    if(val==-1){
-      this.dropdownText = "请选择年级";
-    }
-    else if(val==0){
-      this.dropdownText = "Freshman 大一"
-    }
-    else if(val==1){
-      this.dropdownText = "Sophomore 大二";
-    }
-    else if(val==2){
-      this.dropdownText = "Junior 大三";
-    }
-    else if(val==3){
-      this.dropdownText = "Senior 大四";
-    }
-    }
   }
+
+  
 
 }
 </script>

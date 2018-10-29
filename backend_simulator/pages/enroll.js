@@ -1,27 +1,18 @@
 module.exports = {
     /**
-     * 获得某项目具体信息的请求 页面url: assignmentInfo组件
+     * 学生请求页面的保存请求 页面url: '/main'
      * 学生通过邮箱登陆
      * 
      * @param {string} title
      * 任务的题目
      *
-     * @property {Array} 
-     * 科研任务具体信息
-     * teacher
-     * introduction
-     * keywords
-     * abilities
-     * detailed
-     * number
-     * deadline
-     * status
+     * @property {Array} avaList 
+     * 所有科研任务列表
      */
 
-    enrollGet: function(title, callback){
+    enrollGet: function(name, callback){
         callback(
             {
-                title:"基于bootstrap的前端网页设计研究",
                 teacher:"国雨晴",
                 introduction:" Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。\
                   在使用 Vue 时，我们推荐在你的浏览器上安装 Vue Devtools。它允许你在一个更友好的界面中审查和调试 Vue 应用。\

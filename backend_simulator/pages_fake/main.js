@@ -3,7 +3,9 @@ module.exports = {
      * 学生请求页面的保存请求 页面url: '/main'
      * 学生通过邮箱登陆
      * 
-     * @param {string} name
+     * @param {string} id
+     * 学生的学号 如果为"",用邮箱
+     * @param {string} email
      * 学生的邮箱
      *
      * @property {boolean} isTeacher
@@ -19,7 +21,7 @@ module.exports = {
      * 所有科研任务列表
      */
 
-    mainGet: function(name, callback){
+    mainGet: function(id, email, callback){
         callback(
             //isTeacher
             true,

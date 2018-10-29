@@ -1,5 +1,10 @@
 <template>
 <div>
+      <h4 class="mb-3"><b>{{info.title}}</b>
+           <small class="form-text text-muted">
+             {{info.status}}
+              </small>
+         </h4>
     <p class="form-text" style="font-weight:bold;">指导教师</p>
          <p class="form-text text-muted">
            {{info.teacher}}</p>
@@ -10,7 +15,7 @@
 <p class="form-text" style="font-weight:bold;">关键词</p>
 <div>
 
-    <b-badge variant="light" style="font-size:15px; font-weight:200" v-for="item in info.keywords">{{item}}</b-badge>
+    <b-badge variant="light" style="font-size:15px; font-weight:200" v-for="item in info.keywords" :key="item">{{item}}</b-badge>
 
 </div>
                   <!-- <hr class="mb-4"> -->
@@ -32,11 +37,33 @@
 </p>
 </div>
 </template>
+
+
 <script>
+
+
 export default {
   
-props:{
- info:Object
-}
+  name: "enroll",
+   data() {
+    return {
+      info:{}
+    }
+   },
+   created:function(){
+     this.initialize();
+   },
+   
+  methods: {
+    initialize(){
+  var that=this;
+
+      $.get(
+        "/enroll/get",//TODO:get
+        {}).then(function(data){
+          that.info=data;
+         });
+    }
+  }
 }
 </script>

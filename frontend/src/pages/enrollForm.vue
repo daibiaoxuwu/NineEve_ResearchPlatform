@@ -18,39 +18,39 @@
         
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3"><b>Basic Information 基本信息</b></h4>
-          <form class="needs-validation" novalidate="">
+          <!-- <form class="needs-validation" novalidate=""> -->
             <div class="row">
               <div class="col-md-6 mb-3"> <label for="firstName">Last name 姓<br></label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                <input type="text" class="form-control" id="firstName" placeholder="" value="" required="" v-model="lastName">
                 <div class="invalid-feedback"> Valid first name is required. </div>
               </div>
               <div class="col-md-6 mb-3"> <label for="lastName">First name 名</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="" v-model="firstName">
                 <div class="invalid-feedback"> Valid last name is required. </div>
               </div>
             </div>
             <div class="mb-3"> <label for="username">Username 用户名</label>
               <div class="input-group">
                 <div class="input-group-prepend"> <span class="input-group-text">@</span> </div>
-                <input type="text" class="form-control" id="username" placeholder="Username" required="">
+                <input type="text" class="form-control" id="username" placeholder="Username" required="" v-model="username">
                 <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
               </div>
             </div>
             <div class="mb-3"> <label for="email">Student's ID 学号<br></label>
-              <input type="" class="form-control" id="email">
+              <input type="" class="form-control" id="email" v-model="studentId">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
           
             <div class="mb-3"> <label for="email">Wechat/Phone 微信号/手机号<br></label>
-              <input type="" class="form-control" id="email" placeholder="">
+              <input type="" class="form-control" id="email" placeholder="" v-model="wechatPhone">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
             <div class="mb-3"> <label for="email">Email 邮箱</label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <input type="email" class="form-control" id="email" placeholder="you@example.com" v-model="email">
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
             <div class="mb-3"> <label for="address">Personal Webpage Address 个人主页地址<span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address" placeholder="" required="">
+              <input type="text" class="form-control" id="address" placeholder="" required="" v-model="perWebAddr">
               <div class="invalid-feedback"> Please enter your shipping address. </div>
             </div>
             <hr class="mb-4">
@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Self introduction 自我介绍</label>
                <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="selfIntr"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -69,7 +69,7 @@
             </div>
             <div class="col-md-12 mb-3"> <label for="email">Reasons for Enrollment 报名原因</label>
              <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="reasonEnroll"
                      placeholder="Enter something"
                      :rows="3"
                      :max-rows="6">
@@ -80,17 +80,17 @@
          
             </div>
             <hr class="mb-4">
-            <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information 保存信息</button>
+            <button class="btn btn-secondary btn-lg btn-block" @click="save">Save information 保存信息</button>
          
               
   <b-btn v-b-modal.modal2 class="btn btn-primary btn-lg btn-block"  style="margin-top:0.5rem;">Submit Enrollment 提交报名</b-btn>
   <!-- 上面貌似不能加type="submit"属性, 否则无法弹框. -->
   <!-- Modal Component -->
-  <b-modal id="modal2" title="Bootstrap-Vue"  @ok="handleOk">
+  <b-modal id="modal2" title="Bootstrap-Vue"  @ok="launch">
     <p class="my-4">Are you sure to submit enrollment?</br>是否提交报名?</p>
   </b-modal>
            
-          </form>
+          <!-- </form> -->
         </div>
       </div>
     </div>
@@ -105,17 +105,82 @@
 import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
 export default {
   name: "enrollForm",
+
    data() {
     return {
+      lastName:"",
+      firstName:"",
+      username:"",
+      studentId:"",
+      wechatPhone:"",
+      email:"",
+      perWebAddr:"",
+      selfIntr:"",
+      reasonEnroll:"",
+      showSaveAlert: false,
+      showFailAlert: false
     }
    },
+
      components:{
     rightpane, assignmentInfo
   },
+  created:function(){
+    this.getInfo();
+  },
     methods: {
-   handleOk (){
-      this.$router.push("/enrollSuccess")
+
+    save() {
+          var that = this;
+      console.log( {lastName: that.lastName, firstName: that.firstName, username: that.username,
+         studentId: that.studentId, wechatPhone: that.wechatPhone, email: that.email, perWebAddr: that.perWebAddr,
+          selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll});
+      $.get(
+        "/enrollForm/save",
+        {lastName: that.lastName, firstName: that.firstName, username: that.username,
+         studentId: that.studentId, wechatPhone: that.wechatPhone, email: that.email, perWebAddr: that.perWebAddr,
+          selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll},
+        function(data){
+          alert(data.saveSuccess);
+        }
+      )
+    },
+
+    getInfo() {
+      var that=this;
+      $.get(
+        "/enrollForm/get",
+        {}).then(function(data){
+          console.log("lastname:" +data.lastName)
+          that.lastName = data.lastName;
+          that.firstName = data.firstName;
+          that.username = data.username;
+          that.studentId = data.studentId;
+          that.wechatPhone = data.wechatPhone;
+          that.email = data.email;
+          that.perWebAddr = data.perWebAddr;
+          that.selfIntr = data.selfIntr;
+          that.reasonEnroll = data.reasonEnroll;
+        });
+      
+    },
+
+    launch() {
+      var that=this;
+      $.get(
+        "/enrollForm/launch",
+        {lastName: that.lastName, firstName: that.firstName, username: that.username,
+         studentId: that.studentId, wechatPhone: that.wechatPhone, email: that.email,
+          perWebAddr: that.perWebAddr, selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll},
+        function(data){
+          if(data.launchSuccess){
+      that.$router.push("/enrollSuccess")
+          }
+        }
+      )
     }
+
   }
+
 }
 </script>
