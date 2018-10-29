@@ -98,7 +98,8 @@ export default {
     $.get('/home/get',
         function(data){
           that.list=data;
-        })
+        });
+    console.log('created');
   },
   methods: {
     countDownChanged (dismissCountDown) {
