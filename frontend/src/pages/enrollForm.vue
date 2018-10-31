@@ -233,6 +233,68 @@ export default {
 
     launch() {
       var that=this;
+
+      if (that.lastName == null) that.lastName = "";
+      if (that.firstName == null) that.firstName = "";
+      if (that.username == null) that.username = "";
+      if (that.studentId == null) that.studentId = "";
+      if (that.wechatPhone == null) that.wechatPhone = "";
+      if (that.email == null) that.email = "";
+      if (that.perWebAddr == null) that.perWebAddr = "";
+      if (that.selfIntr == null) that.selfIntr = "";
+      if (that.reasonEnroll == null) that.reasonEnroll = "";
+      if (that.award == null) that.award = "";
+
+      if (that.lastName == "" || that.firstName == "" || that.username == ""
+       || that.wechatPhone == "" || that.email == "" || that.selfIntr == ""
+       || that.reasonEnroll == "" || that.award == "") {
+        alert("Please complete all the forms.\n 请将所有表单填写完毕.");
+        return;
+      }
+
+      if (that.lastName.length>20 || that.firstName.length>20 || that.username.length>200
+        || that.studentId>20 || that.wechatPhone.length>200 || that.email.length>200
+        || that.perWebAddr.length>200 || that.selfIntr.length>2000 || that.reasonEnroll.length>2000
+        || that.award>2000) {
+          alert("Your input is beyond limitation.\n 您的输入超出字符长度限制.");
+          return;
+      }
+
+      var hasQuotationMarks1 = (new RegExp("\"")).test(that.lastName)
+      || (new RegExp("\'")).test(that.lastName);
+      var hasQuotationMarks2 = (new RegExp("\"")).test(that.firstName)
+      || (new RegExp("\'")).test(that.firstName);
+      var hasQuotationMarks3 = (new RegExp("\"")).test(that.username)
+      || (new RegExp("\'")).test(that.username);
+      var hasQuotationMarks4 = (new RegExp("\"")).test(that.studentId)
+      || (new RegExp("\'")).test(that.studentId);
+      var hasQuotationMarks5 = (new RegExp("\"")).test(that.wechatPhone)
+      || (new RegExp("\'")).test(that.wechatPhone);
+      var hasQuotationMarks6 = (new RegExp("\"")).test(that.email)
+      || (new RegExp("\'")).test(that.email);
+      var hasQuotationMarks7 = (new RegExp("\"")).test(that.perWebAddr)
+      || (new RegExp("\'")).test(that.perWebAddr);
+      var hasQuotationMarks8 = (new RegExp("\"")).test(that.selfIntr)
+      || (new RegExp("\'")).test(that.selfIntr);
+      var hasQuotationMarks9 = (new RegExp("\"")).test(that.reasonEnroll)
+      || (new RegExp("\'")).test(that.reasonEnroll);
+      var hasQuotationMarks10 = (new RegExp("\"")).test(that.award)
+      || (new RegExp("\'")).test(that.award);
+      if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
+      || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
+      || hasQuotationMarks7 || hasQuotationMarks8 || hasQuotationMarks9
+      || hasQuotationMarks10) {
+         alert("Please don't put quotation marks in your inputs.\n 请不要输入引号.");
+         return;
+      }
+
+      var isEmail = (new RegExp("@")).test(that.email);
+      var isInUniv = (new RegExp("edu\.cn$")).test(that.email);
+      if (!isEmail || !isInUniv) {
+        alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
+        return;
+      }
+
       $.get(
         "/enrollForm/launch",
         {lastName: that.lastName, firstName: that.firstName, username: that.username,
