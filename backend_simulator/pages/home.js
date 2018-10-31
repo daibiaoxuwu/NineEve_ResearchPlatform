@@ -124,7 +124,12 @@ module.exports = {
 				recall({registerSuccess: false});
 			else
 			{
-				connection.query('insert into student(username,email,password,studentid) values("' + name + '","' + email + '","' + password + '","' + email + '")', function (error, results){
+				connection.query('insert into student(username,email,password,studentid,selectedlab) values("'
+								+ name + '","'
+								+ email + '","'
+								+ password + '","'
+								+ email
+								+ '","[{\\\"name\\\":\\\"Software Laboratory 软件所\\\",\\\"state\\\":false},{\\\"name\\\":\\\"High Performance Laboratory 高性能\\\",\\\"state\\\":false},{\\\"name\\\":\\\"Multimedia Laboratory 媒体所\\\",\\\"state\\\":false},{\\\"name\\\":\\\"Artificial Intelligence Laboratory 智能所\\\",\\\"state\\\":false},{\\\"name\\\":\\\"Network Laboratory 网络所\\\",\\\"state\\\":false}]")', function (error, results){
 					if (error) throw error;
 					console.log(results);
 				});
