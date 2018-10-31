@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 8080
+const port = 80
 
 
 
@@ -399,6 +399,7 @@ app.get('/assignmentView/get', function(sReq, sRes) {
     })
 })
 
+<<<<<<< backend_simulator/bs_fake.js
 app.get('/right/get', function(sReq, sRes) {
     if (sReq.session && sReq.session.user) {
         main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
@@ -453,3 +454,5 @@ app.get('/app/logout', function(sReq, sRes) {
 
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+module.exports = server;
