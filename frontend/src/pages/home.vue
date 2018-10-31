@@ -129,7 +129,7 @@ export default {
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
       if (inputName.length<200 && inputPassword.length<200) {
         if (inputTORS=="teacher") {
-          $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword})
+          $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword, code:code})
             .then(function(data){
               if(data.loginSuccess){
                 if(data.infoFinished){
@@ -137,6 +137,8 @@ export default {
                 }else{
                   that.$router.push("/teacherInfo");
                 }
+              } else if(data.codeError) {
+                alert("验证码错误")
               } else if(data.usernameNotFound){
                 alert("用户不存在.");
               } else {
@@ -148,7 +150,7 @@ export default {
         else if (inputTORS=="student"){
           var isEmail = (new RegExp("@")).test(inputName);
           if (isEmail) {
-            $.get('/login/byEmail', {email:inputName,password:inputPassword})
+            $.get('/login/byEmail', {email:inputName,password:inputPassword, code:code})
               .then(function(data){
                 if(data.loginSuccess){
                   if(data.infoFinished){
@@ -156,7 +158,9 @@ export default {
                   }else{
                     that.$router.push("/studentInfo");
                   }
-                } else if(data.usernameNotFound){
+                } else if(data.codeError) {
+                alert("验证码错误")
+              }else if(data.usernameNotFound){
                 alert("用户不存在.");
               } else {
                 alert("error in username or password.\n用户名或密码错误.")
@@ -165,7 +169,7 @@ export default {
             );
           }
           else {
-            $.get('/login/byStudentId', {studentId:inputName,password:inputPassword})
+            $.get('/login/byStudentId', {studentId:inputName,password:inputPassword, code:code})
               .then(function(data){
                 if(data.loginSuccess){
                   if(data.infoFinished){
@@ -173,7 +177,9 @@ export default {
                   }else{
                     that.$router.push("/studentInfo");
                   }
-                } else if(data.usernameNotFound){
+                } else if(data.codeError) {
+                alert("验证码错误")
+              } else if(data.usernameNotFound){
                 alert("用户不存在.");
               } else {
                 alert("error in username or password.\n用户名或密码错误.")

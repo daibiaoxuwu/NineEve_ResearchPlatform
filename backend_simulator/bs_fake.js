@@ -3,6 +3,7 @@ const app = express()
 const port = 80
 
 
+var svgCaptcha = require('svg-captcha');
 
 app.use(express.static('../frontend'))
 var server = require('http').Server(app);
@@ -72,7 +73,7 @@ app.get('/login/byEmail', function(sReq, sRes){
   if (sReq.query.email.length<200 && sReq.query.password.length<200) {
 	   home.emailLogin(sReq.query.email, sReq.query.password, function(result){
         sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false};
-		sRes.send(result);
+        sRes.send({loginSuccess: result.loginSuccess, usernameNotFound: result.usernameNotFound, infoFinished: result.infoFinished, codeError: (sReq.session.captcha == sReq.query.code)});
 	});
   }
 });
@@ -81,7 +82,7 @@ app.get('/login/byTeacherId', function(sReq, sRes){
   if (sReq.query.teacherId.length<200 && sReq.query.password.length<200) {
 	   home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
         sReq.session.user = {id: sReq.query.teacherId, email:"", isTeacher:true};
-		      sRes.send(result);
+        sRes.send({loginSuccess: result.loginSuccess, usernameNotFound: result.usernameNotFound, infoFinished: result.infoFinished, codeError: (sReq.session.captcha == sReq.query.code)});
 	   });
    }
 });
@@ -89,8 +90,8 @@ app.get('/login/byTeacherId', function(sReq, sRes){
 app.get('/login/byStudentId', function(sReq, sRes){
   if (sReq.query.studentId.length<200 && sReq.query.password.length<200) {
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
-        sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}
-		sRes.send(result);
+    sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}
+    sRes.send({loginSuccess: result.loginSuccess, usernameNotFound: result.usernameNotFound, infoFinished: result.infoFinished, codeError: (sReq.session.captcha == sReq.query.code)});
 	  });
   }
 });
@@ -390,6 +391,30 @@ app.get('/home/get', function(sReq, sRes) {
     })
 })
 
+
+app.get('/api/getCaptcha', function(req, res) {
+    var captcha = svgCaptcha.create({  
+        // 翻转颜色  
+        inverse: false,  
+        // 字体大小  
+        fontSize: 36,  
+        // 噪声线条数  
+        noise: 2,  
+        // 宽度  
+        width: 80,  
+        // 高度  
+        height: 30,  
+    });  
+    // 保存到session,忽略大小写  
+    req.session.captcha = captcha.text.toLowerCase(); 
+    console.log(req.session.captcha); //0xtg 生成的验证码
+    //保存到cookie 方便前端调用验证
+    res.cookie('captcha', req.session.captcha); 
+    res.setHeader('Content-Type', 'image/svg+xml');
+    res.write(String(captcha.data));
+    res.end();
+})
+
 app.get('/assignmentView/get', function(sReq, sRes) {
     assignmentView.assignmentViewGet(function(avaList){
         sRes.send({
@@ -399,7 +424,6 @@ app.get('/assignmentView/get', function(sReq, sRes) {
     })
 })
 
-<<<<<<< backend_simulator/bs_fake.js
 app.get('/right/get', function(sReq, sRes) {
     if (sReq.session && sReq.session.user) {
         main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
