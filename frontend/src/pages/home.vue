@@ -22,6 +22,13 @@
               </small>
             </div>
              <div class="form-group">
+               <row>
+                         <img src="/api/getCaptcha" alt="captcha" >
+
+             <input type="text" class="form-control" placeholder="" v-model="code" id="code">
+               </row>
+             </div>
+             <div class="form-group">
             <button v-on:click="loginRequest()" class="form-control btn btn-primary">Login</button>
              </div>
               <div class="form-group" style="text-align:center;">
@@ -88,7 +95,8 @@ export default {
     return {
        currentPage3: 1,
        num3:1,
-      list:[]
+      list:[],
+      picture:""
     };
   },
   created:function(){
@@ -99,6 +107,7 @@ export default {
       var that = this;
       $.get('/home/get',{currentPage3: that.currentPage3},
             function(data){
+              that.picture=data.picture;
               that.list=data.avaList;
               that.num3=data.num3;
             })
