@@ -49,6 +49,10 @@ export default {
   name: "register",
   data() {
     return {
+      registerName:"",
+      registerUniv:"",
+      registerEmail:"",
+      registerPassword:""
     }
   },
   methods: {

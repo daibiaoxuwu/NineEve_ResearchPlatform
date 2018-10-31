@@ -45,11 +45,11 @@ module.exports = {
      * 保存是否成功 如果没有查到此人, 返回false
      */
 
-    studentInfoSave: function(id, idemail, lastName, firstName, username,
+    studentInfoSave: function(id, mail, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-          breIntr, grade, selectedLab, selectedKey, callback) {
+          breIntr, grade, selectedLab, selectedKey, recall) {
         console.log("studentInfoSave: " + id + email + lastName + firstName);
-        callback({saveSuccess: true});
+        recall({saveSuccess: true});
     },
 
 
@@ -99,11 +99,11 @@ module.exports = {
      * 启动是否成功 如果没有查到此人, 返回false
      */
 
-    studentInfoLaunch: function(id, idemail, lastName, firstName, username,
+    studentInfoLaunch: function(id, mail, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-         breIntr, grade, selectedLab, selectedKey, callback) {
+         breIntr, grade, selectedLab, selectedKey, recall) {
         console.log("studentInfoLaunch: " + id + email + lastName + firstName + email);
-        callback({launchSuccess: true});
+        recall({launchSuccess: true});
     },
 
     /**
@@ -152,9 +152,9 @@ module.exports = {
      * 所有的关键词 每一项的格式:{name:"关键词", state:true/false}. 所有的关键词都被传出来, state任取.
      */
 
-    studentInfoGet: function(id, email, callback) {
+    studentInfoGet: function(id, email, recall) {
         console.log("studentInfGet: " + id + email);
-        if(email=="1") callback({lastName: "一", firstName:"2",
+        if(email=="1") recall({lastName: "一", firstName:"2",
         username:"3",
         wechatPhone:"4", 
         email:"5",
@@ -170,7 +170,7 @@ module.exports = {
           ],
         selectedKey:[{name: "1", state: true}],
         allKeys:[{name: "关键词", state: false}]});
-        else callback({lastName: ""});
+        else recall({lastName: ""});
     }
 
 }

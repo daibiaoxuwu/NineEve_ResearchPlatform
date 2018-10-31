@@ -111,32 +111,18 @@
 <script>
 import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue"
 export default {
-  name: "studentInfo",
+  name: "assignmentInfo",
 
    data() {
     return {
-      grade: -1, dropdownText: "Please Select 请选择",
-      lastName:"",
-      firstName:"",
-      username:"",
-      wechatPhone:"",
-      email:"",
-      perWebAddr:"",
-      breIntr:"",
-      showSaveAlert: false,
-      showFailAlert: false,
-      allKeys:[
-        {name: "关键词 1", state:true},
-        {name: "关键词 2", state:true}
-      ],
-      selectedKey:[],
-      selectedLab:[
-        {name: "Software Laboratory 软件所", state:false},
-        {name: "High Performance Laboratory 高性能", state:false},
-        {name: "Multimedia Laboratory 媒体所", state:false},
-        {name: "Artificial Intelligence Laboratory 智能所", state:false},
-        {name: "Network Laboratory 网络所", state:false}
-      ]
+      title:"",
+      background:"",
+      introduction:"",
+      keywords:"",
+      abilities:"",
+      detailed:"",
+      number:"",
+      deadline:""
     }
    },
 
@@ -162,22 +148,18 @@ export default {
 
     save() {
           var that = this;
-      console.log( {lastName: that.lastName, firstName: that.firstName, username:that.username,
-         wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
-          breIntr:that.breIntr, grade:that.grade,
-          selectedLab:that.selectedLab,
-          selectedKey:that.selectedKey
-          });
+      console.log( {title: that.title, background: that.background, introduction: that.introduction,
+         keywords: that.keywords, abilities: that.abilities, detailed:that.detailed,
+          number: that.number, deadline: that.deadline});
       $.get(
-        "/studentInfo/save",
-        {lastName: that.lastName, firstName: that.firstName, username:that.username,
-         wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
-          breIntr:that.breIntr, grade:that.grade,
-          selectedLab:that.selectedLab,
-          selectedKey:that.selectedKey
-          }).then(function(data){
+        "/assignmentForm/save",
+        {title: that.title, background: that.background, introduction: that.introduction,
+         keywords: that.keywords, abilities: that.abilities, detailed:that.detailed,
+          number: that.number, deadline: that.deadline}).then(function(data){
             if(!data.saveSuccess){
               alert("保存信息出现问题");
+            } else{
+              alert('保存成功');
             }
         });
       
@@ -185,51 +167,30 @@ export default {
 
     getInfo() {
       var that=this;
+      console.log(this.$route);
+      if(!this.$route.query.isNew){
       $.get(
-        "/studentInfo/get",
+        "/assignmentForm/get",
         {}).then(function(data){
-          console.log("lastname:" +data.lastName)
-          that.lastName = data.lastName;
-          that.firstName = data.firstName;
-          that.username = data.username;
-          that.wechatPhone = data.wechatPhone;
-          that.email = data.email;
-          that.perWebAddr = data.perWebAddr;
-          that.breIntr = breIntr;
-          that.grade = data.grade;
-          that.selectedLab = data.selectedLab;
-          that.selectedKey = data.selectedKey;
-        });
-      
-    },
-
-    clickFresh() {
-      this.grade = 0;
-      this.dropdownText = "Freshman 大一";
-    },
-    clickSoph() {
-      this.grade = 1;
-      this.dropdownText = "Sophomore 大二";
-    },
-    clickJuni() {
-      this.grade = 2;
-      this.dropdownText = "Junior 大三";
-    },
-    clickSeni() {
-      this.grade = 3;
-      this.dropdownText = "Senior 大四";
+          that.title = data.title;
+          that.background = data.background;
+          that.introduction = data.introduction;
+          that.keywords = data.keywords;
+          that.abilities = data.abilities;
+          that.detailed = data.detailed;
+          that.number = data.number;
+          that.deadline = data.deadline;
+          });
+      }
     },
 
     launch() {
       var that = this;
       $.get(
-        "/studentInfo/launch",
-        {lastName: that.lastName, firstName: that.firstName, username:that.username,
-         wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
-          breIntr:that.breIntr, grade:that.grade,
-           selectedLab:that.selectedLab,
-          selectedKey:that.selectedKey
-          }).then(function(data){
+        "/assignmentForm/launch",
+        {title: that.title, background: that.background, introduction: that.introduction,
+         keywords: that.keywords, abilities: that.abilities, detailed:that.detailed,
+          number: that.number, deadline: that.deadline}).then(function(data){
             if(data.launchSuccess){
           window.location.href="/main";
             } else {

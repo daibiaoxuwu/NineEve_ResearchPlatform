@@ -1,6 +1,6 @@
 <template>
-    <div>  
-    
+    <div>
+
   <div class="py-5">
     <div class="container">
       <div class="row">
@@ -15,7 +15,7 @@
     <div class="container">
       <div class="row">
         <rightpane></rightpane>
-        
+
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3"><b>Basic Information 基本信息</b></h4>
           <form class="needs-validation" novalidate="">
@@ -61,8 +61,8 @@
               <div class="invalid-feedback"> Please enter your shipping address. </div>
             </div>
             <hr class="mb-4">
-           
-            
+
+
             <h4 class="mb-3">Assignment Information 科研任务介绍</h4>
             <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Research Area 实验室方向</label>
@@ -83,10 +83,10 @@
     </b-form-textarea>
               <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
             </div>
-            
-         
+
+
             </div>
-            
+
             <hr class="mb-4">
              </form>
             <button class="btn btn-secondary btn-lg btn-block" @click="save">Save information 保存信息</button>
@@ -94,13 +94,13 @@
 
              <b-alert variant="info" :show="showSaveAlert">Saving...正在保存...</b-alert>
              <b-alert variant="warning" :show="showFailAlert">Server Failure. 服务器故障.</b-alert>
-         
+
         </div>
       </div>
     </div>
   </div>
- 
-  
+
+
      </div>
 </template>
 
@@ -134,22 +134,27 @@ export default {
     methods: {
    handleOk () {
       this.$router.push("/")
-    }, 
-   
+    },
+
     save() {
           var that = this;
       console.log( {lastName: that.lastName, firstName: that.firstName, username:that.username,
          wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
           researchArea:that.researchArea, researchResults:that.researchResults, lab:that.lab});
-      $.get(
-        "/teacherInfo/save",
-        {lastName: that.lastName, firstName: that.firstName, username:that.username,
-         wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
-          researchArea:that.researchArea, researchResults:that.researchResults, lab:that.lab},
-        function(data){
-          alert(data.saveSuccess);
-        }
-      )
+      //if (that.lastname.length<20 && that.firstName.length<20 && that.username.length<200
+        //&& that.wechatPhone.length<200 && that.email.length<200 && that.perWebAddr.length<200
+        //&& that.researchArea.length<2000 && that.researchResults.length<2000
+        //&& that.lab.length<200) {
+        $.get(
+          "/teacherInfo/save",
+          {lastName: that.lastName, firstName: that.firstName, username:that.username,
+           wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
+            researchArea:that.researchArea, researchResults:that.researchResults, lab:that.lab},
+          function(data){
+            alert(data.saveSuccess);
+          }
+        );
+      //}
     },
 
     getInfo() {
@@ -168,7 +173,7 @@ export default {
           that.researchResults = data.researchResults;
           that.lab = data.lab;
         });
-      
+
     },
 
     clickSoft() {
@@ -201,9 +206,8 @@ export default {
           researchArea:that.researchArea, researchResults:that.researchResults, lab:that.lab},
         function(data){
           if(data.launchSuccess){
-            
+            that.$router.push('/main');
           }
-          alert(data.launchSuccess);
         }
       )
     }
