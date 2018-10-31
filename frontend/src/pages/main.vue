@@ -18,7 +18,13 @@
         <div class="col-md-12">
           <h1>科研实习平台</h1>
              <p class="mb-3">Scientific Research &amp; Internship Platform</p>
-             
+     <b-dropdown  text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100" variant="link" no-caret>
+    <template slot="button-content"  >
+        <template>
+        <input class="form-control" placeholder="search" v-model="search" type='text'/>
+    </template>
+    <b-dropdown-item v-for="item in allKeys" @click="searchKey(item)" :key="item.name">{{item.name}}</b-dropdown-item>
+  </b-dropdown>
 <p class="mb-3">
   <div class="card">
             <div class="card-header">MESSAGES 新动态</div>
@@ -34,9 +40,9 @@
                 <tbody>
                   <tr v-for="(item, index) in msgList" @click="onClick(item)" :key="item.title">
 
-                    <td>{{index}}</td>
+                    <td>{{index+1}}</td>
                     <td>{{item.title}}</td>
-                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
+                    <!-- <td @click="onClick1(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
                     <td>{{item.status}}</td>
                   </tr>
@@ -64,7 +70,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="(item, index) in myList" @click="onClick(item)" :key="item.title">
-                    <td>{{index}}</td>
+                    <td>{{index+1}}</td>
                     <td>{{item.title}}</td>
                     <td>{{item.status}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
@@ -94,7 +100,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="(item, index) in avaList" @click="onClick(item)" :key="item.title">
-                    <td>{{index}}</td>
+                    <td>{{index+1}}</td>
                     <td>{{item.title}}</td>
                     <td>{{item.status}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
@@ -123,7 +129,7 @@
             </div>
           </div>
 </p>
- <router-link to="/assignmentForm"><b-btn  v-bind:class="isTeacherButton">New Assignment 立项</b-btn></router-link>
+ <b-btn  v-bind:class="isTeacherButton" @click="newAssign">New Assignment 立项</b-btn>
 
         </div>
       </div>
@@ -162,6 +168,9 @@ export default {
     this.update();
   },
   methods: {
+    newAssign(){
+      this.$router.push({path:'/assignmentForm', query:{isNew: true}});
+    },
     update(){
       console.log(this.currentPage1);
   var that=this;
@@ -188,23 +197,89 @@ export default {
     },
     onClick(item){
       if(item.status == "Enrolling 可报名"){
+        if(this.isTeacherButton=="invisible"){
         
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enroll");
       })
-      } else if (item.status == "Passed 已通过"){
+      }
+      else{
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
-       that.$router.push("/enrollAcceptedNotice");
+       that.$router.push("/enrollStatus");
+      })
+        
+      }
+      }
+      
+      else if (item.status == "Passed 已通过"){
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enrollAcceptNotice");
+      })
+        
+      }
+      
+  else if (item.status == "Rejected 已拒绝"){
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enrollRejectNotice");
+      })
+      }else if (item.status == "Editable 可编辑"){
+      var that = this;
+      $.get("/home/setNewAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push({path:"/assignmentForm", query:{isNew: false}});
+      })
+      }     else{
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enroll");
+      })
+      }
+    },
+	onClick1(item){
+      if(item.status == "Enrolling 可报名"){
+if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
+           
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enrollStatus");
+      })
+	  }
+	  else{
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enroll");
+      })
+      } 
+	  }else if (item.status == "Passed 已通过"){
+      var that = this;
+	    console.log("enroll");
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+	  console.log("enroll");
+       that.$router.push("/enrollAcceptNotice");
       })
       } else if (item.status == "Rejected 已拒绝"){
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enrollRejectNotice");
+      })
+      }else if (item.status == "Editable 可编辑"){
+      var that = this;
+      $.get("/home/setNewAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push({path:"/assignmentForm", query:{isNew: false}});
       })
       }
     }
@@ -218,6 +293,14 @@ export default {
     },
     currentPage3: function(val){
       this.update();
+    },
+    search: function(val){
+      $.get("/main/search",
+      {
+        search: val
+      }).then(function(data){
+        this.$router.push("/assignmentView");
+      })
     }
   }
 };

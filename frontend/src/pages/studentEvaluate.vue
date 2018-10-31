@@ -18,7 +18,7 @@
         
         <div class="col-md-8 order-md-1">
          
-          <h4 class="mb-3">Satisfication 满意度</h4>
+          <h4 class="mb-3">Satisfication 满意度: {{satis}}</h4>
            <div>
   <b-button-toolbar key-nav  aria-label="Toolbar with button groups">
 
@@ -57,7 +57,7 @@
          
             </div>
             <hr class="mb-4">
-            <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information 保存信息</button>
+            <!-- <button class="btn btn-secondary btn-lg btn-block" type="submit">Save information 保存信息</button> -->
          
               
   <b-btn v-b-modal.modal2 class="btn btn-primary btn-lg btn-block"  style="margin-top:0.5rem;">Submit Evaluation 提交评价</b-btn>

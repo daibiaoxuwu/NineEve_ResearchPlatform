@@ -2,8 +2,6 @@ const express = require('express')
 const app = express()
 const port = 8080
 
-
-
 app.use(express.static('../frontend'))
 var server = require('http').Server(app);
 app.engine('.html', require('ejs').__express);
@@ -28,7 +26,7 @@ app.use(appSession);
 
 
 
-app.get('(/|/register)', (req, res) =>{
+app.get('(/|/register|/assignmentView)', (req, res) =>{
     var user = {};
     if (req.session && req.session.user) { user.name = req.session.user; }//TODO: what's this?
     res.render('index', {"user":JSON.stringify(user)});
@@ -39,7 +37,7 @@ app.get('/enroll', (req, res) => {
     if (req.session && req.session.assignment) {
         user = req.session.user;
         res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
-    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
+    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页�会被重定向回到首�
 })
 
 //app.all('/(((teacher|student|assignment)(Info|View|Evaluate|EvaluateSuccess))|(enroll(Form|Status|Success|Accepted|AcceptedNotice))|main)', (req, res) => {
@@ -48,7 +46,7 @@ app.get(/^\/[^\/]*$/, (req, res) => {
     if (req.session && req.session.user) {
         user = req.session.user;
         res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
-    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
+    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页�会被重定向回到首�
 })
 
 var requireLoc = "./pages_fake"; //location for requiring js files for database connection
@@ -89,7 +87,7 @@ app.get('/login/byTeacherId', function(sReq, sRes){
 app.get('/login/byStudentId', function(sReq, sRes){
   if (sReq.query.studentId.length<200 && sReq.query.password.length<200) {
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
-        sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}
+        sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}   
 		sRes.send(result);
 	  });
   }
@@ -97,28 +95,6 @@ app.get('/login/byStudentId', function(sReq, sRes){
 
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
-  if (sReq.query.name!=null && sReq.query.university!=null &&
-   sReq.query.email!=null && sReq.query.password!=null)  {
-     var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.name)
-     || (new RegExp("\'")).test(sReq.query.name);
-     var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.university)
-     || (new RegExp("\'")).test(sReq.query.university);
-     var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.email)
-     || (new RegExp("\'")).test(sReq.query.email);
-     var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.password)
-     || (new RegExp("\'")).test(sReq.query.password);
-     if (hasQuotationMarks1 || hasQuotationMarks2
-      || hasQuotationMarks3 || hasQuotationMarks4) {
-        return;
-      }
-    }
-
-      var isEmail = (new RegExp("@")).test(sReq.query.email);
-      var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
-      if (!isEmail || !isInUniv) {
-        return;
-      }
-
   if (sReq.query.name.length<200 && sReq.query.university.length<200
     && sReq.query.email.length<200 && sReq.query.password.length<200) {
    home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
@@ -185,17 +161,17 @@ app.get('/teacherInfo/save', function(sReq, sRes) {
 });
 
 app.get('/teacherInfo/launch', function(sReq, sRes) {
-  if (sReq.query.lastName == null) sReq.query.lastName = "";
-  if (sReq.query.firstName == null) sReq.query.firstName = "";
-  if (sReq.query.username == null) sReq.query.username = "";
-  if (sReq.query.wechatPhone == null) sReq.query.wechatPhone = "";
-  if (sReq.query.email == null) sReq.query.email = "";
-  if (sReq.query.perWebAddr == null) sReq.query.perWebAddr = "";
-  if (sReq.query.researchArea == null) sReq.query.researchArea = "";
-  if (sReq.query.researchResults == null) sReq.query.researchResults = "";
-  if (sReq.query.lab == null || (sReq.query.lab!=0&&sReq.query.lab!=1
-    &&sReq.query.lab!=2&&sReq.query.lab!=3&&sReq.query.lab!=4))
-    sReq.query.lab = -1;
+    if (sReq.query.lastName == null) sReq.query.lastName = "";
+    if (sReq.query.firstName == null) sReq.query.firstName = "";
+    if (sReq.query.username == null) sReq.query.username = "";
+    if (sReq.query.wechatPhone == null) sReq.query.wechatPhone = "";
+    if (sReq.query.email == null) sReq.query.email = "";
+    if (sReq.query.perWebAddr == null) sReq.query.perWebAddr = "";
+    if (sReq.query.researchArea == null) sReq.query.researchArea = "";
+    if (sReq.query.researchResults == null) sReq.query.researchResults = "";
+    if (sReq.query.lab == null || (sReq.query.lab!=0&&sReq.query.lab!=1
+      &&sReq.query.lab!=2&&sReq.query.lab!=3&&sReq.query.lab!=4))
+      sReq.query.lab = -1;
 
     if (sReq.query.lastName == "" || sReq.query.firstName == "" || sReq.query.username == ""
      || sReq.query.wechatPhone == "" || sReq.query.email == "" || sReq.query.researchArea == ""
@@ -203,10 +179,10 @@ app.get('/teacherInfo/launch', function(sReq, sRes) {
       return;
     }
 
-  if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
-    || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200 || sReq.query.perWebAddr.length>200
-    || sReq.query.researchArea.length>2000 || sReq.query.researchResults.length>2000) {
-      return;
+    if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
+      || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200 || sReq.query.perWebAddr.length>200
+      || sReq.query.researchArea.length>2000 || sReq.query.researchResults.length>2000) {
+        return;
     }
 
     var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.lastName)
@@ -252,6 +228,9 @@ app.get('/teacherInfo/get', function(sReq, sRes) {
 
 
 app.get('/studentInfo/save', function(sReq, sRes) {
+    console.log(sReq);
+    console.log(sReq.query.selectedKey);
+
     if (sReq.query.lastName == null) sReq.query.lastName = "";
     if (sReq.query.firstName == null) sReq.query.firstName = "";
     if (sReq.query.username == null) sReq.query.username = "";
@@ -276,7 +255,7 @@ app.get('/studentInfo/save', function(sReq, sRes) {
     var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.username)
     || (new RegExp("\'")).test(sReq.query.username);
     var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.wechatPhone)
-    || (new RegExp("\'")).test(sReq.query.wechatPhone);
+    || (new RegExp("\'")).test(sReq.iquery.wechatPhone);
     var hasQuotationMarks5 = (new RegExp("\"")).test(sReq.query.email)
     || (new RegExp("\'")).test(sReq.query.email);
     var hasQuotationMarks6 = (new RegExp("\"")).test(sReq.query.perWebAddr)
@@ -297,8 +276,6 @@ app.get('/studentInfo/save', function(sReq, sRes) {
       return;
     }
 
-    console.log(sReq);
-    console.log(sReq.query.selectedKey);
     studentInfo.studentInfoSave(sReq.session.user.id, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey, function(result){
@@ -371,17 +348,12 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 		 });
 });
 
-app.get('/enrollStatus/getDetails', function(sReq, sRes) {
-    studentInfo.studentInfoGet(sReq.query.id, sReq.query.email, function(result){
-			 sRes.send(result);
-		 });
-});
 
 
 app.get('/enrollForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    enrollForm.enrollFormSave(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    enrollForm.enrollFormSave(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
@@ -389,7 +361,7 @@ app.get('/enrollForm/save', function(sReq, sRes) {
 });
 
 app.get('/enrollForm/launch', function(sReq, sRes) {
-    enrollForm.enrollFormLaunch(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
+    enrollForm.enrollFormLaunch(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
@@ -397,7 +369,31 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
 });
 
 app.get('/enrollForm/get', function(sReq, sRes) {
-    enrollForm.enrollFormGet(sReq.session.user.studentId, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
+    enrollForm.enrollFormGet(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
+			 sRes.send(result);
+		 });
+});
+app.get('/enrollForm/check', function(sReq, sRes) {
+    if(sReq.session && sReq.session.user){
+    enrollForm.enrollFormCheck(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
+			 sRes.send(result);
+         });
+        }
+    else{
+        sRes.send("/");
+    }
+});//TODO
+app.get('/enrollForm/checkT', function(sReq, sRes) {
+    if(sReq.session && sReq.session.user){
+    enrollForm.enrollFormCheckT(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
+			 sRes.send(result);
+		 });}
+    else{
+        sRes.send("/");
+    }
+});
+app.get('/enrollStatus/getDetails', function(sReq, sRes) {
+    enrollForm.enrollFormGet(sReq.query.id, sReq.query.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
 			 sRes.send(result);
 		 });
 });
@@ -406,7 +402,7 @@ app.get('/enrollForm/get', function(sReq, sRes) {
 app.get('/assignmentForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
-    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.id};
+    sReq.session.newAssignment={title: sReq.query.title, teacherId: sReq.session.user.id};
     assignmentForm.assignmentFormSave(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
@@ -415,7 +411,7 @@ app.get('/assignmentForm/save', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/launch', function(sReq, sRes) {
-    sReq.session.assignment={title: sReq.query.title, teacherId: sReq.session.user.id};
+    sReq.session.newAssignment="";
     assignmentForm.assignmentFormLaunch(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){
@@ -424,8 +420,8 @@ app.get('/assignmentForm/launch', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/get', function(sReq, sRes) {
-    if(sReq.session && sReq.session.assignment){
-    assignmentForm.assignmentFormGet(sReq.session.user.id, sReq.session.assignment.title, function(result){
+    if(sReq.session && sReq.session.newAssignment && sReq.session.newAssignment!=""){
+    assignmentForm.assignmentFormGet(sReq.session.user.id, sReq.session.newAssignment.title, function(result){
 			 sRes.send(result);
          });
         }
@@ -441,11 +437,11 @@ app.get('/main/get', function(sReq, sRes) {
     main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
         console.log({
             isTeacher: sReq.session.user.isTeacher,
-            num1: parseInt(msgList.length / 3),
+            num1: parseInt((msgList.length-1) / 3)+1,
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
-            num2: parseInt(myList.length / 3),
+            num2: parseInt((myList.length-1) / 3)+1,
             myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
-            num3: parseInt(avaList.length / 3),
+            num3: parseInt((avaList.length-1) / 3)+1,
             avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
             msglist2: msgList,
             myList2: myList,
@@ -454,11 +450,11 @@ app.get('/main/get', function(sReq, sRes) {
         });
         sRes.send({
             isTeacher: sReq.session.user.isTeacher,
-            num1: parseInt(msgList.length / 3) + 1,
+            num1: parseInt((msgList.length-1) / 3) + 1,
             msgList: msgList.slice(Math.min(sReq.query.currentPage1 * 3 - 3, msgList.length), Math.min(sReq.query.currentPage1 * 3, msgList.length)),
-            num2: parseInt(myList.length / 3) + 1,
+            num2: parseInt((myList.length-1) / 3) + 1,
             myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
-            num3: parseInt(avaList.length / 3) + 1,
+            num3: parseInt((avaList.length-1) / 3) + 1,
             avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length))
         })
     })
@@ -475,7 +471,7 @@ app.get('/enrollStatus/get', function(sReq, sRes) {
             avalist2: list
         });
         sRes.send({
-            num3: parseInt(list.length / 3) + 1,
+            num3: parseInt((list.length-1) / 3) + 1,
             list: list.slice(Math.min(sReq.query.currentPage3 * 3 - 3, list.length), Math.min(sReq.query.currentPage3 * 3, list.length))
         })
     })
@@ -486,6 +482,17 @@ app.get('/enrollStatus/accept', function(sReq, sRes) {
         sRes.send(result);
     })
 });
+app.get('/enrollStatus/refuse', function(sReq, sRes) {
+    enrollStatus.enrollStatusReject(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, function(result){
+        sRes.send(result);
+    })
+});
+app.get('/enrollStatus/launch', function(sReq, sRes) {
+    enrollStatus.enrollStatusLaunch(sReq.session.user.id, sReq.session.assignment.title, function(result){
+        sRes.send(result);
+    })
+});
+
 
 
 app.get('/home/setAssignment', function(sReq, sRes) {
@@ -495,17 +502,30 @@ app.get('/home/setAssignment', function(sReq, sRes) {
     })
 })
 
+app.get('/home/setNewAssignment', function(sReq, sRes) {
+    enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
+        sReq.session.newAssignment = item;
+        sRes.send(item);
+    })
+})
+
 //do not need database!
 app.get('/enroll/get', function(sReq, sRes) {
-        sRes.send(sReq.session.assignment);
+     enroll.enrollGet(sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
+        sRes.send(item);
+     })
 })
 
 app.get('/enroll/isTeacher', function(sReq, sRes) {
-    if(sReq.session && sReq.session.user && sReq.session.user.isTeacher == false){
-        sRes.send(false);
-    } else{
-        sRes.send(true);
-    }
+    enroll.enrollGet(sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
+        sReq.session.assignment = item;
+        var isTeacher=true;
+        if(sReq.session && sReq.session.user && sReq.session.user.isTeacher == false){
+            isTeacher=false;
+        }
+        sRes.send({assignment:item, isTeacher:isTeacher});
+    })
+    
 })
 
 
@@ -518,15 +538,18 @@ app.get('/enroll/route', function(sReq, sRes) {
 })
 
 app.get('/home/get', function(sReq, sRes) {
-    home.homeGet(function(item){
-        sRes.send(item);
+    home.homeGet(function(avaList){
+        sRes.send({
+            num3: parseInt((avaList.length-1) / 3) + 1,
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length))
+        })
     })
 })
 
 app.get('/assignmentView/get', function(sReq, sRes) {
     assignmentView.assignmentViewGet(function(avaList){
         sRes.send({
-            num3: parseInt(avaList.length / 3) + 1,
+            num: parseInt((avaList.length-1) / 3) + 1,
             avaList: avaList.slice(Math.min(sReq.query.currentPage * 3 - 3, avaList.length), Math.min(sReq.query.currentPage * 3, avaList.length))
         })
     })
@@ -534,8 +557,8 @@ app.get('/assignmentView/get', function(sReq, sRes) {
 
 app.get('/right/get', function(sReq, sRes) {
     if (sReq.session && sReq.session.user) {
-        right.rightGet(sReq.session.user.id, sReq.session.user.email,sReq.session.user.isTeacher, function(item){
-            sRes.send(item);
+        main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
+            sRes.send({msgList: msgList.slice(0, Math.min(5, msgList.length)), myList: myList.slice(0, Math.min(5, myList.length))});
         })
     } else{
         sRes.send('/');
@@ -543,7 +566,7 @@ app.get('/right/get', function(sReq, sRes) {
 })
 
 app.get('/right/route', function(sReq, sRes) {
-    enroll.enrollGet(sReq.query.title, function(item){
+    enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
         sReq.session.assignment = item;
         console.log(item);
         if (sReq.session && sReq.session.user.isTeacher) {
@@ -555,29 +578,34 @@ app.get('/right/route', function(sReq, sRes) {
 })
 
 app.get('/studentEvaluate/save', function(sReq, sRes) {
-    evaluate.studentEvaluateSave(sReq.query.user.id, sReq.query.assignment.title, sReq.query.assignment.teacherId,  sReq.query.satis, sReq.query.learned, sReq.query.notlearned, function(item){
+    evaluate.studentEvaluateSave(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.satis, sReq.query.learned, sReq.query.notlearned, function(item){
         sRes.send(item);
     })
 })
 
 app.get('/teacherEvaluate/save', function(sReq, sRes) {
-    evaluate.teacherEvaluateSave(sReq.query.user.id, sReq.query.assignment.title, sReq.query.satis,  sReq.query.intro, sReq.query.reason, function(item){
+    evaluate.teacherEvaluateSave(sReq.session.assignment.teacherId, sReq.session.assignment.title, sReq.query.satis,  sReq.query.intro, sReq.query.reason, function(item){
         sRes.send(item);
     })
 })
 
 app.get('/studentEvaluate/get', function(sReq, sRes) {
-    evaluate.studentEvaluateGet(sReq.query.user.id, sReq.query.assignment.title, sReq.query.assignment.teacherId, function(item){
+    evaluate.studentEvaluateGet(sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
         sRes.send(item);
     })
 })
 
 app.get('/teacherEvaluate/get', function(sReq, sRes) {
-    evaluate.teacherEvaluateGet(sReq.query.user.id, sReq.query.assignment.title, function(item){
+    evaluate.teacherEvaluateGet(sReq.session.assignment.teacherId, sReq.session.assignment.title, function(item){
         sRes.send(item);
     })
 })
 
+//do not need database!
+app.get('/app/logout', function(sReq, sRes) {
+        sReq.session.destroy();
+        sRes.end();
+})
 
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))

@@ -22,6 +22,9 @@ module.exports = {
      */
 
     mainGet: function(id, email, isTeacher, callback){
+		console.log("lzr5"+id);
+		console.log("lzr6"+email);
+		console.log("lzr7"+isTeacher);
 		connection.query('select * from project ', function (error, results, fields){
 			var studentid=id;
 			var teacherid=id;
@@ -32,7 +35,7 @@ module.exports = {
 			var avalist=[];
 			if(isTeacher)
 			{
-				connection.query('select * from enrollform where teacherread=0 and teacher="' + teacherid + '"', function (err, resul, fiel){
+				connection.query('select * from enrollform where teacherread=0 and teacher="' + teacherid + '" and `success`=0', function (err, resul, fiel){
 					for(var i in results)
 					{
 						if(results[i].teacher==teacherid)
@@ -52,28 +55,35 @@ module.exports = {
 			}
 			else
 			{
-				connection.query('select * from enrollform where studentread=0 and student="' + studentid + '"', function (err, resul, fiel){
+				connection.query('select * from enrollform where student="' + studentid + '"', function (err, resul, fiel){
 					for(var i in results)
 					{
-						if(results[i].student==studentid)
-							mylist.push({title: results[i].title,
-										 teacherId: results[i].teacher,
-										 status: results[i].status});
-						avalist.push({title: results[i].title,
-									  teacherId: results[i].teacher,
-									  status: results[i].status});
+						if	(results[i].status.indexOf("Enroll")!=-1)
+							avalist.push({title: results[i].title,
+										  teacherId: results[i].teacher,
+										  status: results[i].status});
 					}
 					for(var i in resul)
 					{
-						var st=resul[i].status;
-						if(resul[i].success==1)
-							st='Accepted 已通过';
-						else
-							if(resul[i].success==2)
-								st='Rejected 已拒绝';
+						var st;
+						for(var j in results){
+							if(results[j].title == resul[i].title && results[j].teacher == resul[i].teacher){
+								st=results[j].status;
+							}
+						}
+						var realst=st;
+						if(resul[i].success==1 && st=="Enrolling 可报名")
+							st='Passed 已通过';
+						if(resul[i].success==2)
+							st='Rejected 已拒绝';
+							if(resul[i].studentread==0){
 						message.push({title: resul[i].title,
 									  teacherId: resul[i].teacher,
-								      status: st});
+									  status: st});
+						}
+							mylist.push({title: resul[i].title,
+										 teacherId: resul[i].teacher,
+										 status: realst});
 					}
 					callback(message,mylist,avalist);
 				});	

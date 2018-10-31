@@ -158,6 +158,8 @@ export default {
           number: that.number, deadline: that.deadline}).then(function(data){
             if(!data.saveSuccess){
               alert("保存信息出现问题");
+            } else{
+              alert('保存成功');
             }
         });
       
@@ -165,6 +167,8 @@ export default {
 
     getInfo() {
       var that=this;
+      console.log(this.$route);
+      if(!this.$route.query.isNew){
       $.get(
         "/assignmentForm/get",
         {}).then(function(data){
@@ -177,7 +181,7 @@ export default {
           that.number = data.number;
           that.deadline = data.deadline;
           });
-      
+      }
     },
 
     launch() {

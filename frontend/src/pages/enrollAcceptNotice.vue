@@ -22,7 +22,7 @@
                 Congratulations!
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经被 "基于Bootstrap-Vue的网页设计研究" 录取!</b>
+          <h5 class="mb-3"><b>你已经被项目录取!</b>
            <small class="form-text text-muted">
               You have been accepted to the project. Your project has been launched.
               </small>
@@ -32,13 +32,13 @@
               </small>
          </h5>
       <assignmentInfo></assignmentInfo>
-  <router-link to="/"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
+  <router-link to="/main"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
 
-  <b-btn v-b-modal.modal1 class="btn btn-danger btn-lg btn-block" style="marginTop:0.5rem;">Terminate Assignment 结束项目</b-btn>
+  <!-- <b-btn v-b-modal.modal1 class="btn btn-danger btn-lg btn-block" style="marginTop:0.5rem;">Terminate Assignment 结束项目</b-btn>
   <!-- Modal Component -->
-  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
-    <p class="my-4">是否结束项目?</p>
-  </b-modal>
+  <!-- <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk"> -->
+    <!-- <p class="my-4">是否结束项目?</p> -->
+  <!-- </b-modal> --> -->
         
         
         </div>
