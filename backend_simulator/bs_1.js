@@ -1,4 +1,5 @@
 const express = require('express')
+var svgCaptcha = require('svg-captcha')
 const app = express()
 const port = 80
 
