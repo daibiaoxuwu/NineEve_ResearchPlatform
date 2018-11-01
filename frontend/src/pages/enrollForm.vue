@@ -55,9 +55,18 @@
             </div>
             <hr class="mb-4">
            
-            
+                        
             <h4 class="mb-3">Enroll Information 报名理由</h4>
             <div class="row">
+              <div class="col-md-12 mb-3"> <label for="email">Received Awards 获得奖项</label>
+             <b-form-textarea id="textarea1"
+                     v-model="award"
+                     placeholder="特奖"
+                     :rows="3"
+                     :max-rows="6">
+    </b-form-textarea>
+              <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+            </div>
                 <div class="col-md-12 mb-3"> <label for="email">Self introduction 自我介绍</label>
                <b-form-textarea id="textarea1"
                      v-model="selfIntr"
@@ -117,6 +126,7 @@ export default {
       perWebAddr:"",
       selfIntr:"",
       reasonEnroll:"",
+      award: "",
       showSaveAlert: false,
       showFailAlert: false
     }
@@ -134,12 +144,12 @@ export default {
           var that = this;
       console.log( {lastName: that.lastName, firstName: that.firstName, username: that.username,
          studentId: that.studentId, wechatPhone: that.wechatPhone, email: that.email, perWebAddr: that.perWebAddr,
-          selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll});
+          selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll, award: that.award });
       $.get(
         "/enrollForm/save",
         {lastName: that.lastName, firstName: that.firstName, username: that.username,
          studentId: that.studentId, wechatPhone: that.wechatPhone, email: that.email, perWebAddr: that.perWebAddr,
-          selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll},
+          selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll,award: that.award  },
         function(data){
           alert(data.saveSuccess);
         }
@@ -161,6 +171,7 @@ export default {
           that.perWebAddr = data.perWebAddr;
           that.selfIntr = data.selfIntr;
           that.reasonEnroll = data.reasonEnroll;
+          that.award = data.award;
         });
       
     },
@@ -171,7 +182,7 @@ export default {
         "/enrollForm/launch",
         {lastName: that.lastName, firstName: that.firstName, username: that.username,
          studentId: that.studentId, wechatPhone: that.wechatPhone, email: that.email,
-          perWebAddr: that.perWebAddr, selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll},
+          perWebAddr: that.perWebAddr, selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll, award: that.award },
         function(data){
           if(data.launchSuccess){
       that.$router.push("/enrollSuccess")

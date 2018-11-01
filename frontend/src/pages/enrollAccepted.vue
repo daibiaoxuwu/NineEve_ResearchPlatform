@@ -22,25 +22,21 @@
                 Congratulations!
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经同意了 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.year.split(" ")[1]}})的报名! 请等待后续通知.</b>
+          <h5 class="mb-3"><b>你已经同意了学生的报名! 请等待后续通知.</b>
            <small class="form-text text-muted">
               You have successfully accepted a student for your project. Please await further notice.
               </small>
          </h5>
-           <h2 class="mb-3"><b>{{selectedItem.text}}</b>
-           <small class="form-text text-muted">
-                {{selectedItem.department.split(" ")[0]}} {{selectedItem.year.split(" ")[0]}} {{selectedItem.department.split(" ")[1]}} {{selectedItem.year.split(" ")[1]}} 
-              </small>
-         </h2>
-        <studentInfo></studentInfo>
-       <router-link to="/teacherEvaluate">         
-  <b-btn v-b-modal.modal2 class="btn btn-danger btn-lg btn-block"  style="margin-top:0.5rem;">End Assignment 结题</b-btn>
-   </router-link>
+       <!-- <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo> -->
+       <assignmentInfo></assignmentInfo>
+       <!-- <router-link to="/teacherEvaluate">          -->
+  <!-- <b-btn v-b-modal.modal2 class="btn btn-danger btn-lg btn-block"  style="margin-top:0.5rem;">End Assignment 结题</b-btn> -->
+   <!-- </router-link> -->
   <!-- Modal Component -->
 
-  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
-    <p class="my-4">是否结题?</p>
-  </b-modal>
+  <!-- <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk"> -->
+    <!-- <p class="my-4">是否结题?</p> -->
+  <!-- </b-modal> -->
  
         
         </div>
@@ -61,6 +57,7 @@ export default {
   name: "enrollSuccess",
    data() {
     return {
+      detail:{},
        selectedItem:  {
           text: "肖朝军",
           department: "CST 计算机系",
@@ -70,6 +67,8 @@ export default {
    },
     components:{
     rightpane, assignmentInfo, studentInfo
+  },created:function(){
+    this.detail = this.$route.detail;
   },
     methods: {
    handleOk (){

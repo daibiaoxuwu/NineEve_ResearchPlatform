@@ -38,7 +38,7 @@
             </div>
             <div class="mb-3"> <label for="email">Grade 年级<br></label>
               <div class="mb-3">
-                <b-dropdown id="ddown-header" v-model="grade" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
+                <b-dropdown id="ddown-header" v-bind:text="grade" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
                 <b-dropdown-item-button style="text-align:center;" @click="clickFresh">Freshman 大一</b-dropdown-item-button>
                 <b-dropdown-item-button style="text-align:center;" @click="clickSoph">Sophomore 大二</b-dropdown-item-button>
                 <b-dropdown-item-button style="text-align:center;" @click="clickJuni">Junior 大三</b-dropdown-item-button>
@@ -151,12 +151,14 @@ export default {
   },
   created:function(){
     this.getInfo();
+ 
   },
     methods: {
    searchKey (item){
      this.selectedKey.push(item);
     },
     toggleKey (item){
+       console.log("toggle"+item);
      if(item.toggleKey=="primary"){
       item.toggleKey="light";
      }
@@ -203,6 +205,8 @@ export default {
           that.perWebAddr = data.perWebAddr;
           that.breIntr = data.breIntr;
           that.grade = data.grade;
+          if(that.grade!="Freshman 大一" && that.grade!="Sophomore 大二" && that.grade != "Junior 大三" && that.grade != "Senior 大四")
+            that.grade="Please Select 请选择";
           that.selectedLab = data.selectedLab;
           that.selectedKey = data.selectedKey;
           that.allKeys = data.allKeys;

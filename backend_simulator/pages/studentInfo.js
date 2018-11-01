@@ -50,13 +50,21 @@ module.exports = {
           breIntr, grade, selectedLab, selectedKey, recall) {
         console.log("studentInfoSave: " + id + email + lastName + firstName);
 		var studentID=id;
-		if(studentID=="")
-			studentID=email;
+		if(studentID==""||!studentID)
+			studentID=mail;
         connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
 			if(results.length==0)
 				recall({saveSuccess: false});
 			else
 			{
+				String.prototype.replaceAll = function(search, replacement) {
+					var target = this;
+					return target.replace(new RegExp(search, 'g'), replacement);
+				};
+				var stringKey=JSON.stringify(selectedKey);
+				if(!selectedKey)
+					stringKey='';
+				console.log(JSON.stringify(selectedLab).replaceAll('\"','\\\"') );
 				connection.query('update student set `lastname`="' + lastName + '", ' +
 				'`firstname`="' + firstName + '", ' +
 				'`username`="' + username + '", ' +
@@ -64,9 +72,9 @@ module.exports = {
 				'`email`="' + email + '", ' +
 				'`perwebaddr`="' + perWebAddr + '", ' +
 				'`breintr`="' + breIntr + '", ' +
-				'`grade`=' + grade + ', ' +
-				'`selectedlab`="' + JSON.stringify(selectedLab) + '", ' +
-				'`selectedkey`="' + JSON.stringify(selectedKey) + '" ' +				
+				'`grade`="' + grade + '", ' +
+				'`selectedlab`="' + JSON.stringify(selectedLab).replaceAll('\"','\\\"') + '", ' +
+				'`selectedkey`="' + stringKey.replaceAll('\"','\\\"') + '" ' +				
 				'where studentID="'+studentID+'"');
 				recall({saveSuccess: true});
 			}
@@ -125,13 +133,20 @@ module.exports = {
          breIntr, grade, selectedLab, selectedKey, recall) {
         console.log("studentInfoLaunch: " + id + email + lastName + firstName + email);
 		var studentID=id;
-		if(studentID=="")
-			studentID=email;
+		if(studentID==""||!studentID)
+			studentID=mail;
         connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
 			if(results.length==0)
 				recall({launchSuccess: false});
 			else
 			{
+				String.prototype.replaceAll = function(search, replacement) {
+					var target = this;
+					return target.replace(new RegExp(search, 'g'), replacement);
+				};
+				var stringKey=JSON.stringify(selectedKey);
+				if(!selectedKey)
+					stringKey='';
 				connection.query('update student set `lastname`="' + lastName + '", ' +
 				'`firstname`="' + firstName + '", ' +
 				'`username`="' + username + '", ' +
@@ -139,9 +154,9 @@ module.exports = {
 				'`email`="' + email + '", ' +
 				'`perwebaddr`="' + perWebAddr + '", ' +
 				'`breintr`="' + breIntr + '", ' +
-				'`grade`=' + grade + ', ' +
-				'`selectedlab`="' + JSON.stringify(selectedLab) + '", ' +
-				'`selectedkey`="' + JSON.stringify(selectedKey) + '", ' +	
+				'`grade`="' + grade + '", ' +
+				'`selectedlab`="' + JSON.stringify(selectedLab).replaceAll('\"','\\\"') + '", ' +
+				'`selectedkey`="' + stringKey.replaceAll('\"','\\\"') + '", ' +	
 				'`filled`=1 ' +
 				'where studentID="'+studentID+'"');
 				recall({launchSuccess: true});
@@ -198,31 +213,37 @@ module.exports = {
 
     studentInfoGet: function(id, email, recall) {
 		var studentID=id;
-		if(studentID=="")
+		if(studentID==""||!studentID)
 			studentID=email;
         console.log("studentInfGet: " + id + email);
 		connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
 			if(results.length>0)
 			{
-				function getKeys(preResults,recall){
-					connection.query('select * from `key`', function (error, results, fields){
-						var allKeys=[];
-						for(var key in results)
-							allKeys.push({name: results[key].name, state: false});
-						console.log(allKeys);
-						recall({lastName: preResults[0].lastname,
-						firstName:  preResults[0].firstname,
-						username:  preResults[0].username,
-						wechatPhone: preResults[0].wechatphone,
-						email: preResults[0].email,
-						perWebAddr: preResults[0].perwebaddr,
-						grade: preResults[0].grade,
-						selectedLab: JSON.parse(preResults[0].selectedlab),
-						selectedKey: JSON.parse(preResults[0].selectedkey),
-						allKeys: allKeys});
-					});
-				};
-				getKeys(results,recall);
+				connection.query('select * from `key`', function (err, result, fiel){
+					var allKeys=[];
+					for(var key in result)
+						allKeys.push({name: result[key].name, state: false});
+                     var keys=[];
+                     if(results[0].selectedkey!=""){
+                     keys=JSON.parse(results[0].selectedkey);
+                     }
+                     var labs=[];
+                     if(results[0].selectedlab!=""){
+                     labs=JSON.parse(results[0].selectedlab);
+                     }
+					 console.log(keys);
+					console.log(allKeys);
+					recall({lastName: results[0].lastname,
+					firstName:  results[0].firstname,
+					username:  results[0].username,
+					wechatPhone: results[0].wechatphone,
+					email: results[0].email,
+					perWebAddr: results[0].perwebaddr,
+					grade: results[0].grade,
+					selectedLab: labs,
+					selectedKey: keys,
+					allKeys: allKeys});
+				});
 			}
 			else
 			{
