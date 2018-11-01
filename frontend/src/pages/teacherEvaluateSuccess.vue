@@ -22,14 +22,14 @@
                 Congratulations!
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经成功为学生 肖朝军 结题并完成评价! 项目已正式结束.</b>
+          <h5 class="mb-3"><b>你已经成功为学生结题并完成评价! 项目已正式结束.</b>
            <small class="form-text text-muted">
               You have successfully terminated the project and evaluated your student.
               </small>
          </h5>
            <assignmentInfo></assignmentInfo> 
 
-  <router-link to="/"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
+  <router-link to="/main"><b-btn class="btn btn-primary btn-lg btn-block">Home 返回主页</b-btn></router-link>
 
         
         </div>

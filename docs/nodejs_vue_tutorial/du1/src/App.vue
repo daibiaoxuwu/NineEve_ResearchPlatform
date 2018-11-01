@@ -17,7 +17,7 @@ export default {
   methods:{
     onLogin( ){
       alert(1);
-      $.post(
+      $.get(
         "/login",
          {user:"John", pass:"abc"},
          function( data ){

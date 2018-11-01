@@ -4,9 +4,14 @@
     <div class="container"> <a class="navbar-brand" href="#">Navbar</a> <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent"> <span class="navbar-toggler-icon"></span> </button>
       <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
         <ul class="navbar-nav">
-          <li class="nav-item"> <a class="nav-link" href="#"><i class="fa d-inline fa-lg fa-bookmark-o"></i> Bookmarks</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#"><i class="fa d-inline fa-lg fa-envelope-o"></i> Contacts</a> </li>
-        </ul> <router-link to="/" class="btn navbar-btn btn-primary ml-2 text-white"><i class="fa d-inline fa-lg fa-user-circle-o"></i>Sign in</router-link>
+          <li class="nav-item"> <router-link to="/main"><a class="nav-link"><i class="fa d-inline fa-lg fa-bookmark-o"></i> DashBoard</a></router-link> </li>
+          <li class="nav-item"> <router-link to="/assignmentView"><a class="nav-link"><i class="fa d-inline fa-lg fa-envelope-o"></i> Assignments</a></router-link> </li>
+        </ul> 
+        <b-btn v-b-modal.modal3 class="btn navbar-btn btn-primary ml-2 text-white"><i class="fa d-inline fa-lg fa-user-circle-o"></i>Sign Out</b-btn>
+        <b-modal id="modal3" title="登出"  @ok="handleLogout">
+          <p class="my-4">是否登出?</p>
+        </b-modal>
+
       </div>
     </div>
   </nav>
@@ -44,10 +49,14 @@ export default {
 
     };
   },
-  updated() {
-        window.scroll(0, 0);
-    },
+
   methods: {
+    handleLogout(){
+      var that = this;
+      $.get('/app/logout',{}).then(function(){
+        that.$router.push('/');
+      })
+    }
 
   }
 };

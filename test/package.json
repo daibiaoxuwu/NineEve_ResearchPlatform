@@ -1,0 +1,47 @@
+{
+  "name": "test",
+  "version": "0.1.0",
+  "description": "test files",
+  "main": "test.js",
+  "author": "Bingjian Huang",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "jquery": "^3.3.1",
+    "vue": "^2.5.17"
+  },
+  "scripts": {
+    "test": "jest",
+    "basetest": "jest home.test.js"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.25",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^21.2.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "jest": "^23.6.0",
+    "mocha": "^5.2.0",
+    "mock-vue-router": "^0.1.3",
+    "mockjs": "^1.0.1-beta3",
+    "nyc": "^12.0.2",
+    "regenerator-runtime": "^0.11.0",
+    "request": "^2.88.0",
+    "vue-jest": "^3.0.0",
+    "vue-template-compiler": "^2.4.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.vue$": "vue-jest"
+    }
+  }
+}

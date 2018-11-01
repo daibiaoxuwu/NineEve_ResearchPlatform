@@ -10,7 +10,6 @@
            <div class="form-group" style="text-align:center;">
              <h3>Login</h3>
               </div>
-          <form>
             <div class="form-group"> <select class="form-control" v-model="inputTSForm" id="form10">
               <option value="teacher">Teacher</option>
               <option value="student">Student</option>
@@ -23,13 +22,19 @@
               </small>
             </div>
              <div class="form-group">
+               <row>
+                         <img src="/api/getCaptcha" alt="captcha" >
+
+             <input type="text" class="form-control" placeholder="" v-model="code" id="code">
+               </row>
+             </div>
+             <div class="form-group">
             <button v-on:click="loginRequest()" class="form-control btn btn-primary">Login</button>
              </div>
               <div class="form-group" style="text-align:center;">
              <h5>or</h5>
               </div>
             <router-link to="/register"><button  class="form-control btn btn-primary">Register</button></router-link>
-          </form>
         </div>
       </div>
     </div>
@@ -54,20 +59,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in list ">
-                    <td>{{index}}</td>
-                    <td>{{item.text}}</td>
+                  <tr v-for="(item, index) in list" :key="item.title" @click="onClick(item)">
+                    <td>{{index+1}}</td>
+                    <td>{{item.title}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
 
-                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
+                    <td>{{item.status}}</td>
                   </tr>
 
                 </tbody>
               </table>
 
             </div>
-            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+            <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
           </div>
         </div>
       </div>
@@ -88,108 +93,116 @@ export default {
   name: "home",
   data() {
     return {
-       currentPage: 1,
-        dismissSecs: 10,
-      dismissCountDown: 0,
-      showDismissibleAlert: false,
-      list:[
-        {
-          text: "项目1",
-          status: "Enrolling 可报名"
-        },
-        {
-          text: "项目2",
-          status: "Enrolling 可报名"
-        },
-        {
-          text: "项目3",
-          status: "Enrolling 可报名"
-        },
-         {
-          text: "项目4",
-          status: "Enrolling 可报名"
-        },
-         {
-          text: "项目5",
-          status: "Enrolling 可报名"
-        }
-      ]
+       currentPage3: 1,
+       num3:1,
+      list:[],
+      picture:""
     };
   },
+  created:function(){
+    this.update();
+  },
   methods: {
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
-    },
-    linkGen (pageNum) {
-      return '#page/' + pageNum + '/foobar'
+    update(){
+      var that = this;
+      $.get('/home/get',{currentPage3: that.currentPage3},
+            function(data){
+              that.picture=data.picture;
+              that.list=data.avaList;
+              that.num3=data.num3;
+            })
     },
     onClick (item){
-      alert(item.text);
-      // this.$router.push("/log")
+      var that = this;
+      $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enroll");
+      })
     },
 
     loginRequest (){
       var inputTORS = this.inputTSForm;
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
-      var loginRequestUrlEmail = "/loginRequestUrlEmail";
-      var loginRequestUrlTeacherId = "/loginRequestUrlTeacherId";
-      var loginRequestUrlStudentId = "/loginRequestUrlStudentId";
+      var that = this;
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      alert(inputTORS);
-      if (inputTORS=="teacher") {
-        $.post(loginRequestUrlTeacherId, {teacherId:inputName,password:inputPassword},
-          function(data){
-            if(data.loginSuccess){
-              alert("login success");
-            } else if(data.usernameTaken){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-          }
-        );
-      }
-      else if (inputTORS=="student"){
-        var isEmail = (new RegExp("@")).test(inputName);
-        if (isEmail) {
-          $.post(loginRequestUrlEmail, {email:inputName,password:inputPassword},
-            function(data){
+      if (inputName.length<200 && inputPassword.length<200) {
+        if (inputTORS=="teacher") {
+          $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword, code:code})
+            .then(function(data){
               if(data.loginSuccess){
-                alert("login success");
-              } else if(data.usernameTaken){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
+                if(data.infoFinished){
+                  that.$router.push("/main");
+                }else{
+                  that.$router.push("/teacherInfo");
+                }
+              } else if(data.codeError) {
+                alert("验证码错误")
+              } else if(data.usernameNotFound){
+                alert("用户不存在.");
+              } else {
+                alert("error in username or password.\n用户名或密码错误.")
+              }
             }
           );
         }
-        else {
-          $.post(loginRequestUrlStudentId, {studentId:inputName,password:inputPassword},
-            function(data){
-              if(data.loginSuccess){
-                alert("login success");
-              } else if(data.usernameTaken){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-            }
-          );
+        else if (inputTORS=="student"){
+          var isEmail = (new RegExp("@")).test(inputName);
+          if (isEmail) {
+            $.get('/login/byEmail', {email:inputName,password:inputPassword, code:code})
+              .then(function(data){
+                if(data.loginSuccess){
+                  if(data.infoFinished){
+                    that.$router.push("/main");
+                  }else{
+                    that.$router.push("/studentInfo");
+                  }
+                } else if(data.codeError) {
+                alert("验证码错误")
+              }else if(data.usernameNotFound){
+                alert("用户不存在.");
+              } else {
+                alert("error in username or password.\n用户名或密码错误.")
+              }
+              }
+            );
+          }
+          else {
+            $.get('/login/byStudentId', {studentId:inputName,password:inputPassword, code:code})
+              .then(function(data){
+                if(data.loginSuccess){
+                  if(data.infoFinished){
+                    that.$router.push("/main");
+                  }else{
+                    that.$router.push("/studentInfo");
+                  }
+                } else if(data.codeError) {
+                alert("验证码错误")
+              } else if(data.usernameNotFound){
+                alert("用户不存在.");
+              } else {
+                alert("error in username or password.\n用户名或密码错误.")
+              }
+              }
+            );
+          }
+        }
+        else{
+          alert("please choose a way to login.");
         }
       }
       else{
-        alert("please choose a way to login.");
+        alert("Your input is beyond limitation.");
       }
-
     }
 
 
+  },
+  watch: {
+    currentPage3: function(val){
+      this.update();
+    }
   }
 };
 // 逻辑部分直接修改item即可呈现.
