@@ -66,7 +66,7 @@
          <p class="form-text text-muted">
          {{info3.notlearned}}
 </p>
-
+</div>
 
 </div>
 </template>
@@ -76,7 +76,7 @@
 
 
 export default {
-  
+
   name: "enroll",
    data() {
     return {
@@ -91,7 +91,7 @@ export default {
    created:function(){
      this.initialize();
    },
-   
+
   methods: {
     initialize(){
   var that=this;
