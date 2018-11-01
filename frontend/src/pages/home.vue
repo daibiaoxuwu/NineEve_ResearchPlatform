@@ -124,7 +124,7 @@ export default {
       var that = this;
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      if (inputName.length<200 && inputPassword.length<200) {
+      if (input && inputName.length<200 && input && inputPassword.length<200) {
         if (inputTORS=="teacher") {
           $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword, code:that.code})
             .then(function(data){
