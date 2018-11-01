@@ -23,7 +23,7 @@ describe("app test", () => {
     })
     
     it('should contain sign in', () => {
-      expect(wrapper.text()).contain('Sign in');
+      expect(wrapper.text()).contain('Sign Out');
     })
 
   })
@@ -32,10 +32,6 @@ describe("app test", () => {
 
     it('has data function', () => {
       expect(typeof App.data).to.be.equal('function');
-    })
-
-    it('has updated function', () => {
-      expect(typeof App.updated).to.be.equal('function');
     })
 
   })

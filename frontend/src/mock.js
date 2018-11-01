@@ -25,10 +25,10 @@ const generateHomeList = [{
 
 Mock.mock('/home/get', 'get', generateHomeList);
 
-$.ajax({
-    url: '/home/get',
-    type: 'get',
-    success: function(data){
-      that.list=data;
-    }
-  })
+// $.ajax({
+//     url: '/home/get',
+//     type: 'get',
+//     success: function(data){
+//       that.list=data;
+//     }
+//   })

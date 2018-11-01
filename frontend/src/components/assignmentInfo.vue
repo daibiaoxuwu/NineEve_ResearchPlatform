@@ -66,6 +66,7 @@
          <p class="form-text text-muted">
          {{info3.notlearned}}
 </p>
+
 </div>
 
 </div>
