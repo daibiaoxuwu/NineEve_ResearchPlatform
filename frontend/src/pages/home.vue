@@ -21,13 +21,12 @@
                 <a href="#"> Forgot your password?</a>
               </small>
             </div>
-             <div class="form-group">
+             <!-- <div class="form-group">
                <row>
                          <img src="/api/getCaptcha" alt="captcha" >
-
              <input type="text" class="form-control" placeholder="" v-model="code" id="code">
                </row>
-             </div>
+             </div> -->
              <div class="form-group">
             <button v-on:click="loginRequest()" class="form-control btn btn-primary">Login</button>
              </div>
