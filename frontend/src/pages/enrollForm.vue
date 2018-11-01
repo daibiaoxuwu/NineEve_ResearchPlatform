@@ -247,7 +247,7 @@ export default {
 
       if (that.lastName == "" || that.firstName == "" || that.username == ""
        || that.wechatPhone == "" || that.email == "" || that.selfIntr == ""
-       || that.reasonEnroll == "" || that.award == "") {
+       || that.reasonEnroll == "" || that.award == "" || that.studentId == "") {
         alert("Please complete all the forms.\n 请将所有表单填写完毕.");
         return;
       }
