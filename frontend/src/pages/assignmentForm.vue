@@ -1,6 +1,6 @@
 <template>
-    <div>  
-    
+    <div>
+
   <div class="py-5">
     <div class="container">
       <div class="row">
@@ -15,7 +15,7 @@
     <div class="container">
       <div class="row">
         <rightpane></rightpane>
-        
+
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3"><b>Basic Information 基本信息</b></h4>
           <form class="needs-validation" novalidate="">
@@ -90,12 +90,12 @@
                           <div class="mb-3"> <label for="username">Deadline 截止时间</label>
               <div class="input-group">
             <input type="text" class="form-control" id="username" required="" v-model="deadline">
-  
+
           <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
               </div>
             </div>
 
-         
+
           </form>
             <button class="btn btn-secondary btn-lg btn-block" type="submit" @click="save">Save information 保存信息</button>
              <button class="btn btn-primary btn-lg btn-block" type="submit" style="margin-top:0.5rem;" @click="launch">Launch Assignment 启动项目</button>
@@ -103,8 +103,8 @@
       </div>
     </div>
   </div>
- 
-  
+
+
      </div>
 </template>
 
@@ -162,7 +162,7 @@ export default {
               alert('保存成功');
             }
         });
-      
+
     },
 
     getInfo() {
@@ -197,8 +197,8 @@ export default {
               alert("保存信息出现问题");
             }
         });
-       
-      
+
+
     }
 
   },

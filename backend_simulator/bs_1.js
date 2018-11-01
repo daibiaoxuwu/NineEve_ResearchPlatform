@@ -50,7 +50,7 @@ app.get('/enroll', (req, res) => {
     if (req.session && req.session.assignment) {
         user = req.session.user;
         res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
-    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
+    } else{res.redirect("/");}//未登录的用户, 如果输入url强行访问此页�会被重定向回到首�
 })
 
 //app.all('/(((teacher|student|assignment)(Info|View|Evaluate|EvaluateSuccess))|(enroll(Form|Status|Success|Accepted|AcceptedNotice))|main)', (req, res) => {
@@ -59,7 +59,7 @@ app.get(/^\/[^\/]*$/, (req, res) => {
     if (req.session && req.session.user) {
         user = req.session.user;
         res.render('index', {"user":JSON.stringify(user)} );//只允许登陆过的用户进�
-    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页� 会被重定向回到首�
+    } else{ res.redirect("/");}//未登录的用户, 如果输入url强行访问此页�会被重定向回到首�
 })
 
 var requireLoc = "./pages"; //location for requiring js files for database connection
@@ -122,7 +122,7 @@ app.get('/login/byTeacherId', function(sReq, sRes){
 app.get('/login/byStudentId', function(sReq, sRes){
   if (sReq.query.studentId.length<200 && sReq.query.password.length<200) {
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
-        sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}   
+        sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}
 		sRes.send(result);
 	  });
   }
@@ -142,7 +142,52 @@ app.get('/register/getUrl', function(sReq, sRes){
 
 app.get('/teacherInfo/save', function(sReq, sRes) {
     //console.log(sReq);
-    console.log(sReq.query.email);
+    if (sReq.query.lastName == null) sReq.query.lastName = "";
+    if (sReq.query.firstName == null) sReq.query.firstName = "";
+    if (sReq.query.username == null) sReq.query.username = "";
+    if (sReq.query.wechatPhone == null) sReq.query.wechatPhone = "";
+    if (sReq.query.email == null) sReq.query.email = "";
+    if (sReq.query.perWebAddr == null) sReq.query.perWebAddr = "";
+    if (sReq.query.researchArea == null) sReq.query.researchArea = "";
+    if (sReq.query.researchResults == null) sReq.query.researchResults = "";
+    if (sReq.query.lab == null || (sReq.query.lab!=0&&sReq.query.lab!=1
+      &&sReq.query.lab!=2&&sReq.query.lab!=3&&sReq.query.lab!=4))
+      sReq.query.lab = -1;
+
+    if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
+      || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200 || sReq.query.perWebAddr.length>200
+      || sReq.query.researchArea.length>2000 || sReq.query.researchResults.length>2000) {
+        return;
+      }
+
+      var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.lastName)
+      || (new RegExp("\'")).test(sReq.query.lastName);
+      var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.firstName)
+      || (new RegExp("\'")).test(sReq.query.firstName);
+      var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.username)
+      || (new RegExp("\'")).test(sReq.query.username);
+      var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.wechatPhone)
+      || (new RegExp("\'")).test(sReq.query.wechatPhone);
+      var hasQuotationMarks5 = (new RegExp("\"")).test(sReq.query.email)
+      || (new RegExp("\'")).test(sReq.query.email);
+      var hasQuotationMarks6 = (new RegExp("\"")).test(sReq.query.perWebAddr)
+      || (new RegExp("\'")).test(sReq.query.perWebAddr);
+      var hasQuotationMarks7 = (new RegExp("\"")).test(sReq.query.researchArea)
+      || (new RegExp("\'")).test(sReq.query.researchArea);
+      var hasQuotationMarks8 = (new RegExp("\"")).test(sReq.query.researchResults)
+      || (new RegExp("\'")).test(sReq.query.researchResults);
+      if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
+        || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
+        || hasQuotationMarks7 || hasQuotationMarks8) {
+          return;
+        }
+
+      var isEmail = (new RegExp("@")).test(sReq.query.email);
+      var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+      if (!isEmail || !isInUniv) {
+        return;
+      }
+
     teacherInfo.teacherInfoSave(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab, function(result){
@@ -151,6 +196,58 @@ app.get('/teacherInfo/save', function(sReq, sRes) {
 });
 
 app.get('/teacherInfo/launch', function(sReq, sRes) {
+    if (sReq.query.lastName == null) sReq.query.lastName = "";
+    if (sReq.query.firstName == null) sReq.query.firstName = "";
+    if (sReq.query.username == null) sReq.query.username = "";
+    if (sReq.query.wechatPhone == null) sReq.query.wechatPhone = "";
+    if (sReq.query.email == null) sReq.query.email = "";
+    if (sReq.query.perWebAddr == null) sReq.query.perWebAddr = "";
+    if (sReq.query.researchArea == null) sReq.query.researchArea = "";
+    if (sReq.query.researchResults == null) sReq.query.researchResults = "";
+    if (sReq.query.lab == null || (sReq.query.lab!=0&&sReq.query.lab!=1
+      &&sReq.query.lab!=2&&sReq.query.lab!=3&&sReq.query.lab!=4))
+      sReq.query.lab = -1;
+
+    if (sReq.query.lastName == "" || sReq.query.firstName == "" || sReq.query.username == ""
+     || sReq.query.wechatPhone == "" || sReq.query.email == "" || sReq.query.researchArea == ""
+     || sReq.query.researchResults == "" || sReq.query.lab == -1) {
+      return;
+    }
+
+    if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
+      || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200 || sReq.query.perWebAddr.length>200
+      || sReq.query.researchArea.length>2000 || sReq.query.researchResults.length>2000) {
+        return;
+    }
+
+    var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.lastName)
+    || (new RegExp("\'")).test(sReq.query.lastName);
+    var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.firstName)
+    || (new RegExp("\'")).test(sReq.query.firstName);
+    var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.username)
+    || (new RegExp("\'")).test(sReq.query.username);
+    var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.wechatPhone)
+    || (new RegExp("\'")).test(sReq.query.wechatPhone);
+    var hasQuotationMarks5 = (new RegExp("\"")).test(sReq.query.email)
+    || (new RegExp("\'")).test(sReq.query.email);
+    var hasQuotationMarks6 = (new RegExp("\"")).test(sReq.query.perWebAddr)
+    || (new RegExp("\'")).test(sReq.query.perWebAddr);
+    var hasQuotationMarks7 = (new RegExp("\"")).test(sReq.query.researchArea)
+    || (new RegExp("\'")).test(sReq.query.researchArea);
+    var hasQuotationMarks8 = (new RegExp("\"")).test(sReq.query.researchResults)
+    || (new RegExp("\'")).test(sReq.query.researchResults);
+    if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
+      || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
+      || hasQuotationMarks7 || hasQuotationMarks8) {
+        return;
+      }
+
+    var isEmail = (new RegExp("@")).test(sReq.query.email);
+    var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+    if (!isEmail || !isInUniv) {
+      return;
+    }
+
     teacherInfo.teacherInfoLaunch(sReq.session.user.id, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.researchArea, sReq.query.researchResults, sReq.query.lab, function(result){
@@ -168,6 +265,52 @@ app.get('/teacherInfo/get', function(sReq, sRes) {
 app.get('/studentInfo/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.selectedKey);
+
+    if (sReq.query.lastName == null) sReq.query.lastName = "";
+    if (sReq.query.firstName == null) sReq.query.firstName = "";
+    if (sReq.query.username == null) sReq.query.username = "";
+    if (sReq.query.wechatPhone == null) sReq.query.wechatPhone = "";
+    if (sReq.query.email == null) sReq.query.email = "";
+    if (sReq.query.perWebAddr == null) sReq.query.perWebAddr = "";
+    if (sReq.query.breIntr == null) sReq.query.breIntr = "";
+    if (sReq.query.grade == null || (sReq.query.grade!="Freshman 大一"&&
+      sReq.query.grade!="Sophomore 大二"&&sReq.query.grade!="Junior 大三"&&sReq.query.grade!="Senior 大四"))
+      sReq.query.grade = "Please Select 请选择";
+
+    if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
+      || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200 || sReq.query.perWebAddr.length>200
+      || sReq.query.breIntr.length>2000 || sReq.query.grade.length>50) {
+      return;
+    }
+
+    var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.lastName)
+    || (new RegExp("\'")).test(sReq.query.lastName);
+    var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.firstName)
+    || (new RegExp("\'")).test(sReq.query.firstName);
+    var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.username)
+    || (new RegExp("\'")).test(sReq.query.username);
+    var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.wechatPhone)
+    || (new RegExp("\'")).test(sReq.query.wechatPhone);
+    var hasQuotationMarks5 = (new RegExp("\"")).test(sReq.query.email)
+    || (new RegExp("\'")).test(sReq.query.email);
+    var hasQuotationMarks6 = (new RegExp("\"")).test(sReq.query.perWebAddr)
+    || (new RegExp("\'")).test(sReq.query.perWebAddr);
+    var hasQuotationMarks7 = (new RegExp("\"")).test(sReq.query.breIntr)
+    || (new RegExp("\'")).test(sReq.query.breIntr);
+    var hasQuotationMarks8 = (new RegExp("\"")).test(sReq.query.grade)
+    || (new RegExp("\'")).test(sReq.query.grade);
+    if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
+      || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
+      || hasQuotationMarks7 || hasQuotationMarks8) {
+      return;
+    }
+
+    var isEmail = (new RegExp("@")).test(sReq.query.email);
+    var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+    if (!isEmail || !isInUniv) {
+      return;
+    }
+
     studentInfo.studentInfoSave(sReq.session.user.id, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey, function(result){
@@ -176,6 +319,57 @@ app.get('/studentInfo/save', function(sReq, sRes) {
 });
 
 app.get('/studentInfo/launch', function(sReq, sRes) {
+    if (sReq.query.lastName == null) sReq.query.lastName = "";
+    if (sReq.query.firstName == null) sReq.query.firstName = "";
+    if (sReq.query.username == null) sReq.query.username = "";
+    if (sReq.query.wechatPhone == null) sReq.query.wechatPhone = "";
+    if (sReq.query.email == null) sReq.query.email = "";
+    if (sReq.query.perWebAddr == null) sReq.query.perWebAddr = "";
+    if (sReq.query.breIntr == null) sReq.query.breIntr = "";
+    if (sReq.query.grade == null || (sReq.query.grade!="Freshman 大一"&&
+      sReq.query.grade!="Sophomore 大二"&&sReq.query.grade!="Junior 大三"&&sReq.query.grade!="Senior 大四"))
+      sReq.query.grade = "Please Select 请选择";
+
+    if (sReq.query.lastName == "" || sReq.query.firstName == "" || sReq.query.username == ""
+      || sReq.query.wechatPhone == "" || sReq.query.email == "" || sReq.query.breIntr == ""
+      || sReq.query.grade == "Please Select 请选择") {
+      return;
+    }
+
+    if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
+      || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200 || sReq.query.perWebAddr.length>200
+      || sReq.query.breIntr.length>2000 || sReq.query.grade.length>50) {
+      return;
+    }
+
+    var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.lastName)
+    || (new RegExp("\'")).test(sReq.query.lastName);
+    var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.firstName)
+    || (new RegExp("\'")).test(sReq.query.firstName);
+    var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.username)
+    || (new RegExp("\'")).test(sReq.query.username);
+    var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.wechatPhone)
+    || (new RegExp("\'")).test(sReq.query.wechatPhone);
+    var hasQuotationMarks5 = (new RegExp("\"")).test(sReq.query.email)
+    || (new RegExp("\'")).test(sReq.query.email);
+    var hasQuotationMarks6 = (new RegExp("\"")).test(sReq.query.perWebAddr)
+    || (new RegExp("\'")).test(sReq.query.perWebAddr);
+    var hasQuotationMarks7 = (new RegExp("\"")).test(sReq.query.breIntr)
+    || (new RegExp("\'")).test(sReq.query.breIntr);
+    var hasQuotationMarks8 = (new RegExp("\"")).test(sReq.query.grade)
+    || (new RegExp("\'")).test(sReq.query.grade);
+    if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
+      || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
+      || hasQuotationMarks7 || hasQuotationMarks8) {
+      return;
+    }
+
+    var isEmail = (new RegExp("@")).test(sReq.query.email);
+    var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+    if (!isEmail || !isInUniv) {
+      return;
+    }
+
     studentInfo.studentInfoLaunch(sReq.session.user.id, sReq.session.user.email, sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey, function(result){
@@ -194,6 +388,58 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 app.get('/enrollForm/save', function(sReq, sRes) {
     console.log(sReq);
     console.log(sReq.query.lastName);
+
+    if (sReq.query.lastName == null) sReq.query.lastName = "";
+    if (sReq.query.firstName == null) sReq.query.firstName = "";
+    if (sReq.query.username == null) sReq.query.username = "";
+    if (sReq.query.studentId == null) sReq.query.studentId = "";
+    if (sReq.query.wechatPhone == null) sReq.query.wechatPhone = "";
+    if (sReq.query.email == null) sReq.query.email = "";
+    if (sReq.query.perWebAddr == null) sReq.query.perWebAddr = "";
+    if (sReq.query.selfIntr == null) sReq.query.selfIntr = "";
+    if (sReq.query.reasonEnroll == null) sReq.query.reasonEnroll = "";
+    if (sReq.query.award == null) sReq.query.award = "";
+
+    if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
+      || sReq.query.studentId>20 || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200
+      || sReq.query.perWebAddr.length>200 || sReq.query.selfIntr.length>2000 || sReq.query.reasonEnroll.length>2000
+      || sReq.query.award>2000) {
+        return;
+    }
+
+    var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.lastName)
+    || (new RegExp("\'")).test(sReq.query.lastName);
+    var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.firstName)
+    || (new RegExp("\'")).test(sReq.query.firstName);
+    var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.username)
+    || (new RegExp("\'")).test(sReq.query.username);
+    var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.studentId)
+    || (new RegExp("\'")).test(sReq.query.studentId);
+    var hasQuotationMarks5 = (new RegExp("\"")).test(sReq.query.wechatPhone)
+    || (new RegExp("\'")).test(sReq.query.wechatPhone);
+    var hasQuotationMarks6 = (new RegExp("\"")).test(sReq.query.email)
+    || (new RegExp("\'")).test(sReq.query.email);
+    var hasQuotationMarks7 = (new RegExp("\"")).test(sReq.query.perWebAddr)
+    || (new RegExp("\'")).test(sReq.query.perWebAddr);
+    var hasQuotationMarks8 = (new RegExp("\"")).test(sReq.query.selfIntr)
+    || (new RegExp("\'")).test(sReq.query.selfIntr);
+    var hasQuotationMarks9 = (new RegExp("\"")).test(sReq.query.reasonEnroll)
+    || (new RegExp("\'")).test(sReq.query.reasonEnroll);
+    var hasQuotationMarks10 = (new RegExp("\"")).test(sReq.query.award)
+    || (new RegExp("\'")).test(sReq.query.award);
+    if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
+    || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
+    || hasQuotationMarks7 || hasQuotationMarks8 || hasQuotationMarks9
+    || hasQuotationMarks10) {
+        return;
+    }
+
+    var isEmail = (new RegExp("@")).test(sReq.query.email);
+    var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+    if (!isEmail || !isInUniv) {
+      return;
+    }
+
     enrollForm.enrollFormSave(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
@@ -202,6 +448,63 @@ app.get('/enrollForm/save', function(sReq, sRes) {
 });
 
 app.get('/enrollForm/launch', function(sReq, sRes) {
+    if (sReq.query.lastName == null) sReq.query.lastName = "";
+    if (sReq.query.firstName == null) sReq.query.firstName = "";
+    if (sReq.query.username == null) sReq.query.username = "";
+    if (sReq.query.studentId == null) sReq.query.studentId = "";
+    if (sReq.query.wechatPhone == null) sReq.query.wechatPhone = "";
+    if (sReq.query.email == null) sReq.query.email = "";
+    if (sReq.query.perWebAddr == null) sReq.query.perWebAddr = "";
+    if (sReq.query.selfIntr == null) sReq.query.selfIntr = "";
+    if (sReq.query.reasonEnroll == null) sReq.query.reasonEnroll = "";
+    if (sReq.query.award == null) sReq.query.award = "";
+
+    if (sReq.query.lastName == "" || sReq.query.firstName == "" || sReq.query.username == ""
+      || sReq.query.wechatPhone == "" || sReq.query.email == "" || sReq.query.selfIntr == ""
+      || sReq.query.reasonEnroll == "" || sReq.query.studentId == "" || sReq.query.award == "") {
+        return;
+    }
+
+    if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
+      || sReq.query.studentId>20 || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200
+      || sReq.query.perWebAddr.length>200 || sReq.query.selfIntr.length>2000 || sReq.query.reasonEnroll.length>2000
+      || sReq.query.award>2000) {
+      return;
+    }
+
+    var hasQuotationMarks1 = (new RegExp("\"")).test(sReq.query.lastName)
+    || (new RegExp("\'")).test(sReq.query.lastName);
+    var hasQuotationMarks2 = (new RegExp("\"")).test(sReq.query.firstName)
+    || (new RegExp("\'")).test(sReq.query.firstName);
+    var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.username)
+    || (new RegExp("\'")).test(sReq.query.username);
+    var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.studentId)
+    || (new RegExp("\'")).test(sReq.query.studentId);
+    var hasQuotationMarks5 = (new RegExp("\"")).test(sReq.query.wechatPhone)
+    || (new RegExp("\'")).test(sReq.query.wechatPhone);
+    var hasQuotationMarks6 = (new RegExp("\"")).test(sReq.query.email)
+    || (new RegExp("\'")).test(sReq.query.email);
+    var hasQuotationMarks7 = (new RegExp("\"")).test(sReq.query.perWebAddr)
+    || (new RegExp("\'")).test(sReq.query.perWebAddr);
+    var hasQuotationMarks8 = (new RegExp("\"")).test(sReq.query.selfIntr)
+    || (new RegExp("\'")).test(sReq.query.selfIntr);
+    var hasQuotationMarks9 = (new RegExp("\"")).test(sReq.query.reasonEnroll)
+    || (new RegExp("\'")).test(sReq.query.reasonEnroll);
+    var hasQuotationMarks10 = (new RegExp("\"")).test(sReq.query.award)
+    || (new RegExp("\'")).test(sReq.query.award);
+    if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
+      || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
+      || hasQuotationMarks7 || hasQuotationMarks8 || hasQuotationMarks9
+      || hasQuotationMarks10) {
+      return;
+    }
+
+    var isEmail = (new RegExp("@")).test(sReq.query.email);
+    var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+    if (!isEmail || !isInUniv) {
+      return;
+    }
+
     enrollForm.enrollFormLaunch(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId,  sReq.query.lastName, sReq.query.firstName, sReq.query.username,
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
@@ -366,7 +669,7 @@ app.get('/enroll/isTeacher', function(sReq, sRes) {
         }
         sRes.send({assignment:item, isTeacher:isTeacher});
     })
-    
+
 })
 
 

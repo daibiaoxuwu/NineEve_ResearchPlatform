@@ -4,7 +4,7 @@
    <div class="py-5" >
     <div class="container">
       <div class="row">
-   
+
       </div>
     </div>
   </div>
@@ -18,7 +18,13 @@
         <div class="col-md-12">
           <h1>科研实习平台</h1>
              <p class="mb-3">Scientific Research &amp; Internship Platform</p>
-             
+     <b-dropdown  text="Please Select" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100" variant="link" no-caret>
+    <template slot="button-content"  >
+        
+        <input class="form-control" placeholder="search" v-model="search" type='text'/>
+    </template>
+    <b-dropdown-item v-for="item in allKeys" @click="searchKey(item)" :key="item.name">{{item.name}}</b-dropdown-item>
+  </b-dropdown>
 <p class="mb-3">
   <div class="card">
             <div class="card-header">MESSAGES 新动态</div>
@@ -106,7 +112,7 @@
               </table>
 
             </div>
-            
+
             <!-- <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" style= "float: left;" /> -->
             <!-- <router-link to="/assignmentView"><b-button style= "float: right;" variant="primary">Details 具体信息</b-button></router-link> -->
             <!-- <span style="display: inline-block;"> -->
@@ -132,7 +138,7 @@
 
 
 
-  
+
 
    </div>
 
@@ -155,7 +161,7 @@ export default {
       avaList:[],
 
       isTeacherButton:"invisible"
-      
+
     };
   },
   created:function(){
@@ -192,7 +198,7 @@ export default {
     onClick(item){
       if(item.status == "Enrolling 可报名"){
         if(this.isTeacherButton=="invisible"){
-        
+
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
@@ -205,19 +211,19 @@ export default {
       {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enrollStatus");
       })
-        
+
       }
       }
-      
+
       else if (item.status == "Passed 已通过"){
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enrollAcceptNotice");
       })
-        
+
       }
-      
+
   else if (item.status == "Rejected 已拒绝"){
       var that = this;
       $.get("/home/setAssignment",
@@ -241,7 +247,7 @@ export default {
 	onClick1(item){
       if(item.status == "Enrolling 可报名"){
 if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
-           
+
       var that = this;
       $.get("/home/setAssignment",
       {title: item.title, teacherId: item.teacherId}).then(function(){
@@ -254,7 +260,7 @@ if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
       {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enroll");
       })
-      } 
+      }
 	  }else if (item.status == "Passed 已通过"){
       var that = this;
 	    console.log("enroll");
@@ -287,9 +293,16 @@ if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
     },
     currentPage3: function(val){
       this.update();
+    },
+    search: function(val){
+      $.get("/main/search",
+      {
+        search: val
+      }).then(function(data){
+        this.$router.push("/assignmentView");
+      })
     }
   }
 };
 // 逻辑部分直接修改item即可呈现.
 </script>
-
