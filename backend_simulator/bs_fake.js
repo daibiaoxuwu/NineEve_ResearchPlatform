@@ -73,7 +73,7 @@ app.get('/login/byEmail', function(sReq, sRes){
   if (sReq.query.email.length<200 && sReq.query.password.length<200) {
 	   home.emailLogin(sReq.query.email, sReq.query.password, function(result){
         sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false};
-        sRes.send({loginSuccess: result.loginSuccess, usernameNotFound: result.usernameNotFound, infoFinished: result.infoFinished, codeError: (sReq.session.captcha == sReq.query.code)});
+        sRes.send({loginSuccess: result.loginSuccess, usernameNotFound: result.usernameNotFound, infoFinished: result.infoFinished, codeError: (sReq.session.captcha != sReq.query.code)});
 	});
   }
 });
@@ -82,7 +82,7 @@ app.get('/login/byTeacherId', function(sReq, sRes){
   if (sReq.query.teacherId.length<200 && sReq.query.password.length<200) {
 	   home.teacherLogin(sReq.query.teacherId, sReq.query.password,function(result){
         sReq.session.user = {id: sReq.query.teacherId, email:"", isTeacher:true};
-        sRes.send({loginSuccess: result.loginSuccess, usernameNotFound: result.usernameNotFound, infoFinished: result.infoFinished, codeError: (sReq.session.captcha == sReq.query.code)});
+        sRes.send({loginSuccess: result.loginSuccess, usernameNotFound: result.usernameNotFound, infoFinished: result.infoFinished, codeError: (sReq.session.captcha != sReq.query.code)});
 	   });
    }
 });
@@ -91,7 +91,7 @@ app.get('/login/byStudentId', function(sReq, sRes){
   if (sReq.query.studentId.length<200 && sReq.query.password.length<200) {
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
     sReq.session.user = {id: sReq.query.studentId, email:"", isTeacher:false}
-    sRes.send({loginSuccess: result.loginSuccess, usernameNotFound: result.usernameNotFound, infoFinished: result.infoFinished, codeError: (sReq.session.captcha == sReq.query.code)});
+    sRes.send({loginSuccess: result.loginSuccess, usernameNotFound: result.usernameNotFound, infoFinished: result.infoFinished, codeError: (sReq.session.captcha != sReq.query.code)});
 	  });
   }
 });
