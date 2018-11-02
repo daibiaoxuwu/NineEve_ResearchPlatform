@@ -258,7 +258,7 @@ app.get('/studentInfo/save', function(sReq, sRes) {
     var hasQuotationMarks3 = (new RegExp("\"")).test(sReq.query.username)
     || (new RegExp("\'")).test(sReq.query.username);
     var hasQuotationMarks4 = (new RegExp("\"")).test(sReq.query.wechatPhone)
-    || (new RegExp("\'")).test(sReq.iquery.wechatPhone);
+    || (new RegExp("\'")).test(sReq.query.wechatPhone);
     var hasQuotationMarks5 = (new RegExp("\"")).test(sReq.query.email)
     || (new RegExp("\'")).test(sReq.query.email);
     var hasQuotationMarks6 = (new RegExp("\"")).test(sReq.query.perWebAddr)

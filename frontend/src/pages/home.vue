@@ -21,12 +21,12 @@
                 <a href="#"> Forgot your password?</a>
               </small>
             </div>
-             <!-- <div class="form-group">
+              <div class="form-group">
                <row>
                 <img src="/api/getCaptcha" alt="captcha" @click="update">
              <input type="text" placeholder="" v-model="code" id="code1">
                </row>
-             </div> -->
+             </div>
              <div class="form-group">
             <button v-on:click="loginRequest()" class="form-control btn btn-primary">Login</button>
              </div>
@@ -124,7 +124,7 @@ export default {
       var that = this;
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      if (input && inputName.length<200 && input && inputPassword.length<200) {
+      if (inputName && inputName.length<200 && inputPassword && inputPassword.length<200) {
         if (inputTORS=="teacher") {
           $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword, code:that.code})
             .then(function(data){
