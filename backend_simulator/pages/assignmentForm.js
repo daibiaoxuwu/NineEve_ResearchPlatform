@@ -133,7 +133,10 @@ module.exports = {
 			connection.query('delete from `prokey` where title="' + title + '" and teacher="' + teacher + '"');
 			for(var i in keyarray)
 			{
-				connection.query('insert into `key`(`name`) values("' + keyarray[i] + '")');
+				connection.query('select * from `key`', function (error, results, fields){
+					if(results.length==0)
+						connection.query('insert into `key`(`name`) values("' + keyarray[i] + '")');
+				});
 				connection.query('insert into `prokey`(`teacher`,`title`,`key`) values(' +
 				'"' + teacher + '",' +
 				'"' + title + '",' +				
