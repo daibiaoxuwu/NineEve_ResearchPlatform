@@ -39,6 +39,15 @@ module.exports = {
          keywords, abilities, detailed,
           number, deadline, callback) {
 			  			 console.log("lzr4: "+teacher+title);
+			var keyarray = keywords.toString().split(' ');
+			connection.query('delete from `prokey` where title="' + title + '" and teacher="' + teacher + '"');
+			for(var i in keyarray)
+			{
+				connection.query('insert into `prokey`(`teacher`,`title`,`key`) values(' +
+				'"' + teacher + '",' +
+				'"' + title + '",' +				
+				'"' + keyarray[i] + '")');			
+			}				
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 				if(results.length==0)
 				{
@@ -46,13 +55,12 @@ module.exports = {
 						var teachername="";
 						if(resul.length>0)
 							teachername=resul[0].lastname + resul[0].firstname;
-						connection.query('insert into project(`teacher`,`teachername`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
+						connection.query('insert into project(`teacher`,`teachername`,`title`,`background`,`introduction`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
 										 '"' + teacher + '",' +
 										 '"' + teachername + '",' +
 										 '"' + title + '",' +
 										 '"' + background+ '",' +
 										 '"' + introduction + '",' +
-										 '"' + keywords + '",' +
 										 '"' + abilities + '",' +
 										 '"' + detailed + '",' +
 										 '' + number + ',' +
@@ -67,7 +75,6 @@ module.exports = {
 					{
 						connection.query('update project set `background`="' + background + '", ' +
 										'`introduction`="' + introduction + '", ' +
-										'`keywords`="' + keywords + '", ' +
 										'`abilities`="' + abilities + '", ' +
 										'`detailed`="' + detailed + '", ' +
 										'`num`=' + number + ', ' +
@@ -123,8 +130,15 @@ module.exports = {
          number, deadline, callback) {
 			console.log("lzr2: "+teacher+title);
 			var keyarray = keywords.toString().split(' ');
+			connection.query('delete from `prokey` where title="' + title + '" and teacher="' + teacher + '"');
 			for(var i in keyarray)
+			{
 				connection.query('insert into `key`(`name`) values("' + keyarray[i] + '")');
+				connection.query('insert into `prokey`(`teacher`,`title`,`key`) values(' +
+				'"' + teacher + '",' +
+				'"' + title + '",' +				
+				'"' + keyarray[i] + '")');			
+			}				
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 				if(results.length==0)
 				{
@@ -132,13 +146,12 @@ module.exports = {
 						var teachername="";
 						if(resul.length>0)
 							teachername=resul[0].lastname + resul[0].firstname;
-						connection.query('insert into project(`teacher`,`teachername`,`title`,`background`,`introduction`,`keywords`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
+						connection.query('insert into project(`teacher`,`teachername`,`title`,`background`,`introduction`,`abilities`,`detailed`,`num`,`status`,`deadline`) values(' +
 										 '"' + teacher + '",' +
 										 '"' + teachername + '",' +
 										 '"' + title + '",' +
 										 '"' + background+ '",' +
 										 '"' + introduction + '",' +
-										 '"' + keywords + '",' +
 										 '"' + abilities + '",' +
 										 '"' + detailed + '",' +
 										 '' + number + ',' +
@@ -148,12 +161,11 @@ module.exports = {
 					});
 				}
 				else
-				{
+				{	
 					if(results[0].status.indexOf("Editable")!=-1)
 					{		
 						connection.query('update project set `background`="' + background + '", ' +
 										'`introduction`="' + introduction + '", ' +
-										'`keywords`="' + keywords + '", ' +
 										'`abilities`="' + abilities + '", ' +
 										'`detailed`="' + detailed + '", ' +
 										'`num`=' + number + ', ' +
@@ -215,14 +227,19 @@ module.exports = {
         connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 			if(results.length>0)
 			{
-				callback({title: title,
-						  background: results[0].background,
-						  introduction: results[0].introduction,
-						  keywords: results[0].keywords.split(' '),
-						  abilities: results[0].abilities,
-						  detailed: results[0].detailed,
-						  number: results[0].num.toString(),
-						  deadline: results[0].deadline});
+				connection.query('select * from `prokey` where title="' + title + '" and teacher="' + teacher + '"', function (err, resul, fiel){
+					var keys=[];
+					for(var i in resul)
+						keys.push(resul[i].key);
+					callback({title: title,
+							  background: results[0].background,
+							  introduction: results[0].introduction,
+							  keywords: keys,
+							  abilities: results[0].abilities,
+							  detailed: results[0].detailed,
+							  number: results[0].num.toString(),
+							  deadline: results[0].deadline});
+				});
 			}
 			else
 			{
