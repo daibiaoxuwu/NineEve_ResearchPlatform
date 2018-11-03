@@ -15,7 +15,7 @@ module.exports = {
      */
 	enrollQuery: function(results, statu, i, callback){
 		var that = this;
-		if(i>=results.length) {
+		if(i<0) {
 			callback(statu);
 			return;
 		}
@@ -31,10 +31,10 @@ module.exports = {
 							text: resul[0].lastname + resul[0].firstname,
 							department: "CST 计算机系",
 							grade: resul[0].grade});
-				that.enrollQuery(results, statu, i+1, callback);
+				that.enrollQuery(results, statu, i-1, callback);
 			});
 		} else {
-			this.enrollQuery(results,statu, i+1, callback);
+			this.enrollQuery(results,statu, i-1, callback);
 		}
 	},
 
@@ -47,14 +47,14 @@ module.exports = {
 				var statu=[];
 				console.log("lzr6"+teacherId+","+title);
 				var i = 0;
-				that.enrollQuery(results, statu, 0, callback);
+				that.enrollQuery(results, statu, results.length-1, callback);
 			});
 		}else{
 			connection.query('select * from enrollform where title="' + title + '" and teacher="' + teacherId + '" and `success`=0', function (error, results, field){
 				var statu=[];
 				console.log("lzr6"+teacherId+","+title);
 				var i = 0;
-				that.enrollQuery(results, statu, 0, callback);
+				that.enrollQuery(results, statu, results.length-1, callback);
 			});
 		}})
     },
