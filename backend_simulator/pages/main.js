@@ -46,9 +46,9 @@ module.exports = {
 									  teacherId: results[i].teacher,
 									  status: results[i].status});
 					}
-					for(var i in resul)
-						message.push({title: resul[i].title,
-									  teacherId: resul[i].teacher,
+					for(var j in resul)
+						message.push({title: resul[j].title,
+									  teacherId: resul[j].teacher,
 								      status: "Enrolling 可报名"});
 					callback(message,mylist,avalist);
 				});
@@ -56,12 +56,12 @@ module.exports = {
 			else
 			{
 				connection.query('select * from enrollform where student="' + studentid + '"', function (err, resul, fiel){
-					for(var i in results)
+					for(var k in results)
 					{
-						if	(results[i].status.indexOf("Enroll")!=-1)
-							avalist.push({title: results[i].title,
-										  teacherId: results[i].teacher,
-										  status: results[i].status});
+						if	(results[k].status.indexOf("Enroll")!=-1)
+							avalist.push({title: results[k].title,
+										  teacherId: results[k].teacher,
+										  status: results[k].status});
 					}
 					for(var i in resul)
 					{
@@ -76,14 +76,14 @@ module.exports = {
 							st='Passed 已通过';
 						if(resul[i].success==2)
 							st='Rejected 已拒绝';
-							if(resul[i].studentread==0){
-						message.push({title: resul[i].title,
-									  teacherId: resul[i].teacher,
-									  status: st});
+						if(resul[i].studentread==0){
+							message.push({title: resul[i].title,
+										  teacherId: resul[i].teacher,
+										  status: st});
 						}
-							mylist.push({title: resul[i].title,
-										 teacherId: resul[i].teacher,
-										 status: realst});
+						mylist.push({title: resul[i].title,
+									 teacherId: resul[i].teacher,
+									 status: realst});
 					}
 					callback(message,mylist,avalist);
 				});	

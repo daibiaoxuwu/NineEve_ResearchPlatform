@@ -130,13 +130,17 @@ module.exports = {
          number, deadline, callback) {
 			console.log("lzr2: "+teacher+title);
 			var keyarray = keywords.toString().split(' ');
+			var insertkey = function(key)
+			{
+				connection.query('select * from `key` where `name`="' + key + '"', function (error, results, fields){
+					if(results.length==0)
+						connection.query('insert into `key`(`name`) values("' + key + '")');
+				});
+			}
 			connection.query('delete from `prokey` where title="' + title + '" and teacher="' + teacher + '"');
 			for(var i in keyarray)
 			{
-				connection.query('select * from `key`', function (error, results, fields){
-					if(results.length==0)
-						connection.query('insert into `key`(`name`) values("' + keyarray[i] + '")');
-				});
+				insertkey(keyarray[i]);
 				connection.query('insert into `prokey`(`teacher`,`title`,`key`) values(' +
 				'"' + teacher + '",' +
 				'"' + title + '",' +				

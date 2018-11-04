@@ -46,14 +46,12 @@ module.exports = {
 			connection.query('select * from enrollform where title="' + title + '" and teacher="' + teacherId + '" and `success`!=2', function (error, results, field){
 				var statu=[];
 				console.log("lzr6"+teacherId+","+title);
-				var i = 0;
 				that.enrollQuery(results, statu, results.length-1, callback);
 			});
 		}else{
 			connection.query('select * from enrollform where title="' + title + '" and teacher="' + teacherId + '" and `success`=0', function (error, results, field){
 				var statu=[];
 				console.log("lzr6"+teacherId+","+title);
-				var i = 0;
 				that.enrollQuery(results, statu, results.length-1, callback);
 			});
 		}})

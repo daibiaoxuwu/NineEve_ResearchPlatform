@@ -252,9 +252,6 @@ module.exports = {
 		if(student==""||!student)
 			student=idemail;	
 		connection.query('select * from student where studentid="' + student + '"', function (error, results, fields){
-			var tStudentID = results[0].studentid;
-			if(tStudentID.indexOf('@') != -1)
-				tStudentID = '空';
 			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"  and `filled`=1 ', function (err, resul, fiel){
 				if(resul.length>0)
 				{
