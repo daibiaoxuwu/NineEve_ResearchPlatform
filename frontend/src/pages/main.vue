@@ -160,6 +160,8 @@ export default {
       myList:[],
       avaList:[],
 
+      allKeys:[],
+
       isTeacherButton:"invisible"
 
     };
@@ -282,6 +284,14 @@ if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
        that.$router.push({path:"/assignmentForm", query:{isNew: false}});
       })
       }
+    },
+    searchKey(item){
+      var that = this;
+        $.get("/home/setAssignment",
+      {title: item.title, teacherId: item.teacherId}).then(function(){
+       that.$router.push("/enroll");
+      })
+    
     }
   },
   watch: {
@@ -295,11 +305,12 @@ if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
       this.update();
     },
     search: function(val){
+      var that = this;
       $.get("/main/search",
       {
         search: val
       }).then(function(data){
-        this.$router.push("/assignmentView");
+        that.allKeys = data;
       })
     }
   }

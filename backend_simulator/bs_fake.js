@@ -572,8 +572,11 @@ app.get('/main/get', function(sReq, sRes) {
     })
 });
 
-
-
+app.get('/main/search', function(sReq, sRes) {
+    main.search(sReq.query.search, function(data){
+        sRes.send(data);
+    })
+});
 
 app.get('/enrollStatus/get', function(sReq, sRes) {
     enrollStatus.enrollStatusGet(sReq.session.user.id, sReq.session.assignment.title, function(list){
