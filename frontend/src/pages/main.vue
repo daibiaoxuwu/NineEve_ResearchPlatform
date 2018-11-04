@@ -55,6 +55,51 @@
           </div>
 
 </p>
+
+<p v-bind:class="interestVisible">
+
+          <div class="card">
+            <div class="card-header">INTERESTED PROJECTS 订阅项目</div>
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>PROJECT NAME 项目名称</th>
+                    <th>STATUS 状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in intList" @click="onClick(item)" :key="item.title">
+                    <td>{{index+1}}</td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.status}}</td>
+                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
+                    <!-- <td><button @click="onClick(item)">项目1</button></td> -->
+
+                  </tr>
+
+                </tbody>
+              </table>
+
+            </div>
+
+            <!-- <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" style= "float: left;" /> -->
+            <!-- <router-link to="/assignmentView"><b-button style= "float: right;" variant="primary">Details 具体信息</b-button></router-link> -->
+            <!-- <span style="display: inline-block;"> -->
+            <!-- <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" style= " float: left;" /></span> -->
+            <!-- <span style="display: inline-block;"> -->
+            <!-- <router-link to="/assignmentView"><b-button style= "float: right;" variant="primary">Details 具体信息</b-button></router-link></span> -->
+            <div class="row">
+            <div class="col-md-6 order-md-1">
+              <b-pagination-nav base-url="#" :number-of-pages="numint" v-model="currentPageint"  />
+            </div>
+            <div class="col-md-6 order-md-2">
+              <p class="float-right"><router-link to="/assignmentView" ><b-button variant="primary">Details 具体信息</b-button></router-link></p>
+            </div>
+            </div>
+          </div>
+</p>
 <p class="mb-3">
 
           <div class="card">
@@ -153,9 +198,11 @@ export default {
        currentPage1: 1,
        currentPage2: 1,
        currentPage3: 1,
+       currentPageint: 1,
        num1: 1,
        num2: 1,
        num3: 1,
+       numint: 1,
       msgList:[],
       myList:[],
       avaList:[],
@@ -163,7 +210,9 @@ export default {
       allKeys:[],
       search:"",
 
-      isTeacherButton:"invisible"
+
+      isTeacherButton:"invisible",
+      interestVisible:"invisible"
 
     };
   },
@@ -183,12 +232,16 @@ export default {
           currentPage1: that.currentPage1,
           currentPage2: that.currentPage2,
           currentPage3: that.currentPage3,
+          currentPageint: that.currentPageint
         }).then(function(data){
           console.log(data);
           if(data.isTeacher){
             that.isTeacherButton="btn btn-primary btn-lg btn-block";
+            that.interestVisible="invisible";
           }else{
             that.isTeacherButton="invisible";
+            that.interestVisible="mb-3";
+            that.intList = data.intList;
           }
           that.num1=data.num1,
           that.num2=data.num2,
@@ -303,6 +356,9 @@ if(this.isTeacherButton="btn btn-primary btn-lg btn-block"){
       this.update();
     },
     currentPage3: function(val){
+      this.update();
+    },
+    currentPageint: function(val){
       this.update();
     },
     search: function(val){

@@ -578,7 +578,7 @@ app.get('/assignmentForm/get', function(sReq, sRes) {
 
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
+    main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList, intList){
         console.log({
             isTeacher: sReq.session.user.isTeacher,
             num1: parseInt((msgList.length-1) / 3)+1,
@@ -587,6 +587,8 @@ app.get('/main/get', function(sReq, sRes) {
             myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
             num3: parseInt((avaList.length-1) / 3)+1,
             avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
+            numint: parseInt((intList.length-1) / 3) + 1,
+            intList: intList.slice(Math.min(sReq.query.currentPageint * 3 - 3, intList.length), Math.min(sReq.query.currentPageint * 3, intList.length)),
             msglist2: msgList,
             myList2: myList,
             avalist2: avaList
@@ -599,7 +601,9 @@ app.get('/main/get', function(sReq, sRes) {
             num2: parseInt((myList.length-1) / 3) + 1,
             myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
             num3: parseInt((avaList.length-1) / 3) + 1,
-            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length))
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
+            numint: parseInt((intList.length-1) / 3) + 1,
+            intList: intList.slice(Math.min(sReq.query.currentPageint * 3 - 3, intList.length), Math.min(sReq.query.currentPageint * 3, intList.length))
         })
     })
 });

@@ -18,7 +18,9 @@ module.exports = {
      * 学生的科研任务(已经报名, 或者已经录取等)列表
      * 
      * @property {Array} avaList 
-     * 所有科研任务列表i
+     * 所有科研任务列表
+     * @property {Array} intList 
+     * 订阅的科研任务列表
      */
 
     mainGet: function(id, email, isTeacher, callback){
@@ -85,7 +87,7 @@ module.exports = {
 									 teacherId: resul[i].teacher,
 									 status: realst});
 					}
-					callback(message,mylist,avalist);
+					callback(message,mylist,avalist, intList);
 				});	
 			}				
 					
