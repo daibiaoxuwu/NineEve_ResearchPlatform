@@ -161,6 +161,7 @@ export default {
       avaList:[],
 
       allKeys:[],
+      search:"",
 
       isTeacherButton:"invisible"
 
