@@ -90,5 +90,23 @@ module.exports = {
 			}				
 					
 		});
+    },
+	
+    search: function(search, callback){
+		console.log(search);
+		connection.query('select * from `project` where `title` like "%' + search + '%"', function (error, results, fields){
+			connection.query('select * from `project` where `title` not like "%' + search + '%" and `introduction` like "%' + search + '%"', function (err, resul, fiel){
+				var ans=[];
+				for(var i in results)
+					ans.push({title: results[i].title,
+							  teacherId: results[i].teacher,
+							  status: results[i].status});
+				for(var j in resul)
+					ans.push({title: resul[j].title,
+							  teacherId: resul[j].teacher,
+							  status: resul[j].status});
+				callback(ans);
+			});
+		});
     }
 }
