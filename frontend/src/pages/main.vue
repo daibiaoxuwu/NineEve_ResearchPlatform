@@ -23,7 +23,7 @@
         
         <input class="form-control" placeholder="search" v-model="search" type='text'/>
     </template>
-    <b-dropdown-item v-for="item in allKeys" @click="searchKey(item)" :key="item.name">{{item.name}}</b-dropdown-item>
+    <b-dropdown-item v-for="item in allKeys" @click="searchKey(item)" :key="item.title">{{item.title}}</b-dropdown-item>
   </b-dropdown>
 <p class="mb-3">
   <div class="card">
