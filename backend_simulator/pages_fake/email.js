@@ -11,7 +11,7 @@ var transporter = nodemailer.createTransport({
 const testmodule = '【科研信息平台】[请勿将验证码告知任何人，否则账号被盗平台不予处理]验证码：';
 
 var mailOptions = {
-  from: '18801290116@163.com',
+  from: '科研信息平台<18801290116@163.com>',
   to: '',
   subject: '【科研信息平台】验证码',
   text: ''
@@ -19,12 +19,22 @@ var mailOptions = {
 
 module.exports = {
 
+  /**
+   * 在使用邮箱服务之前需要先验证是否可用。
+   *
+   * @property {string} response
+   * 发送成功返回'verify success'
+   * 失败返回错误信息
+   *
+   */
   serverVerify: function(res){
     transporter.verify(function(error, success) {
      if (error) {
         console.log(error);
       } else {
-        res('verify success');
+        res({
+          response: 'verify success'
+        });
       }
     });
   },
@@ -36,7 +46,7 @@ module.exports = {
    * 登陆者的电子邮箱
    *
    * @property {string} response
-   * 发送成功返回信息，失败返回error
+   * 发送成功返回信息，失败返回error信息
    * @property {int} captcha
    * int形式的6位验证码，用于验证输入是否正确
    *
