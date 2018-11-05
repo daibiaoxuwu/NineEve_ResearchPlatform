@@ -5,9 +5,9 @@
     <div class="py-5">
     <div class="container">
       <div class="row">
-        <div class="text-center col-md-7 mx-auto"> <i class="fa d-block fa-bullseye fa-5x mb-4 text-info"></i>
+        <div class="text-center col-md-7 mx-auto"> <i class="fa d-block fa-bullseye fa-5x mb-4 text-teacher"></i>
           <h2>教师信息</h2>
-          <p class="lead">Teacher information</p>
+          <p class="lead">Teacher teacherrmation</p>
         </div>
       </div>
     </div>
@@ -19,6 +19,13 @@
         
         <div class="col-md-8 order-md-1">
       
+
+         <h4 class="mb-3"><b>{{teacherName}}</b>
+           <small class="form-text text-muted">
+             {{dropdownText}}
+              </small>
+         </h4>
+
                <h4 class="mb-3"><b>Other Projects 其他项目</b></h4>
 
           <table class="table table-hover">
@@ -41,10 +48,27 @@
             <b-pagination-nav base-url="#" :number-of-pages="num" v-model="currentPage" />
 
 
+   
+    <p class="form-text" style="font-weight:bold;">Email 邮箱</p>
+         <p class="form-text text-muted">
+           {{email}}</p>
+         <p class="form-text" style="font-weight:bold;">Personal Webpage Address 个人主页地址</p>
+         <p class="form-text text-muted">
+          {{perWebAddr}}
+</p>
+                  <!-- <hr class="mb-4"> -->
+ <p class="form-text" style="font-weight:bold;">Research Area 实验室方向</p>
+         <p class="form-text text-muted">
+            {{researchArea}}
+          </p>
+ <p class="form-text" style="font-weight:bold;">Research Results 科研成果介绍</p>
+         <p class="form-text text-muted">
+           {{researchResults}}
+         </p>
 
 
-             <!-- <router-link to="/enrollSuccess" > <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button></router-link> -->
-             <button v-bind:class="visible" @click= "enroll" style="margin-top:0.5rem;">{{buttonword}}</button>
+
+             <button class="btn btn-secondary btn-lg btn-block" @click="$router.go(-1)">Home 返回主页</button>
         
         </div>
       </div>
@@ -58,87 +82,67 @@
 
 <script>
 import rightpane from '../components/right.vue';
-import assignmentInfo from '../components/assignmentInfo.vue';
 
 export default {
-  name: 'enroll',
   data() {
     return {
+      lab:0,
+      dropdownText: 'Software Laboratory 软件所',
+      teacherName:"教师名",
+      email:"1@1",
+      perWebAddr:"1.com",
+      researchArea:"area",
+      researchResults:"results",
       visible: 'invisible',
       isTeacher: false,
-      buttonword: '报名 Enroll Now',
+      currentPage:1,
+      num:1,
+      list:[{
+        title:"项目1",
+        status:"Enrolling 可报名"
+      }]
     };
   },
   components: {
-    rightpane,
-    assignmentInfo,
+    rightpane
   },
   created: function() {
     var that = this;
-    $.get('/enroll/isTeacher', {}).then(function(data) {
-      if (data == '/') {
-        that.visible = 'invisible';
-      } else {
-        that.isTeacher = data.isTeacher;
-        if (data.assignment.status == 'Launched 已启动') {
-          if (that.isTeacher == false) {
-            $.get('/enrollForm/Check', {}).then(function(result) {
-              if (result == true) {
-                that.buttonword = '结题 End Assignment';
-                that.visible = 'btn btn-primary btn-lg btn-block';
-              } else {
-                that.visible = 'invisible';
-              }
-            });
-          } else {
-            that.visible = 'invisible';
-          }
-        } else if (data.assignment.status == 'Evaluated 学生已评价') {
-          if (that.isTeacher == true) {
-            $.get('/enrollForm/CheckT', {}).then(function(result) {
-              if (result == true) {
-                that.buttonword = '评价学生 Evaluate';
-                that.visible = 'btn btn-primary btn-lg btn-block';
-              } else {
-                that.visible = 'invisible';
-              }
-            });
-          } else {
-            that.visible = 'invisible';
-          }
-        } else if (data.assignment.status == 'Ended 已结题') {
-          that.visible = 'invisible';
-        } else {
-          if (data.isTeacher) {
-            that.visible = 'invisible';
-          } else {
-            that.visible = 'btn btn-primary btn-lg btn-block';
-            $.get('/enrollForm/Check', {}).then(function(result) {
-              if (result == true) {
-                that.buttonword = "You've enrolled. 已经报名.";
-              } else {
-                that.buttonword = '报名 Enroll Now';
-              }
-            });
-          }
-        }
-      }
-    });
+     $.get(
+        "/teacherView/get",
+        {}).then(function(data){
+          console.log("lastname:" +data.lastName)
+          that.teacherName = data.lastName + data.firstName;
+          that.email = data.email;
+          that.perWebAddr = data.perWebAddr;
+          that.researchArea = data.researchArea;
+          that.researchResults = data.researchResults;
+          that.lab = data.lab;
+        });
   },
   methods: {
-    enroll() {
-      console.log('enroll');
-      if (this.buttonword == '结题 End Assignment') {
-        this.$router.push('/studentEvaluate');
-      } else if (this.buttonword == '评价学生 Evaluate') {
-        this.$router.push('/teacherEvaluate');
-      } else if (this.buttonword == '报名 Enroll Now') {
-        var that = this;
-        $.get('/enroll/route', {}).then(function(data) {
-          that.$router.push(data);
-        });
-      }
-    },
   },
+  watch: {
+    lab: function(val) {
+      if(val==-1){
+        this.dropdownText = "Not Selected 未选择";
+      }
+      else if(val==0){
+        this.dropdownText = "Software Laboratory 软件所";
+      }
+      else if(val==1){
+        this.dropdownText = "High Performance Laboratory 高性能";
+      }
+      else if(val==2){
+        this.dropdownText = "Multimedia Laboratory 媒体所";
+      }
+      else if(val==3){
+        this.dropdownText = "Artificial Intelligence Laboratory 智能所";
+      }
+      else if(val==4){
+        this.dropdownText = "Network Laboratory 网络所";
+      }
+    }
+  }
 };
 </script>

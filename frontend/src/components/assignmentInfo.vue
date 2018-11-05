@@ -6,8 +6,8 @@
               </small>
          </h4>
     <p class="form-text" style="font-weight:bold;">指导教师</p>
-         <p class="form-text text-muted">
-           {{info.teacher}}</p>
+     <router-link to="/teacherView">     <p class="form-text text-muted">
+           {{info.teacher}}</p></router-link>
          <p class="form-text" style="font-weight:bold;">项目简介</p>
          <p class="form-text text-muted">
           {{info.introduction}}

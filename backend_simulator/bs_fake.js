@@ -228,7 +228,11 @@ app.get('/teacherInfo/get', function(sReq, sRes) {
 			 sRes.send(result);
 		 });
 });
-
+app.get('/teacherView/get', function(sReq, sRes) {
+    teacherInfo.teacherInfoGet(sReq.session.assignment.teacherId, function(result){
+			 sRes.send(result);
+		 });
+});
 
 app.get('/studentInfo/save', function(sReq, sRes) {
     console.log(sReq);
