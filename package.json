@@ -18,7 +18,7 @@
     "test": "npm run jesttest -- -u",
     "mochatest": "nyc --reporter=lcov --reporter=text mocha test/server.js",
     "build": "npm run build --prefix frontend",
-    "jesttest": "jest --coverage",
+    "jesttest": "nyc --reporter=lcov --reporter=text jest --coverage",
     "basetest": "jest enrollAcceptedNotice.test.js"
   },
   "devDependencies": {
