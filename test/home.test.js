@@ -41,11 +41,11 @@ describe('home.vue test', () => {
     })
 
     it('should be at page 1 initially', () => {
-      expect(wrapper.vm.currentPage).to.be.equal(1);
+      expect(wrapper.vm.currentPage3).to.be.equal(1);
     })
     
-    it('should have items after created', () => {
-      expect(vm.list.length).greaterThan(0);
+    it('should have no items before created', () => {
+      expect(vm.list.length).to.be.equal(0);
     })
   })
 

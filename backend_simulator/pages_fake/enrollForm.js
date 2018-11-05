@@ -10,6 +10,9 @@ module.exports = {
      * 
      * @param {string} assignmentTitle
      * 学生报名项目的题目
+     * 
+     *      *      *      * @param {string} teacher
+     * 学生报名项目的老师id
      *
      * @param {string} lastName
      * 学生的姓
@@ -38,15 +41,18 @@ module.exports = {
      * @param {string} reasonEnroll
      * 报名原因
      * 
+     * @param {string} award
+     * 奖励
+     * 
      * @property {boolean} saveSuccess //property: return
      * 保存是否成功
      * 
      *
      */
 
-    enrollFormSave: function(id, idemail, assignmentTitle, lastName, firstName, username,
+    enrollFormSave: function(id, idemail, assignmentTitle, teacher, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
-          selfIntr, reasonEnroll, callback) {
+          selfIntr, reasonEnroll, award, callback) {
              console.log('e'+id+idemail+assignmentTitle+firstName);
         callback({saveSuccess: true});
     },
@@ -64,6 +70,9 @@ module.exports = {
      * @param {string} assignmentTitle
      * 学生报名项目的题目
      *
+     *      *      *      * @param {string} teacher
+     * 学生报名项目的老师id
+     * 
      * @param {string} lastName
      * 学生的姓
      *
@@ -97,9 +106,9 @@ module.exports = {
      *
      */
 
-    enrollFormLaunch: function(id, idemail, assignmentTitle, lastName, firstName, username,
+    enrollFormLaunch: function(id, idemail, assignmentTitle, teacher, lastName, firstName, username,
         wechatPhone, email, perWebAddr,
-         selfIntr, reasonEnroll, callback) {
+         selfIntr, reasonEnroll, award, callback) {
              console.log('e'+id+idemail+assignmentTitle+firstName);
        callback({launchSuccess: true});
    },
@@ -118,6 +127,9 @@ module.exports = {
      * 
      *      * @param {string} assignmentTitle
      * 学生报名项目的题目
+     * 
+     *      *      * @param {string} teacher
+     * 学生报名项目的老师id
      * 
      * @property {string} lastName
      * 学生的姓
@@ -147,8 +159,8 @@ module.exports = {
      * 报名原因
      *
      */
-    enrollFormGet: function(id, idemail, assignmentTitle, callback) {
-             console.log('e'+id+idemail+assignmentTitle+firstName);
+    enrollFormGet: function(id, idemail, assignmentTitle, teacher, callback) {
+             console.log('e'+id+idemail+assignmentTitle);
         if(id=="1") callback({lastName: "一"});
         else callback({id: ""});
     },

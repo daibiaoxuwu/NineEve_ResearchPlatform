@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import $ from 'jquery'
 import BootstrapVue from 'bootstrap-vue'
+require('./mock.js')
 // import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 // import 'bootstrap/dist/css/custom-landing.css'

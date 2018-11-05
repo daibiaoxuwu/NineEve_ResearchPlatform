@@ -35,6 +35,40 @@
          <p class="form-text text-muted">
          {{info.deadline}}
 </p>
+
+<div :class="visibleT">
+<h5 class="form-text" style="font-weight:bold;">教师评价</h5>
+<p class="form-text" style="font-weight:bold;">满意度</p>
+         <p class="form-text text-muted">
+         {{info2.satis}}
+</p>
+<p class="form-text" style="font-weight:bold;">项目完成介绍</p>
+         <p class="form-text text-muted">
+         {{info2.intro}}
+</p>
+<p class="form-text" style="font-weight:bold;">评价原因</p>
+         <p class="form-text text-muted">
+         {{info2.reason}}
+</p>
+</div>
+
+<div :class="visibleS" v-for="(info3,index) in info3s" :key="info3.learned">
+<h5 class="form-text" style="font-weight:bold;">学生 {{index+1}} 评价</h5>
+<p class="form-text" style="font-weight:bold;">满意度</p>
+         <p class="form-text text-muted">
+         {{info3.satis}}
+</p>
+<p class="form-text" style="font-weight:bold;">收获</p>
+         <p class="form-text text-muted">
+         {{info3.learned}}
+</p>
+<p class="form-text" style="font-weight:bold;">尚未习得</p>
+         <p class="form-text text-muted">
+         {{info3.notlearned}}
+</p>
+
+</div>
+
 </div>
 </template>
 
@@ -43,17 +77,22 @@
 
 
 export default {
-  
+
   name: "enroll",
    data() {
     return {
-      info:{}
+      info:{},
+      info2:{},
+      info3:{},
+      info3s:[],
+      visibleT:"invisible",
+      visibleS:"invisible"
     }
    },
    created:function(){
      this.initialize();
    },
-   
+
   methods: {
     initialize(){
   var that=this;
@@ -62,6 +101,28 @@ export default {
         "/enroll/get",//TODO:get
         {}).then(function(data){
           that.info=data;
+         });
+      $.get(
+        "/studentEvaluate/get",//TODO:get
+        {}).then(function(data){
+          if(data && data!=""){
+          that.info3s=data;
+          that.visibleS="";
+          }
+          else{
+            that.visibleS="invisible";
+          }
+         });
+          $.get(
+        "/teacherEvaluate/get",//TODO:get
+        {}).then(function(data){
+          if(data && data!=""){
+          that.info2=data;
+          that.visibleT="";
+          }
+          else{
+            that.visibleT="invisible";
+          }
          });
     }
   }
