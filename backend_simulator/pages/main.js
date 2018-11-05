@@ -22,11 +22,77 @@ module.exports = {
      * @property {Array} intList 
      * 订阅的科研任务列表
      */
+	getIntList: function(message, mylist, avalist, i, j, keys, proj, intlist, callback) {
+		var that = this;
+		if(i == keys.length)
+			callback(message, mylist, avalist, intlist);
+		else
+		{
+			var projects = proj;
+			if(j == 0)
+			{
+				connection.query('select * from prokey where `key`="' + keys[i].key + '"', function (error, results, fields){
+					projects = results;
+					if(j == projects.length)
+						that.getIntList(message, mylist, avalist, i+1, 0, keys, projects, intlist, callback);
+					else
+					{
+						var rep = 1;
+						for(var k in intlist)
+						{
+							if((intlist[k].title == projects[j].title) && (intlist[k].teacherId == projects[j].teacher))
+								rep = 0;
+						}
+						if(rep == 1)
+						{
+							connection.query('select * from project where `title`="' + projects[j].title + '" and `teacher`="' + projects[j].teacher + '"', function (err, resul, fiel){
+								console.log("zz"+resul);
+									intlist.push({title: resul[0].title,
+												  teacherId: resul[0].teacher,
+												  status: resul[0].status});
+								that.getIntList(message, mylist, avalist, i, j+1, keys, projects, intlist, callback);
+							});
+						}
+						else
+							that.getIntList(message, mylist, avalist, i, j+1, keys, projects, intlist, callback);
+					}
+				});
+			}
+			else
+			{
+				if(j == projects.length)
+					that.getIntList(message, mylist, avalist, i+1, 0, keys, projects, intlist, callback);
+				else
+				{
+					var rep = 1;
+					for(var k in intlist)
+					{
+						if((intlist[k].title == projects[j].title) && (intlist[k].teacherId == projects[j].teacher))
+							rep = 0;
+					}
+					if(rep == 1)
+					{
+						connection.query('select * from project where `title`="' + projects[j].title + '" and `teacher`="' + projects[j].teacher + '"', function (err, resul, fiel){
+							console.log("zz"+resul);
+								intlist.push({title: resul[0].title,
+											  teacherId: resul[0].teacher,
+											  status: resul[0].status});
+							that.getIntList(message, mylist, avalist, i, j+1, keys, projects, intlist, callback);
+						});
+					}
+					else
+						that.getIntList(message, mylist, avalist, i, j+1, keys, projects, intlist, callback);
+				}
+			}
+		}
+	},		
+
 
     mainGet: function(id, email, isTeacher, callback){
 		console.log("lzr5"+id);
 		console.log("lzr6"+email);
 		console.log("lzr7"+isTeacher);
+		var that = this;
 		connection.query('select * from project ', function (error, results, fields){
 			var studentid=id;
 			var teacherid=id;
@@ -35,6 +101,7 @@ module.exports = {
 			var message=[];
 			var mylist=[];
 			var avalist=[];
+			var intlist=[];
 			if(isTeacher)
 			{
 				connection.query('select * from enrollform where teacherread=0 and teacher="' + teacherid + '" and `success`=0', function (err, resul, fiel){
@@ -52,7 +119,7 @@ module.exports = {
 						message.push({title: resul[j].title,
 									  teacherId: resul[j].teacher,
 								      status: "Enrolling 可报名"});
-					callback(message,mylist,avalist);
+					callback(message,mylist,avalist,intlist);
 				});
 			}
 			else
@@ -87,7 +154,9 @@ module.exports = {
 									 teacherId: resul[i].teacher,
 									 status: realst});
 					}
-					callback(message,mylist,avalist, intList);
+					connection.query('select * from `stukey` where student="' + studentid + '"', function (er, resu, fie){
+						that.getIntList(message, mylist, avalist, 0, 0, resu, intlist, intlist, callback);
+					});
 				});	
 			}				
 					
