@@ -19,7 +19,7 @@
     "mochatest": "nyc --reporter=lcov --reporter=text mocha test/server.js",
     "build": "npm run build --prefix frontend",
     "jesttest": "nyc --reporter=lcov --reporter=text jest --coverage",
-    "basetest": "jest enrollRefused.test.js"
+    "basetest": "jest enrollStatus.test.js"
   },
   "devDependencies": {
     "chai": "^4.1.2",
