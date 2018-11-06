@@ -14,7 +14,7 @@
   <div class="">
     <div class="container">
       <div class="row">
-        <rightpane></rightpane>
+        <rightpane @click="update"></rightpane>
         
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3"><b>Enroll List 报名队列</b></h4>
@@ -46,20 +46,45 @@
               </table>
             <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
 
-
-<div>
             <h2 class="mb-3"><b>{{selectedItem.text}}</b>
            <small class="form-text text-muted">
                 {{selectedItem.department.split(" ")[0]}} {{selectedItem.grade.split(" ")[0]}} {{selectedItem.department.split(" ")[1]}} {{selectedItem.grade.split(" ")[1]}} 
               </small>
          </h2>
-       <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
-t  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
+<studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
+
+  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
 
   <!-- Modal Component -->
-  <b-modal id="modal1" title="Bootstrap-Vue"  @ok="handleOk">
+  <b-modal id="modal1" title="同意报名"  @ok="handleOk">
     <p class="my-4">是否同意 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
   </b-modal>
+
+  <b-btn v-b-modal.modal2 v-bind:class="class2" style="margin-top:0.5rem;">Reject Enrollment 拒绝报名</b-btn>
+
+  <!-- Modal Component -->
+  <b-modal id="modal2" title="拒绝报名"  @ok="handleRefuse">
+    <p class="my-4">是否拒绝 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
+  </b-modal>
+  
+
+  <b-btn v-b-modal.modal5 style="margin-top:0.5rem;">Launch Assignment 启动项目</b-btn>
+
+  <!-- Modal Component -->
+  <b-modal id="modal5" title="启动项目"  @ok="handleLaunch">
+    <p class="my-4">是否终止报名,启动项目?</p>
+  </b-modal>
+  
+
+
+  
+
+  
+
+  
+
+  
+
         
         </div>
         </div>
@@ -68,7 +93,6 @@ t  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名<
   </div>
   
   
-     </div>
 </template>
 
 
@@ -80,6 +104,7 @@ export default {
    data() {
     return {
       list:[{
+        id:"",
           text:"",
           department: "暂无学生报名",
           grade:""
@@ -88,17 +113,12 @@ export default {
       currentPage3:1,
        
       selectedItem:  {
+        id:"",
           text:"",
           department: "",
           grade:""
         },
-      detail: {lastName: "一", firstName:"2",
-        username:"3",
-        wechatPhone:"4", 
-        email:"5",
-        perWebAddr:"6",
-        breIntr:"7",
-        grade:"Junior 大三"},
+      detail: {},
       detailClass: "invisible",
       class2:"invisible"
     }
@@ -107,22 +127,34 @@ export default {
     rightpane, assignmentInfo, studentInfo
   },
   created:function(){
-    var that = this;
+   this.update();
+  },
+    methods: {
+      update(){
+         var that = this;
     $.get('/enrollStatus/get',
     {currentPage3:that.currentPage3}).then(function(result){
      console.log(result);
-      if(result.list.length>0){  that.list=result.list; that.selectedItem=result.list[0];}
-      that.num3=num3;
+      if(result.list.length>0){
+        that.list=result.list;
+        that.selectedItem=result.list[0];
+        that.onClick(selectedItem);
+          that.detailClass="";
+          that.class2="btn btn-primary btn-lg btn-block";
+      } else {
+        that.detailClass="invisible";
+        that.class2="invisible";
+        }
+      that.num3=result.num3;
     })
-  },
-    methods: {
+      },
       onClick(item){
         if(item.department=="暂无学生报名"){
-          detailClass="invisible";
-          class2="invisible";
+          this.detailClass="invisible";
+          this.class2="invisible";
         }else{
-          detailClass="";
-          class2="btn btn-primary btn-lg btn-block";
+          this.detailClass="";
+          this.class2="btn btn-primary btn-lg btn-block";
         var that = this;
         this.selectedItem=item;
         $.get('/enrollStatus/getDetails',
@@ -132,7 +164,41 @@ export default {
         }
       },
    handleOk (){
-      this.$router.push("/enrollAccepted")
+      var that = this;
+        $.get('/enrollStatus/accept',
+    {id: that.selectedItem.id}).then(function(result){
+      if(result.acceptSuccess){
+      that.$router.push({path:"/enrollAccepted", query:{detail: that.detail}});
+      }
+    })
+    },
+     handleRefuse (){
+      var that = this;
+        $.get('/enrollStatus/refuse',
+    {id: that.selectedItem.id}).then(function(result){
+      if(result.acceptSuccess){
+      that.$router.push("/enrollRefused");
+      }
+    })
+    },
+    handleLaunch(){
+      var that = this;
+      $.get('/enrollStatus/launch',{}).then(function(result){
+      if(result.acceptSuccess){
+        alert("project launched!");
+        that.$router.push("/main");
+      }
+      })
+    }
+  },
+  watch: {
+    currentPage3: function(val){
+      this.update();
+    }
+  },
+  watch: {
+    currentPage3: function(val){
+      this.update();
     }
   }
 }

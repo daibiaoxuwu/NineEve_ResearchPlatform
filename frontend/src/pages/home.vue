@@ -21,6 +21,12 @@
                 <a href="#"> Forgot your password?</a>
               </small>
             </div>
+              <div class="form-group">
+               <row>
+                <img src="/api/getCaptcha" alt="captcha" @click="update">
+             <input type="text" placeholder="" v-model="code" id="code1">
+               </row>
+             </div>
              <div class="form-group">
             <button v-on:click="loginRequest()" class="form-control btn btn-primary">Login</button>
              </div>
@@ -52,20 +58,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in list" :key="item.text">
-                    <td>{{index}}</td>
-                    <td>{{item.text}}</td>
+                  <tr v-for="(item, index) in list" :key="item.title" @click="onClick(item)">
+                    <td>{{index+1}}</td>
+                    <td>{{item.title}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
                     <!-- <td><button @click="onClick(item)">项目1</button></td> -->
 
-                    <td @click="onClick(item)"><router-link to="/enroll">{{item.status}}</router-link></td>
+                    <td>{{item.status}}</td>
                   </tr>
 
                 </tbody>
               </table>
 
             </div>
-            <b-pagination-nav base-url="#" :number-of-pages="10" v-model="currentPage" />
+            <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
           </div>
         </div>
       </div>
@@ -86,34 +92,27 @@ export default {
   name: "home",
   data() {
     return {
-       currentPage: 1,
-        dismissSecs: 10,
-      dismissCountDown: 0,
-      showDismissibleAlert: false,
+       currentPage3: 1,
+       num3:1,
       list:[]
     };
   },
   created:function(){
-    var that = this;
-    $.get('/home/get',
-        function(data){
-          that.list=data;
-        })
+    this.update();
   },
   methods: {
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
-    },
-    linkGen (pageNum) {
-      return '#page/' + pageNum + '/foobar'
+    update(){
+      var that = this;
+      $.get('/home/get',{currentPage3: that.currentPage3},
+            function(data){
+              that.list=data.avaList;
+              that.num3=data.num3;
+            })
     },
     onClick (item){
       var that = this;
       $.get("/home/setAssignment",
-      {title: item.text}).then(function(){
+      {title: item.title, teacherId: item.teacherId}).then(function(){
        that.$router.push("/enroll");
       })
     },
@@ -125,67 +124,83 @@ export default {
       var that = this;
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      if (inputTORS=="teacher") {
-        $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword})
-          .then(function(data){
-            if(data.loginSuccess){
-              if(data.infoFinished){
-                that.$router.push("/main");
-              }else{
-                that.$router.push("/teacherInfo");
-              }
-            } else if(data.usernameNotFound){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-          }
-        );
-      }
-      else if (inputTORS=="student"){
-        var isEmail = (new RegExp("@")).test(inputName);
-        if (isEmail) {
-          $.get('/login/byEmail', {email:inputName,password:inputPassword})
+      if (inputName && inputName.length<200 && inputPassword && inputPassword.length<200) {
+        if (inputTORS=="teacher") {
+          $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword, code:that.code})
             .then(function(data){
-              if(data.loginSuccess){
+               if(data.codeError) {
+                alert("验证码错误")
+              } else if(data.loginSuccess){
                 if(data.infoFinished){
                   that.$router.push("/main");
                 }else{
-                  that.$router.push("/studentInfo");
+                  that.$router.push("/teacherInfo");
                 }
               } else if(data.usernameNotFound){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
+                alert("用户不存在.");
+              } else {
+                alert("error in username or password.\n用户名或密码错误.")
+              }
             }
           );
         }
-        else {
-          $.get('/login/byStudentId', {studentId:inputName,password:inputPassword})
-            .then(function(data){
-              if(data.loginSuccess){
-                if(data.infoFinished){
-                  that.$router.push("/main");
-                }else{
-                  that.$router.push("/studentInfo");
-                }
-              } else if(data.usernameNotFound){
-              alert("用户不存在.");
-            } else {
-              alert("error in username or password.\n用户名或密码错误.")
-            }
-            }
-          );
+        else if (inputTORS=="student"){
+          var isEmail = (new RegExp("@")).test(inputName);
+          if (isEmail) {
+            $.get('/login/byEmail', {email:inputName,password:inputPassword, code:that.code})
+              .then(function(data){
+                if(data.codeError) {
+                alert("验证码错误")
+              }else if(data.loginSuccess){
+                  if(data.infoFinished){
+                    that.$router.push("/main");
+                  }else{
+                    that.$router.push("/studentInfo");
+                  }
+                } else  if(data.usernameNotFound){
+                alert("用户不存在.");
+              } else {
+                alert("error in username or password.\n用户名或密码错误.")
+              }
+              }
+            );
+          }
+          else {
+            $.get('/login/byStudentId', {studentId:inputName,password:inputPassword, code:that.code})
+              .then(function(data){
+                console.log(data);
+                 if(data.codeError) {
+                alert("验证码错误")
+              } else if(data.loginSuccess){
+                  if(data.infoFinished){
+                    that.$router.push("/main");
+                  }else{
+                    that.$router.push("/studentInfo");
+                  }
+                } else if(data.usernameNotFound){
+                alert("用户不存在.");
+              } else {
+                alert("error in username or password.\n用户名或密码错误.")
+              }
+              }
+            );
+          }
+        }
+        else{
+          alert("please choose a way to login.");
         }
       }
       else{
-        alert("please choose a way to login.");
+        alert("Your input is beyond limitation.");
       }
-
     }
 
 
+  },
+  watch: {
+    currentPage3: function(val){
+      this.update();
+    }
   }
 };
 // 逻辑部分直接修改item即可呈现.

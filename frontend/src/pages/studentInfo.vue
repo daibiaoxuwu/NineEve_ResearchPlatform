@@ -1,6 +1,6 @@
 <template>
-    <div>  
-    
+    <div>
+
   <div class="py-5">
     <div class="container">
       <div class="row">
@@ -15,7 +15,7 @@
     <div class="container">
       <div class="row">
         <rightpane></rightpane>
-        
+
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3"><b>Basic Information 基本信息</b></h4>
           <form class="needs-validation" novalidate="">
@@ -38,7 +38,7 @@
             </div>
             <div class="mb-3"> <label for="email">Grade 年级<br></label>
               <div class="mb-3">
-                <b-dropdown id="ddown-header" v-model="grade" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
+                <b-dropdown id="ddown-header" v-bind:text="grade" class="ml-0 mr-0 w-100" toggle-class="w-100" menu-class="w-100">
                 <b-dropdown-item-button style="text-align:center;" @click="clickFresh">Freshman 大一</b-dropdown-item-button>
                 <b-dropdown-item-button style="text-align:center;" @click="clickSoph">Sophomore 大二</b-dropdown-item-button>
                 <b-dropdown-item-button style="text-align:center;" @click="clickJuni">Junior 大三</b-dropdown-item-button>
@@ -59,7 +59,7 @@
               <input type="text" class="form-control" id="address" placeholder="" required="" v-model="perWebAddr">
               <div class="invalid-feedback"> Please enter your shipping address. </div>
             </div>
-          
+
            <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Brief Introduction 个人简介</label>
                <b-form-textarea id="textarea1"
@@ -73,7 +73,7 @@
             </div>
               <hr class="mb-4">
             <h4 class="mb-3">Interersted Tabs 感兴趣的标签</h4>
-            
+
 
    <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Laboratories 实验室</label>
@@ -89,7 +89,7 @@
 
                <div class="row">
                 <div class="col-md-12 mb-3"> <label for="email">Keywords 关键词</label>
-                   
+
                    <div class="mb-1">
 <b-button v-for="item in selectedKey" variant="outline-primary" style="font-size:15px; font-weight:200; padding: 0 0.4em; margin:0.5rem 0.5rem;" :pressed.sync="item.state" :key="item.name">{{item.name}}</b-button>
 </div>
@@ -112,8 +112,8 @@
       </div>
     </div>
   </div>
- 
-  
+
+
      </div>
 </template>
 
@@ -151,12 +151,14 @@ export default {
   },
   created:function(){
     this.getInfo();
+
   },
     methods: {
    searchKey (item){
      this.selectedKey.push(item);
     },
     toggleKey (item){
+       console.log("toggle"+item);
      if(item.toggleKey=="primary"){
       item.toggleKey="light";
      }
@@ -167,7 +169,54 @@ export default {
     },
 
     save() {
-          var that = this;
+      var that = this;
+
+      if (that.lastName == null) that.lastName = "";
+      if (that.firstName == null) that.firstName = "";
+      if (that.username == null) that.username = "";
+      if (that.wechatPhone == null) that.wechatPhone = "";
+      if (that.email == null) that.email = "";
+      if (that.perWebAddr == null) that.perWebAddr = "";
+      if (that.breIntr == null) that.breIntr = "";
+      if (that.grade == null) that.grade = "Please Select 请选择";
+
+      if (that.lastName.length>20 || that.firstName.length>20 || that.username.length>200
+        || that.wechatPhone.length>200 || that.email.length>200 || that.perWebAddr.length>200
+        || that.breIntr.length>2000 || that.grade.length>50) {
+          alert("Your input is beyond limitation.\n 您的输入超出字符长度限制.");
+          return;
+      }
+
+      var hasQuotationMarks1 = (new RegExp("\"")).test(that.lastName)
+      || (new RegExp("\'")).test(that.lastName);
+      var hasQuotationMarks2 = (new RegExp("\"")).test(that.firstName)
+      || (new RegExp("\'")).test(that.firstName);
+      var hasQuotationMarks3 = (new RegExp("\"")).test(that.username)
+      || (new RegExp("\'")).test(that.username);
+      var hasQuotationMarks4 = (new RegExp("\"")).test(that.wechatPhone)
+      || (new RegExp("\'")).test(that.wechatPhone);
+      var hasQuotationMarks5 = (new RegExp("\"")).test(that.email)
+      || (new RegExp("\'")).test(that.email);
+      var hasQuotationMarks6 = (new RegExp("\"")).test(that.perWebAddr)
+      || (new RegExp("\'")).test(that.perWebAddr);
+      var hasQuotationMarks7 = (new RegExp("\"")).test(that.breIntr)
+      || (new RegExp("\'")).test(that.breIntr);
+      var hasQuotationMarks8 = (new RegExp("\"")).test(that.grade)
+      || (new RegExp("\'")).test(that.grade);
+      if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
+      || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
+      || hasQuotationMarks7 || hasQuotationMarks8) {
+         alert("Please don't put quotation marks in your inputs.\n 请不要输入引号.");
+         return;
+      }
+
+      var isEmail = (new RegExp("@")).test(that.email);
+      var isInUniv = (new RegExp("edu\.cn$")).test(that.email);
+      if (!isEmail || !isInUniv) {
+        alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
+        return;
+      }
+
       console.log( {lastName: that.lastName, firstName: that.firstName, username:that.username,
          wechatPhone:that.wechatPhone, email:that.email, perWebAddr:that.perWebAddr,
           breIntr:that.breIntr, grade:that.grade,
@@ -185,8 +234,11 @@ export default {
             if(!data.saveSuccess){
               alert("保存信息出现问题");
             }
+            else {
+              alert("保存信息成功")
+            }
         });
-      
+
     },
 
     getInfo() {
@@ -203,6 +255,8 @@ export default {
           that.perWebAddr = data.perWebAddr;
           that.breIntr = data.breIntr;
           that.grade = data.grade;
+          if(that.grade!="Freshman 大一" && that.grade!="Sophomore 大二" && that.grade != "Junior 大三" && that.grade != "Senior 大四")
+            that.grade="Please Select 请选择";
           that.selectedLab = data.selectedLab;
           that.selectedKey = data.selectedKey;
           that.allKeys = data.allKeys;
@@ -224,6 +278,60 @@ export default {
 
     launch() {
       var that = this;
+
+      if (that.lastName == null) that.lastName = "";
+      if (that.firstName == null) that.firstName = "";
+      if (that.username == null) that.username = "";
+      if (that.wechatPhone == null) that.wechatPhone = "";
+      if (that.email == null) that.email = "";
+      if (that.perWebAddr == null) that.perWebAddr = "";
+      if (that.breIntr == null) that.breIntr = "";
+      if (that.grade == null) that.grade = "Please Select 请选择";
+
+      if (that.lastName == "" || that.firstName == "" || that.username == ""
+       || that.wechatPhone == "" || that.email == "" || that.breIntr == ""
+       || that.grade == "Please Select 请选择") {
+        alert("Please complete all the forms.\n 请将所有表单填写完毕.");
+        return;
+      }
+
+      if (that.lastName.length>20 || that.firstName.length>20 || that.username.length>200
+        || that.wechatPhone.length>200 || that.email.length>200 || that.perWebAddr.length>200
+        || that.breIntr.length>2000 || that.grade.length>50) {
+          alert("Your input is beyond limitation.\n 您的输入超出字符长度限制.");
+          return;
+      }
+
+      var hasQuotationMarks1 = (new RegExp("\"")).test(that.lastName)
+      || (new RegExp("\'")).test(that.lastName);
+      var hasQuotationMarks2 = (new RegExp("\"")).test(that.firstName)
+      || (new RegExp("\'")).test(that.firstName);
+      var hasQuotationMarks3 = (new RegExp("\"")).test(that.username)
+      || (new RegExp("\'")).test(that.username);
+      var hasQuotationMarks4 = (new RegExp("\"")).test(that.wechatPhone)
+      || (new RegExp("\'")).test(that.wechatPhone);
+      var hasQuotationMarks5 = (new RegExp("\"")).test(that.email)
+      || (new RegExp("\'")).test(that.email);
+      var hasQuotationMarks6 = (new RegExp("\"")).test(that.perWebAddr)
+      || (new RegExp("\'")).test(that.perWebAddr);
+      var hasQuotationMarks7 = (new RegExp("\"")).test(that.breIntr)
+      || (new RegExp("\'")).test(that.breIntr);
+      var hasQuotationMarks8 = (new RegExp("\"")).test(that.grade)
+      || (new RegExp("\'")).test(that.grade);
+      if (hasQuotationMarks1 || hasQuotationMarks2 || hasQuotationMarks3
+      || hasQuotationMarks4 || hasQuotationMarks5 || hasQuotationMarks6
+      || hasQuotationMarks7 || hasQuotationMarks8) {
+         alert("Please don't put quotation marks in your inputs.\n 请不要输入引号.");
+         return;
+      }
+
+      var isEmail = (new RegExp("@")).test(that.email);
+      var isInUniv = (new RegExp("edu\.cn$")).test(that.email);
+      if (!isEmail || !isInUniv) {
+        alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
+        return;
+      }
+
       $.get(
         "/studentInfo/launch",
         {lastName: that.lastName, firstName: that.firstName, username:that.username,
@@ -238,13 +346,13 @@ export default {
               alert("保存信息出现问题");
             }
         });
-       
-      
+
+
     }
 
   }
 
-  
+
 
 }
 </script>

@@ -1,6 +1,6 @@
 {
   "name": "platform",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "a platform demo",
   "main": "backend_simulator/bs_1.js",
   "author": "Jialuo Du/Zehai Yang/Zhengrong Lu/Bingjian Huang/Yuqing Guo",
@@ -15,7 +15,7 @@
     "init2": "cd backend_simulator && npm install",
     "init3": "cd test && npm install",
     "start": "npm run start --prefix backend_simulator",
-    "test": "npm run jesttest",
+    "test": "npm run jesttest -- -u",
     "mochatest": "nyc --reporter=lcov --reporter=text mocha test/server.js",
     "build": "npm run build --prefix frontend",
     "jesttest": "jest --coverage",

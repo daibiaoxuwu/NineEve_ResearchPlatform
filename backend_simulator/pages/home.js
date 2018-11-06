@@ -17,8 +17,16 @@ module.exports = {
      *
      */
     emailLogin: function(email, password, recall) {
+		connection.query('select * from student where email="'+email+'"', function (error, results, fields){
+			if(results.length == 0)
+				recall({loginSuccess: false, usernameNotFound: true, infoFinished: false});
+			else
+				if(results[0].password == password)
+					recall({loginSuccess: true, usernameNotFound: true, infoFinished: results[0].filled == 1});
+				else
+					recall({loginSuccess: false, usernameNotFound: false, infoFinished: false});
+		});
         console.log("email login: "+email + password);
-        recall({loginSuccess: true, usernameNotFound: false, infoFinished: false});
     },
 
 
@@ -116,7 +124,12 @@ module.exports = {
 				recall({registerSuccess: false});
 			else
 			{
-				connection.query('insert into student(name,email,password,studentid) values("' + name + '","' + email + '","' + password + '","' + email + '")', function (error, results){
+				connection.query('insert into student(username,email,password,studentid,selectedlab) values("'
+								+ name + '","'
+								+ email + '","'
+								+ password + '","'
+								+ email
+								+ '","[{\\\"name\\\":\\\"Software Laboratory 软件所\\\",\\\"state\\\":false},{\\\"name\\\":\\\"High Performance Laboratory 高性能\\\",\\\"state\\\":false},{\\\"name\\\":\\\"Multimedia Laboratory 媒体所\\\",\\\"state\\\":false},{\\\"name\\\":\\\"Artificial Intelligence Laboratory 智能所\\\",\\\"state\\\":false},{\\\"name\\\":\\\"Network Laboratory 网络所\\\",\\\"state\\\":false}]")', function (error, results){
 					if (error) throw error;
 					console.log(results);
 				});
@@ -130,30 +143,13 @@ module.exports = {
      * 所有科研任务列表
      */
     homeGet: function(callback){
-        callback(
-                [{
-                    text: "项目1",
-                    status: "Enrolling 可报名"
-                  },
-                  {
-                    text: "项目2",
-                    status: "Enrolling 可报名"
-                  },
-                  {
-                    text: "项目3",
-                    status: "Enrolling 可报名"
-                  },
-                   {
-                    text: "项目4",
-                    status: "Enrolling 可报名"
-                  },
-                   {
-                    text: "项目5",
-                    status: "Enrolling 可报名"
-                  }]
-              
-              );
-            }
-
-
+		connection.query('select * from project ', function (error, results, fields){
+			var projects=[];
+			for(var result in results)
+				projects.push({title: results[result].title,
+					teacherId: results[result].teacher,
+					status: results[result].status});
+			callback(projects);
+		});
+	}
 }

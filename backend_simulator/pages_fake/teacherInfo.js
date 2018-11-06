@@ -8,7 +8,7 @@ module.exports = {
      * @param {string} firstName
      * 教师的名
      * 
-     * @param {string} username
+     * @param {string} userName
      * 用户名
      * 
      * @param {string} wechatPhone
@@ -31,16 +31,13 @@ module.exports = {
      *
      * @property {boolean} saveSuccess //property: return
      * 保存是否成功
-     * 
-     * 
-     * //TODO:这里和/pages不一样,没有传递teacherId
      */
 
-    teacherInfoSave: function(lastName, firstName, username,
+    teacherInfoSave: function(teacherID, lastName, firstName, userName,
          wechatPhone, email, perWebAddr,
-          researchArea, researchResults, lab, callback) {
+          researchArea, researchResults, lab, recall) {
         console.log("teacherInfoSave: " + lastName + firstName);
-        callback({saveSuccess: true});
+        recall({saveSuccess: true});
     },
 
 
@@ -53,7 +50,7 @@ module.exports = {
      * @param {string} firstName
      * 教师的名
      * 
-     * @param {string} username
+     * @param {string} userName
      * 用户名
      * 
      * @param {string} wechatPhone
@@ -78,16 +75,16 @@ module.exports = {
      * 启动是否成功
      */
 
-    teacherInfoLaunch: function(lastName, firstName, username,
+    teacherInfoLaunch: function(teacherID, lastName, firstName, userName,
          wechatPhone, email, perWebAddr,
-          researchArea, researchResults, lab, callback) {
+          researchArea, researchResults, lab, recall) {
         console.log("teacherInfoLaunch: " + lastName + firstName + email);
-        callback({launchSuccess: true});
+        recall({launchSuccess: true});
     },
 
 /**
      * 教师请求页面的获取旧的信息请求 页面url: '/teacherInfo'
-     * 
+     *
      * @param {string} name
      * 教师号 用以查询教师
      *
@@ -96,33 +93,33 @@ module.exports = {
      *
      * @property {string} firstName
      * 教师的名
-     * 
+     *
      * @property {string} username
      * 用户名
-     * 
+     *
      * @property {string} wechatPhone
      * 微信号/手机号
-     * 
+     *
      * @property {string} email
      * 邮箱
-     * 
+     *
      * @property {string} perWebAddr
      * 个人主页地址
-     * 
+     *
      * @property {string} researchArea
      * 实验室方向
-     * 
+     *
      * @property {string} researchResults
      * 科研成果介绍
-     * 
+     *
      * @property {integer} lab
      * 研究所
      *
      */
-    teacherInfoGet: function(name, callback) {
-        console.log("teacherInfGet: " + name);
-        if(name=="1") callback({lastName: "一"});
-        else callback({lastName: ""});
+    teacherInfoGet: function(teacherID, recall) {
+        console.log("teacherInfGet: " + teacherID);
+        if(teacherID=="1") recall({lastName: "一"});
+        else recall({lastName: ""});
     },
 
 }

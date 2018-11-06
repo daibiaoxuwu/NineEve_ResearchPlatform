@@ -23,7 +23,7 @@ describe("app test", () => {
     })
     
     it('should contain sign in', () => {
-      expect(wrapper.text()).contain('Sign in');
+      expect(wrapper.text()).contain('Sign Out');
     })
 
   })
