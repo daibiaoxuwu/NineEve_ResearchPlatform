@@ -108,7 +108,7 @@ app.get('/register/getCaptcha', function(sReq, sRes){
     }
 
     if (sReq.query.email.length<200) {
-      home.register(sReq.query.email,function(result){
+      email.sendEmail(sReq.query.email,function(result){
 		      sRes.send(result);
 	   });
     }

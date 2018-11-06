@@ -18,13 +18,13 @@
               <div class="form-group col-md-6"> <label for="form19">Password</label> <input type="password" class="form-control" id="form19" placeholder="••••" v-model="registerPassword"> </div>
               <div class="form-group col-md-6"> <label for="form20">Confirm Password</label> <input type="password" class="form-control" id="form20" placeholder="••••" v-model="registerPasswordRepetition"> </div>
             </div>
-            <div class="form-group"> <label for="form18">CAPTCHA from Your Email</label> <input type="text" class="form-control" id="form21" placeholder="CAPTCHA" v-model="registerCaptcha"> </div>
+            <div class="form-group" style="display:none" id="divCaptcha"> <label for="form18">CAPTCHA from Your Email</label> <input type="text" class="form-control" id="form21" placeholder="CAPTCHA" v-model="registerCaptcha"> </div>
             <div class="form-group">
-              <div class="form-check"> <input class="form-check-input" type="checkbox" id="form21" value="on" v-model="registerAgreement"> <label class="form-check-label" for="form21"> I Agree with <a href="#">Term and Conditions</a> of the service </label> </div>
+              <div class="form-check"> <input class="form-check-input" type="checkbox" id="form22" value="on" v-model="registerAgreement"> <label class="form-check-label" for="form22"> I Agree with <a href="#">Term and Conditions</a> of the service </label> </div>
             </div>
           </form>
           <button class="btn btn-primary col-md-5" @click="getEmailCaptcha">Submit</button>
-          <button class="btn btn-primary col-md-5" @click="onRegister">Register</button>
+          <button class="btn btn-primary col-md-5" @click="onRegister" style="display:none" id="buttonRegister">Register</button>
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@ export default {
 
       if (that.registerEmail==null) that.registerEmail=="";
       if (that.registerEmail.length>200) {
-        
+
       }
       var isEmail = (new RegExp("@")).test(that.registerEmail);
       var isInUniv = (new RegExp("edu\.cn$")).test(that.registerEmail);
@@ -114,6 +114,8 @@ export default {
         {email:that.registerEmail}
      ).then(()=>{
        alert("A CAPTCHA has been sent to your email, please input it.\n 验证码已发送至您的邮箱, 请输入您收到的验证码.");
+       document.getElementById("divCaptcha").style.display="inline";
+       document.getElementById("buttonRegister").style.display="inline";
      });
    }
   }

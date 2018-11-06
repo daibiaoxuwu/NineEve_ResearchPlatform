@@ -119,6 +119,24 @@ app.get('/login/byTeacherId', function(sReq, sRes){
    }
 });
 
+app.get('/register/getCaptcha', function(sReq, sRes){
+    if (sReq.query.email == null) sReq.query.email = "";
+
+    if (sReq.query.email.length > 200) return;
+
+    var isEmail = (new RegExp("@")).test(sReq.query.email);
+    var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+    if (!isEmail || !isInUniv) {
+      return;
+    }
+
+    if (sReq.query.email.length<200) {
+      //email.sendEmail(sReq.query.email,function(result){
+		  //    sRes.send(result);
+	   //});
+    }
+});
+
 app.get('/login/byStudentId', function(sReq, sRes){
   if (sReq.query.studentId.length<200 && sReq.query.password.length<200) {
     home.studentLogin(sReq.query.studentId, sReq.query.password,function(result){
