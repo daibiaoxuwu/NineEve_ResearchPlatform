@@ -100,6 +100,9 @@ export default {
       var that = this;
 
       if (that.registerEmail==null) that.registerEmail=="";
+      if (that.registerEmail.length>200) {
+        
+      }
       var isEmail = (new RegExp("@")).test(that.registerEmail);
       var isInUniv = (new RegExp("edu\.cn$")).test(that.registerEmail);
       if (!isEmail || !isInUniv) {
@@ -107,7 +110,7 @@ export default {
         return;
       }
 
-      $.get('/register/getUrl',
+      $.get('/register/getCaptcha',
         {email:that.registerEmail}
      ).then(()=>{
        alert("A CAPTCHA has been sent to your email, please input it.\n 验证码已发送至您的邮箱, 请输入您收到的验证码.");

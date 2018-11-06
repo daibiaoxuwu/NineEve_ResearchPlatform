@@ -129,14 +129,27 @@ app.get('/login/byStudentId', function(sReq, sRes){
 });
 
 app.get('/register/getUrl', function(sReq, sRes){
-	console.log(sReq.query);
-  if (sReq.query.name.length<200 && sReq.query.university.length<200
-    && sReq.query.email.length<200 && sReq.query.password.length<200 && sReq.query.captcha.length<20) {
-   home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
+    console.log(sReq.query);
+
+    if (sReq.query.name == null) sReq.query.name = "";
+    if (sReq.query.university == null) sReq.query.university = "";
+    if (sReq.query.email == null) sReq.query.email = "";
+    if (sReq.query.password == null) sReq.query.password = "";
+    if (sReq.query.captcha == null) sReq.query.captcha = "";
+
+    var isEmail = (new RegExp("@")).test(sReq.query.email);
+    var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+    if (!isEmail || !isInUniv) {
+      return;
+    }
+
+    if (sReq.query.name.length<200 && sReq.query.university.length<200
+      && sReq.query.email.length<200 && sReq.query.password.length<200 && sReq.query.captcha.length<20) {
+      home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
         sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
-		sRes.send(result);
-	 });
-  }
+        sRes.send(result);
+      });
+    }
 });
 
 
