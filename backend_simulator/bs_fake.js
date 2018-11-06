@@ -67,6 +67,7 @@ var assignmentView = require(requireLoc + "/assignmentView");
 var assignmentForm = require(requireLoc + "/assignmentForm");
 var right = require(requireLoc + "/right");
 var evaluate = require(requireLoc + "/evaluate");
+var email_js = require(requireLoc + "/email");
 
 
 app.get('/login/byEmail', function(sReq, sRes){
@@ -108,7 +109,7 @@ app.get('/register/getCaptcha', function(sReq, sRes){
     }
 
     if (sReq.query.email.length<200) {
-      email.sendEmail(sReq.query.email,function(result){
+      email_js.sendCaptchaEmail(sReq.query.email,function(result){
 		      sRes.send(result);
 	   });
     }

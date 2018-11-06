@@ -112,8 +112,9 @@ export default {
 
       $.get('/register/getCaptcha',
         {email:that.registerEmail}
-     ).then(()=>{
+     ).then(function(data){
        alert("A CAPTCHA has been sent to your email, please input it.\n 验证码已发送至您的邮箱, 请输入您收到的验证码.");
+       //alert("captcha:" + data.captcha);
        document.getElementById("divCaptcha").style.display="inline";
        document.getElementById("buttonRegister").style.display="inline";
      });
