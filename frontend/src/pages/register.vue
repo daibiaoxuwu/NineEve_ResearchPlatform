@@ -18,11 +18,15 @@
               <div class="form-group col-md-6"> <label for="form19">Password</label> <input type="password" class="form-control" id="form19" placeholder="••••" v-model="registerPassword"> </div>
               <div class="form-group col-md-6"> <label for="form20">Confirm Password</label> <input type="password" class="form-control" id="form20" placeholder="••••" v-model="registerPasswordRepetition"> </div>
             </div>
+            <div class="form-group"> <label for="form18">CAPTCHA from Your Email</label> <input type="text" class="form-control" id="form21" placeholder="CAPTCHA" v-model="registerCaptcha"> </div>
             <div class="form-group">
               <div class="form-check"> <input class="form-check-input" type="checkbox" id="form21" value="on" v-model="registerAgreement"> <label class="form-check-label" for="form21"> I Agree with <a href="#">Term and Conditions</a> of the service </label> </div>
             </div>
           </form>
+          <div class="form-row">
            <button class="btn btn-primary" @click="onRegister">Register</button>
+           <button class="btn btn-primary" @click="launchCaptcha">Launch Captcha</button>
+          </div>
         </div>
       </div>
     </div>
@@ -65,7 +69,7 @@ export default {
         ).then(()=>{
           window.location.href="/studentInfo";
         });
-         
+
        }
        else {
          alert("The password repetition is not correct.\n 需要输入一致的密码.");
