@@ -23,10 +23,8 @@
               <div class="form-check"> <input class="form-check-input" type="checkbox" id="form21" value="on" v-model="registerAgreement"> <label class="form-check-label" for="form21"> I Agree with <a href="#">Term and Conditions</a> of the service </label> </div>
             </div>
           </form>
-          <div class="form-row">
-           <button class="btn btn-primary" @click="onRegister">Register</button>
-           <button class="btn btn-primary" @click="launchCaptcha">Launch Captcha</button>
-          </div>
+          <button class="btn btn-primary col-md-5" @click="getEmailCaptcha">Submit</button>
+          <button class="btn btn-primary col-md-5" @click="onRegister">Register</button>
         </div>
       </div>
     </div>
@@ -56,16 +54,33 @@ export default {
       registerName:"",
       registerUniv:"",
       registerEmail:"",
-      registerPassword:""
+      registerPassword:"",
+      registerCaptcha:""
     }
   },
   methods: {
    onRegister(){
-     if (this.registerAgreement==true) {
-       if (this.registerPassword==this.registerPasswordRepetition) {
+     var that = this;
+
+     if (that.registerCaptcha==null) that.registerCaptcha=="";
+     if (that.registerCaptcha=="") {
+       alert("Please input the captcha in your email.\n 请输入您邮箱中收到的验证码.");
+       return;
+     }
+
+     if (that.registerEmail==null) that.registerEmail=="";
+     var isEmail = (new RegExp("@")).test(that.registerEmail);
+     var isInUniv = (new RegExp("edu\.cn$")).test(that.registerEmail);
+     if (!isEmail || !isInUniv) {
+       alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
+       return;
+     }
+
+     if (that.registerAgreement==true) {
+       if (that.registerPassword==that.registerPasswordRepetition) {
          $.get('/register/getUrl',
-           {name:this.registerName, university:this.registerUniv, email:this.registerEmail,
-             password:this.registerPassword}
+           {name:that.registerName, university:that.registerUniv, email:that.registerEmail,
+             password:that.registerPassword, captcha:that.registerCaptcha}
         ).then(()=>{
           window.location.href="/studentInfo";
         });
@@ -79,6 +94,24 @@ export default {
        alert("You should agree with Term and Conditions of the service first!\n请点击 同意 勾选框. ");
      }
 
+   },
+
+   getEmailCaptcha() {
+      var that = this;
+
+      if (that.registerEmail==null) that.registerEmail=="";
+      var isEmail = (new RegExp("@")).test(that.registerEmail);
+      var isInUniv = (new RegExp("edu\.cn$")).test(that.registerEmail);
+      if (!isEmail || !isInUniv) {
+        alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
+        return;
+      }
+
+      $.get('/register/getUrl',
+        {email:that.registerEmail}
+     ).then(()=>{
+       alert("A CAPTCHA has been sent to your email, please input it.\n 验证码已发送至您的邮箱, 请输入您收到的验证码.");
+     });
    }
   }
 };

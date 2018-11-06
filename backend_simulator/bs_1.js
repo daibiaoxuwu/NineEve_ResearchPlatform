@@ -79,23 +79,23 @@ var right = require(requireLoc + "/right");
 var evaluate = require(requireLoc + "/evaluate");
 
 // app.get('/api/getCaptcha', function(req, res) {
-//     var captcha = svgCaptcha.create({  
-//         // 翻转颜色  
-//         inverse: false,  
-//         // 字体大小  
-//         fontSize: 36,  
-//         // 噪声线条数  
-//         noise: 2,  
-//         // 宽度  
-//         width: 80,  
-//         // 高度  
-//         height: 30,  
-//     });  
-//     // 保存到session,忽略大小写  
-//     req.session = captcha.text.toLowerCase(); 
+//     var captcha = svgCaptcha.create({
+//         // 翻转颜色
+//         inverse: false,
+//         // 字体大小
+//         fontSize: 36,
+//         // 噪声线条数
+//         noise: 2,
+//         // 宽度
+//         width: 80,
+//         // 高度
+//         height: 30,
+//     });
+//     // 保存到session,忽略大小写
+//     req.session = captcha.text.toLowerCase();
 //     console.log(req.session); //0xtg 生成的验证码
 //     //保存到cookie 方便前端调用验证
-//     res.cookie('captcha', req.session); 
+//     res.cookie('captcha', req.session);
 //     res.setHeader('Content-Type', 'image/svg+xml');
 //     res.write(String(captcha.data));
 //     res.end();
@@ -131,7 +131,7 @@ app.get('/login/byStudentId', function(sReq, sRes){
 app.get('/register/getUrl', function(sReq, sRes){
 	console.log(sReq.query);
   if (sReq.query.name.length<200 && sReq.query.university.length<200
-    && sReq.query.email.length<200 && sReq.query.password.length<200) {
+    && sReq.query.email.length<200 && sReq.query.password.length<200 && sReq.query.captcha.length<20) {
    home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
         sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
 		sRes.send(result);
@@ -692,23 +692,23 @@ app.get('/home/get', function(sReq, sRes) {
 
 
 app.get('/api/getCaptcha', function(req, res) {
-    var captcha = svgCaptcha.create({  
-        // 翻转颜色  
-        inverse: false,  
-        // 字体大小  
-        fontSize: 36,  
-        // 噪声线条数  
-        noise: 2,  
-        // 宽度  
-        width: 80,  
-        // 高度  
-        height: 30,  
-    });  
-    // 保存到session,忽略大小写  
-    req.session.captcha = captcha.text.toLowerCase(); 
+    var captcha = svgCaptcha.create({
+        // 翻转颜色
+        inverse: false,
+        // 字体大小
+        fontSize: 36,
+        // 噪声线条数
+        noise: 2,
+        // 宽度
+        width: 80,
+        // 高度
+        height: 30,
+    });
+    // 保存到session,忽略大小写
+    req.session.captcha = captcha.text.toLowerCase();
     console.log(req.session.captcha); //0xtg 生成的验证码
     //保存到cookie 方便前端调用验证
-    res.cookie('captcha', req.session.captcha); 
+    res.cookie('captcha', req.session.captcha);
     res.setHeader('Content-Type', 'image/svg+xml');
     res.write(String(captcha.data));
     res.end();
