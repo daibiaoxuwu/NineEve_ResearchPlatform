@@ -5,3 +5,4 @@ import BootstrapVue from 'bootstrap-vue'
 global.$ = global.jQuery = $;
 global.Vue = Vue;
 global.BootstrapVue = BootstrapVue;
+Vue.use(BootstrapVue);
