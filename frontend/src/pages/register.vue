@@ -61,6 +61,7 @@ export default {
   methods: {
    onRegister(){
      var that = this;
+     var passwdSHA256;
 
      if (that.registerCaptcha==null) that.registerCaptcha=="";
      if (that.registerCaptcha=="") {
@@ -77,10 +78,14 @@ export default {
      }
 
      if (that.registerAgreement==true) {
+       if (that.registerPassword != null) {
+          passwdSHA256 = require("js-sha256").sha256(that.registerPassword);
+          //alert(passwdSHA256.length);
+       }
        if (that.registerPassword==that.registerPasswordRepetition) {
          $.get('/register/getUrl',
            {name:that.registerName, university:that.registerUniv, email:that.registerEmail,
-             password:that.registerPassword, captcha:that.registerCaptcha}
+             password:passwdSHA256, captcha:that.registerCaptcha}
         ).then(()=>{
           window.location.href="/studentInfo";
         });
