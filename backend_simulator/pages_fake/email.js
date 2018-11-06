@@ -8,12 +8,14 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-const testmodule = '【科研信息平台】[请勿将验证码告知任何人，否则账号被盗平台不予处理]验证码：';
+const testModule = '【科研信息平台】[请勿将验证码告知任何人，否则账号被盗平台不予处理]验证码：';
+const subjectModule = '【科研信息平台】';
+const notificationModule = ['同学你好，你已经被', '项目录取。请登录科研信息平台联系项目导师。'];
 
 var mailOptions = {
   from: '科研信息平台<18801290116@163.com>',
   to: '',
-  subject: '【科研信息平台】验证码',
+  subject: '',
   text: ''
 };
 
@@ -23,7 +25,7 @@ module.exports = {
    * 在使用邮箱服务之前需要先验证是否可用。
    *
    * @property {string} response
-   * 发送成功返回'verify success'
+   * 发送成功返回'success'
    * 失败返回错误信息
    *
    */
@@ -33,7 +35,7 @@ module.exports = {
         console.log(error);
       } else {
         res({
-          response: 'verify success'
+          response: 'success'
         });
       }
     });
@@ -46,7 +48,8 @@ module.exports = {
    * 登陆者的电子邮箱
    *
    * @property {string} response
-   * 发送成功返回信息，失败返回error信息
+   * 发送成功返回'success'，
+   * 失败返回error信息
    * @property {int} captcha
    * int形式的6位验证码，用于验证输入是否正确
    *
@@ -54,7 +57,8 @@ module.exports = {
   sendEmail: function(req, res){
     mailOptions.to = req.clientEmail;
     var captcha = Math.floor(Math.random() * 800000 + 100000);
-    mailOptions.text = testmodule + captcha.toString();
+    mailOptions.text = testModule + captcha.toString();
+    mailOptions.subject = subjectModule + '验证码';
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
         console.log(error);
@@ -64,8 +68,43 @@ module.exports = {
         });
       } else {
         res({
-          response: 'sendEmail: ' + info.response,
+          response: 'success',
           captcha: captcha
+        });
+      }
+    });
+  },
+
+  /**
+  * 发送报名通过邮件
+  *
+  * @param {string} clientEmail
+  * 报名同学的电子邮箱
+  * @param {string} assignmentTitle
+  * 学生报名项目的题目
+  * @param {string} lastName
+  * 学生的姓
+  * @param {string} firstName
+  * 学生的名
+  *
+  * @property {string} response
+  * 发送成功返回'success，
+  * 失败返回error信息
+  *
+  */
+  sendNotification: function(req, res){
+    mailOptions.to = req.clientEmail;
+    mailOptions.text = req.lastName + req.firstName + notificationModule[0] + req.assignmentTitle + notificationModule[1];
+    mailOptions.subject = subjectModule + req.assignmentTitle + '项目报名通过';
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+        res({
+          response: error
+        });
+      } else {
+        res({
+          response: 'success'
         });
       }
     });
