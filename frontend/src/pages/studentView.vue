@@ -45,6 +45,20 @@
       </div>
     </div>
   </div>
+    <button class="btn btn-secondary btn-lg btn-block" @click="visit">Return 返回</button>
+
+  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
+  <!-- Modal Component -->
+  <b-modal id="modal1" title="同意报名"  @ok="handleOk">
+    <p class="my-4">是否同意 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
+  </b-modal>
+
+  <b-btn v-b-modal.modal2 v-bind:class="class2" style="margin-top:0.5rem;">Reject Enrollment 拒绝报名</b-btn>
+
+  <!-- Modal Component -->
+  <b-modal id="modal2" title="拒绝报名"  @ok="handleRefuse">
+    <p class="my-4">是否拒绝 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
+  </b-modal>
   
   
      </div>
@@ -86,6 +100,24 @@ export default {
         });
   },
   methods: {
+    handleOk (){
+      var that = this;
+        $.get('/studentView/accept',
+    {}).then(function(result){
+      if(result.acceptSuccess){
+      that.$router.push({path:"/enrollAccepted", query:{detail: that.detail}});
+      }
+    })
+    },
+     handleRefuse (){
+      var that = this;
+        $.get('/studentView/refuse',
+    {}).then(function(result){
+      if(result.acceptSuccess){
+      that.$router.push("/enrollRefused");
+      }
+    })
+    },
   }
   
 };

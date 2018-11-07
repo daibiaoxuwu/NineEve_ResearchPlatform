@@ -714,7 +714,16 @@ app.get('/enrollStatus/launch', function(sReq, sRes) {
         sRes.send(result);
     })
 });
-
+app.get('/studentView/accept', function(sReq, sRes) {
+    enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.session.selectStudent, function(result){
+        sRes.send(result);
+    })
+});
+app.get('/studentView/refuse', function(sReq, sRes) {
+    enrollStatus.enrollStatusReject(sReq.session.user.id, sReq.session.assignment.title, sReq.session.selectStudent, function(result){
+        sRes.send(result);
+    })
+});
 
 
 app.get('/home/setAssignment', function(sReq, sRes) {
