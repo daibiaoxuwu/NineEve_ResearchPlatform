@@ -226,7 +226,7 @@ module.exports = {
       case 2: //导师已通过学生申请后给发送确认邮件
         var teacherId = req.teacherId;
         var studentId = req.studentId;
-        var assignmentTitle ＝ "九夕成员睡眠质量分析";
+        var assignmentTitle = "九夕成员睡眠质量分析";
         if (req.assignmentTitle != null)
           assignmentTitle = req.assignmentTitle;
 
