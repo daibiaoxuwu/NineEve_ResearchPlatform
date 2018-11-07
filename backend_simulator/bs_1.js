@@ -542,15 +542,23 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
        if (result.launchSuccess == true) {
-         var req = {
+         var req1 = {
            lastName: sReq.query.lastName,
            firstName: sReq.query.firstName,
-           clientEmail: sReq.session.user.email,
+           clientEmail: sReq.query.email,
            assignmentTitle: sReq.session.assignment.title
          };
-         email_js.sendEnrollNotificationToStudent(req, 1, function(res){
-   		      sRes.send(res);
-   	      });
+         email_js.sendEnrollNotificationToStudent(req1, 1, function(res1){
+   		      //something about res1
+   	     });
+
+         var req2 = {
+           teacherId: sReq.session.assignment.teacherId,
+           assignmentTitle: sReq.session.assignment.title
+         };
+         email_js.sendEnrollNotificationToTeacher(req2, 1, function(res2){
+            //something about res2
+         });
        }
 		 });
 });

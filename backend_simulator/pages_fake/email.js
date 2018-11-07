@@ -11,8 +11,12 @@ var transporter = nodemailer.createTransport({
 const testModule = '【科研信息平台】[请勿将验证码告知任何人，否则账号被盗平台不予处理]验证码：';
 const subjectModule = '【科研信息平台】';
 const notificationModule = ['同学你好，你已经被', '项目录取。请登录科研信息平台联系项目导师。'];
+
 const notificationModuleStudentCase1 =
-  ['同学你好，你已成功提交', '项目的报名申请。请等待审核。'];
+  ['同学你好，你已成功提交', '项目的报名申请，请等待审核。'];
+
+const notificationModuleTeacherCase1 =
+  ['老师您好，您的', '项目已有新的学生报名，请登录科研信息平台审核。'];
 
 
 var mailOptions = {
@@ -142,16 +146,50 @@ module.exports = {
   * 所有给学生发送报名相关事宜的邮件
   */
   sendEnrollNotificationToStudent: function(req, reqNo, res){
-    mailOptions.to = req.clientEmail;
-
     switch (reqNo) {
       case 1: //学生报名提交后收到的通知
-        console.log(req.lastName);
-        console.log(req.firstName);
         console.log(req.clientEmail);
         console.log(req.assignmentTitle);
+        mailOptions.to = req.clientEmail;
         mailOptions.text = req.lastName + req.firstName + notificationModuleStudentCase1[0]
           + req.assignmentTitle + notificationModuleStudentCase1[1];
+        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已提交';
+        break;
+
+      default:
+        return;
+    }
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+        res({
+          response: error
+        });
+      } else {
+        res({
+          response: 'success'
+        });
+      }
+    });
+  },
+
+  /**
+  * 所有给老师发送报名相关事宜的邮件
+  */
+  sendEnrollNotificationToTeacher: function(req, reqNo, res){
+    switch (reqNo) {
+      case 1: //学生报名提交后, 导师收到通知
+        var teacherId = req.teacherId;
+        var clientEmail;
+        var lastName;
+        var firstName;
+
+        //根据teacherId查询老师的姓,名,邮箱
+
+        mailOptions.to = clientEmail;
+        mailOptions.text = lastName + firstName + notificationModuleTeacherCase1[0]
+          + req.assignmentTitle + notificationModuleTeacherCase1[1];
         mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已提交';
         break;
 

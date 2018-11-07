@@ -302,7 +302,7 @@ export default {
           perWebAddr: that.perWebAddr, selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll, award: that.award },
         function(data){
           if(data.launchSuccess){
-      that.$router.push("/enrollSuccess")
+            that.$router.push("/enrollSuccess");
           }
         }
       )
