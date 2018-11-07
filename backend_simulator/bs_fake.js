@@ -401,7 +401,7 @@ app.get('/enrollForm/save', function(sReq, sRes) {
     if (sReq.query.award == null) sReq.query.award = "";
 
     if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
-      || sReq.query.studentId>20 || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200
+      || sReq.query.studentId.length>20 || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200
       || sReq.query.perWebAddr.length>200 || sReq.query.selfIntr.length>2000 || sReq.query.reasonEnroll.length>2000
       || sReq.query.award>2000) {
         return;
@@ -466,7 +466,7 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
     }
 
     if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
-      || sReq.query.studentId>20 || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200
+      || sReq.query.studentId.length>20 || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200
       || sReq.query.perWebAddr.length>200 || sReq.query.selfIntr.length>2000 || sReq.query.reasonEnroll.length>2000
       || sReq.query.award>2000) {
         return;
@@ -509,6 +509,17 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
+       if (result.launchSuccess == true) {
+         var req = {
+           lastName: sReq.query.lastName,
+           firstName: sReq.query.firstName,
+           clientEmail: sReq.session.user.email,
+           assignmentTitle: sReq.session.assignment.title
+         };
+         email_js.sendEnrollNotificationToStudent(req, 1, function(res){
+   		      sRes.send(res);
+   	      });
+       }
 		 });
 });
 

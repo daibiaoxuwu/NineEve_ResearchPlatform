@@ -133,5 +133,40 @@ module.exports = {
         });
       }
     });
+  },
+
+  /**
+  * 所有给学生发送报名相关事宜的邮件
+  */
+  sendEnrollNotificationToStudent: function(req, reqNo, res){
+    mailOptions.to = req.clientEmail;
+
+    switch (reqNo) {
+      case 1: //学生报名提交后收到的通知
+        console.log(req.lastName);
+        console.log(req.firstName);
+        console.log(req.clientEmail);
+        console.log(req.assignmentTitle);
+        mailOptions.text = req.lastName + req.firstName + notificationModuleStudentCase1[0]
+          + req.assignmentTitle + notificationModuleStudentCase1[1];
+        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已提交';
+        break;
+
+      default:
+        return;
+    }
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+        res({
+          response: error
+        });
+      } else {
+        res({
+          response: 'success'
+        });
+      }
+    });
   }
 }
