@@ -76,21 +76,35 @@ module.exports = {
      * 
      */
     enrollStatusAccept: function(teacherId, title, studentId, callback){
-		connection.query('select * from enrollform where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"', function (error, results, fields){
+		connection.query('select * from enrollform where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '" and `success`=0', function (error, results, fields){
 			if(results.length>0)
 			{
 				connection.query('update enrollform set `success`=1,`teacherread`=1,`studentread`=0 where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"');
-				callback({acceptSuccess: true})
+				connection.query('select * from student where studentid="' + studentId + '"', function (err, resul, fiel){
+					if(resul.length>0)
+						callback({acceptSuccess: true,
+								  clientEmail: resul[0].email,
+								  firstName: resul[0].firstname,
+								  lastName: resul[0].lastname});
+					else
+						callback({acceptSuccess: false,
+								  clientEmail: "",
+								  firstName: "",
+								  lastName: ""});
+				});
 			}
 			else
 			{
-				callback({acceptSuccess: false});
+				callback({acceptSuccess: false,
+						  clientEmail: "",
+						  firstName: "",
+						  lastName: ""});
 			}
 		});
     },
 	
 	enrollStatusReject: function(teacherId, title, studentId, callback){
-		connection.query('select * from enrollform where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"', function (error, results, fields){
+		connection.query('select * from enrollform where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '" and `success`=0', function (error, results, fields){
 			if(results.length>0)
 			{
 				connection.query('update enrollform set `success`=2,`teacherread`=1,`studentread`=0 where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"');
@@ -102,6 +116,7 @@ module.exports = {
 			}
 		});
 	},
+	
     enrollStatusLaunch: function(teacher, title, callback){
 		connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 			if(results.length>0)

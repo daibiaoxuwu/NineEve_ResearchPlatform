@@ -122,6 +122,12 @@ export default {
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
       var that = this;
+
+      var passwdSHA256;
+      if (inputPassword != null) {
+        passwdSHA256 = require("js-sha256").sha256(inputPassword);
+        //alert(passwdSHA256.length);
+      }
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
       if (inputName && inputName.length<200 && inputPassword && inputPassword.length<200) {

@@ -6,8 +6,8 @@ module.exports = {
     teacherEvaluateSave: function(teacherId, title, satis, intro, reason, callback){
         callback({saveSuccess: true});
     },
-    
-    studentEvaluateGet: function(id, title, teacherId,  callback){
+
+    studentEvaluateGet: function(title, teacherId,  callback){
         callback({satis: "1", learned: "2", notlearned:"3"});
     },
     teacherEvaluateGet: function(teacherId, title, callback){

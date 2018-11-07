@@ -155,7 +155,7 @@ export default {
       if (that.award == null) that.award = "";
 
       if (that.lastName.length>20 || that.firstName.length>20 || that.username.length>200
-        || that.studentId>20 || that.wechatPhone.length>200 || that.email.length>200
+        || that.studentId.length>20 || that.wechatPhone.length>200 || that.email.length>200
         || that.perWebAddr.length>200 || that.selfIntr.length>2000 || that.reasonEnroll.length>2000
         || that.award>2000) {
           alert("Your input is beyond limitation.\n 您的输入超出字符长度限制.");
@@ -253,7 +253,7 @@ export default {
       }
 
       if (that.lastName.length>20 || that.firstName.length>20 || that.username.length>200
-        || that.studentId>20 || that.wechatPhone.length>200 || that.email.length>200
+        || that.studentId.length>20 || that.wechatPhone.length>200 || that.email.length>200
         || that.perWebAddr.length>200 || that.selfIntr.length>2000 || that.reasonEnroll.length>2000
         || that.award>2000) {
           alert("Your input is beyond limitation.\n 您的输入超出字符长度限制.");
@@ -302,7 +302,7 @@ export default {
           perWebAddr: that.perWebAddr, selfIntr: that.selfIntr, reasonEnroll: that.reasonEnroll, award: that.award },
         function(data){
           if(data.launchSuccess){
-      that.$router.push("/enrollSuccess")
+            that.$router.push("/enrollSuccess");
           }
         }
       )
