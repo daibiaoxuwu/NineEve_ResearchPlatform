@@ -14,9 +14,13 @@ const notificationModule = ['同学你好，你已经被', '项目录取。请�
 
 const notificationModuleStudentCase1 =
   ['同学你好，你已成功提交', '项目的报名申请，请等待审核。'];
+const notificationModuleStudentCase2 =
+  ['同学你好，你对', '项目的报名申请已被通过，请登录科研信息平台确认。'];
 
 const notificationModuleTeacherCase1 =
   ['老师您好，您的', '项目已有新的学生报名，请登录科研信息平台审核。'];
+const notificationModuleTeacherCase2 =
+  ['老师您好，您已同意', '同学加入', '项目。请等待学生最后确认。'];
 
 
 var mailOptions = {
@@ -156,6 +160,21 @@ module.exports = {
         mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已提交';
         break;
 
+      case 2: //学生申请被通过后收到邮件通知
+        var teacherId = req.teacherId;
+        var studentId = req.studentId;
+        var studentEmail;
+        var lastNameStudent;
+        var firstNameStudent;
+
+        //根据studentId查询学生姓,名
+
+        mailOptions.to = studentEmail;
+        mailOptions.text = lastNameStudent + firstNameStudent + notificationModuleStudentCase2[0]
+          + req.assignmentTitle + notificationModuleStudentCase2[1];
+        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已通过';
+        break;
+
       default:
         return;
     }
@@ -190,7 +209,25 @@ module.exports = {
         mailOptions.to = clientEmail;
         mailOptions.text = lastName + firstName + notificationModuleTeacherCase1[0]
           + req.assignmentTitle + notificationModuleTeacherCase1[1];
-        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已提交';
+        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目已有新报名';
+        break;
+
+      case 2: //导师已通过学生申请后给发送确认邮件
+        var teacherId = req.teacherId;
+        var studentId = req.studentId;
+        var teacherEmail;
+        var lastNameTeacher;
+        var firstNameTeacher;
+        var lastNameStudent;
+        var firstNameStudent;
+
+        //根据teacherId查询老师的姓,名,邮箱; 根据studentId查询学生姓,名
+
+        mailOptions.to = teacherEmail;
+        mailOptions.text = lastNameTeacher + firstNameTeacher + notificationModuleTeacherCase2[0]
+          + lastNameStudent + firstNameStudent + notificationModuleTeacherCase2[1] +
+          req.assignmentTitle + notificationModuleTeacherCase2[2];
+        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目同意学生报名通知';
         break;
 
       default:
