@@ -27,12 +27,12 @@ module.exports = {
 							text: resul[0].lastname + resul[0].firstname,
 							department: "CST 计算机系",
 							grade: resul[0].grade,
-							success: resul[0].success});
+							success: results[0].success});
 				statu.push({id: results[i].student,
 							text: resul[0].lastname + resul[0].firstname,
 							department: "CST 计算机系",
 							grade: resul[0].grade,
-							success: resul[0].success});
+							success: results[0].success});
 				that.enrollQuery(results, statu, i-1, callback);
 			});
 		} else {

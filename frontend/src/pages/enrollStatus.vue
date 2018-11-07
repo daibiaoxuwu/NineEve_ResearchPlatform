@@ -170,12 +170,12 @@ export default {
   computed: {
     enrollList: function(){
       return this.list.filter(function(item){
-        return item.success === 0;
+        return item.success == 0;
       })
     },
     acceptedList: function(){
       return this.list.filter(function(item){
-        return item.success === 1;
+        return item.success == 1;
       })
     },
   },

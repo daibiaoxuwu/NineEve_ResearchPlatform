@@ -419,7 +419,7 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 		 });
 });
 app.get('/studentView/get', function(sReq, sRes) {
-    studentInfo.studentInfoGet(sReq.query.id, sReq.query.id, function(result){
+    studentInfo.studentInfoGet(sReq.session.selectStudent, sReq.session.selectStudent, function(result){
 			 sRes.send(result);
 		 });
 });
@@ -612,7 +612,7 @@ app.get('/home/setAssignment', function(sReq, sRes) {
         sReq.session.assignment = item;
         sRes.send(item);
     })
-})``
+});
 
 app.get('/assignmentForm/save', function(sReq, sRes) {
     console.log(sReq);
