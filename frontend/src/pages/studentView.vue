@@ -25,9 +25,8 @@
              {{dropdownText}}
               </small>
          </h4>
-          
-            <b-pagination-nav base-url="#" :number-of-pages="num" v-model="currentPage" />
 
+               
 
    
     <p class="form-text" style="font-weight:bold;">Email 邮箱</p>
@@ -87,7 +86,7 @@ export default {
         });
   },
   methods: {
-  },
+  }
   
 };
 </script>
