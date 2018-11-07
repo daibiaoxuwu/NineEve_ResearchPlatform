@@ -152,27 +152,34 @@ module.exports = {
   sendEnrollNotificationToStudent: function(req, reqNo, res){
     switch (reqNo) {
       case 1: //学生报名提交后收到的通知
-        console.log(req.clientEmail);
-        console.log(req.assignmentTitle);
-        mailOptions.to = req.clientEmail;
+        var assignmentTitle = "九夕成员睡眠质量分析";
+        if (req.assignmentTitle != null)
+          assignmentTitle = req.assignmentTitle;
+
+
+        mailOptions.to = studentEmail;
         mailOptions.text = req.lastName + req.firstName + notificationModuleStudentCase1[0]
-          + req.assignmentTitle + notificationModuleStudentCase1[1];
-        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已提交';
+          + assignmentTitle + notificationModuleStudentCase1[1];
+        mailOptions.subject = subjectModule + assignmentTitle + ' 项目报名申请已提交';
         break;
 
       case 2: //学生申请被通过后收到邮件通知
         var teacherId = req.teacherId;
         var studentId = req.studentId;
-        var studentEmail;
-        var lastNameStudent;
-        var firstNameStudent;
+        var assignmentTitle = "九夕成员睡眠质量分析";
+        if (req.assignmentTitle != null)
+          assignmentTitle = req.assignmentTitle;
+        //以下是默认值，需要改
+        var studentEmail = "yangzh16@mails.tsinghua.edu.cn";
+        var lastNameStudent = "肖";
+        var firstNameStudent = "特奖";
 
         //根据studentId查询学生姓,名
 
         mailOptions.to = studentEmail;
         mailOptions.text = lastNameStudent + firstNameStudent + notificationModuleStudentCase2[0]
-          + req.assignmentTitle + notificationModuleStudentCase2[1];
-        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已通过';
+          + assignmentTitle + notificationModuleStudentCase2[1];
+        mailOptions.subject = subjectModule + assignmentTitle + ' 项目报名申请已通过';
         break;
 
       default:
@@ -200,34 +207,43 @@ module.exports = {
     switch (reqNo) {
       case 1: //学生报名提交后, 导师收到通知
         var teacherId = req.teacherId;
-        var clientEmail;
-        var lastName;
-        var firstName;
+        var assignmentTitle = "九夕成员睡眠质量分析";
+        if (req.assignmentTitle != null)
+          assignmentTitle = req.assignmentTitle;
+        //以下是默认值，需要改
+        var teacherEmail = "dujl16@mails.tsinghua.edu.cn";
+        var lastNameTeacher = "杜";
+        var firstNameTeacher = "迦罗";
 
         //根据teacherId查询老师的姓,名,邮箱
 
-        mailOptions.to = clientEmail;
+        mailOptions.to = teacherEmail;
         mailOptions.text = lastName + firstName + notificationModuleTeacherCase1[0]
-          + req.assignmentTitle + notificationModuleTeacherCase1[1];
-        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目已有新报名';
+          + assignmentTitle + notificationModuleTeacherCase1[1];
+        mailOptions.subject = subjectModule + assignmentTitle + ' 项目已有新报名';
         break;
 
       case 2: //导师已通过学生申请后给发送确认邮件
         var teacherId = req.teacherId;
         var studentId = req.studentId;
-        var teacherEmail;
-        var lastNameTeacher;
-        var firstNameTeacher;
-        var lastNameStudent;
-        var firstNameStudent;
+        var assignmentTitle ＝ "九夕成员睡眠质量分析";
+        if (req.assignmentTitle != null)
+          assignmentTitle = req.assignmentTitle;
+
+        //以下是默认值，需要改
+        var teacherEmail = "dujl16@mails.tsinghua.edu.cn";
+        var lastNameTeacher = "杜";
+        var firstNameTeacher = "迦罗";
+        var lastNameStudent = "肖";
+        var firstNameStudent = "特奖";
 
         //根据teacherId查询老师的姓,名,邮箱; 根据studentId查询学生姓,名
 
         mailOptions.to = teacherEmail;
         mailOptions.text = lastNameTeacher + firstNameTeacher + notificationModuleTeacherCase2[0]
           + lastNameStudent + firstNameStudent + notificationModuleTeacherCase2[1] +
-          req.assignmentTitle + notificationModuleTeacherCase2[2];
-        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目同意学生报名通知';
+          assignmentTitle + notificationModuleTeacherCase2[2];
+        mailOptions.subject = subjectModule + assignmentTitle + ' 项目同意学生报名通知';
         break;
 
       default:

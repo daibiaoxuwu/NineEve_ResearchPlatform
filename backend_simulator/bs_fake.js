@@ -513,7 +513,7 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
          var req1 = {
            lastName: sReq.query.lastName,
            firstName: sReq.query.firstName,
-           clientEmail: sReq.query.email,
+           studentEmail: sReq.query.email,
            assignmentTitle: sReq.session.assignment.title
          };
          email_js.sendEnrollNotificationToStudent(req1, 1, function(res1){
