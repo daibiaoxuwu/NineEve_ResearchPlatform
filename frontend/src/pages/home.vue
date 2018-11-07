@@ -122,11 +122,17 @@ export default {
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
       var that = this;
+
+      var passwdSHA256;
+      if (inputPassword != null) {
+        passwdSHA256 = require("js-sha256").sha256(inputPassword);
+        //alert(passwdSHA256.length);
+      }
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
       if (inputName && inputName.length<200 && inputPassword && inputPassword.length<200) {
         if (inputTORS=="teacher") {
-          $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword, code:that.code})
+          $.get('/login/byTeacherId', {teacherId:inputName,password:passwdSHA256, code:that.code})
             .then(function(data){
                if(data.codeError) {
                 alert("验证码错误")
@@ -147,7 +153,7 @@ export default {
         else if (inputTORS=="student"){
           var isEmail = (new RegExp("@")).test(inputName);
           if (isEmail) {
-            $.get('/login/byEmail', {email:inputName,password:inputPassword, code:that.code})
+            $.get('/login/byEmail', {email:inputName,password:passwdSHA256, code:that.code})
               .then(function(data){
                 if(data.codeError) {
                 alert("验证码错误")
@@ -166,7 +172,7 @@ export default {
             );
           }
           else {
-            $.get('/login/byStudentId', {studentId:inputName,password:inputPassword, code:that.code})
+            $.get('/login/byStudentId', {studentId:inputName,password:passwdSHA256, code:that.code})
               .then(function(data){
                 console.log(data);
                  if(data.codeError) {

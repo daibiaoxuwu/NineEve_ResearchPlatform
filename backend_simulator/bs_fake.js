@@ -67,6 +67,7 @@ var assignmentView = require(requireLoc + "/assignmentView");
 var assignmentForm = require(requireLoc + "/assignmentForm");
 var right = require(requireLoc + "/right");
 var evaluate = require(requireLoc + "/evaluate");
+var email_js = require(requireLoc + "/email");
 
 
 app.get('/login/byEmail', function(sReq, sRes){
@@ -96,15 +97,46 @@ app.get('/login/byStudentId', function(sReq, sRes){
   }
 });
 
+app.get('/register/getCaptcha', function(sReq, sRes){
+    if (sReq.query.email == null) sReq.query.email = "";
+
+    if (sReq.query.email.length > 200) return;
+
+    var isEmail = (new RegExp("@")).test(sReq.query.email);
+    var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+    if (!isEmail || !isInUniv) {
+      return;
+    }
+
+    if (sReq.query.email.length<200) {
+      email_js.sendCaptchaEmail(sReq.query.email,function(result){
+		      sRes.send(result);
+	   });
+    }
+});
+
 app.get('/register/getUrl', function(sReq, sRes){
-	console.log(sReq.query);
-  if (sReq.query.name.length<200 && sReq.query.university.length<200
-    && sReq.query.email.length<200 && sReq.query.password.length<200) {
-   home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
-        sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
-		sRes.send(result);
-	 });
-  }
+    console.log(sReq.query);
+
+    if (sReq.query.name == null) sReq.query.name = "";
+    if (sReq.query.university == null) sReq.query.university = "";
+    if (sReq.query.email == null) sReq.query.email = "";
+    if (sReq.query.password == null) sReq.query.password = "";
+    if (sReq.query.captcha == null) sReq.query.captcha = "";
+
+    var isEmail = (new RegExp("@")).test(sReq.query.email);
+    var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
+    if (!isEmail || !isInUniv) {
+      return;
+    }
+
+    if (sReq.query.name.length<200 && sReq.query.university.length<200
+      && sReq.query.email.length<200 && sReq.query.password.length<200 && sReq.query.captcha.length<20) {
+     home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
+          sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
+      sRes.send(result);
+     });
+    }
 });
 
 
@@ -369,7 +401,7 @@ app.get('/enrollForm/save', function(sReq, sRes) {
     if (sReq.query.award == null) sReq.query.award = "";
 
     if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
-      || sReq.query.studentId>20 || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200
+      || sReq.query.studentId.length>20 || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200
       || sReq.query.perWebAddr.length>200 || sReq.query.selfIntr.length>2000 || sReq.query.reasonEnroll.length>2000
       || sReq.query.award>2000) {
         return;
@@ -434,7 +466,7 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
     }
 
     if (sReq.query.lastName.length>20 || sReq.query.firstName.length>20 || sReq.query.username.length>200
-      || sReq.query.studentId>20 || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200
+      || sReq.query.studentId.length>20 || sReq.query.wechatPhone.length>200 || sReq.query.email.length>200
       || sReq.query.perWebAddr.length>200 || sReq.query.selfIntr.length>2000 || sReq.query.reasonEnroll.length>2000
       || sReq.query.award>2000) {
         return;
@@ -477,6 +509,17 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
+       if (result.launchSuccess == true) {
+         var req = {
+           lastName: sReq.query.lastName,
+           firstName: sReq.query.firstName,
+           clientEmail: sReq.session.user.email,
+           assignmentTitle: sReq.session.assignment.title
+         };
+         email_js.sendEnrollNotificationToStudent(req, 1, function(res){
+   		      sRes.send(res);
+   	      });
+       }
 		 });
 });
 
@@ -660,23 +703,23 @@ app.get('/home/get', function(sReq, sRes) {
 
 
 app.get('/api/getCaptcha', function(req, res) {
-    var captcha = svgCaptcha.create({  
-        // 翻转颜色  
-        inverse: false,  
-        // 字体大小  
-        fontSize: 36,  
-        // 噪声线条数  
-        noise: 2,  
-        // 宽度  
-        width: 80,  
-        // 高度  
-        height: 30,  
-    });  
-    // 保存到session,忽略大小写  
-    req.session.captcha = captcha.text.toLowerCase(); 
+    var captcha = svgCaptcha.create({
+        // 翻转颜色
+        inverse: false,
+        // 字体大小
+        fontSize: 36,
+        // 噪声线条数
+        noise: 2,
+        // 宽度
+        width: 80,
+        // 高度
+        height: 30,
+    });
+    // 保存到session,忽略大小写
+    req.session.captcha = captcha.text.toLowerCase();
     console.log(req.session.captcha); //0xtg 生成的验证码
     //保存到cookie 方便前端调用验证
-    res.cookie('captcha', req.session.captcha); 
+    res.cookie('captcha', req.session.captcha);
     res.setHeader('Content-Type', 'image/svg+xml');
     res.write(String(captcha.data));
     res.end();
