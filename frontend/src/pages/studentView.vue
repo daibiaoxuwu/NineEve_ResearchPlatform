@@ -57,7 +57,6 @@ import rightpane from '../components/right.vue';
 export default {
   data() {
     return {
-      dropdownText: 'Software Laboratory 软件所',
       grade: "Junior 大三",
       studentName:"学生名",
       email:"1@1",
@@ -79,6 +78,7 @@ export default {
         "/studentView/get",
         {}).then(function(data){
           console.log("lastname:" + data.lastName)
+          that.grade = data.grade;
           that.studentName = data.lastName + data.firstName;
           that.email = data.email;
           that.perWebAddr = data.perWebAddr;
