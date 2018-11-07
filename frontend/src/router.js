@@ -23,6 +23,7 @@ import studentEvaluateSuccess from "./pages/studentEvaluateSuccess.vue";
 import teacherEvaluate from "./pages/teacherEvaluate.vue";
 import teacherEvaluateSuccess from "./pages/teacherEvaluateSuccess.vue";
 import teacherView from "./pages/teacherView.vue";
+import studentView from "./pages/studentView.vue";
 const routes = [
     { path: '/', component: homepage },
     { path: '/teacherInfo', component: teacherInfo },
@@ -43,7 +44,8 @@ const routes = [
     { path: '/teacherEvaluate', component: teacherEvaluate},
     { path: '/studentEvaluateSuccess', component: studentEvaluateSuccess},
     { path: '/teacherEvaluateSuccess', component: teacherEvaluateSuccess},
-    { path: '/teacherView', component: teacherView}
+    { path: '/teacherView', component: teacherView},
+    { path: '/studentView', component: studentView},
   ]
 
 const router = new VueRouter({
