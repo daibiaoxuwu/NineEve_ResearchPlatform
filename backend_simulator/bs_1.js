@@ -418,6 +418,11 @@ app.get('/studentInfo/get', function(sReq, sRes) {
 			 sRes.send(result);
 		 });
 });
+app.get('/studentView/get', function(sReq, sRes) {
+    studentInfo.studentInfoGet(sReq.query.id, sReq.query.id, function(result){
+			 sRes.send(result);
+		 });
+});
 
 
 
@@ -596,7 +601,18 @@ app.get('/enrollStatus/getDetails', function(sReq, sRes) {
 			 sRes.send(result);
 		 });
 });
+app.get('/enrollStatus/visitStudent', function(sReq, sRes) {
+    sReq.session.selectStudent = sReq.query.id;
+    sRes.send("");
+});
 
+
+app.get('/home/setAssignment', function(sReq, sRes) {
+    enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
+        sReq.session.assignment = item;
+        sRes.send(item);
+    })
+})``
 
 app.get('/assignmentForm/save', function(sReq, sRes) {
     console.log(sReq);

@@ -89,8 +89,9 @@
          </h2>
 <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
 
-  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
+  <button class="btn btn-secondary btn-lg btn-block" @click="visit">Visit Homepage 访问学生主页</button>
 
+  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
   <!-- Modal Component -->
   <b-modal id="modal1" title="同意报名"  @ok="handleOk">
     <p class="my-4">是否同意 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
@@ -237,6 +238,12 @@ export default {
         alert("project launched!");
         that.$router.push("/main");
       }
+      })
+    },
+    visit(){
+      var that = this;
+      $.get('/enrollStatus/visitStudent',{id: that.selectedItem.id}).then(function(){
+        that.$router.push("/studentView");
       })
     }
   },
