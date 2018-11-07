@@ -292,7 +292,11 @@ app.get('/teacherInfo/get', function(sReq, sRes) {
 			 sRes.send(result);
 		 });
 });
-
+app.get('/teacherView/get', function(sReq, sRes) {
+    teacherInfo.teacherInfoGet(sReq.session.assignment.teacherId, function(result){
+			 sRes.send(result);
+		 });
+});
 
 app.get('/studentInfo/save', function(sReq, sRes) {
     console.log(sReq);
@@ -411,6 +415,11 @@ app.get('/studentInfo/launch', function(sReq, sRes) {
 
 app.get('/studentInfo/get', function(sReq, sRes) {
     studentInfo.studentInfoGet(sReq.session.user.id, sReq.session.user.email, function(result){
+			 sRes.send(result);
+		 });
+});
+app.get('/studentView/get', function(sReq, sRes) {
+    studentInfo.studentInfoGet(sReq.session.selectStudent, sReq.session.selectStudent, function(result){
 			 sRes.send(result);
 		 });
 });
@@ -592,7 +601,18 @@ app.get('/enrollStatus/getDetails', function(sReq, sRes) {
 			 sRes.send(result);
 		 });
 });
+app.get('/enrollStatus/visitStudent', function(sReq, sRes) {
+    sReq.session.selectStudent = sReq.query.id;
+    sRes.send("");
+});
 
+
+app.get('/home/setAssignment', function(sReq, sRes) {
+    enroll.enrollGet(sReq.query.title, sReq.query.teacherId, function(item){
+        sReq.session.assignment = item;
+        sRes.send(item);
+    })
+});
 
 app.get('/assignmentForm/save', function(sReq, sRes) {
     console.log(sReq);
@@ -629,7 +649,7 @@ app.get('/assignmentForm/get', function(sReq, sRes) {
 
 
 app.get('/main/get', function(sReq, sRes) {
-    main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList){
+    main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList, intList){
         console.log({
             isTeacher: sReq.session.user.isTeacher,
             num1: parseInt((msgList.length-1) / 3)+1,
@@ -638,6 +658,8 @@ app.get('/main/get', function(sReq, sRes) {
             myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
             num3: parseInt((avaList.length-1) / 3)+1,
             avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
+            numint: parseInt((intList.length-1) / 3) + 1,
+            intList: intList.slice(Math.min(sReq.query.currentPageint * 3 - 3, intList.length), Math.min(sReq.query.currentPageint * 3, intList.length)),
             msglist2: msgList,
             myList2: myList,
             avalist2: avaList
@@ -650,13 +672,18 @@ app.get('/main/get', function(sReq, sRes) {
             num2: parseInt((myList.length-1) / 3) + 1,
             myList: myList.slice(Math.min(sReq.query.currentPage2 * 3 - 3, myList.length), Math.min(sReq.query.currentPage2 * 3, myList.length)),
             num3: parseInt((avaList.length-1) / 3) + 1,
-            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length))
+            avaList: avaList.slice(Math.min(sReq.query.currentPage3 * 3 - 3, avaList.length), Math.min(sReq.query.currentPage3 * 3, avaList.length)),
+            numint: parseInt((intList.length-1) / 3) + 1,
+            intList: intList.slice(Math.min(sReq.query.currentPageint * 3 - 3, intList.length), Math.min(sReq.query.currentPageint * 3, intList.length))
         })
     })
 });
 
-
-
+app.get('/main/search', function(sReq, sRes) {
+    main.search(sReq.query.search, function(data){
+        sRes.send(data);
+    })
+});
 
 app.get('/enrollStatus/get', function(sReq, sRes) {
     enrollStatus.enrollStatusGet(sReq.session.user.id, sReq.session.assignment.title, function(list){
@@ -707,7 +734,16 @@ app.get('/enrollStatus/launch', function(sReq, sRes) {
         sRes.send(result);
     })
 });
-
+app.get('/studentView/accept', function(sReq, sRes) {
+    enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.session.selectStudent, function(result){
+        sRes.send(result);
+    })
+});
+app.get('/studentView/refuse', function(sReq, sRes) {
+    enrollStatus.enrollStatusReject(sReq.session.user.id, sReq.session.assignment.title, sReq.session.selectStudent, function(result){
+        sRes.send(result);
+    })
+});
 
 
 app.get('/home/setAssignment', function(sReq, sRes) {

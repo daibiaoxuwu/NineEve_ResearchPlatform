@@ -26,11 +26,13 @@ module.exports = {
 				console.log({id: results[i].student,
 							text: resul[0].lastname + resul[0].firstname,
 							department: "CST 计算机系",
-							grade: resul[0].grade});
+							grade: resul[0].grade,
+							success: results[0].success});
 				statu.push({id: results[i].student,
 							text: resul[0].lastname + resul[0].firstname,
 							department: "CST 计算机系",
-							grade: resul[0].grade});
+							grade: resul[0].grade,
+							success: results[0].success});
 				that.enrollQuery(results, statu, i-1, callback);
 			});
 		} else {

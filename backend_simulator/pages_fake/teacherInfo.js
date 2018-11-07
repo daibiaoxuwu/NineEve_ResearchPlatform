@@ -118,7 +118,10 @@ module.exports = {
      */
     teacherInfoGet: function(teacherID, recall) {
         console.log("teacherInfGet: " + teacherID);
-        if(teacherID=="1") recall({lastName: "一"});
+        if(teacherID=="123") recall({
+            lastName: "一",
+            firstName: "一",
+        });
         else recall({lastName: ""});
     },
 
