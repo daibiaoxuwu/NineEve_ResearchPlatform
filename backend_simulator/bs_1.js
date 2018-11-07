@@ -542,15 +542,23 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
        if (result.launchSuccess == true) {
-         var req = {
+         var req1 = {
            lastName: sReq.query.lastName,
            firstName: sReq.query.firstName,
-           clientEmail: sReq.session.user.email,
+           studentEmail: sReq.query.email,
            assignmentTitle: sReq.session.assignment.title
          };
-         email_js.sendEnrollNotificationToStudent(req, 1, function(res){
-   		      sRes.send(res);
-   	      });
+         email_js.sendEnrollNotificationToStudent(req1, 1, function(res1){
+   		      //something about res1
+   	     });
+
+         var req2 = {
+           teacherId: sReq.session.assignment.teacherId,
+           assignmentTitle: sReq.session.assignment.title
+         };
+         email_js.sendEnrollNotificationToTeacher(req2, 1, function(res2){
+            //something about res2
+         });
        }
 		 });
 });
@@ -667,7 +675,27 @@ app.get('/enrollStatus/get', function(sReq, sRes) {
 app.get('/enrollStatus/accept', function(sReq, sRes) {
     enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, function(result){
         sRes.send(result);
-    })
+    });
+
+    if (result.acceptSuccess == true) {
+      var req1 = {
+        teacherId: sReq.session.user.id,
+        studentId: sReq.query.id,
+        assignmentTitle: sReq.session.assignment.title
+      };
+      email_js.sendEnrollNotificationToStudent(req1, 2, function(res1){
+         //something about res1
+      });
+
+      var req2 = {
+        teacherId: sReq.session.user.id,
+        studentId: sReq.query.id,
+        assignmentTitle: sReq.session.assignment.title
+      };
+      email_js.sendEnrollNotificationToTeacher(req2, 2, function(res2){
+         //something about res2
+      });
+    }
 });
 app.get('/enrollStatus/refuse', function(sReq, sRes) {
     enrollStatus.enrollStatusReject(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, function(result){
