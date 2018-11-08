@@ -4,9 +4,9 @@ const port = 80
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'b.NineEve.secoder.local',
+  host     : 'localhost',//'b.NineEve.secoder.local',
   port     : '3306',
-  user     : 'lzr',
+  user     : 'root',//'lzr',
   password : 'newpass',
   database : 'A'
 });
@@ -649,6 +649,8 @@ app.get('/assignmentForm/get', function(sReq, sRes) {
 
 
 app.get('/main/get', function(sReq, sRes) {
+    console.log('/main/get');
+    
     main.mainGet(sReq.session.user.id, sReq.session.user.email, sReq.session.user.isTeacher, function(msgList, myList, avaList, intList){
         console.log({
             isTeacher: sReq.session.user.isTeacher,
@@ -680,6 +682,7 @@ app.get('/main/get', function(sReq, sRes) {
 });
 
 app.get('/main/search', function(sReq, sRes) {
+    console.log('/main/search');
     main.search(sReq.query.search, function(data){
         sRes.send(data);
     })
