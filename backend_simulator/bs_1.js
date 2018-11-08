@@ -779,18 +779,30 @@ app.get('/enroll/get', function(sReq, sRes) {
 
 app.get('/enroll/isTeacher', function(sReq, sRes) {
     if(sReq.session && sReq.session.user){
+        enroll.enrollGet(sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
+            sReq.session.assignment = item;
             enrollForm.enrollFormCheck(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(enrollFormCheckResult){
-                enrollForm.studentNum(sReq.session.user.id, function(studentNumResult){
-                    sRes.send({
-                        assignment:sReq.session.assignment,
-                        isTeacher:sReq.session.isTeacher,
-                        enrollFormCheckResult: enrollFormCheckResult,
+                response={
+                    assignment:sReq.session.assignment,
+                    isTeacher:sReq.session.isTeacher,
+                    enrollFormCheckResult: enrollFormCheckResult,
+                };
+                if(sReq.session.assignment.status=="Enrolling 可报名"){
+                    enrollForm.studentNum(sReq.session.user.id, function(studentNumResult){
+                        response.enrollSubmitNum = studentNumResult.enrollSubmitNum;
+                        response.enrollMaxNum = studentNumResult.enrollMaxNum;
+                        response.enrollSaveNum = studentNumResult.enrollSaveNum;
+                        sRes.send(response);
                     });
+                } else {
+                    sRes.send(response);
+                }
+            })
         })
-
-    })
-        else{
-            sRes.send("/");
+    } else {
+        sRes.send("/");
+    }
+});
 
 
 //do not need database!

@@ -22,6 +22,7 @@
             <assignmentInfo></assignmentInfo>
             <!-- <router-link to="/enrollSuccess" > <button class="btn btn-secondary btn-lg btn-block" type="submit">Mark as Interested</button></router-link> -->
             <button v-bind:class="visible" @click="enroll" style="margin-top:0.5rem;">{{buttonword}}</button>
+            <p class="form-text text-muted">{{warnNum}}</p>
 
           </div>
         </div>
@@ -42,7 +43,8 @@ export default {
     return {
       visible: "invisible",
       isTeacher: false,
-      buttonword: "报名 Enroll Now"
+      buttonword: "报名 Enroll Now",
+      warnNum: ""
     };
   },
   components: {
@@ -52,17 +54,16 @@ export default {
   created: function() {
     var that = this;
     $.get("/enroll/isTeacher", {}).then(function(data) {
-      if (data == "/") {
-        //not logged in
-        that.visible = "invisible";
-      } else {
+      that.visible = "invisible";
+      that.warnNum = "";
+      if (data != "/") {
         //logged in
         that.isTeacher = data.isTeacher;
-        that.visible = "invisible";
         //determine button word
         if (data.assignment.status == "Launched 已启动") {
           if (that.isTeacher == false) {
             $.get("/enrollForm/Check", {}).then(function(result) {
+              //is it the student's assignment?
               if (result == true) {
                 that.buttonword = "结题 End Assignment";
                 that.visible = "btn btn-primary btn-lg btn-block";
@@ -72,6 +73,7 @@ export default {
         } else if (data.assignment.status == "Evaluated 学生已评价") {
           if (that.isTeacher == true) {
             $.get("/enrollForm/CheckT", {}).then(function(result) {
+              //is it the teacher's assignment?
               if (result == true) {
                 that.buttonword = "评价学生 Evaluate";
                 that.visible = "btn btn-primary btn-lg btn-block";
@@ -84,10 +86,36 @@ export default {
             $.get("/enrollForm/Check", {}).then(function(result) {
               if (result.hasEnrolled == true) {
                 that.buttonword = "You've enrolled. 已经报名.";
-              } else if (result.enrollSubmitNum >= result.enrollMaxNum) {
-                that.buttonword = "Maximized. 超过报名上限.";
               } else {
-                that.buttonword = "报名 Enroll Now";
+                that.warnNum =
+                  "你已经报名了" +
+                  result.enrollSubmitNum +
+                  "个项目, 保存了" +
+                  result.enrollSaveNum +
+                  "个项目, 参与运行中项目" +
+                  result.enrollLaunchNum +
+                  "个, 最多还可报名" +
+                  result.enrollMaxNum +
+                  "个项目";
+                if (
+                  result.enrollSubmitNum + result.enrollLaunchNum >=
+                  result.enrollMaxNum
+                ) {
+                  that.buttonword = "Maximized. 超过报名上限.";
+                } else {
+                  that.buttonword = "报名 Enroll Now";
+                  if (
+                    result.enrollSubmitNum +
+                      result.enrollLaunchNum +
+                      result.enrollSaveNum >=
+                    result.enrollMaxNum
+                  ) {
+                    that.warnNum +=
+                      "\n你填写的报名表份数已经超过报名上限. 你可以继续填写和保存, 但是提交的只能有" +
+                      (result.enrollMaxNum - result.enrollLaunchNum) +
+                      "份!";
+                  }
+                }
               }
             });
           }

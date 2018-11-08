@@ -47,38 +47,39 @@ module.exports = {
      *
      */
 
-    enrollFormSave: function(id, idemail, assignmentTitle, teacher, lastName, firstName, username,
-         wechatPhone, email, perWebAddr,
-          selfIntr, reasonEnroll, award, callback) {
-			var student=id;
-			if(student==""||!student)
-				student=idemail;
-			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"', function (error, results, fields){
-				if(results.length==0)
-				{
-					connection.query('insert into enrollform(`student`,`title`,`teacher`,`selfintr`,`reasonenroll`,`award`,`fiiled`) values(' +
-									 '"' + student + '",' +
-									 '"' + assignmentTitle + '",' +		
-									 '"' + teacher +'",' +
-									 '"' + selfIntr + '",' +
-									 '"' + reasonEnroll + '",' + 
-									 '"' + award + '",0)');
-					callback({saveSuccess: true});
-				}
-				else
-				{
-					connection.query('update enrollform set `selfintr`="' + selfIntr + '", ' +
-														   '`reasonenroll`="' + reasonEnroll + '", ' +
-														   '`award`="' + award + '", ' +
-														   '`filled`=0 ' +
-									'where student="' + student + '" and title="' + assignmentTitle  + '" and teacher="' + teacher + '"');
-					callback({saveSuccess: true});
-				}
-			});
+    enrollFormSave: function (id, idemail, assignmentTitle, teacher, lastName, firstName, username,
+        wechatPhone, email, perWebAddr,
+        selfIntr, reasonEnroll, award, callback) {
+        var student = id;
+        if (student == "" || !student)
+            student = idemail;
+        connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"', function (error, results, fields) {
+            if (results.length == 0) {
+                connection.query('insert into enrollform(`student`,`title`,`teacher`,`selfintr`,`reasonenroll`,`award`,`fiiled`) values(' +
+                    '"' + student + '",' +
+                    '"' + assignmentTitle + '",' +
+                    '"' + teacher + '",' +
+                    '"' + selfIntr + '",' +
+                    '"' + reasonEnroll + '",' +
+                    '"' + award + '",0)');
+                callback({
+                    saveSuccess: true
+                });
+            } else {
+                connection.query('update enrollform set `selfintr`="' + selfIntr + '", ' +
+                    '`reasonenroll`="' + reasonEnroll + '", ' +
+                    '`award`="' + award + '", ' +
+                    '`filled`=0 ' +
+                    'where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"');
+                callback({
+                    saveSuccess: true
+                });
+            }
+        });
     },
 
 
-        /**
+    /**
      * 报名信息填写页面的保存并提交请求 页面url: '/enrollForm'
      * 
      * @param {string} id
@@ -127,40 +128,41 @@ module.exports = {
      *
      */
 
-    enrollFormLaunch: function(id, idemail, assignmentTitle, teacher, lastName, firstName, username,
+    enrollFormLaunch: function (id, idemail, assignmentTitle, teacher, lastName, firstName, username,
         wechatPhone, email, perWebAddr,
-         selfIntr, reasonEnroll, award, callback) {
-			var student=id;
-			if(student==""||!student)
-				student=idemail;
-			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"', function (error, results, fields){
-				if(results.length==0)
-				{
-					connection.query('insert into enrollform(`student`,`title`,`teacher`,`selfintr`,`reasonenroll`,`award`,`fiiled`) values(' +
-									 '"' + student + '",' +
-									 '"' + assignmentTitle + '",' +		
-									 '"' + teacher +'",' +
-									 '"' + selfIntr + '",' +
-									 '"' + reasonEnroll + '",' + 
-									 '"' + award + '",1)');
-					callback({launchSuccess: true});
-				}
-				else
-				{
-					connection.query('update enrollform set `selfintr`="' + selfIntr + '", ' +
-														   '`reasonenroll`="' + reasonEnroll + '", ' +
-														   '`award`="' + award + '", ' +
-														   '`filled`=1 ' +
-									'where student="' + student + '" and title="' + assignmentTitle  + '" and teacher="' + teacher + '"');
-					callback({launchSuccess: true});
-				}
-			});
-   },
+        selfIntr, reasonEnroll, award, callback) {
+        var student = id;
+        if (student == "" || !student)
+            student = idemail;
+        connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"', function (error, results, fields) {
+            if (results.length == 0) {
+                connection.query('insert into enrollform(`student`,`title`,`teacher`,`selfintr`,`reasonenroll`,`award`,`fiiled`) values(' +
+                    '"' + student + '",' +
+                    '"' + assignmentTitle + '",' +
+                    '"' + teacher + '",' +
+                    '"' + selfIntr + '",' +
+                    '"' + reasonEnroll + '",' +
+                    '"' + award + '",1)');
+                callback({
+                    launchSuccess: true
+                });
+            } else {
+                connection.query('update enrollform set `selfintr`="' + selfIntr + '", ' +
+                    '`reasonenroll`="' + reasonEnroll + '", ' +
+                    '`award`="' + award + '", ' +
+                    '`filled`=1 ' +
+                    'where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"');
+                callback({
+                    launchSuccess: true
+                });
+            }
+        });
+    },
 
 
 
 
-/**
+    /**
      * 报名信息填写页面的保存请求 页面url: '/enrollForm'
      *
      *      * @param {string} id
@@ -200,85 +202,93 @@ module.exports = {
      * 报名原因
      *
      */
-    enrollFormGet: function(id, idemail, assignmentTitle, teacher, callback) {
-             console.log('e'+id+idemail+assignmentTitle);
-		var student=id;
-		if(student==""||!student)
-			student=idemail;	
-		connection.query('select * from student where studentid="' + student + '"', function (error, results, fields){
-			var tStudentID = results[0].studentid;
-			if(tStudentID.indexOf('@') != -1)
-				tStudentID = '空';
-			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"', function (err, resul, fiel){
-				if(resul.length>0)
-				{
-					callback({lastName: results[0].lastname,
-							  firstName: results[0].firstname,
-							  username: results[0].username,
-							  studentId: tStudentID,
-							  wechatPhone: results[0].wechatphone,
-							  email: results[0].email,
-							  perWebAddr: results[0].perwebaddr,
-							  selfIntr: resul[0].selfintr,
-							  reasonEnroll: resul[0].reasonenroll,
-							  award: resul[0].award});
-				}
-				else
-				{
-					connection.query('insert into enrollform(`student`,`title`,`teacher`,`selfintr`,`reasonenroll`,`award`) values(' +
-									 '"' + student + '",' +
-									 '"' + assignmentTitle + '",' +		
-									 '"' + teacher + '",' +											 
-									 '"",' +
-									 '"",' +
-									 '"")');
-							callback({lastName: results[0].lastname,
-							  firstName: results[0].firstname,
-							  username: results[0].username,
-							  studentId: tStudentID,
-							  wechatPhone: results[0].wechatphone,
-							  email: results[0].email,
-							  perWebAddr: results[0].perwebaddr,
-							  selfIntr: "",
-							  reasonEnroll: "",
-							  award: ""});
-				}
-			});
-		});
+    enrollFormGet: function (id, idemail, assignmentTitle, teacher, callback) {
+        console.log('e' + id + idemail + assignmentTitle);
+        var student = id;
+        if (student == "" || !student)
+            student = idemail;
+        connection.query('select * from student where studentid="' + student + '"', function (error, results, fields) {
+            var tStudentID = results[0].studentid;
+            if (tStudentID.indexOf('@') != -1)
+                tStudentID = '空';
+            connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"', function (err, resul, fiel) {
+                if (resul.length > 0) {
+                    callback({
+                        lastName: results[0].lastname,
+                        firstName: results[0].firstname,
+                        username: results[0].username,
+                        studentId: tStudentID,
+                        wechatPhone: results[0].wechatphone,
+                        email: results[0].email,
+                        perWebAddr: results[0].perwebaddr,
+                        selfIntr: resul[0].selfintr,
+                        reasonEnroll: resul[0].reasonenroll,
+                        award: resul[0].award
+                    });
+                } else {
+                    connection.query('insert into enrollform(`student`,`title`,`teacher`,`selfintr`,`reasonenroll`,`award`) values(' +
+                        '"' + student + '",' +
+                        '"' + assignmentTitle + '",' +
+                        '"' + teacher + '",' +
+                        '"",' +
+                        '"",' +
+                        '"")');
+                    callback({
+                        lastName: results[0].lastname,
+                        firstName: results[0].firstname,
+                        username: results[0].username,
+                        studentId: tStudentID,
+                        wechatPhone: results[0].wechatphone,
+                        email: results[0].email,
+                        perWebAddr: results[0].perwebaddr,
+                        selfIntr: "",
+                        reasonEnroll: "",
+                        award: ""
+                    });
+                }
+            });
+        });
     },
-     enrollFormCheck: function(id, idemail, assignmentTitle, teacher, callback) {
-             console.log('e'+id+idemail+assignmentTitle);
-		var student=id;
-		if(student==""||!student)
-			student=idemail;	
-		connection.query('select * from student where studentid="' + student + '"', function (error, results, fields){
-			connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"  and `filled`=1 ', function (err, resul, fiel){
-				if(resul.length>0)
-				{
+    //学生端 传入id和email是学生的号, 查看学生是否报名了项目, 并且投入使用了
+    enrollFormCheck: function (id, idemail, assignmentTitle, teacher, callback) {
+        console.log('e' + id + idemail + assignmentTitle);
+        var student = id;
+        if (student == "" || !student){
+            student = idemail;
+            connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"  and `filled`=1 ', function (err, resul, fiel) {
+                if (resul.length > 0) {
                     callback(true);
                 } else {
                     callback(false);
                 }
             })
-        })
+        }
     },
-
-     enrollFormCheckT: function(id, idemail, assignmentTitle, teacher, callback) {
-             console.log('e'+id+idemail+assignmentTitle);
-		var student=id;
-		if(student==""||!student)
-			student=idemail;	
-		connection.query('select * from teacher where teacherid="' + student + '" and `filled`=1', function (error, results, fields){
-			connection.query('select * from enrollform where teacher="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"  and `filled`=1 ', function (err, resul, fiel){
-				if(resul.length>0)
-				{
+    //教师端 传入id是教师号,
+    enrollFormCheckT: function (id, idemail, assignmentTitle, teacher, callback) {
+        console.log('e' + id + idemail + assignmentTitle);
+        var student = id;
+        if (student == "" || !student){
+            student = idemail;
+            connection.query('select * from enrollform where teacher="' + student + '" and title="' + assignmentTitle + '"  and `filled`=1 ', function (err, resul, fiel) {
+                if (resul.length > 0) {
                     callback(true);
                 } else {
                     callback(false);
                 }
             })
+        }
+    },
+    //查看学生的报名数量
+    //TODO
+    studentNum: function (id, callback){
+        callback({
+            enrollSaveNum: 3,   //已保存未提交的项目数量
+            enrollSubmitNum: 1, //已提交的项目数量
+            enrollLaunchNum: 1, //已经开始Launch的项目数量
+            enrollMaxNum: 2     //最大报名项目数量
         })
+        //注意学生参加项目, 项目结题等后这里会变化...而不是"报名表数量"
+        //已提交的项目数量 + 已经launch的项目数量 <= 最大报名数量.
     }
-
 }
-
