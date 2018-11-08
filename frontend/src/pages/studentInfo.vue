@@ -6,7 +6,7 @@
       <div class="row">
         <div class="text-center col-md-7 mx-auto"> <i class="fa d-block fa-bullseye fa-5x mb-4 text-info"></i>
           <h2>学生信息填写</h2>
-          <p class="lead">tutor's information form</p>
+          <p class="lead">student's information form</p>
         </div>
       </div>
     </div>

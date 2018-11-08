@@ -2,7 +2,7 @@ const chai=require('chai');
 const expect=chai.expect;
 chai.use(require('chai-http'))
 var request = require('request');
-const app = require('../backend_simulator/bs_fake.js');
+const app = require('../backend_simulator/bs_1.js');
 
 describe('server test', () => {
     
@@ -74,14 +74,16 @@ describe('server test', () => {
     })
 
     describe('teacherInfo page test', () => {
-        // it('/teacherInfo/get', (done) => {
-        //     chai.request(app)
-        //     .get('/teacherInfo/get')
-        //     .end((err, res) => {
-        //         expect(res.status).to.be.equal(200);
-        //         done();
-        //     })
-        // })
+        it('/teacherInfo/get', (done) => {
+            console.log("call");
+            
+            chai.request(app)
+            .get('/teacherInfo/get')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
 
         // it('/teacherInfo/launch', (done) => {
         //     chai.request(app)

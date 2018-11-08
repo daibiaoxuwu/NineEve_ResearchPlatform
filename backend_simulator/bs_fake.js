@@ -256,6 +256,8 @@ app.get('/teacherInfo/launch', function(sReq, sRes) {
 });
 
 app.get('/teacherInfo/get', function(sReq, sRes) {
+    console.log("called");
+    
     teacherInfo.teacherInfoGet(sReq.session.user.id, function(result){
 			 sRes.send(result);
 		 });
