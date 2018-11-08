@@ -53,21 +53,21 @@ export default {
     var that = this;
     $.get("/enroll/isTeacher", {}).then(function(data) {
       if (data == "/") {
+        //not logged in
         that.visible = "invisible";
       } else {
+        //logged in
         that.isTeacher = data.isTeacher;
+        that.visible = "invisible";
+        //determine button word
         if (data.assignment.status == "Launched 已启动") {
           if (that.isTeacher == false) {
             $.get("/enrollForm/Check", {}).then(function(result) {
               if (result == true) {
                 that.buttonword = "结题 End Assignment";
                 that.visible = "btn btn-primary btn-lg btn-block";
-              } else {
-                that.visible = "invisible";
               }
             });
-          } else {
-            that.visible = "invisible";
           }
         } else if (data.assignment.status == "Evaluated 学生已评价") {
           if (that.isTeacher == true) {
@@ -75,23 +75,17 @@ export default {
               if (result == true) {
                 that.buttonword = "评价学生 Evaluate";
                 that.visible = "btn btn-primary btn-lg btn-block";
-              } else {
-                that.visible = "invisible";
               }
             });
-          } else {
-            that.visible = "invisible";
           }
-        } else if (data.assignment.status == "Ended 已结题") {
-          that.visible = "invisible";
-        } else {
-          if (data.isTeacher) {
-            that.visible = "invisible";
-          } else {
+        } else if (data.assignment.status == "Enrolling 可报名") {
+          if (!data.isTeacher) {
             that.visible = "btn btn-primary btn-lg btn-block";
             $.get("/enrollForm/Check", {}).then(function(result) {
-              if (result == true) {
+              if (result.hasEnrolled == true) {
                 that.buttonword = "You've enrolled. 已经报名.";
+              } else if (result.enrollSubmitNum >= result.enrollMaxNum) {
+                that.buttonword = "Maximized. 超过报名上限.";
               } else {
                 that.buttonword = "报名 Enroll Now";
               }

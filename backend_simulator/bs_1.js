@@ -778,16 +778,19 @@ app.get('/enroll/get', function(sReq, sRes) {
 })
 
 app.get('/enroll/isTeacher', function(sReq, sRes) {
-    enroll.enrollGet(sReq.session.assignment.title, sReq.session.assignment.teacherId, function(item){
-        sReq.session.assignment = item;
-        var isTeacher=true;
-        if(sReq.session && sReq.session.user && sReq.session.user.isTeacher == false){
-            isTeacher=false;
-        }
-        sRes.send({assignment:item, isTeacher:isTeacher});
-    })
+    if(sReq.session && sReq.session.user){
+            enrollForm.enrollFormCheck(sReq.session.user.id, sReq.session.user.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(enrollFormCheckResult){
+                enrollForm.studentNum(sReq.session.user.id, function(studentNumResult){
+                    sRes.send({
+                        assignment:sReq.session.assignment,
+                        isTeacher:sReq.session.isTeacher,
+                        enrollFormCheckResult: enrollFormCheckResult,
+                    });
+        })
 
-})
+    })
+        else{
+            sRes.send("/");
 
 
 //do not need database!
