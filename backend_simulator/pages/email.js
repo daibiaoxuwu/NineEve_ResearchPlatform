@@ -149,7 +149,7 @@ module.exports = {
   * 所有给学生发送报名相关事宜的邮件
   */
   sendEnrollNotificationToStudent: function(req, reqNo, res){
-    mailOptions.to = req.clientEmail;
+    // mailOptions.to = req.clientEmail;
 
     switch (reqNo) {
       case 1: //学生报名提交后收到的通知
@@ -158,7 +158,7 @@ module.exports = {
           assignmentTitle = req.assignmentTitle;
 
 
-        mailOptions.to = studentEmail;
+        mailOptions.to = req.clientEmail;
         mailOptions.text = req.lastName + req.firstName + notificationModuleStudentCase1[0]
           + assignmentTitle + notificationModuleStudentCase1[1];
         mailOptions.subject = subjectModule + assignmentTitle + ' 项目报名申请已提交';
@@ -177,7 +177,7 @@ module.exports = {
 
         //根据studentId查询学生姓,名
 
-        mailOptions.to = studentEmail;
+        mailOptions.to = req.clientEmail;
         mailOptions.text = lastNameStudent + firstNameStudent + notificationModuleStudentCase2[0]
           + assignmentTitle + notificationModuleStudentCase2[1];
         mailOptions.subject = subjectModule + assignmentTitle + ' 项目报名申请已通过';
@@ -219,7 +219,7 @@ module.exports = {
         //根据teacherId查询老师的姓,名,邮箱
 
         mailOptions.to = teacherEmail;
-        mailOptions.text = lastName + firstName + notificationModuleTeacherCase1[0]
+        mailOptions.text = lastNameTeacher + firstNameTeacher + notificationModuleTeacherCase1[0]
           + assignmentTitle + notificationModuleTeacherCase1[1];
         mailOptions.subject = subjectModule + assignmentTitle + ' 项目已有新报名';
         break;
@@ -250,7 +250,8 @@ module.exports = {
       default:
         return;
     }
-
+    console.log(mailOptions);
+    
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
         console.log(error);
