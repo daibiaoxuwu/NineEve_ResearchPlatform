@@ -190,7 +190,6 @@ module.exports = {
   sendEnrollNotificationToTeacher: function(req, reqNo, res){
     switch (reqNo) {
       case 1: //学生报名提交后, 导师收到通知
-        var teacherId = req.teacherId;
         var assignmentTitle = "九夕成员睡眠质量分析";
         if (req.assignmentTitle != null)
           assignmentTitle = req.assignmentTitle;

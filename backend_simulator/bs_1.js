@@ -550,26 +550,26 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
         sReq.query.wechatPhone, sReq.query.email, sReq.query.perWebAddr,
          sReq.query.selfIntr, sReq.query.reasonEnroll, sReq.query.award, function(result){
 			 sRes.send(result);
-       if (result.launchSuccess == true) {
-         var req1 = {
-           lastName: sReq.query.lastName,
-           firstName: sReq.query.firstName,
-           clientEmail: sReq.query.email,
-           assignmentTitle: sReq.session.assignment.title
-         };
-         email_js.sendEnrollNotificationToStudent(req1, 1, function(res1){
-   		      console.log(res1.response);
-   	     });
+        if (result.launchSuccess == true) {
+            var req1 = {
+            lastName: sReq.query.lastName,
+            firstName: sReq.query.firstName,
+            clientEmail: sReq.query.email,
+            assignmentTitle: sReq.session.assignment.title
+            };
+            email_js.sendEnrollNotificationToStudent(req1, 1, function(res1){
+                console.log(res1.response);
+            });
 
-         var req2 = {
-           teacherId: sReq.session.assignment.teacherId,
-           assignmentTitle: sReq.session.assignment.title
-         };
-         email_js.sendEnrollNotificationToTeacher(req2, 1, function(res2){
-            console.log(res2.response);
-         });
-       }
-		 });
+            var req2 = {
+            teacherId: sReq.session.assignment.teacherId,
+            assignmentTitle: sReq.session.assignment.title
+            };
+            email_js.sendEnrollNotificationToTeacher(req2, 1, function(res2){
+                console.log(res2.response);
+            });
+        }
+    });
 });
 
 app.get('/enrollForm/get', function(sReq, sRes) {
