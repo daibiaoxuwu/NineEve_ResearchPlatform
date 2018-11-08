@@ -83,16 +83,26 @@ module.exports = {
 			{
 				connection.query('update enrollform set `success`=1,`teacherread`=1,`studentread`=0 where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"');
 				connection.query('select * from student where studentid="' + studentId + '"', function (err, resul, fiel){
-					if(resul.length>0)
-						callback({acceptSuccess: true,
-								  clientEmail: resul[0].email,
-								  firstName: resul[0].firstname,
-								  lastName: resul[0].lastname});
-					else
-						callback({acceptSuccess: false,
-								  clientEmail: "",
-								  firstName: "",
-								  lastName: ""});
+					connection.query('select * from teacher where teacherid="' + teacherId + '"', function (er, resu, fie){
+						if(resul.length>0 && resu.length>0)
+							callback({acceptSuccess: true,
+									clientEmail: resul[0].email,
+									firstName: resul[0].firstname,
+									lastName: resul[0].lastname,
+									firstNameTeacher: resu[0].firstname,
+									lastNameTeacher: resu[0].lastname,
+									teacherEmail: resu[0].email
+									});
+						else
+							callback({acceptSuccess: false,
+									clientEmail: "",
+									firstName: "",
+									lastName: "",
+									firstNameTeacher: "",
+									lastNameTeacher: "",
+									teacherEmail: ""
+									});
+					});
 				});
 			}
 			else
@@ -100,7 +110,11 @@ module.exports = {
 				callback({acceptSuccess: false,
 						  clientEmail: "",
 						  firstName: "",
-						  lastName: ""});
+						  lastName: "",
+						  firstNameTeacher: "",
+						  lastNameTeacher: "",
+						  teacherEmail: ""
+						});
 			}
 		});
     },
@@ -110,11 +124,39 @@ module.exports = {
 			if(results.length>0)
 			{
 				connection.query('update enrollform set `success`=2,`teacherread`=1,`studentread`=0 where student="' + studentId + '" and title="' + title + '" and teacher="' + teacherId + '"');
-				callback({acceptSuccess: true})
+				connection.query('select * from student where studentid="' + studentId + '"', function (err, resul, fiel){
+					connection.query('select * from teacher where teacherid="' + teacherId + '"', function (er, resu, fie){
+						if(resul.length>0 && resu.length>0)
+							callback({acceptSuccess: true,
+									clientEmail: resul[0].email,
+									firstName: resul[0].firstname,
+									lastName: resul[0].lastname,
+									firstNameTeacher: resu[0].firstname,
+									lastNameTeacher: resu[0].lastname,
+									teacherEmail: resu[0].email
+									});
+						else
+							callback({acceptSuccess: false,
+									clientEmail: "",
+									firstName: "",
+									lastName: "",
+									firstNameTeacher: "",
+									lastNameTeacher: "",
+									teacherEmail: ""
+									});
+					});
+				});
 			}
 			else
 			{
-				callback({acceptSuccess: false});
+				callback({acceptSuccess: false,
+						  clientEmail: "",
+						  firstName: "",
+						  lastName: "",
+						  firstNameTeacher: "",
+						  lastNameTeacher: "",
+						  teacherEmail: ""
+						});
 			}
 		});
 	},

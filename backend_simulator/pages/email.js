@@ -153,34 +153,17 @@ module.exports = {
 
     switch (reqNo) {
       case 1: //学生报名提交后收到的通知
-        var assignmentTitle = "九夕成员睡眠质量分析";
-        if (req.assignmentTitle != null)
-          assignmentTitle = req.assignmentTitle;
-
-
         mailOptions.to = req.clientEmail;
         mailOptions.text = req.lastName + req.firstName + notificationModuleStudentCase1[0]
-          + assignmentTitle + notificationModuleStudentCase1[1];
-        mailOptions.subject = subjectModule + assignmentTitle + ' 项目报名申请已提交';
+          + req.assignmentTitle + notificationModuleStudentCase1[1];
+        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已提交';
         break;
 
       case 2: //学生申请被通过后收到邮件通知
-        var teacherId = req.teacherId;
-        var studentId = req.studentId;
-        var assignmentTitle = "九夕成员睡眠质量分析";
-        if (req.assignmentTitle != null)
-          assignmentTitle = req.assignmentTitle;
-        //以下是默认值，需要改
-        var studentEmail = "yangzh16@mails.tsinghua.edu.cn";
-        var lastNameStudent = "肖";
-        var firstNameStudent = "特奖";
-
-        //根据studentId查询学生姓,名
-
         mailOptions.to = req.clientEmail;
-        mailOptions.text = lastNameStudent + firstNameStudent + notificationModuleStudentCase2[0]
-          + assignmentTitle + notificationModuleStudentCase2[1];
-        mailOptions.subject = subjectModule + assignmentTitle + ' 项目报名申请已通过';
+        mailOptions.text = req.lastName + req.firstName + notificationModuleStudentCase2[0]
+          + req.assignmentTitle + notificationModuleStudentCase2[1];
+        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已通过';
         break;
 
       default:
@@ -225,26 +208,11 @@ module.exports = {
         break;
 
       case 2: //导师已通过学生申请后给发送确认邮件
-        var teacherId = req.teacherId;
-        var studentId = req.studentId;
-        var assignmentTitle = "九夕成员睡眠质量分析";
-        if (req.assignmentTitle != null)
-          assignmentTitle = req.assignmentTitle;
-
-        //以下是默认值，需要改
-        var teacherEmail = "dujl16@mails.tsinghua.edu.cn";
-        var lastNameTeacher = "杜";
-        var firstNameTeacher = "迦罗";
-        var lastNameStudent = "肖";
-        var firstNameStudent = "特奖";
-
-        //根据teacherId查询老师的姓,名,邮箱; 根据studentId查询学生姓,名
-
-        mailOptions.to = teacherEmail;
-        mailOptions.text = lastNameTeacher + firstNameTeacher + notificationModuleTeacherCase2[0]
-          + lastNameStudent + firstNameStudent + notificationModuleTeacherCase2[1] +
-          assignmentTitle + notificationModuleTeacherCase2[2];
-        mailOptions.subject = subjectModule + assignmentTitle + ' 项目同意学生报名通知';
+        mailOptions.to = req.teacherEmail;
+        mailOptions.text = req.lastNameTeacher + req.firstNameTeacher + notificationModuleTeacherCase2[0]
+          + req.lastName + req.firstName + notificationModuleTeacherCase2[1] +
+          req.assignmentTitle + notificationModuleTeacherCase2[2];
+        mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目同意学生报名通知';
         break;
 
       default:

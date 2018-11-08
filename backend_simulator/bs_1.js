@@ -700,30 +700,37 @@ app.get('/enrollStatus/get', function(sReq, sRes) {
 });
 
 app.get('/enrollStatus/accept', function(sReq, sRes) {
+    
     enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, function(result){
         sRes.send(result);
+        if (result.acceptSuccess == true) {
+            var req1 = {
+                assignmentTitle: sReq.session.assignment.title,
+                firstName: result.firstName,
+                lastName: result.lastName,
+                clientEmail: result.clientEmail
+            };
+            email_js.sendEnrollNotificationToStudent(req1, 2, function(res1){
+                //something about res1
+            });
+
+            var req2 = {
+                firstName: result.firstName,
+                lastName: result.lastName,
+                firstNameTeacher: result.firstNameTeacher,
+                lastNameTeacher: result.lastNameTeacher,
+                teacherEmail: result.teacherEmail,
+                assignmentTitle: sReq.session.assignment.title
+            };
+            email_js.sendEnrollNotificationToTeacher(req2, 2, function(res2){
+                //something about res2
+            });
+        }
     });
-
-    if (result.acceptSuccess == true) {
-      var req1 = {
-        teacherId: sReq.session.user.id,
-        studentId: sReq.query.id,
-        assignmentTitle: sReq.session.assignment.title
-      };
-      email_js.sendEnrollNotificationToStudent(req1, 2, function(res1){
-         //something about res1
-      });
-
-      var req2 = {
-        teacherId: sReq.session.user.id,
-        studentId: sReq.query.id,
-        assignmentTitle: sReq.session.assignment.title
-      };
-      email_js.sendEnrollNotificationToTeacher(req2, 2, function(res2){
-         //something about res2
-      });
-    }
+    
+    
 });
+
 app.get('/enrollStatus/refuse', function(sReq, sRes) {
     enrollStatus.enrollStatusReject(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, function(result){
         sRes.send(result);
