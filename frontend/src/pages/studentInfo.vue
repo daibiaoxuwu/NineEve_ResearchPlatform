@@ -103,7 +103,9 @@
               </div>
             </div>
             </div>
-
+            <hr class="mb-4">
+            <h4 class="mb-3">Upload your CV file 上传简历文件</h4>
+            <b-form-file v-model="CVFile" :state="Boolean(file)" placeholder="Choose a file..."></b-form-file>
             <hr class="mb-4">
           </form>
             <button class="btn btn-secondary btn-lg btn-block" type="submit" @click="save">Save information 保存信息</button>
@@ -142,7 +144,8 @@ export default {
         {name: "Multimedia Laboratory 媒体所", state:false},
         {name: "Artificial Intelligence Laboratory 智能所", state:false},
         {name: "Network Laboratory 网络所", state:false}
-      ]
+      ],
+      CVFile: null
     }
    },
 
