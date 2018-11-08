@@ -74,54 +74,54 @@ describe('server test', () => {
     })
 
     describe('teacherInfo page test', () => {
-        // it('/teacherInfo/get', (done) => {
-        //     chai.request(app)
-        //     .get('/teacherInfo/get')
-        //     .end((err, res) => {
-        //         expect(res.status).to.be.equal(200);
-        //         done();
-        //     })
-        // })
+        it('/teacherInfo/get', (done) => {
+            chai.request(app)
+            .get('/teacherInfo/get')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
 
-        // it('/teacherInfo/launch', (done) => {
-        //     chai.request(app)
-        //     .get('/teacherInfo/launch')
-        //     .query({
-        //         lastName: 'testlastName',
-        //         firstName: 'testfirstName',
-        //         username: '1',
-        //         wechatPhone: '1',
-        //         email: '1',
-        //         perWebAddr: '1',
-        //         researchArea: '1',
-        //         researchResults: '1',
-        //         lab: '1'
-        //     })
-        //     .end((err, res) => {
-        //         expect(res.status).to.be.equal(200);
-        //         done();
-        //     })
-        // })
+        it('/teacherInfo/launch', (done) => {
+            chai.request(app)
+            .get('/teacherInfo/launch')
+            .query({
+                lastName: 'testlastName',
+                firstName: 'testfirstName',
+                username: '1',
+                wechatPhone: '1',
+                email: '1',
+                perWebAddr: '1',
+                researchArea: '1',
+                researchResults: '1',
+                lab: '1'
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
 
-        // it('/teacherInfo/save', (done) => {
-        //     chai.request(app)
-        //     .get('/teacherInfo/save')
-        //     .query({
-        //         lastName: 'testlastName',
-        //         firstName: 'testfirstName',
-        //         username: '1',
-        //         wechatPhone: '1',
-        //         email: 'teacher@mail.tsinghua.edu.cn',
-        //         perWebAddr: '1',
-        //         researchArea: '1',
-        //         researchResults: '1',
-        //         lab: '1'
-        //     })
-        //     .end((err, res) => {
-        //         expect(res.status).to.be.equal(200);
-        //         done();
-        //     })
-        // })
+        it('/teacherInfo/save', (done) => {
+            chai.request(app)
+            .get('/teacherInfo/save')
+            .query({
+                lastName: 'testlastName',
+                firstName: 'testfirstName',
+                username: '1',
+                wechatPhone: '1',
+                email: 'teacher@mail.tsinghua.edu.cn',
+                perWebAddr: '1',
+                researchArea: '1',
+                researchResults: '1',
+                lab: '1'
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
     })
 
     afterAll(() => {
