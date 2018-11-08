@@ -2,7 +2,7 @@ const chai=require('chai');
 const expect=chai.expect;
 chai.use(require('chai-http'))
 var request = require('request');
-const app = require('../backend_simulator/bs_fake.js');
+const app = require('../backend_simulator/bs_1.js');
 
 describe('server test', () => {
     
@@ -75,6 +75,8 @@ describe('server test', () => {
 
     describe('teacherInfo page test', () => {
         it('/teacherInfo/get', (done) => {
+            console.log("call");
+            
             chai.request(app)
             .get('/teacherInfo/get')
             .end((err, res) => {
@@ -83,45 +85,45 @@ describe('server test', () => {
             })
         })
 
-        it('/teacherInfo/launch', (done) => {
-            chai.request(app)
-            .get('/teacherInfo/launch')
-            .query({
-                lastName: 'testlastName',
-                firstName: 'testfirstName',
-                username: '1',
-                wechatPhone: '1',
-                email: '1',
-                perWebAddr: '1',
-                researchArea: '1',
-                researchResults: '1',
-                lab: '1'
-            })
-            .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                done();
-            })
-        })
+        // it('/teacherInfo/launch', (done) => {
+        //     chai.request(app)
+        //     .get('/teacherInfo/launch')
+        //     .query({
+        //         lastName: 'testlastName',
+        //         firstName: 'testfirstName',
+        //         username: '1',
+        //         wechatPhone: '1',
+        //         email: '1',
+        //         perWebAddr: '1',
+        //         researchArea: '1',
+        //         researchResults: '1',
+        //         lab: '1'
+        //     })
+        //     .end((err, res) => {
+        //         expect(res.status).to.be.equal(200);
+        //         done();
+        //     })
+        // })
 
-        it('/teacherInfo/save', (done) => {
-            chai.request(app)
-            .get('/teacherInfo/save')
-            .query({
-                lastName: 'testlastName',
-                firstName: 'testfirstName',
-                username: '1',
-                wechatPhone: '1',
-                email: 'teacher@mail.tsinghua.edu.cn',
-                perWebAddr: '1',
-                researchArea: '1',
-                researchResults: '1',
-                lab: '1'
-            })
-            .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                done();
-            })
-        })
+        // it('/teacherInfo/save', (done) => {
+        //     chai.request(app)
+        //     .get('/teacherInfo/save')
+        //     .query({
+        //         lastName: 'testlastName',
+        //         firstName: 'testfirstName',
+        //         username: '1',
+        //         wechatPhone: '1',
+        //         email: 'teacher@mail.tsinghua.edu.cn',
+        //         perWebAddr: '1',
+        //         researchArea: '1',
+        //         researchResults: '1',
+        //         lab: '1'
+        //     })
+        //     .end((err, res) => {
+        //         expect(res.status).to.be.equal(200);
+        //         done();
+        //     })
+        // })
     })
 
     afterAll(() => {
