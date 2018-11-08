@@ -66,22 +66,22 @@ describe('server test', () => {
         })
     })
 
-    describe('register test', () => {
-        it('register by outside students', (done) => {
-            agent
-            .get('/register/getUrl')
-            .query({
-                name: 'test student',
-                university: 'university',
-                email: 'test@mails.tsinghua.edu.cn',
-                password: 'password'
-            })
-            .end((err, res) => {
-                expect(res.status).to.be.equal(200);
-                done();
-            })
-        })
-    })
+    // describe('register test', () => {
+    //     it('register by outside students', (done) => {
+    //         agent
+    //         .get('/register/getUrl')
+    //         .query({
+    //             name: 'test student',
+    //             university: 'university',
+    //             email: 'test@mails.tsinghua.edu.cn',
+    //             password: 'password'
+    //         })
+    //         .end((err, res) => {
+    //             expect(res.status).to.be.equal(200);
+    //             done();
+    //         })
+    //     })
+    // })
 
     // describe('teacherInfo page test', () => {
     //     it('/teacherInfo/get', (done) => {
@@ -182,10 +182,6 @@ describe('server test', () => {
                 done();
             })
         })
-
-        agent
-        .get('/app/logout')
-        .end((err, res) => {})
     });
 
 
