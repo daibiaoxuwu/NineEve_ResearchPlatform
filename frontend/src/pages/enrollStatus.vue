@@ -14,23 +14,22 @@
   <div class="">
     <div class="container">
       <div class="row">
-        <rightpane @click="update"></rightpane>
         
-        <div class="col-md-8 order-md-1">
-          <h4 class="mb-3"><b>Enroll List 报名队列</b></h4>
+        <div class="col-md-4 order-md-2">
+          <h4 class="mb-3"><b>Accepted List 已接受学生</b></h4>
 
           <table class="table table-hover">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>STUDENT NAME 学生名</th>
-                    <th>DEPARTMENT 系别</th>
-                    <th>YEAR 年级</th>
+                    <th>STUDENT<br> 学生名</th>
+                    <th>DEPARTMENT<br> 系别</th>
+                    <th>YEAR<br> 年级</th>
                   </tr>
                 </thead>
                 <tbody>
              
-                  <tr v-for="(item, index) in list" @click="onClick(item)" :key="item.text"> <!--for循环传入list；@click时传入参数，onClick可以用-->
+                  <tr v-for="(item, index) in acceptedList" @click="onClick(item)" :key="item.text"> <!--for循环传入list；@click时传入参数，onClick可以用-->
                     <td>{{index}}</td>
                     <td>{{item.text}}</td>
                     <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
@@ -46,6 +45,43 @@
               </table>
             <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
 
+
+
+
+
+
+          <h4 class="mb-3"><b>Enroll List 报名队列</b></h4>
+
+          <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>STUDENT<br> 学生名</th>
+                    <th>DEPARTMENT<br> 系别</th>
+                    <th>YEAR<br> 年级</th>
+                  </tr>
+                </thead>
+                <tbody>
+             
+                  <tr v-for="(item, index) in enrollList" @click="onClick(item)" :key="item.text"> <!--for循环传入list；@click时传入参数，onClick可以用-->
+                    <td>{{index}}</td>
+                    <td>{{item.text}}</td>
+                    <!-- <td @click="onClick(item)" style="color:#12bbad">{{item.status}}</td> -->
+                    <!-- <td><button @click="onClick(item)">项目1</button></td> -->
+                    
+                    <td >{{item.department}}</td>
+                    <td>{{item.grade}}</td>
+                    </tr>
+            
+                  
+                 
+                </tbody>
+              </table>
+            <b-pagination-nav base-url="#" :number-of-pages="num3" v-model="currentPage3" />
+            <rightpane></rightpane>
+        </div>
+        <div class="col-md-8 order-md-1">
+
             <h2 class="mb-3"><b>{{selectedItem.text}}</b>
            <small class="form-text text-muted">
                 {{selectedItem.department.split(" ")[0]}} {{selectedItem.grade.split(" ")[0]}} {{selectedItem.department.split(" ")[1]}} {{selectedItem.grade.split(" ")[1]}} 
@@ -53,8 +89,9 @@
          </h2>
 <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
 
-  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
+  <button v-bind:class="class2" @click="visit">Visit Homepage 访问学生主页</button>
 
+  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
   <!-- Modal Component -->
   <b-modal id="modal1" title="同意报名"  @ok="handleOk">
     <p class="my-4">是否同意 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
@@ -99,6 +136,7 @@
 <script>
 import rightpane from "../components/right.vue"; import assignmentInfo from "../components/assignmentInfo.vue";
 import studentInfo from "../components/studentInfo.vue";
+import { rejects } from 'assert';
 export default {
   name: "enrollForm",
    data() {
@@ -113,10 +151,10 @@ export default {
       currentPage3:1,
        
       selectedItem:  {
-        id:"",
-          text:"",
-          department: "",
-          grade:""
+          id:"",
+          text:"请点击右侧列表选择学生",
+          department: "Click to",
+          grade:"students evaluate"
         },
       detail: {},
       detailClass: "invisible",
@@ -129,6 +167,18 @@ export default {
   created:function(){
    this.update();
   },
+  computed: {
+    enrollList: function(){
+      return this.list.filter(function(item){
+        return item.success == 0;
+      })
+    },
+    acceptedList: function(){
+      return this.list.filter(function(item){
+        return item.success == 1;
+      })
+    },
+  },
     methods: {
       update(){
          var that = this;
@@ -137,8 +187,8 @@ export default {
      console.log(result);
       if(result.list.length>0){
         that.list=result.list;
-        that.selectedItem=result.list[0];
-        that.onClick(selectedItem);
+         that.selectedItem=result.list[0];
+         that.onClick(that.selectedItem);
           that.detailClass="";
           that.class2="btn btn-primary btn-lg btn-block";
       } else {
@@ -149,7 +199,7 @@ export default {
     })
       },
       onClick(item){
-        if(item.department=="暂无学生报名"){
+        if(item.department=="暂无学生报名" || item.department=="Click to"){
           this.detailClass="invisible";
           this.class2="invisible";
         }else{
@@ -188,6 +238,12 @@ export default {
         alert("project launched!");
         that.$router.push("/main");
       }
+      })
+    },
+    visit(){
+      var that = this;
+      $.get('/enrollStatus/visitStudent',{id: that.selectedItem.id}).then(function(){
+        that.$router.push("/studentView");
       })
     }
   },

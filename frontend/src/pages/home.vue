@@ -21,11 +21,10 @@
                 <a href="#"> Forgot your password?</a>
               </small>
             </div>
-             <div class="form-group">
+              <div class="form-group">
                <row>
-                         <img src="/api/getCaptcha" alt="captcha" >
-
-             <input type="text" class="form-control" placeholder="" v-model="code" id="code">
+                <img src="/api/getCaptcha" alt="captcha" @click="update">
+             <input type="text" placeholder="" v-model="code" id="code1">
                </row>
              </div>
              <div class="form-group">
@@ -95,8 +94,7 @@ export default {
     return {
        currentPage3: 1,
        num3:1,
-      list:[],
-      picture:""
+      list:[]
     };
   },
   created:function(){
@@ -107,7 +105,6 @@ export default {
       var that = this;
       $.get('/home/get',{currentPage3: that.currentPage3},
             function(data){
-              that.picture=data.picture;
               that.list=data.avaList;
               that.num3=data.num3;
             })
@@ -125,20 +122,26 @@ export default {
       var inputName = this.inputNameForm;
       var inputPassword = this.inputPasswordForm;
       var that = this;
+
+      var passwdSHA256;
+      if (inputPassword != null) {
+        passwdSHA256 = require("js-sha256").sha256(inputPassword);
+        //alert(passwdSHA256.length);
+      }
       //alert(inputTORS+'\n'+inputName+"\n"+inputPassword);
       //alert($.fn.jquery); //Output your jquery version to check out whether jquery was successfully loaded.
-      if (inputName.length<200 && inputPassword.length<200) {
+      if (inputName && inputName.length<200 && inputPassword && inputPassword.length<200) {
         if (inputTORS=="teacher") {
-          $.get('/login/byTeacherId', {teacherId:inputName,password:inputPassword, code:code})
+          $.get('/login/byTeacherId', {teacherId:inputName,password:passwdSHA256, code:that.code.toLowerCase()})
             .then(function(data){
-              if(data.loginSuccess){
+               if(data.codeError) {
+                alert("验证码错误")
+              } else if(data.loginSuccess){
                 if(data.infoFinished){
                   that.$router.push("/main");
                 }else{
                   that.$router.push("/teacherInfo");
                 }
-              } else if(data.codeError) {
-                alert("验证码错误")
               } else if(data.usernameNotFound){
                 alert("用户不存在.");
               } else {
@@ -150,17 +153,17 @@ export default {
         else if (inputTORS=="student"){
           var isEmail = (new RegExp("@")).test(inputName);
           if (isEmail) {
-            $.get('/login/byEmail', {email:inputName,password:inputPassword, code:code})
+            $.get('/login/byEmail', {email:inputName,password:passwdSHA256, code:that.code.toLowerCase()})
               .then(function(data){
-                if(data.loginSuccess){
+                if(data.codeError) {
+                alert("验证码错误")
+              }else if(data.loginSuccess){
                   if(data.infoFinished){
                     that.$router.push("/main");
                   }else{
                     that.$router.push("/studentInfo");
                   }
-                } else if(data.codeError) {
-                alert("验证码错误")
-              }else if(data.usernameNotFound){
+                } else  if(data.usernameNotFound){
                 alert("用户不存在.");
               } else {
                 alert("error in username or password.\n用户名或密码错误.")
@@ -169,17 +172,18 @@ export default {
             );
           }
           else {
-            $.get('/login/byStudentId', {studentId:inputName,password:inputPassword, code:code})
+            $.get('/login/byStudentId', {studentId:inputName,password:passwdSHA256, code:that.code.toLowerCase()})
               .then(function(data){
-                if(data.loginSuccess){
+                console.log(data);
+                 if(data.codeError) {
+                alert("验证码错误")
+              } else if(data.loginSuccess){
                   if(data.infoFinished){
                     that.$router.push("/main");
                   }else{
                     that.$router.push("/studentInfo");
                   }
-                } else if(data.codeError) {
-                alert("验证码错误")
-              } else if(data.usernameNotFound){
+                } else if(data.usernameNotFound){
                 alert("用户不存在.");
               } else {
                 alert("error in username or password.\n用户名或密码错误.")

@@ -45,5 +45,14 @@ module.exports = {
          { title: "项目5",  teacherId:"1", status: "Enrolling 可报名" } ]
         
         );
+    },
+    search: function(search, callback){
+        callback(
+      [ { title: "项目1", teacherId:"1", status: "Enrolling 可报名" },
+        { title: "项目2", teacherId:"1",  status: "Enrolling 可报名" },
+        { title: "项目3",  teacherId:"1", status: "Enrolling 可报名" },
+         { title: "项目4",  teacherId:"1", status: "Enrolling 可报名" },
+         { title: "项目5",  teacherId:"1", status: "Enrolling 可报名" } ]
+        );
     }
 }

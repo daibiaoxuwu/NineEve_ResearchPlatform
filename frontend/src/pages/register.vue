@@ -18,11 +18,13 @@
               <div class="form-group col-md-6"> <label for="form19">Password</label> <input type="password" class="form-control" id="form19" placeholder="••••" v-model="registerPassword"> </div>
               <div class="form-group col-md-6"> <label for="form20">Confirm Password</label> <input type="password" class="form-control" id="form20" placeholder="••••" v-model="registerPasswordRepetition"> </div>
             </div>
+            <div class="form-group" style="display:none" id="divCaptcha"> <label for="form18">CAPTCHA from Your Email</label> <input type="text" class="form-control" id="form21" placeholder="CAPTCHA" v-model="registerCaptcha"> </div>
             <div class="form-group">
-              <div class="form-check"> <input class="form-check-input" type="checkbox" id="form21" value="on" v-model="registerAgreement"> <label class="form-check-label" for="form21"> I Agree with <a href="#">Term and Conditions</a> of the service </label> </div>
+              <div class="form-check"> <input class="form-check-input" type="checkbox" id="form22" value="on" v-model="registerAgreement"> <label class="form-check-label" for="form22"> I Agree with <a href="#">Term and Conditions</a> of the service </label> </div>
             </div>
           </form>
-           <button class="btn btn-primary" @click="onRegister">Register</button>
+          <button class="btn btn-primary col-md-5" @click="getEmailCaptcha">Submit</button>
+          <button class="btn btn-primary col-md-5" @click="onRegister" style="display:none" id="buttonRegister">Register</button>
         </div>
       </div>
     </div>
@@ -52,20 +54,42 @@ export default {
       registerName:"",
       registerUniv:"",
       registerEmail:"",
-      registerPassword:""
+      registerPassword:"",
+      registerCaptcha:""
     }
   },
   methods: {
    onRegister(){
-     if (this.registerAgreement==true) {
-       if (this.registerPassword==this.registerPasswordRepetition) {
+     var that = this;
+     var passwdSHA256;
+
+     if (that.registerCaptcha==null) that.registerCaptcha=="";
+     if (that.registerCaptcha=="") {
+       alert("Please input the captcha in your email.\n 请输入您邮箱中收到的验证码.");
+       return;
+     }
+
+     if (that.registerEmail==null) that.registerEmail=="";
+     var isEmail = (new RegExp("@")).test(that.registerEmail);
+     var isInUniv = (new RegExp("edu\.cn$")).test(that.registerEmail);
+     if (!isEmail || !isInUniv) {
+       alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
+       return;
+     }
+
+     if (that.registerAgreement==true) {
+       if (that.registerPassword != null) {
+          passwdSHA256 = require("js-sha256").sha256(that.registerPassword);
+          //alert(passwdSHA256.length);
+       }
+       if (that.registerPassword==that.registerPasswordRepetition) {
          $.get('/register/getUrl',
-           {name:this.registerName, university:this.registerUniv, email:this.registerEmail,
-             password:this.registerPassword}
+           {name:that.registerName, university:that.registerUniv, email:that.registerEmail,
+             password:passwdSHA256, captcha:that.registerCaptcha}
         ).then(()=>{
           window.location.href="/studentInfo";
         });
-         
+
        }
        else {
          alert("The password repetition is not correct.\n 需要输入一致的密码.");
@@ -75,6 +99,30 @@ export default {
        alert("You should agree with Term and Conditions of the service first!\n请点击 同意 勾选框. ");
      }
 
+   },
+
+   getEmailCaptcha() {
+      var that = this;
+
+      if (that.registerEmail==null) that.registerEmail=="";
+      if (that.registerEmail.length>200) {
+
+      }
+      var isEmail = (new RegExp("@")).test(that.registerEmail);
+      var isInUniv = (new RegExp("edu\.cn$")).test(that.registerEmail);
+      if (!isEmail || !isInUniv) {
+        alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
+        return;
+      }
+
+      $.get('/register/getCaptcha',
+        {email:that.registerEmail}
+     ).then(function(data){
+       alert("A CAPTCHA has been sent to your email, please input it.\n 验证码已发送至您的邮箱, 请输入您收到的验证码.");
+       //alert("captcha:" + data.captcha);
+       document.getElementById("divCaptcha").style.display="inline";
+       document.getElementById("buttonRegister").style.display="inline";
+     });
    }
   }
 };

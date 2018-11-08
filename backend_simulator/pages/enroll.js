@@ -23,14 +23,17 @@ module.exports = {
         connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 			if(results.length>0)
 			{
-				connection.query('select * from teacher where teacherid="' + teacher + '"', function (err, resul, fiel){
+				connection.query('select * from `prokey` where title="' + title + '" and teacher="' + teacher + '"', function (err, resul, fiel){
+					var keys=[];
+					for(var i in resul)
+						keys.push(resul[i].key);
 					callback(
 					{
 						title: results[0].title,
-						teacher: resul[0].lastname+resul[0].firstname,
+						teacher: results[0].teachername,
 						teacherId: results[0].teacher,
 						introduction: results[0].introduction,
-						keywords: results[0].keywords.split(' '),
+						keywords: keys,
 						abilities: results[0].abilities,
 						detailed: results[0].detailed,
 						number: results[0].num.toString(),

@@ -157,7 +157,7 @@ module.exports = {
         if(email=="1") recall({lastName: "一", firstName:"2",
         username:"3",
         wechatPhone:"4", 
-        email:"5",
+        email:"5@edu.cn",
         perWebAddr:"6",
         breIntr:"7",
         grade:"Junior 大三",
