@@ -22,10 +22,12 @@
 
          <h4 class="mb-3"><b>{{studentName}}</b>
            <small class="form-text text-muted">
-             {{dropdownText}}
+{{department.split(" ")[0]}} {{grade.split(" ")[0]}} {{department.split(" ")[1]}} {{grade.split(" ")[1]}}
               </small>
          </h4>
 
+         <p class="form-text text-muted">
+           {{breIntr}}</p>
                
 
    
@@ -39,28 +41,25 @@
 
 
 
-             <button class="btn btn-secondary btn-lg btn-block" @click="$router.go(-1)">Home 返回主页</button>
-        
+  <b-btn v-b-modal.modal1 class="btn btn-secondary btn-lg btn-block" style="margin-top:0.5rem;">Accept Enrollment 同意报名</b-btn>
+  <!-- Modal Component -->
+  <b-modal id="modal1" title="同意报名"  @ok="handleOk">
+    <p class="my-4">是否同意 {{studentName}} ({{department.split(" ")[1]}}-{{grade.split(" ")[1]}})报名?</p>
+  </b-modal>
+
+  <b-btn v-b-modal.modal2 class="btn btn-secondary btn-lg btn-block" style="margin-top:0.5rem;">Reject Enrollment 拒绝报名</b-btn>
+  <!-- Modal Component -->
+  <b-modal id="modal2" title="拒绝报名"  @ok="handleRefuse">
+    <p class="my-4">是否拒绝 {{studentName}} ({{department.split(" ")[1]}}-{{grade.split(" ")[1]}})报名?</p>
+  </b-modal>
+  
+  <button class="btn btn-secondary btn-lg btn-block" @click="$router.go(-1)" style="margin-top:0.5rem;">Return 返回</button>
+  
+  
         </div>
       </div>
     </div>
   </div>
-    <button class="btn btn-secondary btn-lg btn-block" @click="visit">Return 返回</button>
-
-  <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
-  <!-- Modal Component -->
-  <b-modal id="modal1" title="同意报名"  @ok="handleOk">
-    <p class="my-4">是否同意 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
-  </b-modal>
-
-  <b-btn v-b-modal.modal2 v-bind:class="class2" style="margin-top:0.5rem;">Reject Enrollment 拒绝报名</b-btn>
-
-  <!-- Modal Component -->
-  <b-modal id="modal2" title="拒绝报名"  @ok="handleRefuse">
-    <p class="my-4">是否拒绝 {{selectedItem.text}} ({{selectedItem.department.split(" ")[1]}}-{{selectedItem.grade.split(" ")[1]}})报名?</p>
-  </b-modal>
-  
-  
      </div>
 </template>
 
@@ -72,6 +71,7 @@ export default {
   data() {
     return {
       grade: "Junior 大三",
+      department: "CST 计算机系",
       studentName:"学生名",
       email:"1@1",
       perWebAddr:"1.com",
@@ -92,6 +92,7 @@ export default {
         "/studentView/get",
         {}).then(function(data){
           console.log("lastname:" + data.lastName)
+          console.log(data)
           that.grade = data.grade;
           that.studentName = data.lastName + data.firstName;
           that.email = data.email;

@@ -89,7 +89,7 @@
          </h2>
 <studentInfo v-bind:detail="detail" v-bind:class="detailClass"></studentInfo>
 
-  <button class="btn btn-secondary btn-lg btn-block" @click="visit">Visit Homepage 访问学生主页</button>
+  <button v-bind:class="class2" @click="visit">Visit Homepage 访问学生主页</button>
 
   <b-btn v-b-modal.modal1 v-bind:class="class2">Accept Enrollment 同意报名</b-btn>
   <!-- Modal Component -->
@@ -151,10 +151,10 @@ export default {
       currentPage3:1,
        
       selectedItem:  {
-        id:"",
-          text:"",
-          department: "",
-          grade:""
+          id:"",
+          text:"请点击右侧列表选择学生",
+          department: "Click to",
+          grade:"students evaluate"
         },
       detail: {},
       detailClass: "invisible",
@@ -187,8 +187,8 @@ export default {
      console.log(result);
       if(result.list.length>0){
         that.list=result.list;
-        that.selectedItem=result.list[0];
-        that.onClick(selectedItem);
+         that.selectedItem=result.list[0];
+         that.onClick(that.selectedItem);
           that.detailClass="";
           that.class2="btn btn-primary btn-lg btn-block";
       } else {
@@ -199,7 +199,7 @@ export default {
     })
       },
       onClick(item){
-        if(item.department=="暂无学生报名"){
+        if(item.department=="暂无学生报名" || item.department=="Click to"){
           this.detailClass="invisible";
           this.class2="invisible";
         }else{

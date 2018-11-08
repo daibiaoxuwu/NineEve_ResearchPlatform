@@ -132,7 +132,7 @@ app.get('/register/getCaptcha', function(sReq, sRes){
     }
 
     if (sReq.query.email.length<200) {
-      email_js.sendEmail(sReq.query.email,function(result){
+      email_js.sendEmail({clientEmail: sReq.query.email}, function(result){
 		      sRes.send(result);
 	   });
     }
