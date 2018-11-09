@@ -67,6 +67,7 @@ module.exports = {
   sendEmail: function(req, res){
     mailOptions.to = req.clientEmail;
     var captcha = Math.floor(Math.random() * 800000 + 100000);
+    console.log(captcha);
     mailOptions.text = testModule + captcha.toString();
     mailOptions.subject = subjectModule + '验证码';
     transporter.sendMail(mailOptions, function(error, info){

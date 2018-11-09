@@ -62,6 +62,10 @@ module.exports = {
                     '"' + selfIntr + '",' +
                     '"' + reasonEnroll + '",' +
                     '"' + award + '",0)');
+                connection.query('select * from `student` where `studentid`="' + student + '"', function (err, resul, fiel) {
+                    connection.query('update student set `savenum`=' + (resul.savenum + 1) + 
+                    'where studentid="' + student + '"');
+                });
                 callback({
                     saveSuccess: true
                 });
@@ -282,12 +286,40 @@ module.exports = {
     //查看学生的报名数量
     //TODO
     studentNum: function (id, callback){
-        callback({
-            enrollSaveNum: 3,   //已保存未提交的项目数量
-            enrollSubmitNum: 1, //已提交的项目数量
-            enrollLaunchNum: 1, //已经开始Launch的项目数量
-            enrollMaxNum: 2     //最大报名项目数量
-        })
+        connection.query('select * from student where studentid="' + id + '"', function (error, results, fields) {
+            connection.query('select * from enrollform inner join project ' +
+            'on enrollform.title = project.title and enrollform.teacher = project.teacher' +
+            'where enrollform.student = "' + id + '"', function (err, resul, fiel) {
+                var saveNum = 0;
+                var submitNum = 0;
+                var successNum = 0;
+                var launchNum = 0;
+                var maxNum = 2;
+                if((results[0].grade.indexOf('resh') != -1) || (results[0].grade.indexOf('more') != -1))
+                    maxNum = 1;
+                for(var i in resul)
+                    if(resul[i].filled == 0)
+                        saveNum++;
+                    else
+                        if(resul[i].success == 0)
+                            submitNum++;
+                        else
+                            if((resul[i].success == 1) && (resul[i].status.indexOf("roll") != -1))
+                                successNum++;
+                            else
+                                if((resul[i].success == 1) && (resul[i].status.indexOf("aunch") != -1))
+                                    launchNum++;
+                callback({
+                    enrollSaveNum: saveNum,   //已保存未提交的项目数量
+                    enrollSubmitNum: submitNum,
+                    enrollSuccessNum: successNum, //已提交的项目数量
+                    enrollLaunchNum: launchNum, //已经开始Launch的项目数量
+                    enrollMaxNum: maxNum    //最大报名项目数量
+                });
+                    
+            });
+        });
+
         //注意学生参加项目, 项目结题等后这里会变化...而不是"报名表数量"
         //已提交的项目数量 + 已经launch的项目数量 <= 最大报名数量.
     }

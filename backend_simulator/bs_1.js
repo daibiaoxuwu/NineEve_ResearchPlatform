@@ -4,9 +4,9 @@ const port = 80
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'b.NineEve.secoder.local',
+  host     : 'localhost',
   port     : '3306',
-  user     : 'lzr',
+  user     : 'root',
   password : 'newpass',
   database : 'A'
 });
