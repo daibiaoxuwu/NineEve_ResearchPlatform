@@ -5,9 +5,6 @@ module.exports = {
      * @param {string} id
      * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
      * 
-     * @param {string} idemail
-     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
-     * 
      * @param {string} assignmentTitle
      * 学生报名项目的题目
      *
@@ -47,12 +44,10 @@ module.exports = {
      *
      */
 
-    enrollFormSave: function (id, idemail, assignmentTitle, teacher, lastName, firstName, username,
+    enrollFormSave: function (id, assignmentTitle, teacher, lastName, firstName, username,
         wechatPhone, email, perWebAddr,
         selfIntr, reasonEnroll, award, callback) {
         var student = id;
-        if (student == "" || !student)
-            student = idemail;
         connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"', function (error, results, fields) {
             if (results.length == 0) {
                 connection.query('insert into enrollform(`student`,`title`,`teacher`,`selfintr`,`reasonenroll`,`award`,`fiiled`) values(' +
@@ -88,9 +83,6 @@ module.exports = {
      * 
      * @param {string} id
      * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
-     * 
-     * @param {string} idemail
-     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
      * 
      * @param {string} assignmentTitle
      * 学生报名项目的题目
@@ -132,12 +124,10 @@ module.exports = {
      *
      */
 
-    enrollFormLaunch: function (id, idemail, assignmentTitle, teacher, lastName, firstName, username,
+    enrollFormLaunch: function (id, assignmentTitle, teacher, lastName, firstName, username,
         wechatPhone, email, perWebAddr,
         selfIntr, reasonEnroll, award, callback) {
         var student = id;
-        if (student == "" || !student)
-            student = idemail;
         connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"', function (error, results, fields) {
             if (results.length == 0) {
                 connection.query('insert into enrollform(`student`,`title`,`teacher`,`selfintr`,`reasonenroll`,`award`,`fiiled`) values(' +
@@ -172,9 +162,6 @@ module.exports = {
      *      * @param {string} id
      * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
      * 
-     * @param {string} idemail
-     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
-     * 
      *      * @param {string} assignmentTitle
      * 学生报名项目的题目
      * 
@@ -206,11 +193,9 @@ module.exports = {
      * 报名原因
      *
      */
-    enrollFormGet: function (id, idemail, assignmentTitle, teacher, callback) {
+    enrollFormGet: function (id, assignmentTitle, teacher, callback) {
         console.log('e' + id + idemail + assignmentTitle);
         var student = id;
-        if (student == "" || !student)
-            student = idemail;
         connection.query('select * from student where studentid="' + student + '"', function (error, results, fields) {
             var tStudentID = results[0].studentid;
             if (tStudentID.indexOf('@') != -1)
@@ -254,11 +239,9 @@ module.exports = {
         });
     },
     //学生端 传入id和email是学生的号, 查看学生是否报名了项目, 并且投入使用了
-    enrollFormCheck: function (id, idemail, assignmentTitle, teacher, callback) {
-        console.log('e' + id + idemail + assignmentTitle);
+    enrollFormCheck: function (id, assignmentTitle, teacher, callback) {
+        console.log('e' + id + assignmentTitle);
         var student = id;
-        if (student == "" || !student){
-            student = idemail;
             connection.query('select * from enrollform where student="' + student + '" and title="' + assignmentTitle + '" and teacher="' + teacher + '"  and `filled`=1 ', function (err, resul, fiel) {
                 if (resul.length > 0) {
                     callback(true);
@@ -266,14 +249,11 @@ module.exports = {
                     callback(false);
                 }
             })
-        }
     },
     //教师端 传入id是教师号,
-    enrollFormCheckT: function (id, idemail, assignmentTitle, teacher, callback) {
-        console.log('e' + id + idemail + assignmentTitle);
+    enrollFormCheckT: function (id, assignmentTitle, teacher, callback) {
+        console.log('e' + id + assignmentTitle);
         var student = id;
-        if (student == "" || !student){
-            student = idemail;
             connection.query('select * from enrollform where teacher="' + student + '" and title="' + assignmentTitle + '"  and `filled`=1 ', function (err, resul, fiel) {
                 if (resul.length > 0) {
                     callback(true);
@@ -281,7 +261,6 @@ module.exports = {
                     callback(false);
                 }
             })
-        }
     },
     //查看学生的报名数量
     //TODO

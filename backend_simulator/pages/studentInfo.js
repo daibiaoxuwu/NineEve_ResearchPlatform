@@ -6,9 +6,6 @@ module.exports = {
      * @param {string} id
      * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
      * 
-     * @param {string} email
-     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
-     * 
      * @param {string} lastName
      * 学生的姓
      *
@@ -45,13 +42,11 @@ module.exports = {
      * 保存是否成功 如果没有查到此人, 返回false
      */
 
-    studentInfoSave: function(id, mail, lastName, firstName, username,
+    studentInfoSave: function(id, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
           breIntr, grade, selectedLab, selectedKey, recall) {
         console.log("studentInfoSave: " + id + email + lastName + firstName);
 		var studentID=id;
-		if(studentID==""||!studentID)
-			studentID=mail;
         connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
 			if(results.length==0)
 				recall({saveSuccess: false});
@@ -92,9 +87,6 @@ module.exports = {
      * @param {string} id
      * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
      * 
-     * @param {string} email
-     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
-     * 
      * @param {string} lastName
      * 学生的姓
      *
@@ -131,13 +123,11 @@ module.exports = {
      * 启动是否成功 如果没有查到此人, 返回false
      */
 
-    studentInfoLaunch: function(id, mail, lastName, firstName, username,
+    studentInfoLaunch: function(id, lastName, firstName, username,
          wechatPhone, email, perWebAddr,
          breIntr, grade, selectedLab, selectedKey, recall) {
         console.log("studentInfoLaunch: " + id + email + lastName + firstName + email);
 		var studentID=id;
-		if(studentID==""||!studentID)
-			studentID=mail;
         connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
 			if(results.length==0)
 				recall({launchSuccess: false});
@@ -177,9 +167,6 @@ module.exports = {
      * @param {string} id
      * 学生的id 有可能为"", 这时说明学生通过邮箱登陆; 否则通过id查找它
      * 
-     * @param {string} email
-     * 学生的email 有可能为"", 这时说明学生通过id登陆; 否则通过邮箱查找它
-     * 
      * @property {string} lastName
      * 学生的姓
      *
@@ -217,10 +204,8 @@ module.exports = {
      */
 	
 
-    studentInfoGet: function(id, email, recall) {
+    studentInfoGet: function(id, recall) {
 		var studentID=id;
-		if(studentID==""||!studentID)
-			studentID=email;
         console.log("studentInfGet: " + id + email);
 		connection.query('select * from student where studentID="' + studentID + '"', function (error, results, fields){
 			if(results.length>0)

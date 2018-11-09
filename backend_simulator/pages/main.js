@@ -5,8 +5,6 @@ module.exports = {
      * 
      * @param {string} id
      * 学生的学号 如果为"",用邮箱
-     * @param {string} email
-     * 学生的邮箱
      *
      * @property {boolean} isTeacher
      * 是否为老师(学生和老师公用个人主页)
@@ -88,16 +86,13 @@ module.exports = {
 	},		
 
 
-    mainGet: function(id, email, isTeacher, callback){
+    mainGet: function(id, isTeacher, callback){
 		console.log("lzr5"+id);
-		console.log("lzr6"+email);
 		console.log("lzr7"+isTeacher);
 		var that = this;
 		connection.query('select * from project ', function (error, results, fields){
 			var studentid=id;
 			var teacherid=id;
-			if(!studentid||studentid=="")
-				studentid=email;
 			var message=[];
 			var mylist=[];
 			var avalist=[];
