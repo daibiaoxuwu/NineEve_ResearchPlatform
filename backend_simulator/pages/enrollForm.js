@@ -295,6 +295,7 @@ module.exports = {
                 var successNum = 0;
                 var launchNum = 0;
                 var maxNum = 2;
+                console.log("idid" + id);
                 if((results[0].grade.indexOf('resh') != -1) || (results[0].grade.indexOf('more') != -1))
                     maxNum = 1;
                 for(var i in resul)

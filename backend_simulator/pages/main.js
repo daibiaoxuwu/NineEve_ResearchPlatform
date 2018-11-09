@@ -154,8 +154,15 @@ module.exports = {
 									 teacherId: resul[i].teacher,
 									 status: realst});
 					}
-					connection.query('select * from `stukey` where student="' + studentid + '"', function (er, resu, fie){
-						that.getIntList(message, mylist, avalist, 0, 0, resu, intlist, intlist, callback);
+					//connection.query('select * from `stukey` where student="' + studentid + '"', function (er, resu, fie){
+					//	that.getIntList(message, mylist, avalist, 0, 0, resu, intlist, intlist, callback);
+					//});
+					connection.query('select * from (stukey inner join prokey on stukey.key = prokey.key) join project on project.title = prokey.title and project.teacher = prokey.teacher where stukey.student = "' + studentid + '"',function (er, resu, fie){
+						for(var x in resu)
+							intlist.push({title: resu[x].title,
+								teacherId: resu[x].teacher,
+								status: resu[x].status});
+						callback(message, mylist, avalist, intlist);
 					});
 				});	
 			}				
