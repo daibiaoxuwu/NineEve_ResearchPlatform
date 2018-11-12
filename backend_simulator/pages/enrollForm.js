@@ -289,6 +289,7 @@ module.exports = {
                             else
                                 if((resul[i].success == 1) && (resul[i].status.indexOf("aunch") != -1))
                                     launchNum++;
+                console.log(saveNum,submitNum,successNum,launchNum,maxNum);
                 callback({
                     enrollSaveNum: saveNum,   //已保存未提交的项目数量
                     enrollSubmitNum: submitNum,

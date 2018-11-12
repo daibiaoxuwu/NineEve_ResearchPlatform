@@ -154,9 +154,19 @@ module.exports = {
 					//});
 					connection.query('select * from (stukey inner join prokey on stukey.key = prokey.key) join project on project.title = prokey.title and project.teacher = prokey.teacher where stukey.student = "' + studentid + '"',function (er, resu, fie){
 						for(var x in resu)
-							intlist.push({title: resu[x].title,
-								teacherId: resu[x].teacher,
-								status: resu[x].status});
+						{
+							var hav = 0;
+							for(var y in intlist)
+							{
+								console.log(intlist[y].title,resu[x].title,intlist[y].teacherId,resu[x].teacher);
+								if(intlist[y].title == resu[x].title && intlist[y].teacherId == resu[x].teacher)
+									hav = 1;
+							}
+							if(hav == 0)
+								intlist.push({title: resu[x].title,
+									teacherId: resu[x].teacher,
+									status: resu[x].status});
+						}
 						callback(message, mylist, avalist, intlist);
 					});
 				});	

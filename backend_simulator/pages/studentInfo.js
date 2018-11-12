@@ -206,7 +206,6 @@ module.exports = {
 
     studentInfoGet: function(id, recall) {
 		var studentID=id;
-        console.log("studentInfGet: " + id + email);
 		connection.query('select * from student where studentID="' + studentID + '"', function (error, results, fields){
 			if(results.length>0)
 			{
