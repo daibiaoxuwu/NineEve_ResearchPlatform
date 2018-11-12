@@ -87,6 +87,7 @@ export default {
               if (result.hasEnrolled == true) {
                 that.buttonword = "You've enrolled. 已经报名.";
               } else {
+                console.log("enroll: " + result);
                 that.warnNum =
                   "你已经报名了" +
                   result.enrollSubmitNum +

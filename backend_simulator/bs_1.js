@@ -792,6 +792,7 @@ app.get('/enroll/isTeacher', function(sReq, sRes) {
                         response.enrollSubmitNum = studentNumResult.enrollSubmitNum;
                         response.enrollMaxNum = studentNumResult.enrollMaxNum;
                         response.enrollSaveNum = studentNumResult.enrollSaveNum;
+                        console.log("studentNum: " + response);
                         sRes.send(response);
                     });
                 } else {
