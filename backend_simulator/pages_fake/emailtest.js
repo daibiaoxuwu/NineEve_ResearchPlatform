@@ -1,23 +1,33 @@
-const server = require('./email')
+const server = require('../pages/email')
 
-server.serverVerify(function(res){
-  console.log(res.response);
-})
+// server.serverVerify(function(res){
+//   console.log(res.response);
+// })
 
-var req = {clientEmail: 'huangbj16@mails.tsinghua.edu.cn'};
+// server.sendEmail(req, function(res){
+//   console.log(res.response);
+//   console.log(res.captcha);
+// })
 
-server.sendEmail(req, function(res){
-  console.log(res.response);
-  console.log(res.captcha);
-})
+// req = {
+//   clientEmail: 'huangbj16@mails.tsinghua.edu.cn',
+//   assignmentTitle: 'TCP网络优化器',
+//   lastName: '宋',
+//   firstName: '思睿'
+// };
 
-req = {
-  clientEmail: 'huangbj16@mails.tsinghua.edu.cn',
+// server.sendNotification(req, function(res){
+//   console.log(res.response);
+// })
+
+var req = {
+  clientEmailList: ['huangbj16@mails.tsinghua.edu.cn', 'huangbj16@qq.com'],
   assignmentTitle: 'TCP网络优化器',
-  lastName: '宋',
-  firstName: '思睿'
-};
+  interest: '特奖',
+  firstNameTeacher: '院士',
+  lastNameTeacher: '吴'
+}
 
-server.sendNotification(req, function(res){
+server.sendEnrollNotificationToStudent(req, 3, function(res){
   console.log(res.response);
 })

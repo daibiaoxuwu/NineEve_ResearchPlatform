@@ -16,7 +16,8 @@ const notificationModuleStudentCase1 =
   ['同学你好，你已成功提交', '项目的报名申请，请等待审核。'];
 const notificationModuleStudentCase2 =
   ['同学你好，你对', '项目的报名申请已被通过，请登录科研信息平台确认。'];
-
+const notificationModuleStudentCase3 =
+  ['同学你好，', '老师发布了关于', '的新项目：', '。 请登录科研信息平台查看详情。'];
 const notificationModuleTeacherCase1 =
   ['老师您好，您的', '项目已有新的学生报名，请登录科研信息平台审核。'];
 const notificationModuleTeacherCase2 =
@@ -165,7 +166,14 @@ module.exports = {
           + req.assignmentTitle + notificationModuleStudentCase2[1];
         mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已通过';
         break;
-
+      
+      case 3: //学生因为关注了关键词收到了新项目的通知
+        mailOptions.to = req.clientEmailList.join(', ');
+        mailOptions.subject = subjectModule + '新项目：' + req.assignmentTitle;
+        mailOptions.text = notificationModuleStudentCase3[0]
+          + req.lastNameTeacher + req.firstNameTeacher + notificationModuleStudentCase3[1]
+          + req.interest + notificationModuleStudentCase3[2] + req.assignmentTitle + notificationModuleStudentCase3[3];
+        break;
       default:
         return;
     }
