@@ -9,6 +9,7 @@
       </div>
     </div>
 
+
     <div class="p-0">
       <div class="container">
         <div class="row">
@@ -257,7 +258,8 @@ export default {
           }).then(function() {
             that.$router.push("/enroll");
           });
-        } else {
+        }
+        else {
           var that = this;
           $.get("/home/setAssignment", {
             title: item.title,
@@ -266,7 +268,8 @@ export default {
             that.$router.push("/enrollStatus");
           });
         }
-      } else if (item.status == "Passed 已通过") {
+      }
+      else if (item.status == "Passed 已通过") {
         var that = this;
         $.get("/home/setAssignment", {
           title: item.title,
@@ -274,7 +277,8 @@ export default {
         }).then(function() {
           that.$router.push("/enrollAcceptNotice");
         });
-      } else if (item.status == "Rejected 已拒绝") {
+      }
+      else if (item.status == "Rejected 已拒绝") {
         var that = this;
         $.get("/home/setAssignment", {
           title: item.title,
@@ -282,7 +286,8 @@ export default {
         }).then(function() {
           that.$router.push("/enrollRejectNotice");
         });
-      } else if (item.status == "Editable 可编辑") {
+      }
+      else if (item.status == "Editable 可编辑") {
         var that = this;
         $.get("/home/setNewAssignment", {
           title: item.title,
@@ -293,7 +298,8 @@ export default {
             query: { isNew: false }
           });
         });
-      } else {
+      }
+      else {
         var that = this;
         $.get("/home/setAssignment", {
           title: item.title,
@@ -313,7 +319,8 @@ export default {
           }).then(function() {
             that.$router.push("/enrollStatus");
           });
-        } else {
+        }
+        else {
           var that = this;
           $.get("/home/setAssignment", {
             title: item.title,
@@ -322,7 +329,8 @@ export default {
             that.$router.push("/enroll");
           });
         }
-      } else if (item.status == "Passed 已通过") {
+      }
+      else if (item.status == "Passed 已通过") {
         var that = this;
         console.log("enroll");
         $.get("/home/setAssignment", {
@@ -332,7 +340,8 @@ export default {
           console.log("enroll");
           that.$router.push("/enrollAcceptNotice");
         });
-      } else if (item.status == "Rejected 已拒绝") {
+      }
+      else if (item.status == "Rejected 已拒绝") {
         var that = this;
         $.get("/home/setAssignment", {
           title: item.title,
@@ -340,7 +349,8 @@ export default {
         }).then(function() {
           that.$router.push("/enrollRejectNotice");
         });
-      } else if (item.status == "Editable 可编辑") {
+      }
+      else if (item.status == "Editable 可编辑") {
         var that = this;
         $.get("/home/setNewAssignment", {
           title: item.title,
