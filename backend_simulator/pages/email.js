@@ -172,7 +172,7 @@ module.exports = {
         mailOptions.subject = subjectModule + '新项目：' + req.assignmentTitle;
         mailOptions.text = notificationModuleStudentCase3[0]
           + req.lastNameTeacher + req.firstNameTeacher + notificationModuleStudentCase3[1]
-          + req.interest + notificationModuleStudentCase3[2] + req.assignmentTitle + notificationModuleStudentCase3[3];
+          + req.keywords.join(', ') + notificationModuleStudentCase3[2] + req.assignmentTitle + notificationModuleStudentCase3[3];
         break;
       default:
         return;
