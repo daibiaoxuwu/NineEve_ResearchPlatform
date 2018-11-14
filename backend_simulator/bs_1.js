@@ -132,7 +132,7 @@ app.get('/register/getCaptcha', function(sReq, sRes){
     }
 
     if (sReq.query.email.length<200) {
-      email_js.sendEmail({clientEmail: sReq.query.email}, function(result){
+      email_js.sendCaptchaEmail(sReq.query.email, function(result){
 		      sRes.send(result);
 	   });
     }
@@ -563,6 +563,8 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
 
             var req2 = {
             teacherId: sReq.session.assignment.teacherId,
+            teacherName: sReq.session.assignment.teacher,
+            email: sReq.session.assignment.email,
             assignmentTitle: sReq.session.assignment.title
             };
             email_js.sendEnrollNotificationToTeacher(req2, 1, function(res2){
@@ -625,11 +627,22 @@ app.get('/assignmentForm/save', function(sReq, sRes) {
 		 });
 });
 
-app.get('/assignmentForm/launch', function(sReq, sRes) {
+app.get('/assignmentForm/launch', function(sReq, sRes) {//还需要老师的姓名, keywords的类型？
     sReq.session.newAssignment="";
     assignmentForm.assignmentFormLaunch(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
-         sReq.query.deadline, function(result){
+         sReq.query.deadline, function(result){//返回clientEmailList：“关注了关键词的学生的邮箱”的数组。
+             //send email to interested students
+             let local_req = {
+                clientEmailList: result.clientEmailList,
+                assignmentTitle: sReq.query.title,
+                keywords: sReq.query.keywords,
+                firstNameTeacher: '院士',
+                lastNameTeacher: '吴'
+             }
+             email_js.sendEnrollNotificationToStudent(local_req, 3, function(res){
+                 console.log(res.response);
+             })
 			 sRes.send(result);
 		 });
 });
@@ -836,6 +849,8 @@ app.get('/api/getCaptcha', function(req, res) {
         width: 80,
         // 高度
         height: 30,
+        
+        ignoreChars: "oO0iIlL1gq9"
     });
     // 保存到session,忽略大小写
     req.session.captcha = captcha.text.toLowerCase();

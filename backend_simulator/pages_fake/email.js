@@ -64,7 +64,6 @@ module.exports = {
    * @property {int} captcha
    * int形式的6位验证码，用于验证输入是否正确
    *
-   */
   sendEmail: function(req, res){
     mailOptions.to = req.clientEmail;
     var captcha = Math.floor(Math.random() * 800000 + 100000);
@@ -85,6 +84,7 @@ module.exports = {
       }
     });
   },
+   */
 
   /**
   * 前端人员改写的sendEmail
@@ -127,7 +127,6 @@ module.exports = {
   * 发送成功返回'success，
   * 失败返回error信息
   *
-  */
   sendNotification: function(req, res){
     mailOptions.to = req.clientEmail;
     mailOptions.text = req.lastName + req.firstName + notificationModule[0] + req.assignmentTitle + notificationModule[1];
@@ -145,6 +144,7 @@ module.exports = {
       }
     });
   },
+  */
 
   /**
   * 所有给学生发送报名相关事宜的邮件
