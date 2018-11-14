@@ -271,10 +271,6 @@ export default {
           if (that.CVFile != null) {
             var fileFormData = new FormData();
             fileFormData.append("CVFile", that.CVFile);
-            alert(fileFormData.get("CVFile").size);
-            //$.post("/studentInfo/CVFileSave", fileFormData).then(function(data2){
-              //  alert(data2);
-            //});
 
             $.ajax({
                 url:"/studentInfo/CVFileSave",
@@ -284,7 +280,8 @@ export default {
                 async:false,
                 contentType:false,
                 success:function(data2){
-                    alert("保存信息成功");
+                    if (data2.uploadSuccess)
+                      alert("保存信息成功");
                 },
                 error:function(e){
                     alert("文件保存失败");
