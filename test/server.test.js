@@ -182,9 +182,94 @@ describe('server test', () => {
                 done();
             })
         })
+
+        it('should be able to logout', (done) => {
+            agent
+            .get('/app/logout')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
     });
 
+    describe("assignmentForm test", () => {
+        it('visit /login/byTeacherId', (done) => {
+            agent.get('/login/byTeacherId')
+            .query({
+                teacherId: '1',
+                password: 'd4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35'
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body.loginSuccess).to.be.true;
+                done();
+            })
+        })
 
+        it('should be able to get new assignmentForm page', (done) => {
+            agent.get('/assignmentForm/get')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body.length).not.equal.to(0);
+                done();
+            })
+        })
+
+        it('should be able to save temporary info', (done) => {
+            agent.get('/assignmentForm/save')
+            .query({
+                title: 'test',
+                background: 'test',
+                introduction: 'test',
+                keywords: 'test',
+                abilities: 'test',
+                detailed: 'test',
+                number: 5,
+                deadline: '2018/11/14'
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+        
+        it('should be able to get again with previous title', (done) => {
+            agent.get('/assignmentForm/get')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body.title).equal('test');
+                done();
+            })
+        })
+        
+        it('should be able to launch after edit', (done) => {
+            agent.get('assignmentForm/launch')
+            .query({
+                title: 'test',
+                background: 'test',
+                introduction: 'test',
+                keywords: 'test',
+                abilities: 'test',
+                detailed: 'test',
+                number: 5,
+                deadline: '2018/11/14'
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+
+        it('should be able to logout', (done) => {
+            agent
+            .get('/app/logout')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+    })
 
     afterAll(() => {
         app.close();
