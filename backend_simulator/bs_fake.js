@@ -1,4 +1,7 @@
-const express = require('express')
+const express = require('express');
+const multer = require('multer')({dest: 'uploads/'});
+const path = require('path');
+const fs = require('fs');
 const app = express()
 const port = 80
 
@@ -324,10 +327,21 @@ app.get('/studentInfo/save', function(sReq, sRes) {
 		 });
 });
 
-app.post('/studentInfo/CVFileSave', function(sReq, sRes) {
+app.post('/studentInfo/CVFileSave', multer.single('CVFile'), function(sReq, sRes) {
     console.log("1");
-    //console.log(sReq);
-    sRes.send("aaa");
+    if (!sReq.file) return;
+    //console.log(sReq.file.size);
+    var oldPath = path.join(__dirname, sReq.file.path);
+    var newPath = path.join(__dirname, 'uploads/' + sReq.file.originalname);
+    fs.rename(oldPath, newPath, function(err){
+      if (err) {
+        sRes.send({uploadSuccess:false});
+        console.log(err);
+      } else {
+        sRes.send({uploadSuccess:true});
+      }
+    });
+
 });
 
 app.get('/studentInfo/launch', function(sReq, sRes) {
