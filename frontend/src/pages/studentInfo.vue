@@ -98,8 +98,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            </div>
             <hr class="mb-4">
             <h4 class="mb-3">Upload your CV file 上传简历文件</h4>
             <b-form-file v-model="CVFile" :state="Boolean(file)" placeholder="Choose a file..."></b-form-file>
@@ -235,6 +233,11 @@ export default {
       var isInUniv = new RegExp("edu.cn$").test(that.email);
       if (!isEmail || !isInUniv) {
         alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
+        return;
+      }
+
+      if (that.CVFile.size > 5*1024*1024) {
+        alert("The file should be less than 5MB.\n 上传文件须小于5MB.");
         return;
       }
 
