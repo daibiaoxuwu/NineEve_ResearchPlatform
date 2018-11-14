@@ -98,9 +98,11 @@
                   </div>
                 </div>
               </div>
-
-              <hr class="mb-4">
-            </form>
+            <hr class="mb-4">
+            <h4 class="mb-3">Upload your CV file 上传简历文件</h4>
+            <b-form-file v-model="CVFile" :state="Boolean(file)" placeholder="Choose a file..."></b-form-file>
+            <hr class="mb-4">
+          </form>
             <button class="btn btn-secondary btn-lg btn-block" type="submit" @click="save">Save information 保存信息</button>
             <button class="btn btn-primary btn-lg btn-block" type="submit" style="margin-top:0.5rem;" @click="launch">Submit information 提交信息</button>
           </div>
@@ -129,17 +131,18 @@ export default {
       breIntr: "",
       showSaveAlert: false,
       showFailAlert: false,
-      allKeys: [],
-      selectedKey: [],
-      selectedLab: [
-        { name: "Software Laboratory 软件所", state: false },
-        { name: "High Performance Laboratory 高性能", state: false },
-        { name: "Multimedia Laboratory 媒体所", state: false },
-        { name: "Artificial Intelligence Laboratory 智能所", state: false },
-        { name: "Network Laboratory 网络所", state: false }
-      ]
-    };
-  },
+      allKeys:[],
+      selectedKey:[],
+      selectedLab:[
+        {name: "Software Laboratory 软件所", state:false},
+        {name: "High Performance Laboratory 高性能", state:false},
+        {name: "Multimedia Laboratory 媒体所", state:false},
+        {name: "Artificial Intelligence Laboratory 智能所", state:false},
+        {name: "Network Laboratory 网络所", state:false}
+      ],
+      CVFile: null
+    }
+   },
 
   components: {
     rightpane,
@@ -230,6 +233,11 @@ export default {
       var isInUniv = new RegExp("edu.cn$").test(that.email);
       if (!isEmail || !isInUniv) {
         alert("Please input your univetsity email.\n 请输入您的大学邮箱.");
+        return;
+      }
+
+      if (that.CVFile.size > 5*1024*1024) {
+        alert("The file should be less than 5MB.\n 上传文件须小于5MB.");
         return;
       }
 

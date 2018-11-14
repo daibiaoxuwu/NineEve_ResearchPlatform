@@ -22,7 +22,7 @@
                 Congratulations!
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经成功提交报名!请等待后续通知.</b>
+          <h5 class="mb-3"><b>您已经成功提交报名！请等待后续通知。</b>
            <small class="form-text text-muted">
               You have successfully enrolled for the project. Please await further notice.
               </small>
