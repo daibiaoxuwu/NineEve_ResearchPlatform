@@ -133,7 +133,6 @@ export default {
       breIntr: "",
       showSaveAlert: false,
       showFailAlert: false,
-<<<<<<< HEAD
       allKeys:[],
       selectedKey:[],
       selectedLab:[
@@ -146,19 +145,6 @@ export default {
       CVFile: null
     }
    },
-=======
-      allKeys: [],
-      selectedKey: [],
-      selectedLab: [
-        { name: "Software Laboratory 软件所", state: false },
-        { name: "High Performance Laboratory 高性能", state: false },
-        { name: "Multimedia Laboratory 媒体所", state: false },
-        { name: "Artificial Intelligence Laboratory 智能所", state: false },
-        { name: "Network Laboratory 网络所", state: false }
-      ]
-    };
-  },
->>>>>>> develop
 
   components: {
     rightpane,
