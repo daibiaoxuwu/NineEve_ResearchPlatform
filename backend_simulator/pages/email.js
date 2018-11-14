@@ -151,7 +151,10 @@ module.exports = {
   */
   sendEnrollNotificationToStudent: function(req, reqNo, res){
     // mailOptions.to = req.clientEmail;
-
+    String.prototype.replaceAll = function(search, replacement) {
+      var target = this;
+      return target.replace(new RegExp(search, 'g'), replacement);
+    };
     switch (reqNo) {
       case 1: //学生报名提交后收到的通知
         mailOptions.to = req.clientEmail;
@@ -172,7 +175,7 @@ module.exports = {
         mailOptions.subject = subjectModule + '新项目：' + req.assignmentTitle;
         mailOptions.text = notificationModuleStudentCase3[0]
           + req.lastNameTeacher + req.firstNameTeacher + notificationModuleStudentCase3[1]
-          + req.keywords.join(', ') + notificationModuleStudentCase3[2] + req.assignmentTitle + notificationModuleStudentCase3[3];
+          + req.keywords.replaceAll(' ', ', ') + notificationModuleStudentCase3[2] + req.assignmentTitle + notificationModuleStudentCase3[3];
         break;
       default:
         return;

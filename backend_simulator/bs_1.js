@@ -4,9 +4,9 @@ const port = 80
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'b.NineEve.secoder.local',
+  host     : 'localhost',
   port     : '3306',
-  user     : 'lzr',
+  user     : 'root',
   password : 'newpass',
   database : 'A'
 });
@@ -831,6 +831,8 @@ app.get('/api/getCaptcha', function(req, res) {
         width: 80,
         // 高度
         height: 30,
+        
+        ignoreChars: "oO0iIlL1gq9"
     });
     // 保存到session,忽略大小写
     req.session.captcha = captcha.text.toLowerCase();
