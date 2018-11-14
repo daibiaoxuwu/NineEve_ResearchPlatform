@@ -236,7 +236,7 @@ export default {
         return;
       }
 
-      if (that.CVFile.size > 5*1024*1024) {
+      if (that.CVFile != null && that.CVFile.size > 5*1024*1024) {
         alert("The file should be less than 5MB.\n 上传文件须小于5MB.");
         return;
       }
@@ -268,7 +268,32 @@ export default {
         if (!data.saveSuccess) {
           alert("保存信息出现问题");
         } else {
-          alert("保存信息成功");
+          if (that.CVFile != null) {
+            var fileFormData = new FormData();
+            fileFormData.append("CVFile", that.CVFile);
+            alert(fileFormData.get("CVFile").size);
+            //$.post("/studentInfo/CVFileSave", fileFormData).then(function(data2){
+              //  alert(data2);
+            //});
+
+            $.ajax({
+                url:"/studentInfo/CVFileSave",
+                type:"post",
+                data:fileFormData,
+                processData:false,
+                async:false,
+                contentType:false,
+                success:function(data2){
+                    alert("保存信息成功");
+                },
+                error:function(e){
+                    alert("文件保存失败");
+                }
+            });
+
+          } else {
+            alert("保存信息成功");
+          }
         }
       });
     },

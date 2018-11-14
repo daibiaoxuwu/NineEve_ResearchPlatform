@@ -257,7 +257,7 @@ app.get('/teacherInfo/launch', function(sReq, sRes) {
 
 app.get('/teacherInfo/get', function(sReq, sRes) {
     console.log("called");
-    
+
     teacherInfo.teacherInfoGet(sReq.session.user.id, function(result){
 			 sRes.send(result);
 		 });
@@ -322,6 +322,12 @@ app.get('/studentInfo/save', function(sReq, sRes) {
          sReq.query.breIntr, sReq.query.grade, sReq.query.selectedLab, sReq.query.selectedKey, function(result){
 			 sRes.send(result);
 		 });
+});
+
+app.post('/studentInfo/CVFileSave', function(sReq, sRes) {
+    console.log("1");
+    //console.log(sReq);
+    sRes.send("aaa");
 });
 
 app.get('/studentInfo/launch', function(sReq, sRes) {
