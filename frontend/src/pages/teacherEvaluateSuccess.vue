@@ -22,7 +22,7 @@
                 Congratulations!
               </small>
             </h2>
-            <h5 class="mb-3"><b>你已经成功为学生结题并完成评价! 项目已正式结束.</b>
+            <h5 class="mb-3"><b>您已经成功为学生结题并完成评价! 项目已正式结束.</b>
               <small class="form-text text-muted">
                 You have successfully terminated the project and evaluated your student.
               </small>

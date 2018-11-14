@@ -40,7 +40,7 @@
                 </b-form-textarea>
                 <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
               </div>
-              <div class="col-md-12 mb-3"> <label for="email">What you've not learned 尚未习得</label>
+              <div class="col-md-12 mb-3"> <label for="email">What you've not learned 项目建议</label>
                 <b-form-textarea id="textarea1" v-model="notlearned" placeholder="Enter something" :rows="3" :max-rows="6">
                 </b-form-textarea>
                 <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
