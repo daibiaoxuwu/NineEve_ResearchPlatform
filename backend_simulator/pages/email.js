@@ -205,14 +205,14 @@ module.exports = {
         if (req.assignmentTitle != null)
           assignmentTitle = req.assignmentTitle;
         //以下是默认值，需要改
-        var teacherEmail = "dujl16@mails.tsinghua.edu.cn";
-        var lastNameTeacher = "杜";
-        var firstNameTeacher = "迦罗";
+        var teacherName = "迦罗";
+        if(req.teacherName!=null) teacherName = req.teacherName;
 
-        //根据teacherId查询老师的姓,名,邮箱
+        var teacherEmail = "dujl16@mails.tsinghua.edu.cn";
+        if(req.email!=null) teacherEmail = req.email;
 
         mailOptions.to = teacherEmail;
-        mailOptions.text = lastNameTeacher + firstNameTeacher + notificationModuleTeacherCase1[0]
+        mailOptions.text = teacherName + notificationModuleTeacherCase1[0]
           + assignmentTitle + notificationModuleTeacherCase1[1];
         mailOptions.subject = subjectModule + assignmentTitle + ' 项目已有新报名';
         break;

@@ -132,7 +132,7 @@ app.get('/register/getCaptcha', function(sReq, sRes){
     }
 
     if (sReq.query.email.length<200) {
-      email_js.sendEmail({clientEmail: sReq.query.email}, function(result){
+      email_js.sendCaptchaEmail(sReq.query.email, function(result){
 		      sRes.send(result);
 	   });
     }
@@ -563,6 +563,8 @@ app.get('/enrollForm/launch', function(sReq, sRes) {
 
             var req2 = {
             teacherId: sReq.session.assignment.teacherId,
+            teacherName: sReq.session.assignment.teacher,
+            email: sReq.session.assignment.email,
             assignmentTitle: sReq.session.assignment.title
             };
             email_js.sendEnrollNotificationToTeacher(req2, 1, function(res2){
