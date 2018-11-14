@@ -44,11 +44,11 @@
       <p class="form-text text-muted">
         {{info2.satis}}
       </p>
-      <p class="form-text" style="font-weight:bold;">项目完成介绍</p>
+      <p class="form-text" style="font-weight:bold;">成果介绍</p>
       <p class="form-text text-muted">
         {{info2.intro}}
       </p>
-      <p class="form-text" style="font-weight:bold;">评价原因</p>
+      <p class="form-text" style="font-weight:bold;">项目心得</p>
       <p class="form-text text-muted">
         {{info2.reason}}
       </p>
@@ -64,7 +64,7 @@
       <p class="form-text text-muted">
         {{info3.learned}}
       </p>
-      <p class="form-text" style="font-weight:bold;">尚未习得</p>
+      <p class="form-text" style="font-weight:bold;">项目建议</p>
       <p class="form-text text-muted">
         {{info3.notlearned}}
       </p>

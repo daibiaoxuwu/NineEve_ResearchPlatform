@@ -10,7 +10,7 @@ var transporter = nodemailer.createTransport({
 
 const testModule = '【科研信息平台】[请勿将验证码告知任何人，否则账号被盗平台不予处理]验证码：';
 const subjectModule = '【科研信息平台】';
-const notificationModule = ['同学你好，你已经被', '项目录取。请登录科研信息平台联系项目导师。'];
+const notificationModule = ['同学你好，您已经被', '项目录取。请登录科研信息平台联系项目导师。'];
 
 const notificationModuleStudentCase1 =
   ['同学你好，你已成功提交', '项目的报名申请，请等待审核。'];
