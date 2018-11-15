@@ -22,7 +22,7 @@
                 Well...
               </small>
             </h2>
-            <h5 class="mb-3"><b>你已经拒绝了学生的的报名...</b>
+            <h5 class="mb-3"><b>您已经拒绝了学生的报名...</b>
               <small class="form-text text-muted">
                 You have successfully accepted a student for your project. Please await further notice.
               </small>

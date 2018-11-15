@@ -22,11 +22,11 @@
                 Congratulations!
               </small>
             </h2>
-            <h5 class="mb-3"><b>你已经被项目录取!</b>
+            <h5 class="mb-3"><b>您已经被项目录取!</b>
               <small class="form-text text-muted">
                 You have been accepted to the project. Your project has been launched.
               </small>
-              <b>你们的项目已经启动, 请尽快联系导师.</b>
+              <b>你们的项目已经启动, 请尽快联系导师。</b>
               <small class="form-text text-muted">
                 Please contact your tutor as soon as possible.
               </small>

@@ -22,7 +22,7 @@
                 Congratulations!
               </small>
             </h2>
-            <h5 class="mb-3"><b>你已经同意了学生的报名! 请等待后续通知.</b>
+            <h5 class="mb-3"><b>您已经同意了学生的报名! 请等待后续通知。</b>
               <small class="form-text text-muted">
                 You have successfully accepted a student for your project. Please await further notice.
               </small>

@@ -1,9 +1,7 @@
 module.exports = {
 
-    studentEvaluateSave: function(id, email, title, teacher, satis, learned, notlearned, callback){
+    studentEvaluateSave: function(id, title, teacher, satis, learned, notlearned, callback){
 		var student = id;
-		if(!student || student == "")
-			student = email;
 		connection.query('insert into stueva(`student`,`teacher`,`title`,`satis`,`learned`,`notlearned`) values(' +
 						 '"' + student + '",' +
 						 '"' + teacher + '",' +

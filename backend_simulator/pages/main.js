@@ -5,8 +5,6 @@ module.exports = {
      * 
      * @param {string} id
      * 学生的学号 如果为"",用邮箱
-     * @param {string} email
-     * 学生的邮箱
      *
      * @property {boolean} isTeacher
      * 是否为老师(学生和老师公用个人主页)
@@ -88,16 +86,13 @@ module.exports = {
 	},		
 
 
-    mainGet: function(id, email, isTeacher, callback){
+    mainGet: function(id, isTeacher, callback){
 		console.log("lzr5"+id);
-		console.log("lzr6"+email);
 		console.log("lzr7"+isTeacher);
 		var that = this;
 		connection.query('select * from project ', function (error, results, fields){
 			var studentid=id;
 			var teacherid=id;
-			if(!studentid||studentid=="")
-				studentid=email;
 			var message=[];
 			var mylist=[];
 			var avalist=[];
@@ -154,8 +149,25 @@ module.exports = {
 									 teacherId: resul[i].teacher,
 									 status: realst});
 					}
-					connection.query('select * from `stukey` where student="' + studentid + '"', function (er, resu, fie){
-						that.getIntList(message, mylist, avalist, 0, 0, resu, intlist, intlist, callback);
+					//connection.query('select * from `stukey` where student="' + studentid + '"', function (er, resu, fie){
+					//	that.getIntList(message, mylist, avalist, 0, 0, resu, intlist, intlist, callback);
+					//});
+					connection.query('select * from (stukey inner join prokey on stukey.key = prokey.key) join project on project.title = prokey.title and project.teacher = prokey.teacher where stukey.student = "' + studentid + '"',function (er, resu, fie){
+						for(var x in resu)
+						{
+							var hav = 0;
+							for(var y in intlist)
+							{
+								console.log(intlist[y].title,resu[x].title,intlist[y].teacherId,resu[x].teacher);
+								if(intlist[y].title == resu[x].title && intlist[y].teacherId == resu[x].teacher)
+									hav = 1;
+							}
+							if(hav == 0)
+								intlist.push({title: resu[x].title,
+									teacherId: resu[x].teacher,
+									status: resu[x].status});
+						}
+						callback(message, mylist, avalist, intlist);
 					});
 				});	
 			}				

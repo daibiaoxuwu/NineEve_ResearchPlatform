@@ -10,13 +10,14 @@ var transporter = nodemailer.createTransport({
 
 const testModule = '【科研信息平台】[请勿将验证码告知任何人，否则账号被盗平台不予处理]验证码：';
 const subjectModule = '【科研信息平台】';
-const notificationModule = ['同学你好，你已经被', '项目录取。请登录科研信息平台联系项目导师。'];
+const notificationModule = ['同学你好，您已经被', '项目录取。请登录科研信息平台联系项目导师。'];
 
 const notificationModuleStudentCase1 =
   ['同学你好，你已成功提交', '项目的报名申请，请等待审核。'];
 const notificationModuleStudentCase2 =
   ['同学你好，你对', '项目的报名申请已被通过，请登录科研信息平台确认。'];
-
+const notificationModuleStudentCase3 =
+  ['同学你好，', '老师发布了关于', '的新项目：', '。 请登录科研信息平台查看详情。'];
 const notificationModuleTeacherCase1 =
   ['老师您好，您的', '项目已有新的学生报名，请登录科研信息平台审核。'];
 const notificationModuleTeacherCase2 =
@@ -67,6 +68,7 @@ module.exports = {
   sendEmail: function(req, res){
     mailOptions.to = req.clientEmail;
     var captcha = Math.floor(Math.random() * 800000 + 100000);
+    console.log(captcha);
     mailOptions.text = testModule + captcha.toString();
     mailOptions.subject = subjectModule + '验证码';
     transporter.sendMail(mailOptions, function(error, info){
@@ -150,7 +152,10 @@ module.exports = {
   */
   sendEnrollNotificationToStudent: function(req, reqNo, res){
     // mailOptions.to = req.clientEmail;
-
+    String.prototype.replaceAll = function(search, replacement) {
+      var target = this;
+      return target.replace(new RegExp(search, 'g'), replacement);
+    };
     switch (reqNo) {
       case 1: //学生报名提交后收到的通知
         mailOptions.to = req.clientEmail;
@@ -165,7 +170,14 @@ module.exports = {
           + req.assignmentTitle + notificationModuleStudentCase2[1];
         mailOptions.subject = subjectModule + req.assignmentTitle + ' 项目报名申请已通过';
         break;
-
+      
+      case 3: //学生因为关注了关键词收到了新项目的通知
+        mailOptions.to = req.clientEmailList.join(', ');
+        mailOptions.subject = subjectModule + '新项目：' + req.assignmentTitle;
+        mailOptions.text = notificationModuleStudentCase3[0]
+          + req.lastNameTeacher + req.firstNameTeacher + notificationModuleStudentCase3[1]
+          + req.keywords.replaceAll(' ', ', ') + notificationModuleStudentCase3[2] + req.assignmentTitle + notificationModuleStudentCase3[3];
+        break;
       default:
         return;
     }
@@ -194,14 +206,14 @@ module.exports = {
         if (req.assignmentTitle != null)
           assignmentTitle = req.assignmentTitle;
         //以下是默认值，需要改
-        var teacherEmail = "dujl16@mails.tsinghua.edu.cn";
-        var lastNameTeacher = "杜";
-        var firstNameTeacher = "迦罗";
+        var teacherName = "迦罗";
+        if(req.teacherName!=null) teacherName = req.teacherName;
 
-        //根据teacherId查询老师的姓,名,邮箱
+        var teacherEmail = "dujl16@mails.tsinghua.edu.cn";
+        if(req.email!=null) teacherEmail = req.email;
 
         mailOptions.to = teacherEmail;
-        mailOptions.text = lastNameTeacher + firstNameTeacher + notificationModuleTeacherCase1[0]
+        mailOptions.text = teacherName + notificationModuleTeacherCase1[0]
           + assignmentTitle + notificationModuleTeacherCase1[1];
         mailOptions.subject = subjectModule + assignmentTitle + ' 项目已有新报名';
         break;

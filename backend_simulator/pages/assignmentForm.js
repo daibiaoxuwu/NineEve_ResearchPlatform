@@ -146,6 +146,7 @@ module.exports = {
 				'"' + title + '",' +				
 				'"' + keyarray[i] + '")');			
 			}				
+
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
 				if(results.length==0)
 				{
@@ -164,7 +165,22 @@ module.exports = {
 										 '' + number + ',' +
 										 '"' + 'Enrolling 可报名' + '",' +
 										 '"' + deadline + '")');
-						callback({launchSuccess: true});
+						var emailList=[];
+						connection.query('select * from (stukey inner join prokey on stukey.key = prokey.key) join student on student.studentid = stukey.student where prokey.title = "' + title + '" and prokey.teacher = "' + teacher + '"',function (er, resu, fie){
+							for(var x in resu)
+							{
+								var hav = 0;
+								for(var y in emailList)
+								{
+									//console.log(intlist[y].title,resu[x].title,intlist[y].teacherId,resu[x].teacher);
+									if(emailList[y]==resu[x].email)
+										hav = 1;
+								}
+								if(hav == 0)
+									emailList.push(resu[x].email);
+							}
+							callback({launchSuccess: true,clientEmailList:emailList});
+						});
 					});
 				}
 				else
@@ -179,11 +195,26 @@ module.exports = {
 										'`deadline`="' + deadline + '", ' +
 										'`status`="' + 'Enrolling 可报名' + '" ' +
 										'where teacher="'+teacher+'" and title="' + title + '"');
-						callback({launchSuccess: true});
+						var emailList=[];
+						connection.query('select * from (stukey inner join prokey on stukey.key = prokey.key) join student on student.studentid = stukey.student where prokey.title = "' + title + '" and prokey.teacher = "' + teacher + '"',function (er, resu, fie){
+							for(var x in resu)
+							{
+								var hav = 0;
+								for(var y in emailList)
+								{
+									//console.log(intlist[y].title,resu[x].title,intlist[y].teacherId,resu[x].teacher);
+									if(emailList[y]==resu[x].email)
+										hav = 1;
+								}
+								if(hav == 0)
+									emailList.push(resu[x].email);
+							}
+							callback({launchSuccess: true,clientEmailList:emailList});
+						});
 					}
 					else
 					{
-						callback({launchSuccess: false});
+						callback({launchSuccess: false,clientEmailList:[]});
 					}
 				}
 			});

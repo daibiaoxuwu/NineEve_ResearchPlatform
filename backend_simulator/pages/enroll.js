@@ -27,19 +27,22 @@ module.exports = {
 					var keys=[];
 					for(var i in resul)
 						keys.push(resul[i].key);
-					callback(
-					{
-						title: results[0].title,
-						teacher: results[0].teachername,
-						teacherId: results[0].teacher,
-						introduction: results[0].introduction,
-						keywords: keys,
-						abilities: results[0].abilities,
-						detailed: results[0].detailed,
-						number: results[0].num.toString(),
-						deadline: results[0].deadline,
-						status: results[0].status
-					});
+					connection.query('select * from `teacher` where teacherId ="' + results[0].teacher + '"', function (err, resul2, fiel){
+						callback(
+						{
+							title: results[0].title,
+							teacher: results[0].teachername,
+							teacherId: results[0].teacher,
+							introduction: results[0].introduction,
+							keywords: keys,
+							abilities: results[0].abilities,
+							detailed: results[0].detailed,
+							number: results[0].num.toString(),
+							deadline: results[0].deadline,
+							status: results[0].status,
+							email: resul2[0].email
+						});
+					})
 				});
 			}
 			else

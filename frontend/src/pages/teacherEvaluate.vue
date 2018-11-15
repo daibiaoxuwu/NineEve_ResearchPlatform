@@ -37,12 +37,12 @@
 
               <h4 class="mb-3">Other Information 详细信息</h4>
               <div class="row">
-                <div class="col-md-12 mb-3"> <label for="email">Job introduction 项目完成介绍</label>
+                <div class="col-md-12 mb-3"> <label for="email">Job introduction 成果介绍</label>
                   <b-form-textarea id="textarea1" v-model="intro" placeholder="Enter something" :rows="3" :max-rows="6">
                   </b-form-textarea>
                   <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
                 </div>
-                <div class="col-md-12 mb-3"> <label for="email">Reasons for Evaluation 评价原因</label>
+                <div class="col-md-12 mb-3"> <label for="email">Reasons for Evaluation 项目心得</label>
                   <b-form-textarea id="textarea1" v-model="reason" placeholder="Enter something" :rows="3" :max-rows="6">
                   </b-form-textarea>
                   <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
