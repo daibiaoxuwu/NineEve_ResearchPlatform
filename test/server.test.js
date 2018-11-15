@@ -211,7 +211,7 @@ describe('server test', () => {
             agent.get('/assignmentForm/get')
             .end((err, res) => {
                 expect(res.status).to.be.equal(200);
-                expect(res.body.length).not.equal.to(0);
+                expect(res.body.length).to.be.not.equal(0);
                 done();
             })
         })
@@ -244,7 +244,7 @@ describe('server test', () => {
         })
         
         it('should be able to launch after edit', (done) => {
-            agent.get('assignmentForm/launch')
+            agent.get('/assignmentForm/launch')
             .query({
                 title: 'test',
                 background: 'test',
