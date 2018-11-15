@@ -654,17 +654,19 @@ app.get('/assignmentForm/launch', function(sReq, sRes) {//还需要老师的姓�
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,
          sReq.query.deadline, function(result){//返回clientEmailList：“关注了关键词的学生的邮箱”的数组。
              //send email to interested students
-             let local_req = {
-                clientEmailList: result.clientEmailList,
-                assignmentTitle: sReq.query.title,
-                keywords: sReq.query.keywords,
-                firstNameTeacher: '院士',
-                lastNameTeacher: '吴'
-             }
-             email_js.sendEnrollNotificationToStudent(local_req, 3, function(res){
-                 console.log(res.response);
-             })
-			 sRes.send(result);
+            teacherInfo.teacherInfoGet(sReq.session.user.id, function(result2){
+                let local_req = {
+                    clientEmailList: result.clientEmailList,
+                    assignmentTitle: sReq.query.title,
+                    keywords: sReq.query.keywords,
+                    lastNameTeacher: result2.lastName,
+                    firstNameTeacher: result2.firstName
+                }
+                email_js.sendEnrollNotificationToStudent(local_req, 3, function(res){
+                    console.log(res.response);
+                })
+                sRes.send(result);
+            })
 		 });
 });
 
