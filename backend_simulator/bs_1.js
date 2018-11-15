@@ -354,6 +354,12 @@ app.get('/studentInfo/save', function(sReq, sRes) {
 		 });
 });
 
+app.post('/studentInfo/CVFileSave', function(sReq, sRes) {
+    console.log("1");
+    //console.log(sReq);
+    sRes.send("aaa");
+});
+
 app.get('/studentInfo/launch', function(sReq, sRes) {
     if (sReq.query.lastName == null) sReq.query.lastName = "";
     if (sReq.query.firstName == null) sReq.query.firstName = "";
@@ -716,7 +722,7 @@ app.get('/enrollStatus/get', function(sReq, sRes) {
 });
 
 app.get('/enrollStatus/accept', function(sReq, sRes) {
-    
+
     enrollStatus.enrollStatusAccept(sReq.session.user.id, sReq.session.assignment.title, sReq.query.id, function(result){
         sRes.send(result);
         if (result.acceptSuccess == true) {
@@ -743,8 +749,8 @@ app.get('/enrollStatus/accept', function(sReq, sRes) {
             });
         }
     });
-    
-    
+
+
 });
 
 app.get('/enrollStatus/refuse', function(sReq, sRes) {
