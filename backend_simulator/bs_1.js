@@ -303,9 +303,6 @@ app.get('/teacherView/get', function(sReq, sRes) {
 });
 
 app.get('/studentInfo/save', function(sReq, sRes) {
-    console.log(sReq);
-    console.log(sReq.query.selectedKey);
-
     if (sReq.query.lastName == null) sReq.query.lastName = "";
     if (sReq.query.firstName == null) sReq.query.firstName = "";
     if (sReq.query.username == null) sReq.query.username = "";
@@ -638,8 +635,6 @@ app.get('/home/setAssignment', function(sReq, sRes) {
 });
 
 app.get('/assignmentForm/save', function(sReq, sRes) {
-    console.log(sReq);
-    console.log(sReq.query.lastName);
     sReq.session.newAssignment={title: sReq.query.title, teacherId: sReq.session.user.id};
     assignmentForm.assignmentFormSave(sReq.session.user.id, sReq.query.title, sReq.query.background, sReq.query.introduction, sReq.query.keywords,
         sReq.query.abilities, sReq.query.detailed, sReq.query.number,

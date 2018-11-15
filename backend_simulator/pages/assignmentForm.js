@@ -49,7 +49,7 @@ module.exports = {
 				'"' + keyarray[i] + '")');			
 			}				
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
-				if(results.length==0)
+				if(results == undefined || results.length==0)
 				{
 					connection.query('select * from teacher where teacherid="' + teacher + '"', function (err, resul, fiel){
 						var teachername="";
@@ -133,7 +133,7 @@ module.exports = {
 			var insertkey = function(key)
 			{
 				connection.query('select * from `key` where `name`="' + key + '"', function (error, results, fields){
-					if(results.length==0)
+					if(results == undefined || results.length==0)
 						connection.query('insert into `key`(`name`) values("' + key + '")');
 				});
 			}
@@ -148,7 +148,7 @@ module.exports = {
 			}				
 
 			connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
-				if(results.length==0)
+				if(results == undefined || results.length==0)
 				{
 					connection.query('select * from teacher where teacherid="' + teacher + '"', function (err, resul, fiel){
 						var teachername="";
@@ -263,7 +263,7 @@ module.exports = {
 	
     assignmentFormGet: function(teacher, title, callback) {
         connection.query('select * from project where title="' + title + '" and teacher="' + teacher + '"', function (error, results, fields){
-			if(results.length>0)
+			if(results && results.length>0)
 			{
 				connection.query('select * from `prokey` where title="' + title + '" and teacher="' + teacher + '"', function (err, resul, fiel){
 					var keys=[];
