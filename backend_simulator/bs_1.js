@@ -299,9 +299,6 @@ app.get('/teacherView/get', function(sReq, sRes) {
 });
 
 app.get('/studentInfo/save', function(sReq, sRes) {
-    console.log(sReq);
-    console.log(sReq.query.selectedKey);
-
     if (sReq.query.lastName == null) sReq.query.lastName = "";
     if (sReq.query.firstName == null) sReq.query.firstName = "";
     if (sReq.query.username == null) sReq.query.username = "";

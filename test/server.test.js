@@ -271,6 +271,109 @@ describe('server test', () => {
         })
     })
 
+    describe("student register test", () => {
+        it('should be able to get register captcha', (done) => {
+            agent
+            .get('/register/getCaptcha')
+            .query({
+                email: 'test@edu.cn'
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body.captcha < 1000000 && res.body.captcha > 100000).to.be.true;
+                done();
+            })
+        })
+
+        it('should be able to save register info as new student', (done) => {
+            agent
+            .get('/register/getUrl')
+            .query({
+                name: 'test',
+                university: 'test',
+                email: 'test@edu.cn',
+                password: 'test',
+                captcha: 'test'
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+        
+        it('can get studentinfopage', (done) => {
+            agent
+            .get('/studentInfo/get')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+
+        it('can save temporary info', (done) => {
+            agent
+            .get('/studentInfo/save')
+            .query({
+                lastName: 'test',
+                firstName: 'test',
+                username: 'test',
+                wechatPhone: 'test',
+                email: 'test@edu.cn',
+                perWebAddr: 'test',
+                breIntr: 'test',
+                grade: 'test',
+                selectedKey: [],
+                selectedLab: [
+                    { name: "Software Laboratory 软件所", state: false },
+                    { name: "High Performance Laboratory 高性能", state: false },
+                    { name: "Multimedia Laboratory 媒体所", state: false },
+                    { name: "Artificial Intelligence Laboratory 智能所", state: false },
+                    { name: "Network Laboratory 网络所", state: false }
+                ]
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+
+        it('can launch to main', (done) => {
+            agent
+            .get('/studentInfo/launch')
+            .query({
+                lastName: 'test',
+                firstName: 'test',
+                username: 'test',
+                wechatPhone: 'test',
+                email: 'test@edu.cn',
+                perWebAddr: 'test',
+                breIntr: 'test',
+                grade: "Junior 大三",
+                selectedKey: [],
+                selectedLab: [
+                    { name: "Software Laboratory 软件所", state: false },
+                    { name: "High Performance Laboratory 高性能", state: false },
+                    { name: "Multimedia Laboratory 媒体所", state: false },
+                    { name: "Artificial Intelligence Laboratory 智能所", state: false },
+                    { name: "Network Laboratory 网络所", state: false }
+                ]
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+
+        it('should be able to logout', (done) => {
+            agent
+            .get('/app/logout')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+    })
+
     afterAll(() => {
         app.close();
     })
