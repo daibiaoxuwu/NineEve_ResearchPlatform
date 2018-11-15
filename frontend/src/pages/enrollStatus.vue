@@ -246,11 +246,6 @@ export default {
     currentPage3: function(val) {
       this.update();
     }
-  },
-  watch: {
-    currentPage3: function(val) {
-      this.update();
-    }
   }
 };
 </script>

@@ -49,7 +49,7 @@ export default {
       var that = this;
       var passwdSHA256;
 
-      if (that.registerCaptcha == null) that.registerCaptcha == "";
+      if (that.registerCaptcha == null) that.registerCaptcha = "";
       if (that.registerCaptcha == "") {
         alert(
           "Please input the captcha in your email.\n 请输入您邮箱中收到的验证码."
@@ -57,7 +57,7 @@ export default {
         return;
       }
 
-      if (that.registerEmail == null) that.registerEmail == "";
+      if (that.registerEmail == null) that.registerEmail = "";
       var isEmail = new RegExp("@").test(that.registerEmail);
       var isInUniv = new RegExp("edu.cn$").test(that.registerEmail);
       if (!isEmail || !isInUniv) {
@@ -95,7 +95,7 @@ export default {
     getEmailCaptcha() {
       var that = this;
 
-      if (that.registerEmail == null) that.registerEmail == "";
+      if (that.registerEmail == null) that.registerEmail = "";
       if (that.registerEmail.length > 200) {
       }
       var isEmail = new RegExp("@").test(that.registerEmail);
