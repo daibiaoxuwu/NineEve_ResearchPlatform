@@ -50,7 +50,7 @@ export default {
         if (data == "/") {
           that.visible = "invisible";
         } else {
-          that.visible = "visible-lg col-md-4 order-md-2";
+          that.visible = "visible-lg";
 
           for (var item in data.msgList) {
             if (data.msgList[item].status == "Enrolling 可报名") {

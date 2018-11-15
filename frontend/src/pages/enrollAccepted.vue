@@ -14,7 +14,7 @@
     <div class="">
       <div class="container">
         <div class="row">
-          <rightpane></rightpane>
+              <div class="col-md-4 order-md-2"> <rightpane></rightpane> </div>
 
           <div class="col-md-8 order-md-1">
             <h2 class="mb-3"><b>恭喜!</b>
