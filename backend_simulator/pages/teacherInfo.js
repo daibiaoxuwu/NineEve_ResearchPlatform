@@ -119,7 +119,7 @@ module.exports = {
     teacherInfoGet: function(teacherID, recall) {
         console.log("teacherInfGet: " + teacherID);
 		connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
-			if(results.length>0)
+			if(results != undefined && results.length>0)
 			{
 				recall({lastName: results[0].lastname,
 						firstName:  results[0].firstname,

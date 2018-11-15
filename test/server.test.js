@@ -374,6 +374,80 @@ describe('server test', () => {
         })
     })
 
+    describe("teacherinfo and teacherview test", () => {
+        it('visit /login/byTeacherId', (done) => {
+            agent.get('/login/byTeacherId')
+            .query({
+                teacherId: 'test',
+                password: 'test'
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body.loginSuccess).to.be.true;
+                done();
+            })
+        })
+
+        it('can get teacherinfo', (done) => {
+            agent
+            .get('/teacherInfo/get')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(Object.keys(res.body).includes('lastname'));
+                done();
+            })
+        })
+
+        it('can save teacherinfo', (done) => {
+            agent
+            .get('/teacherInfo/save')
+            .query({
+                lastName: 'test',
+                firstName: 'test',
+                username: 'test',
+                wechatPhone: 'test',
+                email: 'test@edu.cn',
+                perWebAddr: 'test',
+                researchArea: 'test',
+                researchResults: 'test',
+                lab: 1
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+
+        it('can launch teacherinfo', (done) => {
+            agent
+            .get('/teacherInfo/launch')
+            .query({
+                lastName: 'test',
+                firstName: 'test',
+                username: 'test',
+                wechatPhone: 'test',
+                email: 'test@edu.cn',
+                perWebAddr: 'test',
+                researchArea: 'test',
+                researchResults: 'test',
+                lab: 1
+            })
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+
+        it('should be able to logout', (done) => {
+            agent
+            .get('/app/logout')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                done();
+            })
+        })
+    })
+
     afterAll(() => {
         app.close();
     })
