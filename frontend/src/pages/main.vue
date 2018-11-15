@@ -311,7 +311,7 @@ export default {
     },
     onClick1(item) {
       if (item.status == "Enrolling 可报名") {
-        if ((this.isTeacherButton = "btn btn-primary btn-lg btn-block")) {
+        if ((this.isTeacherButton == "btn btn-primary btn-lg btn-block")) {
           var that = this;
           $.get("/home/setAssignment", {
             title: item.title,
