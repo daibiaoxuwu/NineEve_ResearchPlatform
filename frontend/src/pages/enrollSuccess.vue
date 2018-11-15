@@ -14,7 +14,7 @@
   <div class="">
     <div class="container">
       <div class="row">
-        <rightpane></rightpane>
+            <div class="col-md-4 order-md-2"> <rightpane></rightpane> </div>
         
         <div class="col-md-8 order-md-1">
             <h2 class="mb-3"><b>恭喜!</b>
@@ -22,7 +22,7 @@
                 Congratulations!
               </small>
          </h2>
-          <h5 class="mb-3"><b>你已经成功提交报名!请等待后续通知.</b>
+          <h5 class="mb-3"><b>您已经成功提交报名！请等待后续通知。</b>
            <small class="form-text text-muted">
               You have successfully enrolled for the project. Please await further notice.
               </small>

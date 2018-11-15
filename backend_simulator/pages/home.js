@@ -18,7 +18,7 @@ module.exports = {
      */
     emailLogin: function(email, password, recall) {
 		connection.query('select * from student where email="'+email+'"', function (error, results, fields){
-			if(results.length == 0)
+			if(results == undefined || results.length == 0)
 				recall({loginSuccess: false, usernameNotFound: true, infoFinished: false});
 			else
 				if(results[0].password == password)
@@ -50,7 +50,7 @@ module.exports = {
      */
     teacherLogin: function(teacherID, password, recall) {
 		connection.query('select * from teacher where teacherID="'+teacherID+'"', function (error, results, fields){
-			if(results.length == 0)
+			if(results == undefined || results.length == 0)
 				recall({loginSuccess: false, usernameNotFound: true, infoFinished: false});
 			else
 				if(results[0].password == password)
@@ -82,7 +82,7 @@ module.exports = {
      */
         studentLogin: function(studentID, password, recall) {
 		connection.query('select * from student where studentID="'+studentID+'"', function (error, results, fields){
-			if(results.length == 0)
+			if(results == undefined || results.length == 0)
 				recall({loginSuccess: false, usernameNotFound: true, infoFinished: false});
 			else
 				if(results[0].password == password)
@@ -120,7 +120,7 @@ module.exports = {
 			if (error) throw error;
 			console.log('select * from student where email="' + email + '"');
 			console.log(results.length);
-			if(results.length>0)
+			if(results != undefined && results.length>0)
 				recall({registerSuccess: false});
 			else
 			{

@@ -5,8 +5,6 @@ module.exports = {
      * 
      * @param {string} id
      * 学生的学号 如果为"",用邮箱
-     * @param {string} email
-     * 学生的邮箱
      *
      * @property {boolean} isTeacher
      * 是否为老师(学生和老师公用个人主页)
@@ -18,7 +16,7 @@ module.exports = {
      * 已经完成的科研任务列表
      */
 
-    rightGet: function(id, email,isTeacher, callback){
+    rightGet: function(id, callback){
         callback({
      assignment: [ {
         title:"基于Bootstrap的前端网页设计研究",
