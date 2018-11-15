@@ -194,7 +194,6 @@ module.exports = {
      *
      */
     enrollFormGet: function (id, assignmentTitle, teacher, callback) {
-        console.log('e' + id + idemail + assignmentTitle);
         var student = id;
         connection.query('select * from student where studentid="' + student + '"', function (error, results, fields) {
             var tStudentID = results[0].studentid;

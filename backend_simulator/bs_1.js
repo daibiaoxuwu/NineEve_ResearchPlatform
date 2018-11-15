@@ -137,7 +137,8 @@ app.get('/register/getCaptcha', function(sReq, sRes){
 
     if (sReq.query.email.length<200) {
       email_js.sendCaptchaEmail(sReq.query.email, function(result){
-		      sRes.send(result);
+            sReq.session.captcha = result.captcha;
+            sRes.send(result);
 	   });
     }
 });
@@ -163,13 +164,20 @@ app.get('/register/getUrl', function(sReq, sRes){
     var isEmail = (new RegExp("@")).test(sReq.query.email);
     var isInUniv = (new RegExp("edu\.cn$")).test(sReq.query.email);
     if (!isEmail || !isInUniv) {
-      return;
+        sRes.send({registerSuccess: false});
     }
+
+    if(sReq.session.captcha != sReq.query.captcha && sReq.query.captcha == 123456){//123456 is for test;
+        sRes.send({registerSuccess: false});
+    }
+
+    console.log('ready to check database');
+    
 
     if (sReq.query.name.length<200 && sReq.query.university.length<200
       && sReq.query.email.length<200 && sReq.query.password.length<200 && sReq.query.captcha.length<20) {
       home.register(sReq.query.name,sReq.query.university,sReq.query.email,sReq.query.password,function(result){
-        sReq.session.user = {id:"", email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
+        sReq.session.user = {id:sReq.query.email, email: sReq.query.email, isTeacher:false}    //设置"全局变量"name. 此后可以根据这个区分用户.
         sRes.send(result);
       });
     }
@@ -432,12 +440,13 @@ app.get('/studentInfo/launch', function(sReq, sRes) {
 });
 
 app.get('/studentInfo/get', function(sReq, sRes) {
+    console.log("DSKJFHDSJ");
     studentInfo.studentInfoGet(sReq.session.user.id, function(result){
 			 sRes.send(result);
 		 });
 });
 app.get('/studentView/get', function(sReq, sRes) {
-    studentInfo.studentInfoGet(sReq.session.selectStudent, sReq.session.selectStudent, function(result){
+    studentInfo.studentInfoGet(sReq.session.selectStudent, function(result){
 			 sRes.send(result);
 		 });
 });
@@ -617,7 +626,7 @@ app.get('/enrollForm/checkT', function(sReq, sRes) {
     }
 });
 app.get('/enrollStatus/getDetails', function(sReq, sRes) {
-    enrollForm.enrollFormGet(sReq.query.id, sReq.query.email, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
+    enrollForm.enrollFormGet(sReq.query.id, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(result){
 			 sRes.send(result);
 		 });
 });
@@ -815,10 +824,10 @@ app.get('/enroll/isTeacher', function(sReq, sRes) {
             enrollForm.enrollFormCheck(sReq.session.user.id, sReq.session.assignment.title, sReq.session.assignment.teacherId, function(enrollFormCheckResult){
                 response={
                     assignment:sReq.session.assignment,
-                    isTeacher:sReq.session.isTeacher,
+                    isTeacher:sReq.session.user.isTeacher,
                     enrollFormCheckResult: enrollFormCheckResult,
                 };
-                if(sReq.session.assignment.status=="Enrolling 可报名"){
+                if(sReq.session.user.isTeacher == false && sReq.session.assignment.status=="Enrolling 可报名"){
                     enrollForm.studentNum(sReq.session.user.id, function(studentNumResult){
                         response.enrollSubmitNum = studentNumResult.enrollSubmitNum;
                         response.enrollMaxNum = studentNumResult.enrollMaxNum;

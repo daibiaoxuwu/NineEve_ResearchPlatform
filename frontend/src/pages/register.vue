@@ -77,8 +77,8 @@ export default {
             email: that.registerEmail,
             password: passwdSHA256,
             captcha: that.registerCaptcha
-          }).then(() => {
-            window.location.href = "/studentInfo";
+          }).then(() =>{
+            window.location.href = "/studentInfo"; 
           });
         } else {
           alert(
