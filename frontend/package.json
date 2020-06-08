@@ -12,7 +12,7 @@
   "dependencies": {
     "boostrap": "^2.0.0",
     "bootstrap-vue": "^2.0.0-rc.11",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "js-sha256": "^0.9.0",
     "scss-loader": "0.0.1",
     "vue": "^2.5.11",
